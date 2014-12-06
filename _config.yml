@@ -3,7 +3,7 @@
 # ----------------------- #
 
 url: http://tomohung.github.io
-title: The Alchemist
+title: The Life Alchemist
 subtitle: When you want something, all the universe conspires in helping you to achieve it.
 author: Tomo
 simple_search: https://www.google.com/search
@@ -64,7 +64,7 @@ default_asides: [asides/recent_posts.html, asides/github.html, asides/delicious.
 # ----------------------- #
 
 # Github repositories
-github_user: tomohung
+github_user: 
 github_repo_count: 0
 github_show_profile_link: false
 github_skip_forks: true
