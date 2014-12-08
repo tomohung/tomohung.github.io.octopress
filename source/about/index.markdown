@@ -9,7 +9,7 @@ footer: true
 
 ## **洪智偉(Chih-Wei, Hung)** / a.k.a. **Tomo**
 
-{% img right /images/AboutMe/aboutMe.jpg 267 356 %}
+{% img right /images/AboutMe/aboutMe.jpg 267 356 2014 @ Kyoto %}
 
 * **The Alchemist** 
 
