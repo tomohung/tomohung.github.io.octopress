@@ -3,7 +3,7 @@ layout: page
 title: "about"
 date: 2014-12-06 22:09
 comments: false
-sharing: true
+sharing: false
 footer: true
 ---
 
@@ -25,6 +25,8 @@ footer: true
 * **其它**
 
 	想到什麼就寫什麼囉
+
+---
 
 tomohung(at)gmail.com
 
