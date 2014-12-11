@@ -6,6 +6,8 @@ comments: true
 categories: quora
 ---
 
+{% img http://i.minus.com/iEq3JDsAn8DtA.jpg 640 %}
+
 原文出處Origin: http://qr.ae/qhLVJ
 
 #為什麼軟體工程師可以賺這麼多錢？

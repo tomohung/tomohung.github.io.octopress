@@ -5,6 +5,9 @@ date: 2014-12-06 21:37:12 +0800
 comments: true
 categories: quora
 ---
+
+{% img http://i.minus.com/ield6JjxHhryw.jpg 640 %}
+
 原文出處： http://qr.ae/mT5sc
 
 #Q150的人是怎樣的體驗，是否生活變成很輕鬆？

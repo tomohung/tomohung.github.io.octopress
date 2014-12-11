@@ -6,6 +6,8 @@ comments: true
 categories: quora
 ---
 
+{% img http://i.minus.com/ibw1BjtQuOWXDe.jpg 640 %}
+
 原文出處：http://qr.ae/DQj7j
 
 #大陸人怎麼看台灣民主？
