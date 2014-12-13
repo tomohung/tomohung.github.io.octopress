@@ -81,11 +81,26 @@ categories: English
 
 而如前述，台灣的現況是[Galapagos Syndrome][]，只看的到中國的威脅，而沒有看到世界的機會。
 
+###競爭力大師Michael Porter
+前陣子來台灣的[Michael Porter][]也被兩個人拿出來嘲諷了一番，認為台灣這二十年來發展的走向就是深受他的影響，同時也提到了他其實[公司己經破產][broken]的事。
+
+回來查了資料，才知道[五力分析][]就是Porter所提倡的。
+看了wiki上的內容，可以發現其實台灣根本就是把五力分析發揮到極致，也可以說這幾年台灣的競爭力就是由此而生。
+
+競爭力(Competing)和參與力(Engaging)以軟體工程的角度來說，我覺得參與力比較像是用open source的概念，大量的讓所有願意開放的人進來參與。這有兩個好處，一個是讓各種強者進入完善這個project，另一個好處就是軟體工程一直強調的[DRY原則(Don't Repeat Yourself)][DRY]，不要重複打造輪子，把時間花在你真正要做的核心價值上。
+
+###Globish
+[Globish][]全球化英語是日本樂天正在進行的計劃，傳統上不同國家之間的交流，都是要靠少數精英當中間的翻譯，但現在則靠Globish提升員工與其它人的參與力，目的就是要底下員工都能直接面對全世界的客戶。
+
+[Globish]: http://www.toeic.com.tw/campaign/globish/
+[Michael Porter]: http://zh.wikipedia.org/wiki/迈克尔·波特
+[broken]: http://www.businessweekly.com.tw/KBlogArticle.aspx?id=2478
+[五力分析]: http://zh.wikipedia.org/wiki/五力分析
+[DRY]: http://en.wikipedia.org/wiki/Don't_repeat_yourself
 
 # 雜談
 
 聽完講座，自己想強化英文的決心倒是有著重新開始的振作，希望自己能一鼓作氣，目標讓自己的英文一口氣提升至能夠進行15分鐘的演說。
 
 另外也有點感慨，之前參加商周辦的論壇，還是這次參加的講座，自己都必需從中壢趕到台北，在知識的交流上，桃園的位置似乎註定要因為台北而邊緣化。
-
 
