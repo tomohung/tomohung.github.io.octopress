@@ -104,3 +104,8 @@ categories: English
 
 另外也有點感慨，之前參加商周辦的論壇，還是這次參加的講座，自己都必需從中壢趕到台北，在知識的交流上，桃園的位置似乎註定要因為台北而邊緣化。
 
+#後續 update
+
+與朋友對此文章的對談後續
+http://www.tomohung.com/blog/2014/12/15/yu-yan-guan-li-xu/
+
