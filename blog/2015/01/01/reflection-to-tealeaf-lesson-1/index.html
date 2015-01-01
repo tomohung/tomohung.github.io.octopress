@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Blog Archive - The Life Alchemist</title>
+  <title>Reflection to Tealeaf Lesson 1 - The Life Alchemist</title>
   <meta name="author" content="Tomo">
 
   
@@ -14,15 +14,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://tomohung.github.io/blog/archives">
+  <link rel="canonical" href="http://tomohung.github.io/blog/2015/01/01/reflection-to-tealeaf-lesson-1">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="The Life Alchemist" type="application/atom+xml">
 
   <!-- http://opengraphprotocol.org/ -->
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://tomohung.github.io/blog/archives">
-  <meta property="og:title" content="Blog Archive - The Life Alchemist">
+  <meta property="og:url" content="http://tomohung.github.io/blog/2015/01/01/reflection-to-tealeaf-lesson-1">
+  <meta property="og:title" content="Reflection to Tealeaf Lesson 1 - The Life Alchemist">
   
 
   <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
@@ -66,10 +66,10 @@
 
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li >
+                <li class="active">
                     <a rel="index" href="/">Blog</a>
                 </li>
-                <li class="active">
+                <li >
                     <a href="/blog/archives">Archives</a>
                 </li>
                 <li >
@@ -104,35 +104,16 @@
       <div id="main" role="main" class="container">
         <div id="content">
           <div class="row">
-  <div class="page-content col-md-9">
-    <article role="article">
+  <div class="page-content col-md-9" itemscope itemtype="http://schema.org/Blog">
+    <meta itemprop="name" content="The Life Alchemist" />
+    
+    <meta itemprop="url" content="http://tomohung.github.io" />
+    <article class="hentry" role="article" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
       
-        <header class="page-header">
-          
-          
-            <h1 class="entry-title">
-              Blog Archive
-              
-            </h1>
-          
-        </header>
-      
-      <div class="entry-content">
-        <div id="blog-archives" itemscope itemtype="http://schema.org/Blog">
-<meta itemprop="name" content="The Life Alchemist" />
-
-<meta itemprop="url" content="http://tomohung.github.io" />
-
-
-
-  
-  <h2 class="year">2015</h2>
-
-<article class="page-header" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-  
-<h2 class="post-title" itemprop="name headline"><a href="/blog/2015/01/01/reflection-to-tealeaf-lesson-1/" itemprop="url">Reflection to Tealeaf Lesson 1</a></h2>
-<p class="meta text-muted">
-  
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
 
 
 
@@ -146,7 +127,86 @@
 
 
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-01T16:03:33+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-01</time>
+        
+      </p>
+    
+    
+    <h1 class="entry-title" itemprop="name headline">
+        Reflection to Tealeaf Lesson 1
+        
+    </h1>
+    
+  </header>
+
+
+<div class="entry-content clearfix" itemprop="articleBody description"><p>Happy new year!!</p>
+
+<p>Before I talk about where I struggled with, I would like to say something before I join the course.
+I am using C++ for few years, and coding is part of my job. Before join the course, I&rsquo;ve also done the <a href="http://learnrubythehardway.org/book/">Learn Ruby The Hard Way</a> to lesson 45. <code>Learn Ruby The Hard Way</code> is also a good pratice, especially for <code>muscle memory</code>. It focus on <code>just typing ruby</code> when learning ruby knowledge.</p>
+
+<!--more-->
+
+
+<p>After that, I start <code>Prep Course</code> @ tealeaf, reading the book <code>Introduce to Programing</code>. <code>Introduction to Programing</code> is also an amazing book, it use a simple way to explain more detail in ruby, and I really did several times &ldquo;Ah ha!&rdquo; when reading it. Then I thought I was ready for lesson 1, but maybe I&rsquo;m wrong :p</p>
+
+<p>About my struggles, as a C++ programmer, there are mainly two &ldquo;What?&rdquo; for ruby:</p>
+
+<ul>
+<li><p>variable scope: in C++, every local variable only survive in its scope, but in ruby, this is not always true. Even now, I&rsquo;m still a little confused with that. Glad that I find a way to deal with this: <code>Never use outside variable in insdie scope, make them in different name</code>.</p></li>
+<li><p>pointer &amp; reference: when passing a variable to functions(in ruby called: methods), if varaible has prefix like <code>*</code> or <code>&amp;</code>, it obvious means this variable may be modified in this methods. Ruby doesn&rsquo;t take this way, input variables in method could be modified just by what action do inside the method. Fotunately, ruby usaually append suffix <code>!</code> behind method&rsquo;s name to indicate this method modify input variable.</p></li>
+</ul>
+
+
+<p>Even these, I do love ruby.</p>
+
+<ul>
+<li>There are a lot of built-in convenient methods for String, Array, Hash&hellip;etc. And more are waiting to discover</li>
+<li>More fluent phrase for flow control, if, unless, while, until&hellip;etc. Readable code is becoming more and more important.</li>
+<li>type less key :p</li>
+</ul>
+
+
+<p>And special Thanks for TA&rsquo;s:
+Without their help, I couldn&rsquo;t finished these assignments on time. Because of unfamiliar with ruby methods, wrong code style, improper naming&hellip;etc. They always give me timely advice.</p>
+
+<p>Last, share my experience for developing game <code>Black Jack</code>:</p>
+
+<ul>
+<li>write psuedo code : 10 min</li>
+<li>coding : 2 hours</li>
+<li>debugging : 2 hours more</li>
+<li>feedback from TA, then refactor: 2 hours</li>
+</ul>
+
+
+<p>By the way, the most difficulty in Lesson 1 is completing &ldquo;Tic-Tac-Toe&rdquo; AI, it tooks me 10 hours more.
+If you are totally new to program, don&rsquo;t be disppointed at spending a lot of time, because me too!!
+If you are take these assignment as piece of cake, well, let&rsquo;s move to Lesson 2. See you.</p>
+</div>
+
+
+      <footer>
+        <p class="meta text-muted">
+          
   
+
+<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard" itemprop="author" itemscope itemtype="http://schema.org/Person">Posted by <span class="fn" itemprop="name">Tomo</span></span>
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-01T16:03:33+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-01</time>
+          
 
 <span class="glyphicon glyphicon-tags"></span>&nbsp;
 <span class="categories">
@@ -156,202 +216,49 @@
 </span>
 
 
-</p>
-
-</article>
-
-
-
+        </p>
+        
+          <div class="sharing">
   
-  <h2 class="year">2014</h2>
-
-<article class="page-header" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://tomohung.github.io/blog/2015/01/01/reflection-to-tealeaf-lesson-1/" data-via="" data-counturl="http://tomohung.github.io/blog/2015/01/01/reflection-to-tealeaf-lesson-1/" >Tweet</a>
   
-<h2 class="post-title" itemprop="name headline"><a href="/blog/2014/12/15/yu-yan-guan-li-xu/" itemprop="url">語言管理－續</a></h2>
-<p class="meta text-muted">
   
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-12-15T20:34:40+08:00"  data-updated="true" itemprop="datePublished dateCreated">2014-12-15</time>
   
-
-<span class="glyphicon glyphicon-tags"></span>&nbsp;
-<span class="categories">
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
   
-    <a class='category' href='/blog/categories/english/'>english</a>
-  
-</span>
-
-
-</p>
-
-</article>
-
-
-
-<article class="page-header" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-  
-<h2 class="post-title" itemprop="name headline"><a href="/blog/2014/12/12/language-management/" itemprop="url">語言管理</a></h2>
-<p class="meta text-muted">
-  
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-12-12T05:32:48+08:00"  data-updated="true" itemprop="datePublished dateCreated">2014-12-12</time>
-  
-
-<span class="glyphicon glyphicon-tags"></span>&nbsp;
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/english/'>english</a>
-  
-</span>
-
-
-</p>
-
-</article>
-
-
-
-<article class="page-header" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-  
-<h2 class="post-title" itemprop="name headline"><a href="/blog/2014/12/09/why-do-software-engineers-make-so-much/" itemprop="url">Why Do Software Engineers Make So Much?</a></h2>
-<p class="meta text-muted">
-  
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-12-09T20:51:53+08:00"  data-updated="true" itemprop="datePublished dateCreated">2014-12-09</time>
-  
-
-<span class="glyphicon glyphicon-tags"></span>&nbsp;
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/quora/'>quora</a>
-  
-</span>
-
-
-</p>
-
-</article>
-
-
-
-<article class="page-header" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-  
-<h2 class="post-title" itemprop="name headline"><a href="/blog/2014/12/06/what-do-mainland-chinese-people-think-of-the-democracy-in-taiwan/" itemprop="url">What Do Mainland Chinese People Think of the Democracy in Taiwan?</a></h2>
-<p class="meta text-muted">
-  
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-12-06T21:48:36+08:00"  data-updated="true" itemprop="datePublished dateCreated">2014-12-06</time>
-  
-
-<span class="glyphicon glyphicon-tags"></span>&nbsp;
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/quora/'>quora</a>
-  
-</span>
-
-
-</p>
-
-</article>
-
-
-
-<article class="page-header" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-  
-<h2 class="post-title" itemprop="name headline"><a href="/blog/2014/12/06/whats-it-like-to-have-a-150-iq-is-life-really-easy/" itemprop="url">What’s It Like to Have a 150 IQ? Is Life Really Easy</a></h2>
-<p class="meta text-muted">
-  
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-12-06T21:37:12+08:00"  data-updated="true" itemprop="datePublished dateCreated">2014-12-06</time>
-  
-
-<span class="glyphicon glyphicon-tags"></span>&nbsp;
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/quora/'>quora</a>
-  
-</span>
-
-
-</p>
-
-</article>
-
 </div>
 
-      </div>
-      
+        
+        
+          <ul class="meta text-muted pager">
+            
+            <li class="previous"><a href="/blog/2014/12/15/yu-yan-guan-li-xu/" title="Previous Post: 語言管理－續">&laquo; 語言管理－續</a></li>
+            
+            
+          </ul>
+        
+      </footer>
     </article>
+    
+      <section>
+        <h2>Comments</h2>
+        <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+      </section>
     
   </div>
 
   
-    <aside class="sidebar col-md-3">
-      
-        <section class="panel panel-default">
+  <aside class="sidebar col-md-3">
+    
+      <section class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">Recent Posts</h3>
   </div>
   
   <div id="recent_posts" class="list-group">
     
-    <a class="list-group-item " href="/blog/2015/01/01/reflection-to-tealeaf-lesson-1/">Reflection to Tealeaf Lesson 1</a>
+    <a class="list-group-item active" href="/blog/2015/01/01/reflection-to-tealeaf-lesson-1/">Reflection to Tealeaf Lesson 1</a>
     
     <a class="list-group-item " href="/blog/2014/12/15/yu-yan-guan-li-xu/">語言管理－續</a>
     
@@ -369,8 +276,8 @@
 
 
 
-      
-    </aside>
+    
+  </aside>
   
 </div>
 
@@ -394,7 +301,10 @@
       var disqus_shortname = 'tomohung';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://tomohung.github.io/blog/2015/01/01/reflection-to-tealeaf-lesson-1/';
+        var disqus_url = 'http://tomohung.github.io/blog/2015/01/01/reflection-to-tealeaf-lesson-1/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
