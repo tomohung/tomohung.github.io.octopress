@@ -4,7 +4,7 @@
   <title><![CDATA[The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-01-07T02:18:29+00:00</updated>
+  <updated>2015-01-07T02:27:07+00:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -14,11 +14,13 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Lesson 2]]></title>
+    <title type="html"><![CDATA[Reflection of Tealeaf Week 2]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2/"/>
     <updated>2015-01-07T00:15:13+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2</id>
-    <content type="html"><![CDATA[<p>Although I have some option video not done yet, I want to share some of my reflection.</p>
+    <content type="html"><![CDATA[<p><img class="right" src="http://i.minus.com/ibnRw2O1pxsQam.png" width="320"></p>
+
+<p>Although I have some option video not done yet, I want to share some of my reflection.</p>
 
 <p>When I came to lesson 2, first I found that discussion is less than lesson 1 obviously. I think this imply the lesson OOP is harder than before. Thank god I finished three assignments in a week, how I can do this is because:</p>
 
@@ -46,11 +48,13 @@ But I do look forward to it.</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Lesson 1]]></title>
+    <title type="html"><![CDATA[Reflection to Tealeaf Week 1]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/01/reflection-to-tealeaf-lesson-1/"/>
     <updated>2015-01-01T08:03:33+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/01/reflection-to-tealeaf-lesson-1</id>
-    <content type="html"><![CDATA[<p>Happy new year!!</p>
+    <content type="html"><![CDATA[<p><img class="right" src="http://i.minus.com/ibsevSRoOPCEmU.png" width="320"></p>
+
+<p>Happy new year!!</p>
 
 <p>Before I talk about where I struggled with, I would like to say something before I join the course.
 I am using C++ for few years, and coding is part of my job. Before join the course, I&rsquo;ve also done the <a href="http://learnrubythehardway.org/book/">Learn Ruby The Hard Way</a> to lesson 45. <code>Learn Ruby The Hard Way</code> is also a good pratice, especially for <code>muscle memory</code>. It focus on <code>just typing ruby</code> when learning ruby knowledge.</p>
@@ -318,7 +322,7 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Why Do Software Engineers Make So Much?]]></title>
+    <title type="html"><![CDATA[為什麼軟體工程師可以賺這麼多錢？]]></title>
     <link href="http://www.tomohung.com/blog/2014/12/09/why-do-software-engineers-make-so-much/"/>
     <updated>2014-12-09T12:51:53+00:00</updated>
     <id>http://www.tomohung.com/blog/2014/12/09/why-do-software-engineers-make-so-much</id>
@@ -394,7 +398,7 @@ This idea that software salaries are "crazy" is not only inaccurate, but deeply 
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[What Do Mainland Chinese People Think of the Democracy in Taiwan?]]></title>
+    <title type="html"><![CDATA[大陸人怎麼看台灣民主？]]></title>
     <link href="http://www.tomohung.com/blog/2014/12/06/what-do-mainland-chinese-people-think-of-the-democracy-in-taiwan/"/>
     <updated>2014-12-06T13:48:36+00:00</updated>
     <id>http://www.tomohung.com/blog/2014/12/06/what-do-mainland-chinese-people-think-of-the-democracy-in-taiwan</id>
@@ -474,7 +478,7 @@ I for one never believe western model of democracy could work in China. We do ne
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[What’s It Like to Have a 150 IQ? Is Life Really Easy]]></title>
+    <title type="html"><![CDATA[IQ150的人是怎樣的體驗，是否生活變成很輕鬆？]]></title>
     <link href="http://www.tomohung.com/blog/2014/12/06/whats-it-like-to-have-a-150-iq-is-life-really-easy/"/>
     <updated>2014-12-06T13:37:12+00:00</updated>
     <id>http://www.tomohung.com/blog/2014/12/06/whats-it-like-to-have-a-150-iq-is-life-really-easy</id>
@@ -482,7 +486,7 @@ I for one never believe western model of democracy could work in China. We do ne
 
 <p>原文出處： <a href="http://qr.ae/mT5sc">http://qr.ae/mT5sc</a></p>
 
-<h1>Q150的人是怎樣的體驗，是否生活變成很輕鬆？</h1>
+<h1>IQ150的人是怎樣的體驗，是否生活變成很輕鬆？</h1>
 
 <p><strong>Kerry Watson</strong></p>
 
