@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tealeaf | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/tealeaf/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-01-07T00:30:23+00:00</updated>
+  <updated>2015-01-07T02:18:29+00:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -27,7 +27,7 @@
 
 <ol>
 <li><p>As a C++ programmer, OOP concept is also the same in Ruby, like inheritance, polymorphism, composition&hellip;etc. Since I have some experience to OOP, familiar with Ruby&rsquo;s style is not a hard work for me.</p></li>
-<li><p><code>Object Oriented Program book</code> is fantastic!! I spent one night to read it, then next day I can just start to implement my idea without too much struggles. It clearly explain the relationship between <code>is-a</code> and <code>has-a</code> corresponding to inheritance and mixin.</p></li>
+<li><p><a href="http://www.gotealeaf.com/books/oo_ruby"><code>Object Oriented Program book</code></a> is fantastic!! I spent one night to read it, then next day I can just start to implement my idea without too much struggles. It clearly explain the relationship between <code>is-a</code> and <code>has-a</code> corresponding to inheritance and mixin.</p></li>
 </ol>
 
 
@@ -58,7 +58,7 @@ I am using C++ for few years, and coding is part of my job. Before join the cour
 <!--more-->
 
 
-<p>After that, I start <code>Prep Course</code> @ tealeaf, reading the book <code>Introduce to Programing</code>. <code>Introduction to Programing</code> is also an amazing book, it use a simple way to explain more detail in ruby, and I really did several times &ldquo;Ah ha!&rdquo; when reading it. Then I thought I was ready for lesson 1, but maybe I&rsquo;m wrong :p</p>
+<p>After that, I start <code>Prep Course</code> @ tealeaf, reading the book <a href="http://www.gotealeaf.com/books/ruby"><code>Introduce to Programing</code></a>. <code>Introduction to Programing</code> is also an amazing book, it use a simple way to explain more detail in ruby, and I really did several times &ldquo;Ah ha!&rdquo; when reading it. Then I thought I was ready for lesson 1, but maybe I&rsquo;m wrong :p</p>
 
 <p>About my struggles, as a C++ programmer, there are mainly two &ldquo;What?&rdquo; for ruby:</p>
 
