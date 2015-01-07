@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[The Life Alchemist]]></title>
-  <link href="http://tomohung.github.io/atom.xml" rel="self"/>
-  <link href="http://tomohung.github.io/"/>
-  <updated>2015-01-02T07:16:11+08:00</updated>
-  <id>http://tomohung.github.io/</id>
+  <link href="http://www.tomohung.com/atom.xml" rel="self"/>
+  <link href="http://www.tomohung.com/"/>
+  <updated>2015-01-07T00:27:56+00:00</updated>
+  <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
     
@@ -14,10 +14,39 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Reflection to Tealeaf Lesson 2]]></title>
+    <link href="http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2/"/>
+    <updated>2015-01-07T00:15:13+00:00</updated>
+    <id>http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2</id>
+    <content type="html"><![CDATA[<p>Although I have some option video not done yet, I want to share some of my reflection.</p>
+
+<p>When I came to lesson 2, first I found that discussion is less than lesson 1 obviously. I think this imply the lesson OOP is harder than before. Thank god I finished three assignments in a week, how I can do this is because:</p>
+
+<ol>
+<li><p>As a C++ programmer, OOP concept is also the same in Ruby, like inheritance, polymorphism, composition&hellip;etc. Since I have some experience to OOP, familiar with Ruby&rsquo;s style is not a hard work for me.</p></li>
+<li><p><code>Object Oriented Program book</code> is fantastic!! I spent one night to read it, then next day I can just start to implement my idea without too much struggles. It clearly explain the relationship between <code>is-a</code> and <code>has-a</code> corresponding to inheritance and mixin.</p></li>
+</ol>
+
+
+<p>And I do fall in love with Ruby, <code>convention</code> is over configuration becomes nature. In lesson 1, it&rsquo;s weird for me to pass a variable into method, but modified or not depends on what actions in the method. Now I start to think it&rsquo;s convenient to decide modified the variable in the method.
+<code>attr_accessor</code> is another kind of example, default getter and setter helps a lot to reduce typing time.</p>
+
+<p>Using polymorphism, I don&rsquo;t need to care about how using virtual function, just inheritance class then use it.
+Especially for method <code>super</code>, the best way to reduce redundant code.
+One suggestion, If subclass&rsquo;s initialize method doesn&rsquo;t use super, then you might think the superclass and subclass relationship is <code>has-a</code>, not <code>is-a</code>.</p>
+
+<p>I do love my <a href="https://github.com/tomohung/tealeaf/blob/master/Lesson2/oo_tic_tac_toe.rb">Tic-Tac-Toe</a> and <a href="https://github.com/tomohung/tealeaf/blob/master/Lesson2/oo_blackjack.rb">Black Jack</a> implemented by OO. In Tic-Tac-Toe, I use polymorphism to implement single player and double players mode. In Black Jack, I add feature that player can play with others NPC together, not just with dealer. This make the game likely in the real world. Without OO concept, these features are hard to implement.</p>
+
+<p>Next lesson is absolutely my challenge, because I&rsquo;m totally new for web development.
+But I do look forward to it.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Lesson 1]]></title>
-    <link href="http://tomohung.github.io/blog/2015/01/01/reflection-to-tealeaf-lesson-1/"/>
-    <updated>2015-01-01T16:03:33+08:00</updated>
-    <id>http://tomohung.github.io/blog/2015/01/01/reflection-to-tealeaf-lesson-1</id>
+    <link href="http://www.tomohung.com/blog/2015/01/01/reflection-to-tealeaf-lesson-1/"/>
+    <updated>2015-01-01T08:03:33+00:00</updated>
+    <id>http://www.tomohung.com/blog/2015/01/01/reflection-to-tealeaf-lesson-1</id>
     <content type="html"><![CDATA[<p>Happy new year!!</p>
 
 <p>Before I talk about where I struggled with, I would like to say something before I join the course.
@@ -66,9 +95,9 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
   
   <entry>
     <title type="html"><![CDATA[語言管理－續]]></title>
-    <link href="http://tomohung.github.io/blog/2014/12/15/yu-yan-guan-li-xu/"/>
-    <updated>2014-12-15T20:34:40+08:00</updated>
-    <id>http://tomohung.github.io/blog/2014/12/15/yu-yan-guan-li-xu</id>
+    <link href="http://www.tomohung.com/blog/2014/12/15/yu-yan-guan-li-xu/"/>
+    <updated>2014-12-15T12:34:40+00:00</updated>
+    <id>http://www.tomohung.com/blog/2014/12/15/yu-yan-guan-li-xu</id>
     <content type="html"><![CDATA[<p><img src="http://i.minus.com/ijEvqo7aLC7BY.jpg" width="640"></p>
 
 <p><a href="http://www.tomohung.com/blog/2014/12/12/language-management/">上一篇文章</a>關於聽了『語言管理』講座，朋友私底下來信討論，整理了一下對話留個記錄。刪去了一些朋友之間五四三的對話，盡量保留原意：</p>
@@ -193,9 +222,9 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
   
   <entry>
     <title type="html"><![CDATA[語言管理]]></title>
-    <link href="http://tomohung.github.io/blog/2014/12/12/language-management/"/>
-    <updated>2014-12-12T05:32:48+08:00</updated>
-    <id>http://tomohung.github.io/blog/2014/12/12/language-management</id>
+    <link href="http://www.tomohung.com/blog/2014/12/11/language-management/"/>
+    <updated>2014-12-11T21:32:48+00:00</updated>
+    <id>http://www.tomohung.com/blog/2014/12/11/language-management</id>
     <content type="html"><![CDATA[<p><img src="http://i.minus.com/ibp6diev7FKMoZ.jpg" width="640"></p>
 
 <p>這禮拜三晚上，特地到台大參加今周刊舉辦的講座『語言管理』，一開始完全就是為了范疇才報名的，想聽看看本人會說些什麼。但其實講座的主講人有兩位，一位是范疇，另一位是陳超明老師。</p>
@@ -287,9 +316,9 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
   
   <entry>
     <title type="html"><![CDATA[Why Do Software Engineers Make So Much?]]></title>
-    <link href="http://tomohung.github.io/blog/2014/12/09/why-do-software-engineers-make-so-much/"/>
-    <updated>2014-12-09T20:51:53+08:00</updated>
-    <id>http://tomohung.github.io/blog/2014/12/09/why-do-software-engineers-make-so-much</id>
+    <link href="http://www.tomohung.com/blog/2014/12/09/why-do-software-engineers-make-so-much/"/>
+    <updated>2014-12-09T12:51:53+00:00</updated>
+    <id>http://www.tomohung.com/blog/2014/12/09/why-do-software-engineers-make-so-much</id>
     <content type="html"><![CDATA[<p><img src="http://i.minus.com/iEq3JDsAn8DtA.jpg" width="640"></p>
 
 <p>原文出處Origin: <a href="http://qr.ae/qhLVJ">http://qr.ae/qhLVJ</a></p>
@@ -363,9 +392,9 @@ This idea that software salaries are "crazy" is not only inaccurate, but deeply 
   
   <entry>
     <title type="html"><![CDATA[What Do Mainland Chinese People Think of the Democracy in Taiwan?]]></title>
-    <link href="http://tomohung.github.io/blog/2014/12/06/what-do-mainland-chinese-people-think-of-the-democracy-in-taiwan/"/>
-    <updated>2014-12-06T21:48:36+08:00</updated>
-    <id>http://tomohung.github.io/blog/2014/12/06/what-do-mainland-chinese-people-think-of-the-democracy-in-taiwan</id>
+    <link href="http://www.tomohung.com/blog/2014/12/06/what-do-mainland-chinese-people-think-of-the-democracy-in-taiwan/"/>
+    <updated>2014-12-06T13:48:36+00:00</updated>
+    <id>http://www.tomohung.com/blog/2014/12/06/what-do-mainland-chinese-people-think-of-the-democracy-in-taiwan</id>
     <content type="html"><![CDATA[<p><img src="http://i.minus.com/ibw1BjtQuOWXDe.jpg" width="640"></p>
 
 <p>原文出處：<a href="http://qr.ae/DQj7j">http://qr.ae/DQj7j</a></p>
@@ -443,9 +472,9 @@ I for one never believe western model of democracy could work in China. We do ne
   
   <entry>
     <title type="html"><![CDATA[What’s It Like to Have a 150 IQ? Is Life Really Easy]]></title>
-    <link href="http://tomohung.github.io/blog/2014/12/06/whats-it-like-to-have-a-150-iq-is-life-really-easy/"/>
-    <updated>2014-12-06T21:37:12+08:00</updated>
-    <id>http://tomohung.github.io/blog/2014/12/06/whats-it-like-to-have-a-150-iq-is-life-really-easy</id>
+    <link href="http://www.tomohung.com/blog/2014/12/06/whats-it-like-to-have-a-150-iq-is-life-really-easy/"/>
+    <updated>2014-12-06T13:37:12+00:00</updated>
+    <id>http://www.tomohung.com/blog/2014/12/06/whats-it-like-to-have-a-150-iq-is-life-really-easy</id>
     <content type="html"><![CDATA[<p><img src="http://i.minus.com/ield6JjxHhryw.jpg" width="640"></p>
 
 <p>原文出處： <a href="http://qr.ae/mT5sc">http://qr.ae/mT5sc</a></p>
