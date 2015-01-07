@@ -9,6 +9,8 @@ Although I have some option video not done yet, I want to share some of my refle
 
 When I came to lesson 2, first I found that discussion is less than lesson 1 obviously. I think this imply the lesson OOP is harder than before. Thank god I finished three assignments in a week, how I can do this is because:
 
+<!--more-->
+
 1. As a C++ programmer, OOP concept is also the same in Ruby, like inheritance, polymorphism, composition...etc. Since I have some experience to OOP, familiar with Ruby's style is not a hard work for me.
 
 2. `Object Oriented Program book` is fantastic!! I spent one night to read it, then next day I can just start to implement my idea without too much struggles. It clearly explain the relationship between `is-a` and `has-a` corresponding to inheritance and mixin.
