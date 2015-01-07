@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Why do software engineers make so much?"
+title: "[Quora]為什麼軟體工程師可以賺這麼多錢？"
 date: 2014-12-09 20:51:53 +0800
 comments: true
 categories: quora

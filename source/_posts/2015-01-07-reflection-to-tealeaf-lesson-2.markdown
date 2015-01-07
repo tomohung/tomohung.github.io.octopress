@@ -1,15 +1,15 @@
 ---
 layout: post
-title: "Reflection to tealeaf Lesson 2"
+title: "Reflection of tealeaf week 2"
 date: 2015-01-07 00:15:13 +0000
 comments: true
 categories: [tealeaf, ruby]
 ---
+{% img right http://i.minus.com/ibnRw2O1pxsQam.png 320 %}
+
 Although I have some option video not done yet, I want to share some of my reflection.
 
 When I came to lesson 2, first I found that discussion is less than lesson 1 obviously. I think this imply the lesson OOP is harder than before. Thank god I finished three assignments in a week, how I can do this is because:
-
-<!--more-->
 
 1. As a C++ programmer, OOP concept is also the same in Ruby, like inheritance, polymorphism, composition...etc. Since I have some experience to OOP, familiar with Ruby's style is not a hard work for me.
 

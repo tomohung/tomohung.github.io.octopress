@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "What do mainland Chinese people think of the democracy in Taiwan?"
+title: "[Quora]大陸人怎麼看台灣民主？"
 date: 2014-12-06 21:48:36 +0800
 comments: true
 categories: quora

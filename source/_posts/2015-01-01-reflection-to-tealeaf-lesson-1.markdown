@@ -1,11 +1,13 @@
 ---
 layout: post
-title: "Reflection to Tealeaf Lesson 1"
+title: "Reflection to Tealeaf week 1"
 date: 2015-01-01 16:03:33 +0800
 comments: true
 categories: [tealeaf, ruby]
 ---
-  
+
+{% img right http://i.minus.com/ibsevSRoOPCEmU.png 320 %}
+
 Happy new year!!
 
 Before I talk about where I struggled with, I would like to say something before I join the course.
@@ -13,8 +15,6 @@ I am using C++ for few years, and coding is part of my job. Before join the cour
 
 [Learn Ruby The Hard Way]: http://learnrubythehardway.org/book/
  
-<!--more-->
-
 After that, I start `Prep Course` @ tealeaf, reading the book [`Introduce to Programing`][]. `Introduction to Programing` is also an amazing book, it use a simple way to explain more detail in ruby, and I really did several times "Ah ha!" when reading it. Then I thought I was ready for lesson 1, but maybe I'm wrong :p
 
 [`Introduce to Programing`]: http://www.gotealeaf.com/books/ruby
