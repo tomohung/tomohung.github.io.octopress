@@ -13,7 +13,9 @@ When I came to lesson 2, first I found that discussion is less than lesson 1 obv
 
 1. As a C++ programmer, OOP concept is also the same in Ruby, like inheritance, polymorphism, composition...etc. Since I have some experience to OOP, familiar with Ruby's style is not a hard work for me.
 
-2. `Object Oriented Program book` is fantastic!! I spent one night to read it, then next day I can just start to implement my idea without too much struggles. It clearly explain the relationship between `is-a` and `has-a` corresponding to inheritance and mixin.
+2. `[Object Oriented Program book][]` is fantastic!! I spent one night to read it, then next day I can just start to implement my idea without too much struggles. It clearly explain the relationship between `is-a` and `has-a` corresponding to inheritance and mixin.
+
+[Object Oriented Program book]: http://www.gotealeaf.com/books/oo_ruby
 
 And I do fall in love with Ruby, `convention` is over configuration becomes nature. In lesson 1, it's weird for me to pass a variable into method, but modified or not depends on what actions in the method. Now I start to think it's convenient to decide modified the variable in the method.
 `attr_accessor` is another kind of example, default getter and setter helps a lot to reduce typing time.

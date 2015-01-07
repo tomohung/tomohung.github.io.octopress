@@ -15,8 +15,10 @@ I am using C++ for few years, and coding is part of my job. Before join the cour
  
 <!--more-->
 
-After that, I start `Prep Course` @ tealeaf, reading the book `Introduce to Programing`. `Introduction to Programing` is also an amazing book, it use a simple way to explain more detail in ruby, and I really did several times "Ah ha!" when reading it. Then I thought I was ready for lesson 1, but maybe I'm wrong :p
-  
+After that, I start `Prep Course` @ tealeaf, reading the book `[Introduce to Programing][]`. `Introduction to Programing` is also an amazing book, it use a simple way to explain more detail in ruby, and I really did several times "Ah ha!" when reading it. Then I thought I was ready for lesson 1, but maybe I'm wrong :p
+
+[Introduce to Programing]: http://www.gotealeaf.com/books/ruby
+
 About my struggles, as a C++ programmer, there are mainly two "What?" for ruby:
   
   - variable scope: in C++, every local variable only survive in its scope, but in ruby, this is not always true. Even now, I'm still a little confused with that. Glad that I find a way to deal with this: `Never use outside variable in insdie scope, make them in different name`.
