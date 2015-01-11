@@ -4,7 +4,7 @@
   <title><![CDATA[The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-01-08T00:56:41+00:00</updated>
+  <updated>2015-01-11T22:03:37+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -14,9 +14,68 @@
 
   
   <entry>
+    <title type="html"><![CDATA[nitrous.io 開發環境]]></title>
+    <link href="http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing/"/>
+    <updated>2015-01-11T21:26:49+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing</id>
+    <content type="html"><![CDATA[<p><img src="http://i.minus.com/iyZNw6vDZnJa6.png" width="800"></p>
+
+<ul>
+<li>太強了</li>
+<li>太強了</li>
+<li>太強了</li>
+</ul>
+
+
+<p>因為<a href="http://nitrous.io">nitrous</a>太強了，所以說三遍。</p>
+
+<p>入門網路應用程式開發一開始最大的門檻就是安裝適合的環境，尤其是OS用Windows的，好像是次等公民一樣，一下是終端機要用跟別人不一樣的，一下又是安裝套件卡住，一開始一頭熱的想要投入，馬上就被潑盆冷水。</p>
+
+<!--more-->
+
+
+<p>之前我自己的桌機就是用Windows，弄了很久才裝起來可以跑，但就是常遇到怪事，所以就放棄了。現在有一台MBA，少了很多問題，至少按照網路上搜尋到的指引文章照著做，多半都沒什麼意外。</p>
+
+<p>但有時候在外面想用其它電腦看一下自己做的東西時，這時候<a href="http://nitrous.io">nitrous</a>配合<a href="http://github.com">github</a>就派上用場了。nitrous當作雲端編輯平台，github負責同步資料，至少目前我在學習的階段都沒遇到什麼問題，聽說<a href="http://gotealeaf.com">tealeaf</a>裡也有人用nitrous完成所有課程。</p>
+
+<p><img src="http://i.minus.com/ibjA5RfvgDSmp6.png" width="640"></p>
+
+<p>Ruby Girls也是用這套教學，要知道還沒開始就在安裝遇到挫折，真的沒有動力再做下去 &lt;== 就是在說我自己</p>
+
+<p><img src="http://i.minus.com/ibKMcP19URJvJ.png" width="640"></p>
+
+<p>首頁寫的60秒完成不是開完笑的，註冊後有200閃電幣可以用，綽綽有餘，開一個Box只要10個閃電幣，可以選擇的有上圖幾種。</p>
+
+<p><img src="http://i.minus.com/iDo0NvpKvypX6.png" width="640"></p>
+
+<p>登入後可以選擇要IDE介面還是Terminal介面，如果選IDE就像上面一樣。</p>
+
+<p>以編輯器來說，內建的己經蠻好用的，也可以選擇Vim模式。</p>
+
+<p>上圖左邊就是雲端儲存的資料夾，有1.5Gb，寫程式來說應該是夠放，下面就是Terminal，git都己經裝好可以直接用，可以直接把自己github上放的project直接clone下來，五分鐘內就可以從無到有開工。</p>
+
+<h3>Preview</h3>
+
+<p>比較要注意的是Preview時，根據官方Support說，Localhost ip必需設定為0.0.0.0，port的話可以參考下圖：</p>
+
+<p><img src="http://i.minus.com/ioeX2cUhUAC5A.png"></p>
+
+<p>所以如果是Ruby配合shotgun gem來啟動的話，可以用下面指令：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ shotgun xxx.rb -o 0.0.0.0 -p 3000</span></code></pre></td></tr></table></div></figure>
+
+
+<p>指定<code>Localhost ip = 0.0.0.0, port = 3000</code></p>
+
+<p>本機的開發環境當然還是要建立，不過可以等真正入門後再來考慮吧。</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Reflection of Tealeaf Week 2]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2/"/>
-    <updated>2015-01-07T00:15:13+00:00</updated>
+    <updated>2015-01-07T08:15:13+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2</id>
     <content type="html"><![CDATA[<p><img class="right" src="http://i.minus.com/ibnRw2O1pxsQam.png" width="320"></p>
 
@@ -47,7 +106,7 @@ But I do look forward to it.</p>
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Week 1]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/01/reflection-to-tealeaf-lesson-1/"/>
-    <updated>2015-01-01T08:03:33+00:00</updated>
+    <updated>2015-01-01T16:03:33+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/01/reflection-to-tealeaf-lesson-1</id>
     <content type="html"><![CDATA[<p><img class="right" src="http://i.minus.com/ibsevSRoOPCEmU.png" width="320"></p>
 
@@ -97,7 +156,7 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
   <entry>
     <title type="html"><![CDATA[語言管理－續]]></title>
     <link href="http://www.tomohung.com/blog/2014/12/15/yu-yan-guan-li-xu/"/>
-    <updated>2014-12-15T12:34:40+00:00</updated>
+    <updated>2014-12-15T20:34:40+08:00</updated>
     <id>http://www.tomohung.com/blog/2014/12/15/yu-yan-guan-li-xu</id>
     <content type="html"><![CDATA[<p><img src="http://i.minus.com/ijEvqo7aLC7BY.jpg" width="640"></p>
 
@@ -223,9 +282,9 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
   
   <entry>
     <title type="html"><![CDATA[語言管理]]></title>
-    <link href="http://www.tomohung.com/blog/2014/12/11/language-management/"/>
-    <updated>2014-12-11T21:32:48+00:00</updated>
-    <id>http://www.tomohung.com/blog/2014/12/11/language-management</id>
+    <link href="http://www.tomohung.com/blog/2014/12/12/language-management/"/>
+    <updated>2014-12-12T05:32:48+08:00</updated>
+    <id>http://www.tomohung.com/blog/2014/12/12/language-management</id>
     <content type="html"><![CDATA[<p><img src="http://i.minus.com/ibp6diev7FKMoZ.jpg" width="640"></p>
 
 <p>這禮拜三晚上，特地到台大參加今周刊舉辦的講座『語言管理』，一開始完全就是為了范疇才報名的，想聽看看本人會說些什麼。但其實講座的主講人有兩位，一位是范疇，另一位是陳超明老師。</p>
@@ -318,7 +377,7 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
   <entry>
     <title type="html"><![CDATA[[Quora]為什麼軟體工程師可以賺這麼多錢？]]></title>
     <link href="http://www.tomohung.com/blog/2014/12/09/why-do-software-engineers-make-so-much/"/>
-    <updated>2014-12-09T12:51:53+00:00</updated>
+    <updated>2014-12-09T20:51:53+08:00</updated>
     <id>http://www.tomohung.com/blog/2014/12/09/why-do-software-engineers-make-so-much</id>
     <content type="html"><![CDATA[<p><img src="http://i.minus.com/iEq3JDsAn8DtA.jpg" width="640"></p>
 
@@ -394,7 +453,7 @@ This idea that software salaries are "crazy" is not only inaccurate, but deeply 
   <entry>
     <title type="html"><![CDATA[[Quora]大陸人怎麼看台灣民主？]]></title>
     <link href="http://www.tomohung.com/blog/2014/12/06/what-do-mainland-chinese-people-think-of-the-democracy-in-taiwan/"/>
-    <updated>2014-12-06T13:48:36+00:00</updated>
+    <updated>2014-12-06T21:48:36+08:00</updated>
     <id>http://www.tomohung.com/blog/2014/12/06/what-do-mainland-chinese-people-think-of-the-democracy-in-taiwan</id>
     <content type="html"><![CDATA[<p><img src="http://i.minus.com/ibw1BjtQuOWXDe.jpg" width="640"></p>
 
@@ -474,7 +533,7 @@ I for one never believe western model of democracy could work in China. We do ne
   <entry>
     <title type="html"><![CDATA[[Quora]IQ150的人是怎樣的體驗，是否生活變成很輕鬆？]]></title>
     <link href="http://www.tomohung.com/blog/2014/12/06/whats-it-like-to-have-a-150-iq-is-life-really-easy/"/>
-    <updated>2014-12-06T13:37:12+00:00</updated>
+    <updated>2014-12-06T21:37:12+08:00</updated>
     <id>http://www.tomohung.com/blog/2014/12/06/whats-it-like-to-have-a-150-iq-is-life-really-easy</id>
     <content type="html"><![CDATA[<p><img src="http://i.minus.com/ield6JjxHhryw.jpg" width="640"></p>
 
