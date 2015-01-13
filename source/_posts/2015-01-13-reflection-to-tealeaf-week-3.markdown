@@ -3,15 +3,18 @@ layout: post
 title: "Reflection to tealeaf week 3"
 date: 2015-01-13 22:23:15 +0800
 comments: true
-categories: 
+categories: [tealeaf, ruby]
+published : false
 ---
+
+{%img right http://i.minus.com/imhMyMfPCAPpt.png 320 %}
 
 It's realy a tough week for me, because I'm totally new to web development.
 There are lots of material need to be done:
 
 - One new concept book: HTTP https://www.gotealeaf.com/books/http
-- Two new language: HTML & CSS http://www.codecademy.com/tracks/htmlcss
-- Two new framework: [Sinatra][] & [bootstrap][]
+- Two new languages: HTML & CSS http://www.codecademy.com/tracks/htmlcss
+- Two new frameworks: [Sinatra][] & [bootstrap][]
 
 [Sinatra]: http://www.sinatrarb.com/intro.html
 [bootstrap]: http://getbootstrap.com/
@@ -24,7 +27,7 @@ Every request in main.rb is independant with each other, using instance variable
 Using chache is another way to feel free in thinking programming in the old way.
 Though I still use class to complete this assignment, I feel comfortable with this, because I don't need to make a wheel again.
 
-The first struggle in this week is when I saw the `<form action..../>`, I have no idea what's this?! because HTML & CSS course in codecademy never metion this. After google that, I found there are plenty of other syntax I didn't know, [w3shool][] help me to know more about HTML.
+The first struggle in this week is when I saw something like `<form action..../>`, I have no idea what's this?! because HTML & CSS course in codecademy never metion this. After google that, I found there are plenty of other syntax I didn't know, [w3shool][] help me to know more about HTML.
 
 [w3shool]: http://www.w3schools.com/html/html5_intro.asp
 
