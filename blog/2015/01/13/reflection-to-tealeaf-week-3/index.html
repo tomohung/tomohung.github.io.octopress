@@ -2,10 +2,10 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Category: Quora - The Life Alchemist</title>
+  <title>Reflection to Tealeaf Week 3 - The Life Alchemist</title>
   <meta name="author" content="Tomo">
 
-  <meta name="description" content="Category: quora">
+  
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -14,16 +14,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.tomohung.com/blog/categories/quora">
+  <link rel="canonical" href="http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="The Life Alchemist" type="application/atom+xml">
 
   <!-- http://opengraphprotocol.org/ -->
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://www.tomohung.com/blog/categories/quora">
-  <meta property="og:title" content="Category: Quora - The Life Alchemist">
-  <meta property="og:description" content="Category: quora">
+  <meta property="og:url" content="http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3">
+  <meta property="og:title" content="Reflection to Tealeaf Week 3 - The Life Alchemist">
+  
 
   <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
 
@@ -66,10 +66,10 @@
 
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li >
+                <li class="active">
                     <a rel="index" href="/">Blog</a>
                 </li>
-                <li class="active">
+                <li >
                     <a href="/blog/archives">Archives</a>
                 </li>
                 <li >
@@ -104,35 +104,16 @@
       <div id="main" role="main" class="container">
         <div id="content">
           <div class="row">
-  <div class="page-content col-md-9">
-    <article role="article">
+  <div class="page-content col-md-9" itemscope itemtype="http://schema.org/Blog">
+    <meta itemprop="name" content="The Life Alchemist" />
+    
+    <meta itemprop="url" content="http://www.tomohung.com" />
+    <article class="hentry" role="article" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
       
-        <header class="page-header">
-          
-          
-            <h1 class="entry-title">
-              Category: Quora
-              
-            </h1>
-          
-        </header>
-      
-      <div class="entry-content">
-        <div id="blog-archives" class="category" itemscope itemtype="http://schema.org/Blog">
-<meta itemprop="name" content="The Life Alchemist" />
-
-<meta itemprop="url" content="http://www.tomohung.com" />
-
-
-
-  
-  <h2 class="year">2014</h2>
-
-<article class="page-header" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-  
-<h2 class="post-title" itemprop="name headline"><a href="/blog/2014/12/09/why-do-software-engineers-make-so-much/" itemprop="url">[Quora]為什麼軟體工程師可以賺這麼多錢？</a></h2>
-<p class="meta text-muted">
-  
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
 
 
 
@@ -145,101 +126,113 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-12-09T20:51:53+08:00"  data-updated="true" itemprop="datePublished dateCreated">2014-12-09</time>
-  
-
-<span class="glyphicon glyphicon-tags"></span>&nbsp;
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/quora/'>quora</a>
-  
-</span>
-
-
-</p>
-
-</article>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-13T22:23:15+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-13</time>
+        
+      </p>
+    
+    
+    <h1 class="entry-title" itemprop="name headline">
+        Reflection to Tealeaf Week 3
+        
+    </h1>
+    
+  </header>
 
 
+<div class="entry-content clearfix" itemprop="articleBody description"><p>It&rsquo;s realy a tough week for me, because I&rsquo;m totally new to web development.
+There are lots of material need to be done:</p>
 
-<article class="page-header" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-  
-<h2 class="post-title" itemprop="name headline"><a href="/blog/2014/12/06/what-do-mainland-chinese-people-think-of-the-democracy-in-taiwan/" itemprop="url">[Quora]大陸人怎麼看台灣民主？</a></h2>
-<p class="meta text-muted">
-  
-
-
-
-
+<ul>
+<li>One new concept book: HTTP <a href="https://www.gotealeaf.com/books/http">https://www.gotealeaf.com/books/http</a></li>
+<li>Two new language: HTML &amp; CSS <a href="http://www.codecademy.com/tracks/htmlcss">http://www.codecademy.com/tracks/htmlcss</a></li>
+<li>Two new framework: <a href="http://www.sinatrarb.com/intro.html">Sinatra</a> &amp; <a href="http://getbootstrap.com/">bootstrap</a></li>
+</ul>
 
 
+<p>I think the most important thing in this week is &ldquo;HTTP is stateless&rdquo;.</p>
 
+<p>And using Sinatra show me this property explicit.
+Every request in main.rb is independant with each other, using instance variables to store data only survive its scope.</p>
 
+<p>Using chache is another way to feel free in thinking programming in the old way.
+Though I still use class to complete this assignment, I feel comfortable with this, because I don&rsquo;t need to make a wheel again.</p>
 
+<p>The first struggle in this week is when I saw the <code>&lt;form action..../&gt;</code>, I have no idea what&rsquo;s this?! because HTML &amp; CSS course in codecademy never metion this. After google that, I found there are plenty of other syntax I didn&rsquo;t know, <a href="http://www.w3schools.com/html/html5_intro.asp">w3shool</a> help me to know more about HTML.</p>
 
+<p>Another struggle is Sinatra, when I first time read the intro, I totally had no idea what those nouns mean. <code>get '/' {}</code> seems not a nature ruby way; what <code>get</code> <code>post</code> are ??</p>
 
+<p>Following with video and implement functions and pages, then I read Sinatra intro again, this time I feel much clear what its said.</p>
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-12-06T21:48:36+08:00"  data-updated="true" itemprop="datePublished dateCreated">2014-12-06</time>
-  
+<p>Another horrible thing is on viewing video introduce to modern web development. There are so many tools, concepts, languages need to know. Wow&hellip;</p>
 
-<span class="glyphicon glyphicon-tags"></span>&nbsp;
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/quora/'>quora</a>
-  
-</span>
+<p>To be a web development, I know I have to keep going.
+Moing to Lesson 4.</p>
 
-
-</p>
-
-</article>
-
-
-
-<article class="page-header" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-  
-<h2 class="post-title" itemprop="name headline"><a href="/blog/2014/12/06/whats-it-like-to-have-a-150-iq-is-life-really-easy/" itemprop="url">[Quora]IQ150的人是怎樣的體驗，是否生活變成很輕鬆？</a></h2>
-<p class="meta text-muted">
-  
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-12-06T21:37:12+08:00"  data-updated="true" itemprop="datePublished dateCreated">2014-12-06</time>
-  
-
-<span class="glyphicon glyphicon-tags"></span>&nbsp;
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/quora/'>quora</a>
-  
-</span>
-
-
-</p>
-
-</article>
-
+<p>Finally, here is my blog talking about Reflections for tealeaf lessons.
+<a href="http://www.tomohung.com/blog/categories/tealeaf/">http://www.tomohung.com/blog/categories/tealeaf/</a></p>
 </div>
 
-      </div>
-      
+
+      <footer>
+        <p class="meta text-muted">
+          
+  
+
+<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard" itemprop="author" itemscope itemtype="http://schema.org/Person">Posted by <span class="fn" itemprop="name">Tomo</span></span>
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-13T22:23:15+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-13</time>
+          
+
+
+        </p>
+        
+          <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+        
+        
+          <ul class="meta text-muted pager">
+            
+            <li class="previous"><a href="/blog/2015/01/12/yi-makers-schedule-managers-schedule/" title="Previous Post: [譯]Maker's schedule, Manager's schedule">&laquo; [譯]Maker&#8217;s schedule, Manager&#8217;s schedule</a></li>
+            
+            
+          </ul>
+        
+      </footer>
     </article>
+    
+      <section>
+        <h2>Comments</h2>
+        <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+      </section>
     
   </div>
 
   
-    <aside class="sidebar col-md-3">
+  <aside class="sidebar col-md-3">
+    
       
-        
 <section>
 	<span>
 		<img src="http://www.gravatar.com/avatar/8708c05d2568e10fb402516eeb954ef2" alt="Gravatar of Tomo " title="Gravatar of Tomo" />
@@ -252,7 +245,7 @@
   
   <div id="recent_posts" class="list-group">
     
-    <a class="list-group-item " href="/blog/2015/01/13/reflection-to-tealeaf-week-3/">Reflection to Tealeaf Week 3</a>
+    <a class="list-group-item active" href="/blog/2015/01/13/reflection-to-tealeaf-week-3/">Reflection to Tealeaf Week 3</a>
     
     <a class="list-group-item " href="/blog/2015/01/12/yi-makers-schedule-managers-schedule/">[譯]Maker&#8217;s Schedule, Manager&#8217;s Schedule</a>
     
@@ -270,8 +263,8 @@
 
 
 
-      
-    </aside>
+    
+  </aside>
   
 </div>
 
@@ -295,7 +288,10 @@
       var disqus_shortname = 'tomohung';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3/';
+        var disqus_url = 'http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
