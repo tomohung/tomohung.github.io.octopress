@@ -24,6 +24,7 @@ There are two types of schedule, which I'll call the manager's schedule and the 
 -->
 
 有兩種行程安排類型，管理者行程和製造者行程。管理者行程是給老闆用的，它是傳統上指派任務，每天把時間切成數個小時片段，你可以指派任務給其中幾個小時，但原則上，每個小時要做的事情都不一樣。
+<!--more-->
 
 <!--
 When you use time that way, it's merely a practical problem to meet with someone. Find an open slot in your schedule, book them, and you're done.
