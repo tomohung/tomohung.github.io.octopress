@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Web | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/web/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-01-14T22:01:35+08:00</updated>
+  <updated>2015-01-14T22:08:35+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -23,6 +23,9 @@
 <p>The most important thing is that, HTTP is stateless.</p>
 
 <p>What&rsquo;s the influnce by this property? Showing this by Sinatra.</p>
+
+<!--more-->
+
 
 <p>first, follow <a href="http://www.sinatrarb.com/intro.html">Sinatra intro</a> to run basic function:
 then try this code:</p>
@@ -61,7 +64,7 @@ end
 
 <p><img class="<a" src="href="http://i.minus.com/i9oeLWDYI4DBb.png">http://i.minus.com/i9oeLWDYI4DBb.png</a>&#8221;></p>
 
-<p>Key point is: when 2 redirect to 3, it&rsquo;s a new request, instance variable like @name will be deleted after redirect, then create a new one.</p>
+<p>The key point is: when 2 redirect to 3, it&rsquo;s a new request, instance variable like @name will be deleted after redirect, then create a new one.</p>
 
 <p>That&rsquo;s why @name still shows <code>Guest</code>.</p>
 
