@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Sinatra | The Life Alchemist]]></title>
+  <link href="http://www.tomohung.com/blog/categories/sinatra/atom.xml" rel="self"/>
+  <link href="http://www.tomohung.com/"/>
+  <updated>2015-01-14T22:01:35+08:00</updated>
+  <id>http://www.tomohung.com/</id>
+  <author>
+    <name><![CDATA[Tomo]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Show HTTP Is Stateless by Sinatra]]></title>
+    <link href="http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra/"/>
+    <updated>2015-01-14T21:25:15+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra</id>
+    <content type="html"><![CDATA[<p>In tealeaf week 3, introduce to HTTP.</p>
+
+<p>The most important thing is that, HTTP is stateless.</p>
+
+<p>What&rsquo;s the influnce by this property? Showing this by Sinatra.</p>
+
+<p>first, follow <a href="http://www.sinatrarb.com/intro.html">Sinatra intro</a> to run basic function:
+then try this code:</p>
+
+<pre><code class="ruby main.rb">require 'sinatra'
+
+before do
+  @name = 'Guest'
+end
+
+get '/' do
+  erb :home
+end
+
+post '/set_name' do
+  @name = 'tealeaf'
+  redirect '/'
+end
+</code></pre>
+
+<p>and this will show a button, click the button will invoke a post request back to <code>set_name</code> in main.rb:</p>
+
+<p>&#8220;` erb home.erb</p>
+
+<h4>hi~ <%= @name %> </h4>
+
+
+<p><form action="/set_name" method="post">
+  <input class="btn" type="submit" name="name">
+</form>
+&#8220;`</p>
+
+<p>OK, then what will <code>@name</code> show in home.erb after click button??</p>
+
+<p>It shows <code>Guest</code>, not <code>tealeaf</code>. Why?</p>
+
+<p><img class="<a" src="href="http://i.minus.com/i9oeLWDYI4DBb.png">http://i.minus.com/i9oeLWDYI4DBb.png</a>&#8221;></p>
+
+<p>Key point is: when 2 redirect to 3, it&rsquo;s a new request, instance variable like @name will be deleted after redirect, then create a new one.</p>
+
+<p>That&rsquo;s why @name still shows <code>Guest</code>.</p>
+
+<p>How about this way:</p>
+
+<pre><code class="ruby main.rb">require 'sinatra'
+
+before do
+  @name = 'Guest'
+end
+
+get '/' do
+  erb :home
+end
+
+post '/set_name' do
+  @name = 'tealeaf'
+  erb :home
+end
+</code></pre>
+
+<p>Now using erb to embeded <code>home.erb</code> into the same request(&lsquo;/set_name&rsquo;). Then you&rsquo;ll see <code>@name</code> shows <code>tealeaf</code>!!</p>
+
+<p>This experience shows me how HTTP is stateless.</p>
+
+<p>And how web developers make it like stateness is a long way to go.</p>
+]]></content>
+  </entry>
+  
+</feed>

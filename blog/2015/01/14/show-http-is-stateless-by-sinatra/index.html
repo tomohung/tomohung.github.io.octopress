@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>nitrous.io 開發環境 - The Life Alchemist</title>
+  <title>Show HTTP Is Stateless by Sinatra - The Life Alchemist</title>
   <meta name="author" content="Tomo">
 
   
@@ -14,15 +14,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing">
+  <link rel="canonical" href="http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="The Life Alchemist" type="application/atom+xml">
 
   <!-- http://opengraphprotocol.org/ -->
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing">
-  <meta property="og:title" content="nitrous.io 開發環境 - The Life Alchemist">
+  <meta property="og:url" content="http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra">
+  <meta property="og:title" content="Show HTTP Is Stateless by Sinatra - The Life Alchemist">
   
 
   <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
@@ -126,70 +126,122 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-11T21:26:49+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-11</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-14T21:25:15+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-14</time>
         
       </p>
     
     
     <h1 class="entry-title" itemprop="name headline">
-        nitrous.io 開發環境
+        Show HTTP Is Stateless by Sinatra
         
     </h1>
     
   </header>
 
 
-<div class="entry-content clearfix" itemprop="articleBody description"><p><img src="http://i.minus.com/iyZNw6vDZnJa6.png" width="800"></p>
+<div class="entry-content clearfix" itemprop="articleBody description"><p>In tealeaf week 3, introduce to HTTP.</p>
 
-<ul>
-<li>太強了</li>
-<li>太強了</li>
-<li>太強了</li>
-</ul>
+<p>The most important thing is that, HTTP is stateless.</p>
 
+<p>What&rsquo;s the influnce by this property? Showing this by Sinatra.</p>
 
-<p>因為<a href="http://nitrous.io">nitrous</a>太強了，所以說三遍。</p>
+<p>first, follow <a href="http://www.sinatrarb.com/intro.html">Sinatra intro</a> to run basic function:
+then try this code:</p>
 
-<p>入門網路應用程式開發一開始最大的門檻就是安裝適合的環境，尤其是OS用Windows的，好像是次等公民一樣，一下是終端機要用跟別人不一樣的，一下又是安裝套件卡住，一開始一頭熱的想要投入，馬上就被潑盆冷水。</p>
-
-<!--more-->
-
-
-<p>之前我自己的桌機就是用Windows，弄了很久才裝起來可以跑，但就是常遇到怪事，所以就放棄了。現在有一台MBA，少了很多問題，至少按照網路上搜尋到的指引文章照著做，多半都沒什麼意外。</p>
-
-<p>但有時候在外面想用其它電腦看一下自己做的東西時，這時候<a href="http://nitrous.io">nitrous</a>配合<a href="http://github.com">github</a>就派上用場了。nitrous當作雲端編輯平台，github負責同步資料，至少目前我在學習的階段都沒遇到什麼問題，聽說<a href="http://gotealeaf.com">tealeaf</a>裡也有人用nitrous完成所有課程。</p>
-
-<p><img src="http://i.minus.com/ibjA5RfvgDSmp6.png" width="640"></p>
-
-<p>Ruby Girls也是用這套教學，要知道還沒開始就在安裝遇到挫折，真的沒有動力再做下去 &lt;== 就是在說我自己</p>
-
-<p><img src="http://i.minus.com/ibKMcP19URJvJ.png" width="640"></p>
-
-<p>首頁寫的60秒完成不是開完笑的，註冊後有200閃電幣可以用，綽綽有餘，開一個Box只要10個閃電幣，可以選擇的有上圖幾種。</p>
-
-<p><img src="http://i.minus.com/iDo0NvpKvypX6.png" width="640"></p>
-
-<p>登入後可以選擇要IDE介面還是Terminal介面，如果選IDE就像上面一樣。</p>
-
-<p>以編輯器來說，內建的己經蠻好用的，也可以選擇Vim模式。</p>
-
-<p>上圖左邊就是雲端儲存的資料夾，有1.5Gb，寫程式來說應該是夠放，下面就是Terminal，git都己經裝好可以直接用，可以直接把自己github上放的project直接clone下來，五分鐘內就可以從無到有開工。</p>
-
-<h3>Preview</h3>
-
-<p>比較要注意的是Preview時，根據官方Support說，Localhost ip必需設定為0.0.0.0，port的話可以參考下圖：</p>
-
-<p><img src="http://i.minus.com/ioeX2cUhUAC5A.png"></p>
-
-<p>所以如果是Ruby配合shotgun gem來啟動的話，可以用下面指令：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ shotgun xxx.rb -o 0.0.0.0 -p 3000</span></code></pre></td></tr></table></div></figure>
+<figure class='code'><figcaption><span>main.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;sinatra&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">before</span> <span class="k">do</span>
+</span><span class='line'>  <span class="vi">@name</span> <span class="o">=</span> <span class="s1">&#39;Guest&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">get</span> <span class="s1">&#39;/&#39;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">erb</span> <span class="ss">:home</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">post</span> <span class="s1">&#39;/set_name&#39;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="vi">@name</span> <span class="o">=</span> <span class="s1">&#39;tealeaf&#39;</span>
+</span><span class='line'>  <span class="n">redirect</span> <span class="s1">&#39;/&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
 
 
-<p>指定<code>Localhost ip = 0.0.0.0, port = 3000</code></p>
+<p>and this will show a button, click the button will invoke a post request back to <code>set_name</code> in main.rb:</p>
 
-<p>本機的開發環境當然還是要建立，不過可以等真正入門後再來考慮吧。</p>
+<figure class='code'><figcaption><span>home.erb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='erb'><span class='line'><span class="x">&lt;h4&gt;hi~ </span><span class="cp">&lt;%=</span> <span class="vi">@name</span> <span class="cp">%&gt;</span><span class="x"> &lt;/h4&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="x">&lt;form action=&quot;/set_name&quot; method=&quot;post&quot;&gt;</span>
+</span><span class='line'><span class="x">  &lt;input class=&quot;btn&quot; type=&quot;submit&quot; name=&quot;name&quot;&gt;</span>
+</span><span class='line'><span class="x">&lt;/form&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>OK, then what will <code>@name</code> show in home.erb after click button??</p>
+
+<p>It shows <code>Guest</code>, not <code>tealeaf</code>. Why?</p>
+
+<p><img src="http://i.minus.com/i9oeLWDYI4DBb.png"></p>
+
+<p>Key point is: when 2 redirect to 3, it&rsquo;s a new request, instance variable like @name will be deleted after redirect, then create a new one.</p>
+
+<p>That&rsquo;s why @name still shows <code>Guest</code>.</p>
+
+<p>How about this way:</p>
+
+<figure class='code'><figcaption><span>main.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;sinatra&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">before</span> <span class="k">do</span>
+</span><span class='line'>  <span class="vi">@name</span> <span class="o">=</span> <span class="s1">&#39;Guest&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">get</span> <span class="s1">&#39;/&#39;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">erb</span> <span class="ss">:home</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">post</span> <span class="s1">&#39;/set_name&#39;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="vi">@name</span> <span class="o">=</span> <span class="s1">&#39;tealeaf&#39;</span>
+</span><span class='line'>  <span class="n">erb</span> <span class="ss">:home</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now using erb to embeded <code>home.erb</code> into the same request(&lsquo;/set_name&rsquo;). Then you&rsquo;ll see <code>@name</code> shows <code>tealeaf</code>!!</p>
+
+<p>This experience shows me how HTTP is stateless.</p>
+
+<p>And how web developers make it like stateness is a long way to go.</p>
 </div>
 
 
@@ -213,13 +265,13 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-11T21:26:49+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-11</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-14T21:25:15+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-14</time>
           
 
 <span class="glyphicon glyphicon-tags"></span>&nbsp;
 <span class="categories">
   
-    <a class='category' href='/blog/categories/nitrous/'>nitrous</a>, <a class='category' href='/blog/categories/web/'>web</a>
+    <a class='category' href='/blog/categories/ruby/'>ruby</a>, <a class='category' href='/blog/categories/sinatra/'>sinatra</a>, <a class='category' href='/blog/categories/web/'>web</a>
   
 </span>
 
@@ -228,7 +280,7 @@
         
           <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra/" >Tweet</a>
   
   
   
@@ -240,10 +292,8 @@
         
           <ul class="meta text-muted pager">
             
-            <li class="previous"><a href="/blog/2015/01/07/reflection-to-tealeaf-lesson-2/" title="Previous Post: Reflection of tealeaf week 2">&laquo; Reflection of tealeaf week 2</a></li>
+            <li class="previous"><a href="/blog/2015/01/13/reflection-to-tealeaf-week-3/" title="Previous Post: Reflection to tealeaf week 3">&laquo; Reflection to tealeaf week 3</a></li>
             
-            
-            <li class="next"><a href="/blog/2015/01/12/yi-makers-schedule-managers-schedule/" title="Next Post: [譯]Maker's schedule, Manager's schedule">[譯]Maker&#8217;s schedule, Manager&#8217;s schedule &raquo;</a></li>
             
           </ul>
         
@@ -274,13 +324,13 @@
   
   <div id="recent_posts" class="list-group">
     
-    <a class="list-group-item " href="/blog/2015/01/14/show-http-is-stateless-by-sinatra/">Show HTTP Is Stateless by Sinatra</a>
+    <a class="list-group-item active" href="/blog/2015/01/14/show-http-is-stateless-by-sinatra/">Show HTTP Is Stateless by Sinatra</a>
     
     <a class="list-group-item " href="/blog/2015/01/13/reflection-to-tealeaf-week-3/">Reflection to Tealeaf Week 3</a>
     
     <a class="list-group-item " href="/blog/2015/01/12/yi-makers-schedule-managers-schedule/">[譯]Maker&#8217;s Schedule, Manager&#8217;s Schedule</a>
     
-    <a class="list-group-item active" href="/blog/2015/01/11/nitroukai-fa-huan-jing/">nitrous.io 開發環境</a>
+    <a class="list-group-item " href="/blog/2015/01/11/nitroukai-fa-huan-jing/">nitrous.io 開發環境</a>
     
     <a class="list-group-item " href="/blog/2015/01/07/reflection-to-tealeaf-lesson-2/">Reflection of Tealeaf Week 2</a>
     
@@ -318,8 +368,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing/';
-        var disqus_url = 'http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing/';
+        var disqus_identifier = 'http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra/';
+        var disqus_url = 'http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra/';
         var disqus_script = 'embed.js';
       
     (function () {
