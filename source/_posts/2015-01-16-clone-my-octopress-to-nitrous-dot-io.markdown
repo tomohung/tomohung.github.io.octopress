@@ -20,6 +20,7 @@ categories: [octorpress, nitrous, github]
 
 但是其中的程式碼有點錯誤，因為github上存放網頁的位置己經改成github.io了。
 
+<!--more-->
 
 登入nitrous.io，開啟終端機畫面：
 註：不會用可以參考[這個連結](http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing/)
