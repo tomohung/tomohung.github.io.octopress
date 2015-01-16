@@ -6,7 +6,7 @@ comments: true
 categories: [octorpress, nitrous, github]
 ---
 
-{%img http://i.minus.com/iiGNP2Lnx1fRk.png %}
+{%img right http://i.minus.com/iiGNP2Lnx1fRk.png %}
 
 #Octopress & github
 這個部落格是用[Octopress][]在[github][]上建立起來的。但是不像一般的部落格系統，可以只要用瀏覽器登入，就可以開始寫文章，既然知道[nitrous.io][]可以雲端工作，就把腦筋動到它的上面去。
@@ -75,4 +75,4 @@ $ cd ./_deploy
 $ git pull origin master  # update the local master branch
 ```
 
-這樣子就算是在外面用別台電腦，也能夠blog一下了，不錯吧！
+這樣子就算是在外面用別台電腦，也能夠透過nitrous來blog一下了，不錯吧！
