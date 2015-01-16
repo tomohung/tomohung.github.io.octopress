@@ -152,79 +152,12 @@
 
 <p>但是其中的程式碼有點錯誤，因為github上存放網頁的位置己經改成github.io了。</p>
 
-<p>登入nitrous.io，開啟終端機畫面：
-註：不會用可以參考<a href="http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing/">這個連結</a></p>
-
-<p>輸入</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git clone -b source git@github.com:username/username.github.io.git octopress</span></code></pre></td></tr></table></div></figure>
-
-
-<p>然後clone master branch到_deploy資料夾</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ cd octopress
-</span><span class='line'>$ git clone git@github.com:username/username.github.io.git _deploy </span></code></pre></td></tr></table></div></figure>
-
-
-<p>說明一下，branch <strong>source</strong> 就是存放原始資料，branch <strong>master</strong> 放的是rake後產生的資料，再上傳至github讓它來處理。</p>
-
-<p>接著在nitrous安裝需要的gem</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ gem install bundler
-</span><span class='line'>$ rbenv rehash    # If you use rbenv, rehash to be able to run the bundle command
-</span><span class='line'>$ bundle install
-</span><span class='line'>$ rake setup_github_pages</span></code></pre></td></tr></table></div></figure>
-
-
-<p>輸入相關資料，這邊跟octopress上的安裝說明都是一樣的。
-然後所有資料就會從github上完整的clone一份到nitrous上。</p>
-
-<h1>Backup &amp; Sync</h1>
-
-<p>每次寫完文章，最重要的是要記得備份。</p>
-
-<p><code>rake deploy</code>就不用擔心，因為它就是把branch master上傳到github上。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake generate
-</span><span class='line'>$ rake deploy             # update the remote master branch</span></code></pre></td></tr></table></div></figure>
-
-
-<p>但是branch source就要自己處理：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git add .
-</span><span class='line'>$ git commit -m "Some comment here." 
-</span><span class='line'>$ git push origin source  # update the remote source branch </span></code></pre></td></tr></table></div></figure>
-
-
-<p>這樣子可以確保github上版本是最新的。</p>
-
-<p>然後如果要在本機做完到nitrous做，或者是nitrous做完回本機，記得pull branch source 和 master。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ cd octopress
-</span><span class='line'>$ git pull origin source  # update the local source branch
-</span><span class='line'>$ cd ./_deploy
-</span><span class='line'>$ git pull origin master  # update the local master branch</span></code></pre></td></tr></table></div></figure>
-
-
-<p>這樣子就算是在外面用別台電腦，也能夠透過nitrous來blog一下了，不錯吧！</p>
 </div>
   
+  
+    <footer>
+      <a class="btn btn-default" href="/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io/">繼續閱讀 Read on &rarr;</a>
+    </footer>
   
 
 

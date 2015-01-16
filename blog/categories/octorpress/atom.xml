@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octorpress | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/octorpress/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-01-16T21:41:07+08:00</updated>
+  <updated>2015-01-16T21:42:25+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -29,6 +29,9 @@
 <p>作法是參考<a href="http://blog.zerosharp.com/clone-your-octopress-to-blog-from-two-places/">這篇文章</a>。</p>
 
 <p>但是其中的程式碼有點錯誤，因為github上存放網頁的位置己經改成github.io了。</p>
+
+<!--more-->
+
 
 <p>登入nitrous.io，開啟終端機畫面：
 註：不會用可以參考<a href="http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing/">這個連結</a></p>
