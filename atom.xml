@@ -4,7 +4,7 @@
   <title><![CDATA[The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-01-16T21:42:25+08:00</updated>
+  <updated>2015-01-16T21:44:17+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -20,11 +20,11 @@
     <id>http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io</id>
     <content type="html"><![CDATA[<p><img class="right" src="http://i.minus.com/iiGNP2Lnx1fRk.png"></p>
 
-<h1>Octopress &amp; github</h1>
+<h3>Octopress &amp; github</h3>
 
 <p>這個部落格是用<a href="octopress.rog">Octopress</a>在<a href="github.com">github</a>上建立起來的。但是不像一般的部落格系統，可以只要用瀏覽器登入，就可以開始寫文章。不過既然知道<a href="nitrous.io">nitrous.io</a>可以雲端工作，所以就把腦筋動到它的上面去。</p>
 
-<h1>Clone Octopress</h1>
+<h3>Clone Octopress</h3>
 
 <p>作法是參考<a href="http://blog.zerosharp.com/clone-your-octopress-to-blog-from-two-places/">這篇文章</a>。</p>
 
@@ -67,7 +67,7 @@
 <p>輸入相關資料，這邊跟octopress上的安裝說明都是一樣的。
 然後所有資料就會從github上完整的clone一份到nitrous上。</p>
 
-<h1>Backup &amp; Sync</h1>
+<h3>Backup &amp; Sync</h3>
 
 <p>每次寫完文章，最重要的是要記得備份。</p>
 
