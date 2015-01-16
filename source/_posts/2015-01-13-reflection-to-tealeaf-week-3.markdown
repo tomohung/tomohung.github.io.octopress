@@ -21,17 +21,21 @@ There are lots of material need to be done:
 I think the most important thing in this week is "HTTP is stateless".
 
 And using Sinatra show me this property explicit.
+
 Every request in main.rb is independant with each other, using instance variables to store data only survive its scope.
 
 I also write a brief post to memo this property[(HTTP is Stateless)][].
 [(HTTP is Stateless)]: http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra/
 
+
 Using chache is another way to feel free in thinking programming in the old way.
+
 Though I still use class to complete this assignment, I feel comfortable with this, because I don't need to make a wheel again.
 
 The first struggle in this week is when I saw something like `<form action..../>`, I have no idea what's this?! because HTML & CSS course in codecademy never metion this. After google that, I found there are plenty of other syntax I didn't know, [w3shool][] help me to know more about HTML.
 
 [w3shool]: http://www.w3schools.com/html/html5_intro.asp
+
 
 Another struggle is Sinatra, when I first time read the intro, I totally had no idea what those nouns mean. `get '/' {}` seems not a nature ruby way; what `get` `post` are ??
 
