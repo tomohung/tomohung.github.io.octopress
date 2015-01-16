@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Github | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/github/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-01-16T21:44:17+08:00</updated>
+  <updated>2015-01-16T21:46:59+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -52,7 +52,6 @@ $ git clone git@github.com:username/username.github.io.git _deploy
 <p>接著在nitrous安裝需要的gem
 <code>
 $ gem install bundler
-$ rbenv rehash    # If you use rbenv, rehash to be able to run the bundle command
 $ bundle install
 $ rake setup_github_pages
 </code>
