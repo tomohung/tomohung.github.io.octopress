@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octorpress | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/octorpress/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-01-16T21:36:00+08:00</updated>
+  <updated>2015-01-16T21:38:48+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -18,7 +18,7 @@
     <link href="http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io/"/>
     <updated>2015-01-16T21:10:08+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io</id>
-    <content type="html"><![CDATA[<p><img class="<a" src="href="http://i.minus.com/iiGNP2Lnx1fRk.png">http://i.minus.com/iiGNP2Lnx1fRk.png</a>&#8221;></p>
+    <content type="html"><![CDATA[<p><img class="right <a" src="href="http://i.minus.com/iiGNP2Lnx1fRk.png">http://i.minus.com/iiGNP2Lnx1fRk.png</a>&#8221;></p>
 
 <h1>Octopress &amp; github</h1>
 
@@ -82,7 +82,7 @@ $ cd ./_deploy
 $ git pull origin master  # update the local master branch
 </code></pre>
 
-<p>這樣子就算是在外面用別台電腦，也能夠blog一下了，不錯吧！</p>
+<p>這樣子就算是在外面用別台電腦，也能夠透過nitrous來blog一下了，不錯吧！</p>
 ]]></content>
   </entry>
   
