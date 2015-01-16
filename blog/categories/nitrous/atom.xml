@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Nitrous | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/nitrous/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-01-16T21:38:48+08:00</updated>
+  <updated>2015-01-16T21:41:07+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Clone My Octopress to Nitrous.io]]></title>
+    <title type="html"><![CDATA[在Nitrous上寫Octopress]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io/"/>
     <updated>2015-01-16T21:10:08+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io</id>
@@ -22,7 +22,7 @@
 
 <h1>Octopress &amp; github</h1>
 
-<p>這個部落格是用<a href="octopress.rog">Octopress</a>在<a href="github.com">github</a>上建立起來的。但是不像一般的部落格系統，可以只要用瀏覽器登入，就可以開始寫文章，既然知道<a href="nitrous.io">nitrous.io</a>可以雲端工作，就把腦筋動到它的上面去。</p>
+<p>這個部落格是用<a href="octopress.rog">Octopress</a>在<a href="github.com">github</a>上建立起來的。但是不像一般的部落格系統，可以只要用瀏覽器登入，就可以開始寫文章。不過既然知道<a href="nitrous.io">nitrous.io</a>可以雲端工作，所以就把腦筋動到它的上面去。</p>
 
 <h1>Clone Octopress</h1>
 
