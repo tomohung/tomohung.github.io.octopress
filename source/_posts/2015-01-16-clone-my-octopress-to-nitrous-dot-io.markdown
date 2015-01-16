@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Clone My Octopress to Nitrous.io"
+title: "在Nitrous上寫Octopress"
 date: 2015-01-16 21:10:08 +0800
 comments: true
 categories: [octorpress, nitrous, github]
@@ -9,7 +9,7 @@ categories: [octorpress, nitrous, github]
 {%img right http://i.minus.com/iiGNP2Lnx1fRk.png %}
 
 #Octopress & github
-這個部落格是用[Octopress][]在[github][]上建立起來的。但是不像一般的部落格系統，可以只要用瀏覽器登入，就可以開始寫文章，既然知道[nitrous.io][]可以雲端工作，就把腦筋動到它的上面去。
+這個部落格是用[Octopress][]在[github][]上建立起來的。但是不像一般的部落格系統，可以只要用瀏覽器登入，就可以開始寫文章。不過既然知道[nitrous.io][]可以雲端工作，所以就把腦筋動到它的上面去。
 
 [Octopress]: octopress.rog
 [github]: github.com
