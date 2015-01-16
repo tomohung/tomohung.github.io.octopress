@@ -42,7 +42,6 @@ $ git clone git@github.com:username/username.github.io.git _deploy
 接著在nitrous安裝需要的gem
 ```
 $ gem install bundler
-$ rbenv rehash    # If you use rbenv, rehash to be able to run the bundle command
 $ bundle install
 $ rake setup_github_pages
 ```
