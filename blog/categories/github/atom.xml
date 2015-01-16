@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Github | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/github/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-01-16T21:46:59+08:00</updated>
+  <updated>2015-01-17T07:46:54+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -18,9 +18,7 @@
     <link href="http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io/"/>
     <updated>2015-01-16T21:10:08+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io</id>
-    <content type="html"><![CDATA[<p><img class="right <a" src="href="http://i.minus.com/iiGNP2Lnx1fRk.png">http://i.minus.com/iiGNP2Lnx1fRk.png</a>&#8221;></p>
-
-<h3>Octopress &amp; github</h3>
+    <content type="html"><![CDATA[<h3>Octopress &amp; github</h3>
 
 <p>這個部落格是用<a href="octopress.rog">Octopress</a>在<a href="github.com">github</a>上建立起來的。但是不像一般的部落格系統，可以只要用瀏覽器登入，就可以開始寫文章。不過既然知道<a href="nitrous.io">nitrous.io</a>可以雲端工作，所以就把腦筋動到它的上面去。</p>
 
@@ -65,23 +63,23 @@ $ rake setup_github_pages
 <p><code>rake deploy</code>就不用擔心，因為它就是把branch master上傳到github上。
 <code>
 $ rake generate
-$ rake deploy             # update the remote master branch
+$ rake deploy             # 更新 remote master branch
 </code></p>
 
 <p>但是branch source就要自己處理：
 <code>
 $ git add .
-$ git commit -m "Some comment here."
-$ git push origin source  # update the remote source branch
+$ git commit -m "message"
+$ git push origin source  # 更新 remote source branch
 </code>
 這樣子可以確保github上版本是最新的。</p>
 
 <p>然後如果要在本機做完到nitrous做，或者是nitrous做完回本機，記得pull branch source 和 master。</p>
 
 <pre><code>$ cd octopress
-$ git pull origin source  # update the local source branch
+$ git pull origin source  # 更新 local source branch
 $ cd ./_deploy
-$ git pull origin master  # update the local master branch
+$ git pull origin master  # 更新 local master branch
 </code></pre>
 
 <p>這樣子就算是在外面用別台電腦，也能夠透過nitrous來blog一下了，不錯吧！</p>
