@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Reflection to Tealeaf Week 1 - The Life Alchemist</title>
+  <title>Clone My Octopress to Nitrous.io - The Life Alchemist</title>
   <meta name="author" content="Tomo">
 
   
@@ -14,15 +14,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.tomohung.com/blog/2015/01/01/reflection-to-tealeaf-lesson-1">
+  <link rel="canonical" href="http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="The Life Alchemist" type="application/atom+xml">
 
   <!-- http://opengraphprotocol.org/ -->
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://www.tomohung.com/blog/2015/01/01/reflection-to-tealeaf-lesson-1">
-  <meta property="og:title" content="Reflection to Tealeaf Week 1 - The Life Alchemist">
+  <meta property="og:url" content="http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io">
+  <meta property="og:title" content="Clone My Octopress to Nitrous.io - The Life Alchemist">
   
 
   <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
@@ -126,61 +126,102 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-01T16:03:33+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-01</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-16T21:10:08+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-16</time>
         
       </p>
     
     
     <h1 class="entry-title" itemprop="name headline">
-        Reflection to Tealeaf Week 1
+        Clone My Octopress to Nitrous.io
         
     </h1>
     
   </header>
 
 
-<div class="entry-content clearfix" itemprop="articleBody description"><p><img class="right" src="http://i.minus.com/ibsevSRoOPCEmU.png" width="320"></p>
+<div class="entry-content clearfix" itemprop="articleBody description"><p><img src="http://i.minus.com/iiGNP2Lnx1fRk.png"></p>
 
-<p>Happy new year!!</p>
+<h1>Octopress &amp; github</h1>
 
-<p>Before I talk about where I struggled with, I would like to say something before I join the course.
-I am using C++ for few years, and coding is part of my job. Before join the course, I&rsquo;ve also done the <a href="http://learnrubythehardway.org/book/">Learn Ruby The Hard Way</a> to lesson 45. <code>Learn Ruby The Hard Way</code> is also a good pratice, especially for <code>muscle memory</code>. It focus on <code>just typing ruby</code> when learning ruby knowledge.</p>
+<p>這個部落格是用<a href="octopress.rog">Octopress</a>在<a href="github.com">github</a>上建立起來的。但是不像一般的部落格系統，可以只要用瀏覽器登入，就可以開始寫文章，既然知道<a href="nitrous.io">nitrous.io</a>可以雲端工作，就把腦筋動到它的上面去。</p>
 
-<p>After that, I start <code>Prep Course</code> @ tealeaf, reading the book <a href="http://www.gotealeaf.com/books/ruby"><code>Introduce to Programing</code></a>. <code>Introduction to Programing</code> is also an amazing book, it use a simple way to explain more detail in ruby, and I really did several times &ldquo;Ah ha!&rdquo; when reading it. Then I thought I was ready for lesson 1, but maybe I&rsquo;m wrong :p</p>
+<h1>Clone Octopress</h1>
 
-<p>About my struggles, as a C++ programmer, there are mainly two &ldquo;What?&rdquo; for ruby:</p>
+<p>作法是參考<a href="http://blog.zerosharp.com/clone-your-octopress-to-blog-from-two-places/">這篇文章</a>。</p>
 
-<ul>
-<li><p>variable scope: in C++, every local variable only survive in its scope, but in ruby, this is not always true. Even now, I&rsquo;m still a little confused with that. Glad that I find a way to deal with this: <code>Never use outside variable in insdie scope, make them in different name</code>.</p></li>
-<li><p>pointer &amp; reference: when passing a variable to functions(in ruby called: methods), if varaible has prefix like <code>*</code> or <code>&amp;</code>, it obvious means this variable may be modified in this methods. Ruby doesn&rsquo;t take this way, input variables in method could be modified just by what action do inside the method. Fotunately, ruby usaually append suffix <code>!</code> behind method&rsquo;s name to indicate this method modify input variable.</p></li>
-</ul>
+<p>但是其中的程式碼有點錯誤，因為github上存放網頁的位置己經改成github.io了。</p>
 
+<p>登入nitrous.io，開啟終端機畫面：
+註：不會用可以參考<a href="http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing/">這個連結</a></p>
 
-<p>Even these, I do love ruby.</p>
+<p>輸入</p>
 
-<ul>
-<li>There are a lot of built-in convenient methods for String, Array, Hash&hellip;etc. And more are waiting to discover</li>
-<li>More fluent phrase for flow control, if, unless, while, until&hellip;etc. Readable code is becoming more and more important.</li>
-<li>type less key :p</li>
-</ul>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git clone -b source git@github.com:username/username.github.io.git octopress</span></code></pre></td></tr></table></div></figure>
 
 
-<p>And special Thanks for TA&rsquo;s:
-Without their help, I couldn&rsquo;t finished these assignments on time. Because of unfamiliar with ruby methods, wrong code style, improper naming&hellip;etc. They always give me timely advice.</p>
+<p>然後clone master branch到_deploy資料夾</p>
 
-<p>Last, share my experience for developing game <code>Black Jack</code>:</p>
-
-<ul>
-<li>write psuedo code : 10 min</li>
-<li>coding : 2 hours</li>
-<li>debugging : 2 hours more</li>
-<li>feedback from TA, then refactor: 2 hours</li>
-</ul>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ cd octopress
+</span><span class='line'>$ git clone git@github.com:username/username.github.io.git _deploy </span></code></pre></td></tr></table></div></figure>
 
 
-<p>By the way, the most difficulty in Lesson 1 is completing &ldquo;Tic-Tac-Toe&rdquo; AI, it tooks me 10 hours more.
-If you are totally new to program, don&rsquo;t be disppointed at spending a lot of time, because me too!!
-If you are take these assignment as piece of cake, well, let&rsquo;s move to Lesson 2. See you.</p>
+<p>說明一下，branch <strong>source</strong> 就是存放原始資料，branch <strong>master</strong> 放的是rake後產生的資料，再上傳至github讓它來處理。</p>
+
+<p>接著在nitrous安裝需要的gem</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ gem install bundler
+</span><span class='line'>$ rbenv rehash    # If you use rbenv, rehash to be able to run the bundle command
+</span><span class='line'>$ bundle install
+</span><span class='line'>$ rake setup_github_pages</span></code></pre></td></tr></table></div></figure>
+
+
+<p>輸入相關資料，這邊跟octopress上的安裝說明都是一樣的。
+然後所有資料就會從github上完整的clone一份到nitrous上。</p>
+
+<h1>Backup &amp; Sync</h1>
+
+<p>每次寫完文章，最重要的是要記得備份。</p>
+
+<p><code>rake deploy</code>就不用擔心，因為它就是把branch master上傳到github上。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake generate
+</span><span class='line'>$ rake deploy             # update the remote master branch</span></code></pre></td></tr></table></div></figure>
+
+
+<p>但是branch source就要自己處理：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git add .
+</span><span class='line'>$ git commit -m "Some comment here." 
+</span><span class='line'>$ git push origin source  # update the remote source branch </span></code></pre></td></tr></table></div></figure>
+
+
+<p>這樣子可以確保github上版本是最新的。</p>
+
+<p>然後如果要在本機做完到nitrous做，或者是nitrous做完回本機，記得pull branch source 和 master。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ cd octopress
+</span><span class='line'>$ git pull origin source  # update the local source branch
+</span><span class='line'>$ cd ./_deploy
+</span><span class='line'>$ git pull origin master  # update the local master branch</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這樣子就算是在外面用別台電腦，也能夠blog一下了，不錯吧！</p>
 </div>
 
 
@@ -204,13 +245,13 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-01T16:03:33+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-01</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-16T21:10:08+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-16</time>
           
 
 <span class="glyphicon glyphicon-tags"></span>&nbsp;
 <span class="categories">
   
-    <a class='category' href='/blog/categories/ruby/'>ruby</a>, <a class='category' href='/blog/categories/tealeaf/'>tealeaf</a>
+    <a class='category' href='/blog/categories/github/'>github</a>, <a class='category' href='/blog/categories/nitrous/'>nitrous</a>, <a class='category' href='/blog/categories/octorpress/'>octorpress</a>
   
 </span>
 
@@ -219,7 +260,7 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
         
           <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/01/01/reflection-to-tealeaf-lesson-1/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/01/01/reflection-to-tealeaf-lesson-1/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io/" >Tweet</a>
   
   
   
@@ -231,10 +272,8 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
         
           <ul class="meta text-muted pager">
             
-            <li class="previous"><a href="/blog/2014/12/15/yu-yan-guan-li-xu/" title="Previous Post: 語言管理－續">&laquo; 語言管理－續</a></li>
+            <li class="previous"><a href="/blog/2015/01/14/show-http-is-stateless-by-sinatra/" title="Previous Post: show HTTP is stateless by Sinatra">&laquo; show HTTP is stateless by Sinatra</a></li>
             
-            
-            <li class="next"><a href="/blog/2015/01/07/reflection-to-tealeaf-lesson-2/" title="Next Post: Reflection of tealeaf week 2">Reflection of tealeaf week 2 &raquo;</a></li>
             
           </ul>
         
@@ -265,7 +304,7 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
   
   <div id="recent_posts" class="list-group">
     
-    <a class="list-group-item " href="/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io/">Clone My Octopress to Nitrous.io</a>
+    <a class="list-group-item active" href="/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io/">Clone My Octopress to Nitrous.io</a>
     
     <a class="list-group-item " href="/blog/2015/01/14/show-http-is-stateless-by-sinatra/">Show HTTP Is Stateless by Sinatra</a>
     
@@ -309,8 +348,8 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://www.tomohung.com/blog/2015/01/01/reflection-to-tealeaf-lesson-1/';
-        var disqus_url = 'http://www.tomohung.com/blog/2015/01/01/reflection-to-tealeaf-lesson-1/';
+        var disqus_identifier = 'http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io/';
+        var disqus_url = 'http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io/';
         var disqus_script = 'embed.js';
       
     (function () {

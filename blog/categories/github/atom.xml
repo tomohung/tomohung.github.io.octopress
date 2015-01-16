@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Github | The Life Alchemist]]></title>
+  <link href="http://www.tomohung.com/blog/categories/github/atom.xml" rel="self"/>
+  <link href="http://www.tomohung.com/"/>
+  <updated>2015-01-16T21:36:00+08:00</updated>
+  <id>http://www.tomohung.com/</id>
+  <author>
+    <name><![CDATA[Tomo]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Clone My Octopress to Nitrous.io]]></title>
+    <link href="http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io/"/>
+    <updated>2015-01-16T21:10:08+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io</id>
+    <content type="html"><![CDATA[<p><img class="<a" src="href="http://i.minus.com/iiGNP2Lnx1fRk.png">http://i.minus.com/iiGNP2Lnx1fRk.png</a>&#8221;></p>
+
+<h1>Octopress &amp; github</h1>
+
+<p>這個部落格是用<a href="octopress.rog">Octopress</a>在<a href="github.com">github</a>上建立起來的。但是不像一般的部落格系統，可以只要用瀏覽器登入，就可以開始寫文章，既然知道<a href="nitrous.io">nitrous.io</a>可以雲端工作，就把腦筋動到它的上面去。</p>
+
+<h1>Clone Octopress</h1>
+
+<p>作法是參考<a href="http://blog.zerosharp.com/clone-your-octopress-to-blog-from-two-places/">這篇文章</a>。</p>
+
+<p>但是其中的程式碼有點錯誤，因為github上存放網頁的位置己經改成github.io了。</p>
+
+<p>登入nitrous.io，開啟終端機畫面：
+註：不會用可以參考<a href="http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing/">這個連結</a></p>
+
+<p>輸入
+<code>
+$ git clone -b source git@github.com:username/username.github.io.git octopress
+</code></p>
+
+<p>然後clone master branch到_deploy資料夾</p>
+
+<pre><code>$ cd octopress
+$ git clone git@github.com:username/username.github.io.git _deploy 
+</code></pre>
+
+<p>說明一下，branch <strong>source</strong> 就是存放原始資料，branch <strong>master</strong> 放的是rake後產生的資料，再上傳至github讓它來處理。</p>
+
+<p>接著在nitrous安裝需要的gem
+<code>
+$ gem install bundler
+$ rbenv rehash    # If you use rbenv, rehash to be able to run the bundle command
+$ bundle install
+$ rake setup_github_pages
+</code>
+輸入相關資料，這邊跟octopress上的安裝說明都是一樣的。
+然後所有資料就會從github上完整的clone一份到nitrous上。</p>
+
+<h1>Backup &amp; Sync</h1>
+
+<p>每次寫完文章，最重要的是要記得備份。</p>
+
+<p><code>rake deploy</code>就不用擔心，因為它就是把branch master上傳到github上。
+<code>
+$ rake generate
+$ rake deploy             # update the remote master branch
+</code></p>
+
+<p>但是branch source就要自己處理：
+<code>
+$ git add .
+$ git commit -m "Some comment here."
+$ git push origin source  # update the remote source branch
+</code>
+這樣子可以確保github上版本是最新的。</p>
+
+<p>然後如果要在本機做完到nitrous做，或者是nitrous做完回本機，記得pull branch source 和 master。</p>
+
+<pre><code>$ cd octopress
+$ git pull origin source  # update the local source branch
+$ cd ./_deploy
+$ git pull origin master  # update the local master branch
+</code></pre>
+
+<p>這樣子就算是在外面用別台電腦，也能夠blog一下了，不錯吧！</p>
+]]></content>
+  </entry>
+  
+</feed>
