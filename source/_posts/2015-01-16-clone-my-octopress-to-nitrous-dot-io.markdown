@@ -8,14 +8,14 @@ categories: [octorpress, nitrous, github]
 
 {%img right http://i.minus.com/iiGNP2Lnx1fRk.png %}
 
-#Octopress & github
+###Octopress & github
 這個部落格是用[Octopress][]在[github][]上建立起來的。但是不像一般的部落格系統，可以只要用瀏覽器登入，就可以開始寫文章。不過既然知道[nitrous.io][]可以雲端工作，所以就把腦筋動到它的上面去。
 
 [Octopress]: octopress.rog
 [github]: github.com
 [nitrous.io]: nitrous.io
 
-#Clone Octopress
+###Clone Octopress
 作法是參考[這篇文章](http://blog.zerosharp.com/clone-your-octopress-to-blog-from-two-places/)。
 
 但是其中的程式碼有點錯誤，因為github上存放網頁的位置己經改成github.io了。
@@ -49,7 +49,7 @@ $ rake setup_github_pages
 輸入相關資料，這邊跟octopress上的安裝說明都是一樣的。
 然後所有資料就會從github上完整的clone一份到nitrous上。
 
-# Backup & Sync
+### Backup & Sync
 
 每次寫完文章，最重要的是要記得備份。
 
