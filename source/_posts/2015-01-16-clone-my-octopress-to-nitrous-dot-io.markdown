@@ -6,7 +6,6 @@ comments: true
 categories: [octorpress, nitrous, github]
 ---
 
-{%img right http://i.minus.com/iiGNP2Lnx1fRk.png %}
 
 ###Octopress & github
 這個部落格是用[Octopress][]在[github][]上建立起來的。但是不像一般的部落格系統，可以只要用瀏覽器登入，就可以開始寫文章。不過既然知道[nitrous.io][]可以雲端工作，所以就把腦筋動到它的上面去。
@@ -55,14 +54,14 @@ $ rake setup_github_pages
 `rake deploy`就不用擔心，因為它就是把branch master上傳到github上。
 ```
 $ rake generate
-$ rake deploy             # update the remote master branch
+$ rake deploy             # 更新 remote master branch
 ```
 
 但是branch source就要自己處理：
 ```
 $ git add .
-$ git commit -m "Some comment here." 
-$ git push origin source  # update the remote source branch 
+$ git commit -m "message" 
+$ git push origin source  # 更新 remote source branch 
 ```
 這樣子可以確保github上版本是最新的。
 
@@ -70,9 +69,9 @@ $ git push origin source  # update the remote source branch
 
 ```
 $ cd octopress
-$ git pull origin source  # update the local source branch
+$ git pull origin source  # 更新 local source branch
 $ cd ./_deploy
-$ git pull origin master  # update the local master branch
+$ git pull origin master  # 更新 local master branch
 ```
 
 這樣子就算是在外面用別台電腦，也能夠透過nitrous來blog一下了，不錯吧！
