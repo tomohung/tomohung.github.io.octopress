@@ -3,7 +3,7 @@ layout: post
 title: "Reflection to tealeaf week 3"
 date: 2015-01-13 22:23:15 +0800
 comments: true
-categories: [tealeaf, ruby]
+categories: [tealeaf, ruby, sinatra, http, bootstrap, html, css]
 ---
 
 {%img right http://i.minus.com/ilSTmPNHVpVTm.png 320 %}
