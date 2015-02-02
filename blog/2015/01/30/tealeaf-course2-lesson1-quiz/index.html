@@ -145,6 +145,8 @@
 
 <p>  Relational database can store the relationship between data and data. For example, a table store customer&rsquo;s info, and a table store consuming record, these two table can be associated with another table, to establish the customer&rsquo;s consuming history. There are relationships between data and data in relational database. ex. sqlite, MySQL, PostgreSQL ect.</p>
 
+<blockquote><p>the tables within the database are associated with each other. This association can be created with primary/foreign keys and various syntax.</p></blockquote>
+
 <h2>2. What is SQL?</h2>
 
 <p>  SQL(Structured Query Language), it&rsquo;s domain specific language to manipulate database.</p>
@@ -164,17 +166,27 @@
 </ul>
 
 
+<blockquote><p>The two predominant views are the data and schema views.
+Data view displays like a spreadsheet, with the table columns at the top and rows of data per each object instance.
+A schema view shows us the column names and the value type of each column.</p></blockquote>
+
 <h2>4. In a table, what do we call the column that serves as the main identifier for a row of data? We&rsquo;re looking for the general database term, not the column name.</h2>
 
 <p>  Attributes. Column indicate that what the row values mean.</p>
+
+<blockquote><p>We call this the &ldquo;primary key&rdquo;.</p></blockquote>
 
 <h2>5. What is a foreign key, and how is it used?</h2>
 
 <p>  Every row data in a table is included a <strong>primary key</strong>. If we want to associated with other table, we need this primary key to store which row data we wanna to be connected with this one. The store primary key value&rsquo;s column is called <strong>foreign key</strong>.</p>
 
+<blockquote><p>A foreign key is the identifier that connects an association with the models involved. The foreign key is always on the &ldquo;many&rdquo; side and is always in an integer type.</p></blockquote>
+
 <h2>6. At a high level, describe the ActiveRecord pattern. This has nothing to do with Rails, but the actual pattern that ActiveRecord uses to perform its ORM duties.</h2>
 
 <p>  ActiveRecord is mapping the data operation in tables. It substitutes SQL operation and using migration files to define &amp; operate table column.</p>
+
+<blockquote><p>ActiveRecord is a way to access the database. A database table is related to a class. An object of that class is created as a row in the table. This object can have different attribute values shown as the columns in the table. We can create, retrieve, update, and delete the object instances by altering the database table.</p></blockquote>
 
 <h2>7. If there&rsquo;s an ActiveRecord model called &ldquo;CrazyMonkey&rdquo;, what should the table name be?</h2>
 
@@ -239,12 +251,37 @@
 
 <p>  There should be antoher class named &ldquo;Animal&rdquo;, and it belongs to Zoo. Animal should at least have name, and a foriegn key to set to zoo id.</p>
 
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Animal &lt; ActiveRecord::Base
+</span><span class='line'>  belongs_to :zoo
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class CreateAnimal ActiveRecord:Migration
+</span><span class='line'>  def change
+</span><span class='line'>    create_table :animals do |t|
+</span><span class='line'>      t.integer :zoo_id
+</span><span class='line'>    end
+</span><span class='line'>  end</span></code></pre></td></tr></table></div></figure>
+
+
 <ul>
 <li>What are the methods that are now available to a zoo to call related to animals?</li>
 </ul>
 
 
-<p>  <code>zoo.animals</code></p>
+<pre><code class="``">  zoo.animals
+</code></pre>
 
 <ul>
 <li>How do I create an animal called &ldquo;jumpster&rdquo; in a zoo called &ldquo;San Diego Zoo&rdquo;?</li>
@@ -282,6 +319,8 @@
 
 <p>Query the first data in table <code>Animal</code>.</p>
 
+<blockquote><p>This will return the first row of data for the first Animal instance object in the animals table.</p></blockquote>
+
 <h2>12. If I have a table called &ldquo;animals&rdquo; with columns called &ldquo;name&rdquo;, and a model called <code>Animal</code>, how do I instantiate an animal object with name set to &ldquo;Joe&rdquo;. Which methods makes sure it saves to the database?</h2>
 
 <p>This will make sure it saves to database</p>
@@ -302,6 +341,9 @@
 
 <p>  There is a join table between two relational tables, and it needs these two tables row data primary key to be its foreign key. For example, there is a join table called post_categories, and it stores two foriegn key named: post_id and category_id.</p>
 
+<blockquote><p>On the database level of a M:M association, we use a join table to support it. Both of the primary models will each have a 1:M association with the join table.
+By using the has_many :through technique, we are able to create an indirect M:M association with the two primary models.</p></blockquote>
+
 <h2>14. What are the two ways to support a M:M association at the ActiveRecord model level? Pros and cons of each approach?</h2>
 
 <ul>
@@ -312,12 +354,67 @@ You have to define has_many relation with join table, also define has_many throu
 </ul>
 
 
+<blockquote><p>has_many :through requires an explicit join model and a join table, but it is more flexible and we can add additional attributes to the join table.
+has_and_belongs_to_many doesn&rsquo;t require a join model or a join table, but it is less flexible and we cannot add additional attributes to the join table.</p></blockquote>
+
 <h2>15. Suppose we have a User model and a Group model, and we have a M:M association all set up. How do we associate the two?</h2>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span>User.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>user.groups
-</span><span class='line'>group.users</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:user_groups</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:groups</span><span class="p">,</span> <span class="ss">through</span><span class="p">:</span> <span class="n">user_groups</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Group.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Group</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:user_groups</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:users</span><span class="p">,</span> <span class="ss">through</span><span class="p">:</span> <span class="ss">:user_groups</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>UserGroup.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">UserGroup</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:user</span>
+</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:group</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>create_user_groups.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CreateUserGroups</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">change</span>
+</span><span class='line'>    <span class="n">create_table</span> <span class="ss">:post_categories</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">integer</span> <span class="ss">:user_id</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">integer</span> <span class="ss">:group_id</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
 
 </div>
 
