@@ -8,6 +8,8 @@ categories: [rails, tealeaf]
 
 Answer these quizzes, then updated after watching solution.
 
+<!--more-->
+
 1. Why do they call it a relational database?
 
 Relational database can store the relationship between data and data. For example, a table store customer's info, and a table store consuming record, these two table can be associated with another table, to establish the customer's consuming history. There are relationships between data and data in relational database. ex. sqlite, MySQL, PostgreSQL ect.
