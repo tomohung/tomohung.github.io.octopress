@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-02-02T07:55:41+00:00</updated>
+  <updated>2015-02-02T22:12:42+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -14,9 +14,54 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Newbie for Rails Migration]]></title>
+    <link href="http://www.tomohung.com/blog/2015/02/02/newbie-for-rails-migration/"/>
+    <updated>2015-02-02T21:46:35+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/02/02/newbie-for-rails-migration</id>
+    <content type="html"><![CDATA[<p>As a newbie for Rails, It&rsquo;s normal to do something stupid.</p>
+
+<h2>Modified migration files after <code>rake db:migrate</code></h2>
+
+<p>It&rsquo;s useless!! Be carful that every migration filename including a timestamp, after running <code>rake db:migrate</code> will re-generate schema.rb. Data in schema.rb will show that the lastest timestamp, if there is no any new migration files newer than this timestamp, <code>rake db:migrate</code> will do nothing. Yes! it&rsquo;s nothing!!</p>
+
+<pre><code class="text normally you should see">==  CreateArticles: migrating ==================================================
+-- create_table(:articles)
+   -&gt; 0.0019s
+==  CreateArticles: migrated (0.0020s) =========================================
+</code></pre>
+
+<pre><code class="text schema.rb has been updated, rake db:migrate do nothing">$ rake db:migrate
+$ rake db:migrate
+</code></pre>
+
+<!--more-->
+
+
+<p>That&rsquo;s why I got stuck on it for a long time, because I make such a stupid mistake.</p>
+
+<p>So, how about using <code>rake db:drop</code> or <code>rake db:rollback</code>. This is also a not smart choice, because you should consider that there may be some other co-workers are working on the same project. If they also run their migration on their computer, then you modified yourself migration files, or do some database operation like <code>rake db:rollback</code>. These actions will lead to some data error for database.</p>
+
+<h2>Create another new migration file for modified database</h2>
+
+<p>Using <code>rake generate migration do_some_change</code> for chaning database layer. Using another file to show the modified history is much clear. Avoid ambiguous and mess up all update contect in migration files is super important.</p>
+
+<pre><code class="text Add column for posts table">class AddColumnToPosts &lt; ActiveRecord::Migration
+  def change
+    add_column :posts, :user_id, :interger
+  end
+end
+</code></pre>
+
+<h2>Only use <code>rails generate migration</code></h2>
+
+<p>Don&rsquo;t use <code>rails generate</code> for models or controllers etc. It contains a lot of rails magic. Although most of guide tour (including official guide) use this way. But it&rsquo;s easy to misunderstanding what is wrong for operating database layer and ActiveRecord layer. Take care of this!</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Tealeaf Course2 Lesson1 Quiz]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/30/tealeaf-course2-lesson1-quiz/"/>
-    <updated>2015-01-30T08:13:42+00:00</updated>
+    <updated>2015-01-30T16:13:42+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/30/tealeaf-course2-lesson1-quiz</id>
     <content type="html"><![CDATA[<p>Answer these quizzes, then updated after watching solution.</p>
 

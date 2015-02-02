@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tealeaf | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/tealeaf/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-02-02T07:55:41+00:00</updated>
+  <updated>2015-02-02T22:12:42+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -14,9 +14,54 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Newbie for Rails Migration]]></title>
+    <link href="http://www.tomohung.com/blog/2015/02/02/newbie-for-rails-migration/"/>
+    <updated>2015-02-02T21:46:35+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/02/02/newbie-for-rails-migration</id>
+    <content type="html"><![CDATA[<p>As a newbie for Rails, It&rsquo;s normal to do something stupid.</p>
+
+<h2>Modified migration files after <code>rake db:migrate</code></h2>
+
+<p>It&rsquo;s useless!! Be carful that every migration filename including a timestamp, after running <code>rake db:migrate</code> will re-generate schema.rb. Data in schema.rb will show that the lastest timestamp, if there is no any new migration files newer than this timestamp, <code>rake db:migrate</code> will do nothing. Yes! it&rsquo;s nothing!!</p>
+
+<pre><code class="text normally you should see">==  CreateArticles: migrating ==================================================
+-- create_table(:articles)
+   -&gt; 0.0019s
+==  CreateArticles: migrated (0.0020s) =========================================
+</code></pre>
+
+<pre><code class="text schema.rb has been updated, rake db:migrate do nothing">$ rake db:migrate
+$ rake db:migrate
+</code></pre>
+
+<!--more-->
+
+
+<p>That&rsquo;s why I got stuck on it for a long time, because I make such a stupid mistake.</p>
+
+<p>So, how about using <code>rake db:drop</code> or <code>rake db:rollback</code>. This is also a not smart choice, because you should consider that there may be some other co-workers are working on the same project. If they also run their migration on their computer, then you modified yourself migration files, or do some database operation like <code>rake db:rollback</code>. These actions will lead to some data error for database.</p>
+
+<h2>Create another new migration file for modified database</h2>
+
+<p>Using <code>rake generate migration do_some_change</code> for chaning database layer. Using another file to show the modified history is much clear. Avoid ambiguous and mess up all update contect in migration files is super important.</p>
+
+<pre><code class="text Add column for posts table">class AddColumnToPosts &lt; ActiveRecord::Migration
+  def change
+    add_column :posts, :user_id, :interger
+  end
+end
+</code></pre>
+
+<h2>Only use <code>rails generate migration</code></h2>
+
+<p>Don&rsquo;t use <code>rails generate</code> for models or controllers etc. It contains a lot of rails magic. Although most of guide tour (including official guide) use this way. But it&rsquo;s easy to misunderstanding what is wrong for operating database layer and ActiveRecord layer. Take care of this!</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Tealeaf Course2 Lesson1 Quiz]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/30/tealeaf-course2-lesson1-quiz/"/>
-    <updated>2015-01-30T08:13:42+00:00</updated>
+    <updated>2015-01-30T16:13:42+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/30/tealeaf-course2-lesson1-quiz</id>
     <content type="html"><![CDATA[<p>Answer these quizzes, then updated after watching solution.</p>
 
@@ -241,7 +286,7 @@ end
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Lesson 4]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/22/reflection-to-tealeaf-lesson-4/"/>
-    <updated>2015-01-22T03:59:53+00:00</updated>
+    <updated>2015-01-22T11:59:53+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/22/reflection-to-tealeaf-lesson-4</id>
     <content type="html"><![CDATA[<p><img class="right <a" src="href="http://i.minus.com/iS2bpDcNcj44W.jpg">http://i.minus.com/iS2bpDcNcj44W.jpg</a>&#8221; width=&#8221;320&#8221;></p>
 
@@ -268,7 +313,7 @@ end
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Week 3]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3/"/>
-    <updated>2015-01-13T14:23:15+00:00</updated>
+    <updated>2015-01-13T22:23:15+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3</id>
     <content type="html"><![CDATA[<p><img class="right <a" src="href="http://i.minus.com/ilSTmPNHVpVTm.png">http://i.minus.com/ilSTmPNHVpVTm.png</a>&#8221; width=&#8221;320&#8221;></p>
 
@@ -312,7 +357,7 @@ Moving to Lesson 4.</p>
   <entry>
     <title type="html"><![CDATA[Reflection of Tealeaf Week 2]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2/"/>
-    <updated>2015-01-07T00:15:13+00:00</updated>
+    <updated>2015-01-07T08:15:13+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2</id>
     <content type="html"><![CDATA[<p><img class="right <a" src="href="http://i.minus.com/ibnRw2O1pxsQam.png">http://i.minus.com/ibnRw2O1pxsQam.png</a>&#8221; width=&#8221;320&#8221;></p>
 
@@ -337,56 +382,6 @@ One suggestion, If subclass&rsquo;s initialize method doesn&rsquo;t use super, t
 
 <p>Next lesson is absolutely my challenge, because I&rsquo;m totally new for web development.
 But I do look forward to it.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Week 1]]></title>
-    <link href="http://www.tomohung.com/blog/2015/01/01/reflection-to-tealeaf-lesson-1/"/>
-    <updated>2015-01-01T08:03:33+00:00</updated>
-    <id>http://www.tomohung.com/blog/2015/01/01/reflection-to-tealeaf-lesson-1</id>
-    <content type="html"><![CDATA[<p><img class="right <a" src="href="http://i.minus.com/ibsevSRoOPCEmU.png">http://i.minus.com/ibsevSRoOPCEmU.png</a>&#8221; width=&#8221;320&#8221;></p>
-
-<p>Happy new year!!</p>
-
-<p>Before I talk about where I struggled with, I would like to say something before I join the course.
-I am using C++ for few years, and coding is part of my job. Before join the course, I&rsquo;ve also done the <a href="http://learnrubythehardway.org/book/">Learn Ruby The Hard Way</a> to lesson 45. <code>Learn Ruby The Hard Way</code> is also a good pratice, especially for <code>muscle memory</code>. It focus on <code>just typing ruby</code> when learning ruby knowledge.</p>
-
-<p>After that, I start <code>Prep Course</code> @ tealeaf, reading the book <a href="http://www.gotealeaf.com/books/ruby"><code>Introduce to Programing</code></a>. <code>Introduction to Programing</code> is also an amazing book, it use a simple way to explain more detail in ruby, and I really did several times &ldquo;Ah ha!&rdquo; when reading it. Then I thought I was ready for lesson 1, but maybe I&rsquo;m wrong :p</p>
-
-<p>About my struggles, as a C++ programmer, there are mainly two &ldquo;What?&rdquo; for ruby:</p>
-
-<ul>
-<li><p>variable scope: in C++, every local variable only survive in its scope, but in ruby, this is not always true. Even now, I&rsquo;m still a little confused with that. Glad that I find a way to deal with this: <code>Never use outside variable in insdie scope, make them in different name</code>.</p></li>
-<li><p>pointer &amp; reference: when passing a variable to functions(in ruby called: methods), if varaible has prefix like <code>*</code> or <code>&amp;</code>, it obvious means this variable may be modified in this methods. Ruby doesn&rsquo;t take this way, input variables in method could be modified just by what action do inside the method. Fotunately, ruby usaually append suffix <code>!</code> behind method&rsquo;s name to indicate this method modify input variable.</p></li>
-</ul>
-
-
-<p>Even these, I do love ruby.</p>
-
-<ul>
-<li>There are a lot of built-in convenient methods for String, Array, Hash&hellip;etc. And more are waiting to discover</li>
-<li>More fluent phrase for flow control, if, unless, while, until&hellip;etc. Readable code is becoming more and more important.</li>
-<li>type less key :p</li>
-</ul>
-
-
-<p>And special Thanks for TA&rsquo;s:
-Without their help, I couldn&rsquo;t finished these assignments on time. Because of unfamiliar with ruby methods, wrong code style, improper naming&hellip;etc. They always give me timely advice.</p>
-
-<p>Last, share my experience for developing game <code>Black Jack</code>:</p>
-
-<ul>
-<li>write psuedo code : 10 min</li>
-<li>coding : 2 hours</li>
-<li>debugging : 2 hours more</li>
-<li>feedback from TA, then refactor: 2 hours</li>
-</ul>
-
-
-<p>By the way, the most difficulty in Lesson 1 is completing &ldquo;Tic-Tac-Toe&rdquo; AI, it tooks me 10 hours more.
-If you are totally new to program, don&rsquo;t be disppointed at spending a lot of time, because me too!!
-If you are take these assignment as piece of cake, well, let&rsquo;s move to Lesson 2. See you.</p>
 ]]></content>
   </entry>
   

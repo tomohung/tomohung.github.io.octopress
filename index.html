@@ -130,7 +130,134 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-30T08:13:42+00:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-30</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-02-02T21:46:35+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-02-02</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/02/02/newbie-for-rails-migration/" itemprop="url">Newbie for Rails Migration</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>As a newbie for Rails, It&rsquo;s normal to do something stupid.</p>
+
+<h2>Modified migration files after <code>rake db:migrate</code></h2>
+
+<p>It&rsquo;s useless!! Be carful that every migration filename including a timestamp, after running <code>rake db:migrate</code> will re-generate schema.rb. Data in schema.rb will show that the lastest timestamp, if there is no any new migration files newer than this timestamp, <code>rake db:migrate</code> will do nothing. Yes! it&rsquo;s nothing!!</p>
+
+<figure class='code'><figcaption><span>normally you should see</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>==  CreateArticles: migrating ==================================================
+</span><span class='line'>-- create_table(:articles)
+</span><span class='line'>   -&gt; 0.0019s
+</span><span class='line'>==  CreateArticles: migrated (0.0020s) =========================================
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>schema.rb has been updated, rake db:migrate do nothing</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>$ rake db:migrate
+</span><span class='line'>$ rake db:migrate
+</span></code></pre></td></tr></table></div></figure>
+
+
+</div>
+  
+  
+    <footer>
+      <a class="btn btn-default" href="/blog/2015/02/02/newbie-for-rails-migration/">繼續閱讀 Read on &rarr;</a>
+    </footer>
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-02-02T16:05:05+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-02-02</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/" itemprop="url">Reflection to Tealeaf Course 2 Lesson 1</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Finally, Rails is coming.</p>
+
+<p>Before join Tealeaf, I&rsquo;ve tried few times to follow some rails guide books. I just can type some magic codes to build simplest web app but didn&rsquo;t know why at all, because I even didn&rsquo;t know what ruby is.</p>
+
+<p>This time in pre-course, I knew what is ruby, then following [official tour guide] (<a href="http://guides.rubyonrails.org/getting_started.html">http://guides.rubyonrails.org/getting_started.html</a>), it&rsquo;s much clear than other books I&rsquo;ve seen. But I still got stuck on creating many-to-many relationship, because I made a totally mistake here. <em>I modified migration file after running <code>rake db:migrate</code></em>.</p>
+
+<p>Chirs said that:</p>
+
+<blockquote><p>Don&rsquo;t use <code>rails generate</code> except <code>migration</code></p></blockquote>
+
+<p>I do love this way, because:</p>
+
+<ol>
+<li><p>I never saw other&rsquo;s show this way to build migration, they always use <code>rails generate model</code> to create model and migration. And the problem is, I thought this is the only way to create models and migrations!! And I just thought this is Rails magic, I don&rsquo;t need to think too much.</p></li>
+<li><p>When I got stuck because I didn&rsquo;t know I can&rsquo;t modified migration files after running <code>rake db:migrate</code>. Make sure migration setting is all done before running <code>rake db:migrate</code> is very important. And this is just for ActiveRecord layer, database is another layer. It&rsquo;s much easier to understand how could be a disaster to modified/delete migration files working with database layer.</p></li>
+</ol>
+
+
+<p>I make a post to record my big step for Rails.</p>
+
+<p>I also try to detect tealeaf discus panel, becuase I think it&rsquo;s better to <code>show who kudos this post</code>. Sometime I just want to give a kudos for people reply my post without saying more, but it&rsquo;s wierd for others to view this post, because even I give replyer a kudos, others can&rsquo;t see. Anyway, here is my ERD for discuss panel.</p>
+
+<p><img src="http://i.minus.com/ibfrZjiBfElndg.jpg"></p>
+
+<p>I&rsquo;m super satisfied that this week I found my mistake when using migrations, and I think there must be other mistake for controller&rsquo;s and view&rsquo;s. Moving to next lesson!!</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-30T16:13:42+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-30</time>
         
       </p>
     
@@ -182,7 +309,7 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-22T03:59:53+00:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-22</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-22T11:59:53+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-22</time>
         
       </p>
     
@@ -237,7 +364,7 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-16T13:10:08+00:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-16</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-16T21:10:08+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-16</time>
         
       </p>
     
@@ -287,7 +414,7 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-14T13:25:15+00:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-14</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-14T21:25:15+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-14</time>
         
       </p>
     
@@ -333,7 +460,7 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-13T14:23:15+00:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-13</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-13T22:23:15+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-13</time>
         
       </p>
     
@@ -405,12 +532,12 @@ Moving to Lesson 4.</p>
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-11T22:30:34+00:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-11</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-12T06:30:34+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-12</time>
         
       </p>
     
     
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/01/11/yi-makers-schedule-managers-schedule/" itemprop="url">[譯]Maker&#8217;s Schedule, Manager&#8217;s Schedule</a></h2>
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/01/12/yi-makers-schedule-managers-schedule/" itemprop="url">[譯]Maker&#8217;s Schedule, Manager&#8217;s Schedule</a></h2>
     
   </header>
 
@@ -441,7 +568,7 @@ There are two types of schedule, which I'll call the manager's schedule and the 
   
   
     <footer>
-      <a class="btn btn-default" href="/blog/2015/01/11/yi-makers-schedule-managers-schedule/">繼續閱讀 Read on &rarr;</a>
+      <a class="btn btn-default" href="/blog/2015/01/12/yi-makers-schedule-managers-schedule/">繼續閱讀 Read on &rarr;</a>
     </footer>
   
 
@@ -467,7 +594,7 @@ There are two types of schedule, which I'll call the manager's schedule and the 
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-11T13:26:49+00:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-11</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-11T21:26:49+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-11</time>
         
       </p>
     
@@ -520,7 +647,7 @@ There are two types of schedule, which I'll call the manager's schedule and the 
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-07T00:15:13+00:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-07</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-07T08:15:13+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-07</time>
         
       </p>
     
@@ -560,136 +687,6 @@ But I do look forward to it.</p>
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-01T08:03:33+00:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-01</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/01/01/reflection-to-tealeaf-lesson-1/" itemprop="url">Reflection to Tealeaf Week 1</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p><img class="right" src="http://i.minus.com/ibsevSRoOPCEmU.png" width="320"></p>
-
-<p>Happy new year!!</p>
-
-<p>Before I talk about where I struggled with, I would like to say something before I join the course.
-I am using C++ for few years, and coding is part of my job. Before join the course, I&rsquo;ve also done the <a href="http://learnrubythehardway.org/book/">Learn Ruby The Hard Way</a> to lesson 45. <code>Learn Ruby The Hard Way</code> is also a good pratice, especially for <code>muscle memory</code>. It focus on <code>just typing ruby</code> when learning ruby knowledge.</p>
-
-<p>After that, I start <code>Prep Course</code> @ tealeaf, reading the book <a href="http://www.gotealeaf.com/books/ruby"><code>Introduce to Programing</code></a>. <code>Introduction to Programing</code> is also an amazing book, it use a simple way to explain more detail in ruby, and I really did several times &ldquo;Ah ha!&rdquo; when reading it. Then I thought I was ready for lesson 1, but maybe I&rsquo;m wrong :p</p>
-
-<p>About my struggles, as a C++ programmer, there are mainly two &ldquo;What?&rdquo; for ruby:</p>
-
-<ul>
-<li><p>variable scope: in C++, every local variable only survive in its scope, but in ruby, this is not always true. Even now, I&rsquo;m still a little confused with that. Glad that I find a way to deal with this: <code>Never use outside variable in insdie scope, make them in different name</code>.</p></li>
-<li><p>pointer &amp; reference: when passing a variable to functions(in ruby called: methods), if varaible has prefix like <code>*</code> or <code>&amp;</code>, it obvious means this variable may be modified in this methods. Ruby doesn&rsquo;t take this way, input variables in method could be modified just by what action do inside the method. Fotunately, ruby usaually append suffix <code>!</code> behind method&rsquo;s name to indicate this method modify input variable.</p></li>
-</ul>
-
-
-<p>Even these, I do love ruby.</p>
-
-<ul>
-<li>There are a lot of built-in convenient methods for String, Array, Hash&hellip;etc. And more are waiting to discover</li>
-<li>More fluent phrase for flow control, if, unless, while, until&hellip;etc. Readable code is becoming more and more important.</li>
-<li>type less key :p</li>
-</ul>
-
-
-<p>And special Thanks for TA&rsquo;s:
-Without their help, I couldn&rsquo;t finished these assignments on time. Because of unfamiliar with ruby methods, wrong code style, improper naming&hellip;etc. They always give me timely advice.</p>
-
-<p>Last, share my experience for developing game <code>Black Jack</code>:</p>
-
-<ul>
-<li>write psuedo code : 10 min</li>
-<li>coding : 2 hours</li>
-<li>debugging : 2 hours more</li>
-<li>feedback from TA, then refactor: 2 hours</li>
-</ul>
-
-
-<p>By the way, the most difficulty in Lesson 1 is completing &ldquo;Tic-Tac-Toe&rdquo; AI, it tooks me 10 hours more.
-If you are totally new to program, don&rsquo;t be disppointed at spending a lot of time, because me too!!
-If you are take these assignment as piece of cake, well, let&rsquo;s move to Lesson 2. See you.</p>
-</div>
-  
-  
-
-
-        </article>
-      
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-12-15T12:34:40+00:00"  data-updated="true" itemprop="datePublished dateCreated">2014-12-15</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2014/12/15/yu-yan-guan-li-xu/" itemprop="url">語言管理－續</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p><img src="http://i.minus.com/ijEvqo7aLC7BY.jpg" width="640"></p>
-
-<p><a href="http://www.tomohung.com/blog/2014/12/12/language-management/">上一篇文章</a>關於聽了『語言管理』講座，朋友私底下來信討論，整理了一下對話留個記錄。刪去了一些朋友之間五四三的對話，盡量保留原意：</p>
-
-<h1>對話</h1>
-
-<p>R&rsquo;s:</p>
-
-<blockquote><p>  &ldquo;參與力&#8221;聽起來只是重新包裝過的&#8221;競爭力&#8221;耶&hellip;.你把他用&#8221;參與力&#8221;的句子全部代換成競爭力應該一樣通順吧？<br/>
-    他的所謂的新詞的話 得到的action item會跟原來用&#8221;競爭力&#8221;當重點的時候 不一樣在哪邊？<br/>
-    我想我的疑問來自於 結果都是要強調語言很重要的話，那特別創新的詞的用意？</p></blockquote>
-
-</div>
-  
-  
-    <footer>
-      <a class="btn btn-default" href="/blog/2014/12/15/yu-yan-guan-li-xu/">繼續閱讀 Read on &rarr;</a>
-    </footer>
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -719,15 +716,15 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2015/02/02/newbie-for-rails-migration/">Newbie for Rails Migration</a>
+    
+    <a class="list-group-item " href="/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/">Reflection to Tealeaf Course 2 Lesson 1</a>
+    
     <a class="list-group-item " href="/blog/2015/01/30/tealeaf-course2-lesson1-quiz/">Tealeaf Course2 Lesson1 Quiz</a>
     
     <a class="list-group-item " href="/blog/2015/01/22/reflection-to-tealeaf-lesson-4/">Reflection to Tealeaf Lesson 4</a>
     
     <a class="list-group-item " href="/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io/">在Nitrous上寫Octopress</a>
-    
-    <a class="list-group-item " href="/blog/2015/01/14/show-http-is-stateless-by-sinatra/">Show HTTP Is Stateless by Sinatra</a>
-    
-    <a class="list-group-item " href="/blog/2015/01/13/reflection-to-tealeaf-week-3/">Reflection to Tealeaf Week 3</a>
     
   </div>
 </section>

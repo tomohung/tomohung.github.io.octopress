@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Sinatra | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/sinatra/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-02-02T07:55:41+00:00</updated>
+  <updated>2015-02-02T22:12:42+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Lesson 4]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/22/reflection-to-tealeaf-lesson-4/"/>
-    <updated>2015-01-22T03:59:53+00:00</updated>
+    <updated>2015-01-22T11:59:53+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/22/reflection-to-tealeaf-lesson-4</id>
     <content type="html"><![CDATA[<p><img class="right <a" src="href="http://i.minus.com/iS2bpDcNcj44W.jpg">http://i.minus.com/iS2bpDcNcj44W.jpg</a>&#8221; width=&#8221;320&#8221;></p>
 
@@ -43,7 +43,7 @@
   <entry>
     <title type="html"><![CDATA[Show HTTP Is Stateless by Sinatra]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra/"/>
-    <updated>2015-01-14T13:25:15+00:00</updated>
+    <updated>2015-01-14T21:25:15+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra</id>
     <content type="html"><![CDATA[<p>In tealeaf week 3, introduce to HTTP.</p>
 
@@ -124,7 +124,7 @@ end
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Week 3]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3/"/>
-    <updated>2015-01-13T14:23:15+00:00</updated>
+    <updated>2015-01-13T22:23:15+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3</id>
     <content type="html"><![CDATA[<p><img class="right <a" src="href="http://i.minus.com/ilSTmPNHVpVTm.png">http://i.minus.com/ilSTmPNHVpVTm.png</a>&#8221; width=&#8221;320&#8221;></p>
 
