@@ -12,6 +12,8 @@ Answer these quizzes, then updated after watching solution.
 
   Relational database can store the relationship between data and data. For example, a table store customer's info, and a table store consuming record, these two table can be associated with another table, to establish the customer's consuming history. There are relationships between data and data in relational database. ex. sqlite, MySQL, PostgreSQL ect.
 
+> the tables within the database are associated with each other. This association can be created with primary/foreign keys and various syntax.
+
 ##2. What is SQL?
 
   SQL(Structured Query Language), it's domain specific language to manipulate database.
@@ -28,17 +30,27 @@ Answer these quizzes, then updated after watching solution.
   - M:M
   **Many to Many** makes target objects can associate with many other objects, like posts can be assign to many categories, and category can assign to many poasts. We also can track target post or target category is assigned to which one.
 
+> The two predominant views are the data and schema views. 
+> Data view displays like a spreadsheet, with the table columns at the top and rows of data per each object instance. 
+> A schema view shows us the column names and the value type of each column.
+
 ##4. In a table, what do we call the column that serves as the main identifier for a row of data? We're looking for the general database term, not the column name.
 
   Attributes. Column indicate that what the row values mean.
+
+> We call this the "primary key".
 
 ##5. What is a foreign key, and how is it used?
 
   Every row data in a table is included a **primary key**. If we want to associated with other table, we need this primary key to store which row data we wanna to be connected with this one. The store primary key value's column is called **foreign key**.
 
+> A foreign key is the identifier that connects an association with the models involved. The foreign key is always on the "many" side and is always in an integer type.
+
 ##6. At a high level, describe the ActiveRecord pattern. This has nothing to do with Rails, but the actual pattern that ActiveRecord uses to perform its ORM duties.
 
   ActiveRecord is mapping the data operation in tables. It substitutes SQL operation and using migration files to define & operate table column.
+
+> ActiveRecord is a way to access the database. A database table is related to a class. An object of that class is created as a row in the table. This object can have different attribute values shown as the columns in the table. We can create, retrieve, update, and delete the object instances by altering the database table.
 
 ##7. If there's an ActiveRecord model called "CrazyMonkey", what should the table name be?
 
@@ -85,9 +97,26 @@ end
   
   There should be antoher class named "Animal", and it belongs to Zoo. Animal should at least have name, and a foriegn key to set to zoo id.
 
+```
+class Animal < ActiveRecord::Base
+  belongs_to :zoo
+end
+```
+
+```
+class CreateAnimal ActiveRecord:Migration
+  def change
+    create_table :animals do |t|
+      t.integer :zoo_id
+    end
+  end
+```
+
   - What are the methods that are now available to a zoo to call related to animals?
   
-  ```zoo.animals```
+  ```
+  zoo.animals
+  ```
   
   - How do I create an animal called "jumpster" in a zoo called "San Diego Zoo"?
   
@@ -119,6 +148,8 @@ post.body = "post body"
 
 Query the first data in table `Animal`.
 
+> This will return the first row of data for the first Animal instance object in the animals table.
+
 ##12. If I have a table called "animals" with columns called "name", and a model called `Animal`, how do I instantiate an animal object with name set to "Joe". Which methods makes sure it saves to the database?
 
 This will make sure it saves to database
@@ -136,6 +167,9 @@ animal.save
 
   There is a join table between two relational tables, and it needs these two tables row data primary key to be its foreign key. For example, there is a join table called post_categories, and it stores two foriegn key named: post_id and category_id.
 
+> On the database level of a M:M association, we use a join table to support it. Both of the primary models will each have a 1:M association with the join table.
+> By using the has_many :through technique, we are able to create an indirect M:M association with the two primary models.
+
 ##14. What are the two ways to support a M:M association at the ActiveRecord model level? Pros and cons of each approach?
 
   - has_and_belongs_to_many
@@ -144,9 +178,39 @@ animal.save
   - has_many through:
   You have to define has_many relation with join table, also define has_many through: realtion to both target table and join table. This explicit the way to connect target table and join table. It's much easier to understand all realtionship between tables.
 
+> has_many :through requires an explicit join model and a join table, but it is more flexible and we can add additional attributes to the join table.
+> has_and_belongs_to_many doesn't require a join model or a join table, but it is less flexible and we cannot add additional attributes to the join table.
+
 ##15. Suppose we have a User model and a Group model, and we have a M:M association all set up. How do we associate the two?
 
+```ruby User.rb
+class User < ActiveRecord::Base
+  has_many :user_groups
+  has_many :groups, through: user_groups
+end
 ```
-user.groups
-group.users
+
+```ruby Group.rb
+class Group < ActiveRecord::Base
+  has_many :user_groups
+  has_many :users, through: :user_groups
+end
+```
+
+```ruby UserGroup.rb
+class UserGroup < ActiveRecord::Base
+  belongs_to :user
+  belongs_to :group
+end
+```
+
+```ruby create_user_groups.rb
+class CreateUserGroups < ActiveRecord::Migration
+  def change
+    create_table :post_categories do |t|
+      t.integer :user_id
+      t.integer :group_id
+    end
+  end
+end
 ```
