@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Web | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/web/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-02-02T05:21:29+00:00</updated>
+  <updated>2015-02-02T05:24:20+00:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -62,7 +62,7 @@ end
 
 <p>It shows <code>Guest</code>, not <code>tealeaf</code>. Why?</p>
 
-<p>{% img <a href="http://i.minus.com/i9oeLWDYI4DBb.png">http://i.minus.com/i9oeLWDYI4DBb.png</a> %}</p>
+<p><img class="<a" src="href="http://i.minus.com/i9oeLWDYI4DBb.png">http://i.minus.com/i9oeLWDYI4DBb.png</a>&#8221;></p>
 
 <p>The key point is: when 2 redirect to 3, it&rsquo;s a new request, instance variable like @name will be deleted after redirect, then create a new one.</p>
 
@@ -99,7 +99,7 @@ end
     <link href="http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing/"/>
     <updated>2015-01-11T13:26:49+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing</id>
-    <content type="html"><![CDATA[<p>{%img <a href="http://i.minus.com/iyZNw6vDZnJa6.png">http://i.minus.com/iyZNw6vDZnJa6.png</a> 800 %}</p>
+    <content type="html"><![CDATA[<p><img class="<a" src="href="http://i.minus.com/iyZNw6vDZnJa6.png">http://i.minus.com/iyZNw6vDZnJa6.png</a>&#8221; width=&#8221;800&#8221;></p>
 
 <ul>
 <li>太強了</li>
@@ -119,15 +119,15 @@ end
 
 <p>但有時候在外面想用其它電腦看一下自己做的東西時，這時候<a href="http://nitrous.io">nitrous</a>配合<a href="http://github.com">github</a>就派上用場了。nitrous當作雲端編輯平台，github負責同步資料，至少目前我在學習的階段都沒遇到什麼問題，聽說<a href="http://gotealeaf.com">tealeaf</a>裡也有人用nitrous完成所有課程。</p>
 
-<p>{%img <a href="http://i.minus.com/ibjA5RfvgDSmp6.png">http://i.minus.com/ibjA5RfvgDSmp6.png</a> 640 %}</p>
+<p><img class="<a" src="href="http://i.minus.com/ibjA5RfvgDSmp6.png">http://i.minus.com/ibjA5RfvgDSmp6.png</a>&#8221; width=&#8221;640&#8221;></p>
 
 <p>Ruby Girls也是用這套教學，要知道還沒開始就在安裝遇到挫折，真的沒有動力再做下去 &lt;== 就是在說我自己</p>
 
-<p>{%img <a href="http://i.minus.com/ibKMcP19URJvJ.png">http://i.minus.com/ibKMcP19URJvJ.png</a> 640 %}</p>
+<p><img class="<a" src="href="http://i.minus.com/ibKMcP19URJvJ.png">http://i.minus.com/ibKMcP19URJvJ.png</a>&#8221; width=&#8221;640&#8221;></p>
 
 <p>首頁寫的60秒完成不是開完笑的，註冊後有200閃電幣可以用，綽綽有餘，開一個Box只要10個閃電幣，可以選擇的有上圖幾種。</p>
 
-<p>{%img <a href="http://i.minus.com/iDo0NvpKvypX6.png">http://i.minus.com/iDo0NvpKvypX6.png</a> 640 %}</p>
+<p><img class="<a" src="href="http://i.minus.com/iDo0NvpKvypX6.png">http://i.minus.com/iDo0NvpKvypX6.png</a>&#8221; width=&#8221;640&#8221;></p>
 
 <p>登入後可以選擇要IDE介面還是Terminal介面，如果選IDE就像上面一樣。</p>
 
@@ -139,7 +139,7 @@ end
 
 <p>比較要注意的是Preview時，根據官方Support說，Localhost ip必需設定為0.0.0.0，port的話可以參考下圖：</p>
 
-<p>{%img <a href="http://i.minus.com/ioeX2cUhUAC5A.png">http://i.minus.com/ioeX2cUhUAC5A.png</a> %}</p>
+<p><img class="<a" src="href="http://i.minus.com/ioeX2cUhUAC5A.png">http://i.minus.com/ioeX2cUhUAC5A.png</a>&#8221;></p>
 
 <p>所以如果是Ruby配合shotgun gem來啟動的話，可以用下面指令：
 <code>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-02-02T05:21:29+00:00</updated>
+  <updated>2015-02-02T05:24:20+00:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -87,18 +87,23 @@
 
 
 <p>in model files
-&#8220;`
-class Project ActiveRecord::Base
-  has_many :issues
-end</p>
-
-<p>class Issue ActiveRecord::Base
-  belongs_to :project
-end
-&#8220;`</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Project ActiveRecord::Base
+</span><span class='line'>  has_many :issues
+</span><span class='line'>end&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;class Issue ActiveRecord::Base
+</span><span class='line'>  belongs_to :project
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure></p>
 
 <p>in migration files
-<code>rails
+<code>
 class CreateIssue ActiveRecord:Migration
   def change
     create_table :issues do |t|

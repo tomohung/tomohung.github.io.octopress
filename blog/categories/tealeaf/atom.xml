@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tealeaf | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/tealeaf/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-02-02T05:21:29+00:00</updated>
+  <updated>2015-02-02T05:24:20+00:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -87,18 +87,23 @@
 
 
 <p>in model files
-&#8220;`
-class Project ActiveRecord::Base
-  has_many :issues
-end</p>
-
-<p>class Issue ActiveRecord::Base
-  belongs_to :project
-end
-&#8220;`</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Project ActiveRecord::Base
+</span><span class='line'>  has_many :issues
+</span><span class='line'>end&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;class Issue ActiveRecord::Base
+</span><span class='line'>  belongs_to :project
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure></p>
 
 <p>in migration files
-<code>rails
+<code>
 class CreateIssue ActiveRecord:Migration
   def change
     create_table :issues do |t|
@@ -201,7 +206,7 @@ group.users
     <link href="http://www.tomohung.com/blog/2015/01/22/reflection-to-tealeaf-lesson-4/"/>
     <updated>2015-01-22T03:59:53+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/22/reflection-to-tealeaf-lesson-4</id>
-    <content type="html"><![CDATA[<p>{% img right <a href="http://i.minus.com/iS2bpDcNcj44W.jpg">http://i.minus.com/iS2bpDcNcj44W.jpg</a> 320 %}</p>
+    <content type="html"><![CDATA[<p><img class="right <a" src="href="http://i.minus.com/iS2bpDcNcj44W.jpg">http://i.minus.com/iS2bpDcNcj44W.jpg</a>&#8221; width=&#8221;320&#8221;></p>
 
 <p>To be honest, I still feel uncomfortable with this week. From week 3, I learned html &amp; css, to week 4, I learned jQuery &amp; Ajax. It&rsquo;s definitely not enough only rely on Codecademy&rsquo;s course, so I decide to do one more app, tic-tac-toe on wep. I think this should make me more comfortable with these lessons.</p>
 
@@ -228,7 +233,7 @@ group.users
     <link href="http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3/"/>
     <updated>2015-01-13T14:23:15+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3</id>
-    <content type="html"><![CDATA[<p>{%img right <a href="http://i.minus.com/ilSTmPNHVpVTm.png">http://i.minus.com/ilSTmPNHVpVTm.png</a> 320 %}</p>
+    <content type="html"><![CDATA[<p><img class="right <a" src="href="http://i.minus.com/ilSTmPNHVpVTm.png">http://i.minus.com/ilSTmPNHVpVTm.png</a>&#8221; width=&#8221;320&#8221;></p>
 
 <p>It&rsquo;s realy a tough week for me, because I&rsquo;m totally new to web development.
 There are lots of material need to be done:</p>
@@ -272,7 +277,7 @@ Moving to Lesson 4.</p>
     <link href="http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2/"/>
     <updated>2015-01-07T00:15:13+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2</id>
-    <content type="html"><![CDATA[<p>{% img right <a href="http://i.minus.com/ibnRw2O1pxsQam.png">http://i.minus.com/ibnRw2O1pxsQam.png</a> 320 %}</p>
+    <content type="html"><![CDATA[<p><img class="right <a" src="href="http://i.minus.com/ibnRw2O1pxsQam.png">http://i.minus.com/ibnRw2O1pxsQam.png</a>&#8221; width=&#8221;320&#8221;></p>
 
 <p>Although I have some option video not done yet, I want to share some of my reflection.</p>
 
@@ -303,7 +308,7 @@ But I do look forward to it.</p>
     <link href="http://www.tomohung.com/blog/2015/01/01/reflection-to-tealeaf-lesson-1/"/>
     <updated>2015-01-01T08:03:33+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/01/reflection-to-tealeaf-lesson-1</id>
-    <content type="html"><![CDATA[<p>{% img right <a href="http://i.minus.com/ibsevSRoOPCEmU.png">http://i.minus.com/ibsevSRoOPCEmU.png</a> 320 %}</p>
+    <content type="html"><![CDATA[<p><img class="right <a" src="href="http://i.minus.com/ibsevSRoOPCEmU.png">http://i.minus.com/ibsevSRoOPCEmU.png</a>&#8221; width=&#8221;320&#8221;></p>
 
 <p>Happy new year!!</p>
 

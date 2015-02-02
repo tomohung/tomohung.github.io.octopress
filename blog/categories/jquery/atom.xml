@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Jquery | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/jquery/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-02-02T05:21:29+00:00</updated>
+  <updated>2015-02-02T05:24:20+00:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -18,7 +18,7 @@
     <link href="http://www.tomohung.com/blog/2015/01/22/reflection-to-tealeaf-lesson-4/"/>
     <updated>2015-01-22T03:59:53+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/22/reflection-to-tealeaf-lesson-4</id>
-    <content type="html"><![CDATA[<p>{% img right <a href="http://i.minus.com/iS2bpDcNcj44W.jpg">http://i.minus.com/iS2bpDcNcj44W.jpg</a> 320 %}</p>
+    <content type="html"><![CDATA[<p><img class="right <a" src="href="http://i.minus.com/iS2bpDcNcj44W.jpg">http://i.minus.com/iS2bpDcNcj44W.jpg</a>&#8221; width=&#8221;320&#8221;></p>
 
 <p>To be honest, I still feel uncomfortable with this week. From week 3, I learned html &amp; css, to week 4, I learned jQuery &amp; Ajax. It&rsquo;s definitely not enough only rely on Codecademy&rsquo;s course, so I decide to do one more app, tic-tac-toe on wep. I think this should make me more comfortable with these lessons.</p>
 
