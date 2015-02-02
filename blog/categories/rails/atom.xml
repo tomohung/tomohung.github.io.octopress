@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-02-02T04:46:09+00:00</updated>
+  <updated>2015-02-02T05:21:29+00:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -19,6 +19,9 @@
     <updated>2015-01-30T08:13:42+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/30/tealeaf-course2-lesson1-quiz</id>
     <content type="html"><![CDATA[<p>Answer these quizzes, then updated after watching solution.</p>
+
+<!--more-->
+
 
 <ol>
 <li>Why do they call it a relational database?</li>
