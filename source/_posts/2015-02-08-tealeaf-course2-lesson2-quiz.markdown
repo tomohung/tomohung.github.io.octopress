@@ -15,7 +15,7 @@ categories: [rails, tealeaf]
   |---------|----------|-----------|-----------|
   |posts   |GET   |/posts   |posts#index   |
   |new_post   |GET   |/posts/new   |post#new   |
-  |   |POST   |/posts/:id   |post#create   |
+  |   |POST   |/posts   |post#create   |
   |post   |GET   |/posts/:id   |post#show   |
   |edit_post   |GET   |/posts/:id   |post#edit   |
   |   |PUT/PATCH   |/posts/:id   |post#update   |
@@ -25,7 +25,7 @@ categories: [rails, tealeaf]
 
 > ####2. What is REST and how does it relate to the resources routes?
 
-  REST is abbreviation for `Representational State Transfer`. It use a VERB and a URI to operate some action for web application. And it's corespond to 4 HTTP VERB: GET, POST, PUT, DELETE for 7 actions: index, show, new, create, edit, update, destroy.
+  REST is abbreviation for `Representational State Transfer`. It use a VERB and a URI to operate some action for web application. And it's corespond to 4 HTTP VERB: GET, POST, PUT, DELETE with 7 actions: index, show, new, create, edit, update, destroy.
 
 > ####3. What's the major difference between model backed and non-model backed form helpers?
 
@@ -35,16 +35,45 @@ categories: [rails, tealeaf]
 
 > ####4. How does form_for know how to build the <form> element?
 
-  There's a hidden attribute in form to record that what's action for this request. form_for regconize this hidden attribute to build <form> element.
+  form_for based on given object, like this:
+```
+  <%= form_for @posts do |f| %>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+    <%= f.submit %>
+  <% end %>
+```
+  There's a hidden attribute in form to record that what's action for this request. Rails regconize this hidden attribute to build <form> element. It will automatically create submit button by what action is called.
 
 > ####5. What's the general pattern we use in the actions that handle submission of model-backed forms (ie, the create and update actions)?
 
-  For creating a post: `POST posts/:id`
-  For updating a post: `PUT posts/:id`
+For creating a post: `POST /posts`
+```
+def create
+  @post = Post.new(params.require(:post).permit!)
+  if @post.save
+    redirect_to posts_path
+  else
+    render :new
+  end
+end  
+```
+  
+  For updating a post: `PUT /posts/:id`
+```
+def update
+  @post = Post.new(params.require(:post).permit!)
+  if @post.save
+    redirect_to post_path(@post)
+  else
+    render :edit
+  end
+end  
+```
 
 > ####6. How exactly do Rails validations get triggered? Where are the errors saved? How do we show the validation messages on the user interface?
 
-  Rails validations get triggered in Model, and errors save in Model.
+  Rails validations get triggered in Model(ActiveRecord::Base), and errors are saved in Model.
   We can use Model's method to show error messages like this:
 ```
   instance.errors.full_messages
@@ -53,16 +82,17 @@ categories: [rails, tealeaf]
 
 > ####7. What are Rails helpers?
 
-  Rails helpers is a way to practice DRY principle in Model or Controller, it abstract redundant codes in Models/Controllers into helpers for those controllers to use.
+  Rails helpers is a way to implement DRY principle in `View`, it abstract redundant **logic codes** in Views into helpers.
+This make code in View more cleaner without too much logic in it.
 
 > ####8. What are Rails partials?
 
-  Rails partials is a way to practice DRY principle in View, it abstract redundant code in Views into partial forms.
+  Rails partials is a way to implement DRY principle in `View`, it abstract redundant **HTML codes** in Views into partial forms.
 
 > ####9. When do we use partials vs helpers?
 
-  Partials is for Views, and helpers is for Models.
+  Partials is to eliminate repeatedly HTML codes in Views, and helpers is to eliminate repeatedly logic codes in Views.
 
 > ####10. When do we use non-model backed forms?
 
-  Some input or showing element is not associated with tables in database.
+  Some input or showing requirements do not need to be associated with tables in database.
