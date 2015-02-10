@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tealeaf | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/tealeaf/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-02-10T09:27:55+00:00</updated>
+  <updated>2015-02-10T09:38:46+00:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -105,7 +105,7 @@
 
 <blockquote><h4>5. What&rsquo;s the general pattern we use in the actions that handle submission of model-backed forms (ie, the create and update actions)?</h4></blockquote>
 
-<p>For creating a post: <code>POST posts</code>
+<p>For creating a post: <code>POST /posts</code>
 <code>
 def create
   @post = Post.new(params.require(:post).permit!)
@@ -114,9 +114,10 @@ def create
   else
     render :new
   end
+end  
 </code></p>
 
-<p>  For updating a post: <code>PUT posts/:id</code>
+<p>  For updating a post: <code>PUT /posts/:id</code>
 <code>
 def update
   @post = Post.new(params.require(:post).permit!)
@@ -125,11 +126,12 @@ def update
   else
     render :edit
   end
+end  
 </code></p>
 
 <blockquote><h4>6. How exactly do Rails validations get triggered? Where are the errors saved? How do we show the validation messages on the user interface?</h4></blockquote>
 
-<p>  Rails validations get triggered in Model, and errors save in Model.
+<p>  Rails validations get triggered in Model(ActiveRecord::Base), and errors are saved in Model.
   We can use Model&rsquo;s method to show error messages like this:
 <code>
   instance.errors.full_messages
@@ -143,15 +145,15 @@ This make code in View more cleaner without too much logic in it.</p>
 
 <blockquote><h4>8. What are Rails partials?</h4></blockquote>
 
-<p>  Rails partials is a way to implement DRY principle in <code>View</code>, it abstract redundant <strong>HTML code</strong> in Views into partial forms.</p>
+<p>  Rails partials is a way to implement DRY principle in <code>View</code>, it abstract redundant <strong>HTML codes</strong> in Views into partial forms.</p>
 
 <blockquote><h4>9. When do we use partials vs helpers?</h4></blockquote>
 
-<p>  Partials is to eliminate repeatedly HTML code in Views, and helpers is to eliminate repeatedly logic code in Views.</p>
+<p>  Partials is to eliminate repeatedly HTML codes in Views, and helpers is to eliminate repeatedly logic codes in Views.</p>
 
 <blockquote><h4>10. When do we use non-model backed forms?</h4></blockquote>
 
-<p>  Some input or showing element is not associated with tables in database.</p>
+<p>  Some input or showing requirements do not need to be associated with tables in database.</p>
 ]]></content>
   </entry>
   
