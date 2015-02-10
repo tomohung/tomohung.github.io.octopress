@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Nitrous | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/nitrous/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-02-10T09:38:46+00:00</updated>
+  <updated>2015-02-10T22:03:23+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[在Nitrous上寫Octopress]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io/"/>
-    <updated>2015-01-16T13:10:08+00:00</updated>
+    <updated>2015-01-16T21:10:08+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io</id>
     <content type="html"><![CDATA[<h3>Octopress &amp; github</h3>
 
@@ -89,7 +89,7 @@ $ git pull origin master  # 更新 local master branch
   <entry>
     <title type="html"><![CDATA[nitrous.io 開發環境]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing/"/>
-    <updated>2015-01-11T13:26:49+00:00</updated>
+    <updated>2015-01-11T21:26:49+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing</id>
     <content type="html"><![CDATA[<p><img class="<a" src="href="http://i.minus.com/iyZNw6vDZnJa6.png">http://i.minus.com/iyZNw6vDZnJa6.png</a>&#8221; width=&#8221;800&#8221;></p>
 
