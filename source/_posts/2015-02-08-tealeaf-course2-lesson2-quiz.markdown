@@ -31,7 +31,7 @@ categories: [rails, tealeaf]
 
   `Model backed form` from helpers like `form_for`, it can automatically association with objects in table, and it can dynamic generate coresponding element for different actions(ex. edit and new).
 
-  `Model backed form` from helpers like `form_tag`, it operate elements without relationship of tables in database.
+  `Non-model backed form` from helpers like `form_tag`, it operate elements without relationship of tables in database.
 
 > ####4. How does form_for know how to build the <form> element?
 
