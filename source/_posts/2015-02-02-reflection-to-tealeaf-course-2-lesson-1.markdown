@@ -3,7 +3,7 @@ layout: post
 title: "Reflection to Tealeaf Course 2 Lesson 1"
 date: 2015-02-02 08:05:05 +0000
 comments: true
-categories: 
+categories: [rails, tealeaf]
 ---
 
 Finally, Rails is coming.

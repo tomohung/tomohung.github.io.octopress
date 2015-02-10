@@ -3,7 +3,7 @@ layout: post
 title: "Tealeaf Course2 Lesson2 Quiz"
 date: 2015-02-08 14:13:48 +0800
 comments: true
-categories: 
+categories: [rails, tealeaf]
 ---
 
 
