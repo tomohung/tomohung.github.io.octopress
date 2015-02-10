@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-02-10T22:03:23+08:00</updated>
+  <updated>2015-02-10T22:24:47+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -258,7 +258,7 @@ end
 
 <p>  <code>Model backed form</code> from helpers like <code>form_for</code>, it can automatically association with objects in table, and it can dynamic generate coresponding element for different actions(ex. edit and new).</p>
 
-<p>  <code>Model backed form</code> from helpers like <code>form_tag</code>, it operate elements without relationship of tables in database.</p>
+<p>  <code>Non-model backed form</code> from helpers like <code>form_tag</code>, it operate elements without relationship of tables in database.</p>
 
 <blockquote><h4>4. How does form_for know how to build the <form> element?</h4></blockquote>
 
