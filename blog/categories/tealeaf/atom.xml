@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tealeaf | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/tealeaf/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-02-02T22:21:48+08:00</updated>
+  <updated>2015-02-10T09:27:55+00:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -14,9 +14,151 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Tealeaf Course2 Lesson2 Quiz]]></title>
+    <link href="http://www.tomohung.com/blog/2015/02/08/tealeaf-course2-lesson2-quiz/"/>
+    <updated>2015-02-08T06:13:48+00:00</updated>
+    <id>http://www.tomohung.com/blog/2015/02/08/tealeaf-course2-lesson2-quiz</id>
+    <content type="html"><![CDATA[<blockquote><h4>1. Name all the 7 (or 8) routes exposed by the resources keyword in the routes.rb file. Also name the 4 named routes, and how the request is routed to the controller/action.</h4></blockquote>
+
+<p>  For example by table <code>posts</code>:</p>
+
+<table>
+<thead>
+<tr>
+<th>Prefix   </th>
+<th>Verb   </th>
+<th>URI   </th>
+<th>Controller#Action   </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>posts   </td>
+<td>GET   </td>
+<td>/posts   </td>
+<td>posts#index   </td>
+</tr>
+<tr>
+<td>new_post   </td>
+<td>GET   </td>
+<td>/posts/new   </td>
+<td>post#new   </td>
+</tr>
+<tr>
+<td>   </td>
+<td>POST   </td>
+<td>/posts   </td>
+<td>post#create   </td>
+</tr>
+<tr>
+<td>post   </td>
+<td>GET   </td>
+<td>/posts/:id   </td>
+<td>post#show   </td>
+</tr>
+<tr>
+<td>edit_post   </td>
+<td>GET   </td>
+<td>/posts/:id   </td>
+<td>post#edit   </td>
+</tr>
+<tr>
+<td>   </td>
+<td>PUT/PATCH   </td>
+<td>/posts/:id   </td>
+<td>post#update   </td>
+</tr>
+<tr>
+<td>   </td>
+<td>DELETE   </td>
+<td>/posts/:id   </td>
+<td>post#destroy   </td>
+</tr>
+</tbody>
+</table>
+
+
+<!--more-->
+
+
+<blockquote><h4>2. What is REST and how does it relate to the resources routes?</h4></blockquote>
+
+<p>  REST is abbreviation for <code>Representational State Transfer</code>. It use a VERB and a URI to operate some action for web application. And it&rsquo;s corespond to 4 HTTP VERB: GET, POST, PUT, DELETE with 7 actions: index, show, new, create, edit, update, destroy.</p>
+
+<blockquote><h4>3. What&rsquo;s the major difference between model backed and non-model backed form helpers?</h4></blockquote>
+
+<p>  <code>Model backed form</code> from helpers like <code>form_for</code>, it can automatically association with objects in table, and it can dynamic generate coresponding element for different actions(ex. edit and new).</p>
+
+<p>  <code>Model backed form</code> from helpers like <code>form_tag</code>, it operate elements without relationship of tables in database.</p>
+
+<blockquote><h4>4. How does form_for know how to build the <form> element?</h4></blockquote>
+
+<p>  form_for based on given object, like this:
+<code>
+  &lt;%= form_for @posts do |f| %&gt;
+    &lt;%= f.label :title %&gt;
+    &lt;%= f.text_field :title %&gt;
+    &lt;%= f.submit %&gt;
+  &lt;% end %&gt;
+</code>
+  There&rsquo;s a hidden attribute in form to record that what&rsquo;s action for this request. Rails regconize this hidden attribute to build <form> element. It will automatically create submit button by what action is called.</p>
+
+<blockquote><h4>5. What&rsquo;s the general pattern we use in the actions that handle submission of model-backed forms (ie, the create and update actions)?</h4></blockquote>
+
+<p>For creating a post: <code>POST posts</code>
+<code>
+def create
+  @post = Post.new(params.require(:post).permit!)
+  if @post.save
+    redirect_to posts_path
+  else
+    render :new
+  end
+</code></p>
+
+<p>  For updating a post: <code>PUT posts/:id</code>
+<code>
+def update
+  @post = Post.new(params.require(:post).permit!)
+  if @post.save
+    redirect_to post_path(@post)
+  else
+    render :edit
+  end
+</code></p>
+
+<blockquote><h4>6. How exactly do Rails validations get triggered? Where are the errors saved? How do we show the validation messages on the user interface?</h4></blockquote>
+
+<p>  Rails validations get triggered in Model, and errors save in Model.
+  We can use Model&rsquo;s method to show error messages like this:
+<code>
+  instance.errors.full_messages
+</code>
+  which instance is Model&rsquo;s instance.</p>
+
+<blockquote><h4>7. What are Rails helpers?</h4></blockquote>
+
+<p>  Rails helpers is a way to implement DRY principle in <code>View</code>, it abstract redundant <strong>logic codes</strong> in Views into helpers.
+This make code in View more cleaner without too much logic in it.</p>
+
+<blockquote><h4>8. What are Rails partials?</h4></blockquote>
+
+<p>  Rails partials is a way to implement DRY principle in <code>View</code>, it abstract redundant <strong>HTML code</strong> in Views into partial forms.</p>
+
+<blockquote><h4>9. When do we use partials vs helpers?</h4></blockquote>
+
+<p>  Partials is to eliminate repeatedly HTML code in Views, and helpers is to eliminate repeatedly logic code in Views.</p>
+
+<blockquote><h4>10. When do we use non-model backed forms?</h4></blockquote>
+
+<p>  Some input or showing element is not associated with tables in database.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Newbie for Rails Migration]]></title>
     <link href="http://www.tomohung.com/blog/2015/02/02/newbie-for-rails-migration/"/>
-    <updated>2015-02-02T21:46:35+08:00</updated>
+    <updated>2015-02-02T13:46:35+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/02/02/newbie-for-rails-migration</id>
     <content type="html"><![CDATA[<p>As a newbie for Rails, It&rsquo;s normal to do something stupid.</p>
 
@@ -59,9 +201,42 @@ end
   </entry>
   
   <entry>
+    <title type="html"><![CDATA[Reflection to Tealeaf Course 2 Lesson 1]]></title>
+    <link href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/"/>
+    <updated>2015-02-02T08:05:05+00:00</updated>
+    <id>http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1</id>
+    <content type="html"><![CDATA[<p>Finally, Rails is coming.</p>
+
+<p>Before join Tealeaf, I&rsquo;ve tried few times to follow some rails guide books. I just can type some magic codes to build simplest web app but didn&rsquo;t know why at all, because I even didn&rsquo;t know what ruby is.</p>
+
+<p>This time, passing through course 1, I knew what the ruby is, then following <a href="http://guides.rubyonrails.org/getting_started.html">official tour guide</a>, it&rsquo;s much clear than other books I&rsquo;ve seen. But I still got stuck on creating many-to-many relationship, because I made a stupid mistake here: <em>I modified migration file after running <code>rake db:migrate</code></em>.</p>
+
+<p>Then I dived into solution videos, and Chirs said that:</p>
+
+<blockquote><p>Don&rsquo;t use <code>rails generate</code> except <code>migration</code></p></blockquote>
+
+<p>I do love this way, because:</p>
+
+<ol>
+<li><p>I never saw other&rsquo;s show this way to build migration, they always use <code>rails generate model</code> to create model and migration. And the problem is, I thought this is the only way to create models and migrations!! And I just thought this is Rails magic, I don&rsquo;t need to think too much.</p></li>
+<li><p>When I got stuck because I didn&rsquo;t know I can&rsquo;t modified migration files after running <code>rake db:migrate</code>. Make sure migration setting is all done before running <code>rake db:migrate</code> is very important. And this is just for ActiveRecord layer, database is another layer. It&rsquo;s much easier to understand how could be a disaster to modified/delete migration files working with database layer.</p></li>
+</ol>
+
+
+<p>I make <a href="http://www.tomohung.com/blog/2015/02/02/newbie-for-rails-migration/">a post to record my big step for Rails</a>.</p>
+
+<p>I also try to detect tealeaf discus panel, becuase I think it&rsquo;s better to <code>show who kudos this post</code>. Sometimes I just want to give a kudos for people reply my post without saying something more, but it&rsquo;s wierd for others to read this post, because they can&rsquo;t see kudos I already gave the post. Anyway, here is my ERD for discuss panel.</p>
+
+<p><img class="<a" src="href="http://i.minus.com/ibfrZjiBfElndg.jpg">http://i.minus.com/ibfrZjiBfElndg.jpg</a>&#8221;></p>
+
+<p>I&rsquo;m super satisfied that this week I found my mistake when using migrations, and I think there must be other mistake for controller&rsquo;s and view&rsquo;s. Moving to next lesson!!</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Tealeaf Course2 Lesson1 Quiz]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/30/tealeaf-course2-lesson1-quiz/"/>
-    <updated>2015-01-30T16:13:42+08:00</updated>
+    <updated>2015-01-30T08:13:42+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/30/tealeaf-course2-lesson1-quiz</id>
     <content type="html"><![CDATA[<p>Answer these quizzes, then updated after watching solution.</p>
 
@@ -286,7 +461,7 @@ end
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Lesson 4]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/22/reflection-to-tealeaf-lesson-4/"/>
-    <updated>2015-01-22T11:59:53+08:00</updated>
+    <updated>2015-01-22T03:59:53+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/22/reflection-to-tealeaf-lesson-4</id>
     <content type="html"><![CDATA[<p><img class="right <a" src="href="http://i.minus.com/iS2bpDcNcj44W.jpg">http://i.minus.com/iS2bpDcNcj44W.jpg</a>&#8221; width=&#8221;320&#8221;></p>
 
@@ -307,81 +482,6 @@ end
 <p>One more thing, I thought I could be a full stack web developer before this course, then I knew I&rsquo;m wrong. There are a lot of knowledge in front end.</p>
 
 <p>And now I have to keep focus on back end.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Week 3]]></title>
-    <link href="http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3/"/>
-    <updated>2015-01-13T22:23:15+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3</id>
-    <content type="html"><![CDATA[<p><img class="right <a" src="href="http://i.minus.com/ilSTmPNHVpVTm.png">http://i.minus.com/ilSTmPNHVpVTm.png</a>&#8221; width=&#8221;320&#8221;></p>
-
-<p>It&rsquo;s realy a tough week for me, because I&rsquo;m totally new to web development.
-There are lots of material need to be done:</p>
-
-<ul>
-<li>One new concept book: HTTP <a href="https://www.gotealeaf.com/books/http">https://www.gotealeaf.com/books/http</a></li>
-<li>Two new languages: HTML &amp; CSS <a href="http://www.codecademy.com/tracks/htmlcss">http://www.codecademy.com/tracks/htmlcss</a></li>
-<li>Two new frameworks: <a href="http://www.sinatrarb.com/intro.html">Sinatra</a> &amp; <a href="http://getbootstrap.com/">bootstrap</a></li>
-</ul>
-
-
-<p>I think the most important thing in this week is &ldquo;HTTP is stateless&rdquo;.</p>
-
-<p>And using Sinatra show me this property explicit.</p>
-
-<p>Every request in main.rb is independant with each other, using instance variables to store data only survive its scope.</p>
-
-<p>I also write a brief post to memo this property<a href="http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra/">(HTTP is Stateless)</a>.
-Using chache is another way to feel free in thinking programming in the old way.</p>
-
-<p>Though I still use class to complete this assignment, I feel comfortable with this, because I don&rsquo;t need to make a wheel again.</p>
-
-<p>The first struggle in this week is when I saw something like <code>&lt;form action..../&gt;</code>, I have no idea what&rsquo;s this?! because HTML &amp; CSS course in codecademy never metion this. After google that, I found there are plenty of other syntax I didn&rsquo;t know, <a href="http://www.w3schools.com/html/html5_intro.asp">w3shool</a> help me to know more about HTML.</p>
-
-<p>Another struggle is Sinatra, when I first time read the intro, I totally had no idea what those nouns mean. <code>get '/' {}</code> seems not a nature ruby way; what <code>get</code> <code>post</code> are ??</p>
-
-<p>Following with video and implement functions and pages, then I read Sinatra intro again, this time I feel much clear what its said.</p>
-
-<p>Another horrible thing is on viewing video introduce to modern web development. There are so many tools, concepts, languages need to know. Wow&hellip;</p>
-
-<p>To be a web development, I know I have to keep going.
-Moving to Lesson 4.</p>
-
-<p>Finally, here is my blog talking about Reflections for tealeaf lessons.
-<a href="http://www.tomohung.com/blog/categories/tealeaf/">http://www.tomohung.com/blog/categories/tealeaf/</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection of Tealeaf Week 2]]></title>
-    <link href="http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2/"/>
-    <updated>2015-01-07T08:15:13+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2</id>
-    <content type="html"><![CDATA[<p><img class="right <a" src="href="http://i.minus.com/ibnRw2O1pxsQam.png">http://i.minus.com/ibnRw2O1pxsQam.png</a>&#8221; width=&#8221;320&#8221;></p>
-
-<p>Although I have some option video not done yet, I want to share some of my reflection.</p>
-
-<p>When I came to lesson 2, first I found that discussion is less than lesson 1 obviously. I think this imply the lesson OOP is harder than before. Thank god I finished three assignments in a week, how I can do this is because:</p>
-
-<ol>
-<li><p>As a C++ programmer, OOP concept is also the same in Ruby, like inheritance, polymorphism, composition&hellip;etc. Since I have some experience to OOP, familiar with Ruby&rsquo;s style is not a hard work for me.</p></li>
-<li><p><a href="http://www.gotealeaf.com/books/oo_ruby"><code>Object Oriented Program book</code></a> is fantastic!! I spent one night to read it, then next day I can just start to implement my idea without too much struggles. It clearly explain the relationship between <code>is-a</code> and <code>has-a</code> corresponding to inheritance and mixin.</p></li>
-</ol>
-
-
-<p>And I do fall in love with Ruby, <code>convention</code> is over configuration becomes nature. In lesson 1, it&rsquo;s weird for me to pass a variable into method, but modified or not depends on what actions in the method. Now I start to think it&rsquo;s convenient to decide modified the variable in the method.
-<code>attr_accessor</code> is another kind of example, default getter and setter helps a lot to reduce typing time.</p>
-
-<p>Using polymorphism, I don&rsquo;t need to care about how using virtual function, just inheritance class then use it.
-Especially for method <code>super</code>, the best way to reduce redundant code.
-One suggestion, If subclass&rsquo;s initialize method doesn&rsquo;t use super, then you might think the superclass and subclass relationship is <code>has-a</code>, not <code>is-a</code>.</p>
-
-<p>I do love my <a href="https://github.com/tomohung/tealeaf/blob/master/Lesson2/oo_tic_tac_toe.rb">Tic-Tac-Toe</a> and <a href="https://github.com/tomohung/tealeaf/blob/master/Lesson2/oo_blackjack.rb">Black Jack</a> implemented by OO. In Tic-Tac-Toe, I use polymorphism to implement single player and double players mode. In Black Jack, I add feature that player can play with others NPC together, not just with dealer. This make the game likely in the real world. Without OO concept, these features are hard to implement.</p>
-
-<p>Next lesson is absolutely my challenge, because I&rsquo;m totally new for web development.
-But I do look forward to it.</p>
 ]]></content>
   </entry>
   

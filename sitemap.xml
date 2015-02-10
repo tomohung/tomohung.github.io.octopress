@@ -1,112 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://www.tomohung.com/blog/2015/02/08/tealeaf-course2-lesson2-quiz/</loc>
+    <lastmod>2015-02-08T06:13:48+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>http://www.tomohung.com/blog/2015/02/02/newbie-for-rails-migration/</loc>
-    <lastmod>2015-02-02T21:46:35+08:00</lastmod>
+    <lastmod>2015-02-02T13:46:35+00:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/</loc>
-    <lastmod>2015-02-02T16:05:05+08:00</lastmod>
+    <lastmod>2015-02-02T08:05:05+00:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://www.tomohung.com/blog/2015/01/30/tealeaf-course2-lesson1-quiz/</loc>
-    <lastmod>2015-01-30T16:13:42+08:00</lastmod>
+    <lastmod>2015-01-30T08:13:42+00:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://www.tomohung.com/blog/2015/01/22/reflection-to-tealeaf-lesson-4/</loc>
-    <lastmod>2015-01-22T11:59:53+08:00</lastmod>
+    <lastmod>2015-01-22T03:59:53+00:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io/</loc>
-    <lastmod>2015-01-16T21:10:08+08:00</lastmod>
+    <lastmod>2015-01-16T13:10:08+00:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra/</loc>
-    <lastmod>2015-01-14T21:25:15+08:00</lastmod>
+    <lastmod>2015-01-14T13:25:15+00:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3/</loc>
-    <lastmod>2015-01-13T22:23:15+08:00</lastmod>
+    <lastmod>2015-01-13T14:23:15+00:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://www.tomohung.com/blog/2015/01/12/yi-makers-schedule-managers-schedule/</loc>
-    <lastmod>2015-01-12T06:30:34+08:00</lastmod>
+    <loc>http://www.tomohung.com/blog/2015/01/11/yi-makers-schedule-managers-schedule/</loc>
+    <lastmod>2015-01-11T22:30:34+00:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing/</loc>
-    <lastmod>2015-01-11T21:26:49+08:00</lastmod>
+    <lastmod>2015-01-11T13:26:49+00:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2/</loc>
-    <lastmod>2015-01-07T08:15:13+08:00</lastmod>
+    <lastmod>2015-01-07T00:15:13+00:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://www.tomohung.com/blog/2015/01/01/reflection-to-tealeaf-lesson-1/</loc>
-    <lastmod>2015-01-01T16:03:33+08:00</lastmod>
+    <lastmod>2015-01-01T08:03:33+00:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://www.tomohung.com/blog/2014/12/15/yu-yan-guan-li-xu/</loc>
-    <lastmod>2014-12-15T20:34:40+08:00</lastmod>
+    <lastmod>2014-12-15T12:34:40+00:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://www.tomohung.com/blog/2014/12/12/language-management/</loc>
-    <lastmod>2014-12-12T05:32:48+08:00</lastmod>
+    <loc>http://www.tomohung.com/blog/2014/12/11/language-management/</loc>
+    <lastmod>2014-12-11T21:32:48+00:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://www.tomohung.com/blog/2014/12/09/why-do-software-engineers-make-so-much/</loc>
-    <lastmod>2014-12-09T20:51:53+08:00</lastmod>
+    <lastmod>2014-12-09T12:51:53+00:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://www.tomohung.com/blog/2014/12/06/what-do-mainland-chinese-people-think-of-the-democracy-in-taiwan/</loc>
-    <lastmod>2014-12-06T21:48:36+08:00</lastmod>
+    <lastmod>2014-12-06T13:48:36+00:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://www.tomohung.com/blog/2014/12/06/whats-it-like-to-have-a-150-iq-is-life-really-easy/</loc>
-    <lastmod>2014-12-06T21:37:12+08:00</lastmod>
+    <lastmod>2014-12-06T13:37:12+00:00</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>http://www.tomohung.com/blog/</loc>
-    <lastmod>2015-02-02T22:21:48+08:00</lastmod>
+    <loc>http://www.tomohung.com/</loc>
+    <lastmod>2015-02-10T09:27:55+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>http://www.tomohung.com/archives/</loc>
+    <lastmod>2015-02-10T09:27:55+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://www.tomohung.com/archives/</loc>
-    <lastmod>2015-02-02T22:21:48+08:00</lastmod>
+    <loc>http://www.tomohung.com/blog/</loc>
+    <lastmod>2015-02-10T09:27:55+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://www.tomohung.com/blog/archives/</loc>
-    <lastmod>2015-02-02T22:21:48+08:00</lastmod>
+    <lastmod>2015-02-10T09:27:55+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>http://www.tomohung.com/</loc>
-    <lastmod>2015-02-02T22:21:48+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
     <loc>http://www.tomohung.com/about/</loc>
-    <lastmod>2015-02-02T22:21:48+08:00</lastmod>
+    <lastmod>2015-02-10T09:27:55+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

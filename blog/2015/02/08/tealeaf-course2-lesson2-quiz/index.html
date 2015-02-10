@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>在Nitrous上寫Octopress - The Life Alchemist</title>
+  <title>Tealeaf Course2 Lesson2 Quiz - The Life Alchemist</title>
   <meta name="author" content="Tomo">
 
   
@@ -14,15 +14,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io">
+  <link rel="canonical" href="http://www.tomohung.com/blog/2015/02/08/tealeaf-course2-lesson2-quiz">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="The Life Alchemist" type="application/atom+xml">
 
   <!-- http://opengraphprotocol.org/ -->
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io">
-  <meta property="og:title" content="在Nitrous上寫Octopress - The Life Alchemist">
+  <meta property="og:url" content="http://www.tomohung.com/blog/2015/02/08/tealeaf-course2-lesson2-quiz">
+  <meta property="og:title" content="Tealeaf Course2 Lesson2 Quiz - The Life Alchemist">
   
 
   <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
@@ -126,101 +126,175 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-16T13:10:08+00:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-16</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-02-08T06:13:48+00:00"  data-updated="true" itemprop="datePublished dateCreated">2015-02-08</time>
         
       </p>
     
     
     <h1 class="entry-title" itemprop="name headline">
-        在Nitrous上寫Octopress
+        Tealeaf Course2 Lesson2 Quiz
         
     </h1>
     
   </header>
 
 
-<div class="entry-content clearfix" itemprop="articleBody description"><h3>Octopress &amp; github</h3>
+<div class="entry-content clearfix" itemprop="articleBody description"><blockquote><h4>1. Name all the 7 (or 8) routes exposed by the resources keyword in the routes.rb file. Also name the 4 named routes, and how the request is routed to the controller/action.</h4></blockquote>
 
-<p>這個部落格是用<a href="octopress.rog">Octopress</a>在<a href="github.com">github</a>上建立起來的。但是不像一般的部落格系統，可以只要用瀏覽器登入，就可以開始寫文章。不過既然知道<a href="nitrous.io">nitrous.io</a>可以雲端工作，所以就把腦筋動到它的上面去。</p>
+<p>  For example by table <code>posts</code>:</p>
 
-<h3>Clone Octopress</h3>
+<table>
+<thead>
+<tr>
+<th>Prefix   </th>
+<th>Verb   </th>
+<th>URI   </th>
+<th>Controller#Action   </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>posts   </td>
+<td>GET   </td>
+<td>/posts   </td>
+<td>posts#index   </td>
+</tr>
+<tr>
+<td>new_post   </td>
+<td>GET   </td>
+<td>/posts/new   </td>
+<td>post#new   </td>
+</tr>
+<tr>
+<td>   </td>
+<td>POST   </td>
+<td>/posts   </td>
+<td>post#create   </td>
+</tr>
+<tr>
+<td>post   </td>
+<td>GET   </td>
+<td>/posts/:id   </td>
+<td>post#show   </td>
+</tr>
+<tr>
+<td>edit_post   </td>
+<td>GET   </td>
+<td>/posts/:id   </td>
+<td>post#edit   </td>
+</tr>
+<tr>
+<td>   </td>
+<td>PUT/PATCH   </td>
+<td>/posts/:id   </td>
+<td>post#update   </td>
+</tr>
+<tr>
+<td>   </td>
+<td>DELETE   </td>
+<td>/posts/:id   </td>
+<td>post#destroy   </td>
+</tr>
+</tbody>
+</table>
 
-<p>作法是參考<a href="http://blog.zerosharp.com/clone-your-octopress-to-blog-from-two-places/">這篇文章</a>。</p>
-
-<p>但是其中的程式碼有點錯誤，因為github上存放網頁的位置己經改成github.io了。</p>
 
 <!--more-->
 
 
-<p>登入nitrous.io，開啟終端機畫面：
-註：不會用可以參考<a href="http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing/">這個連結</a></p>
+<blockquote><h4>2. What is REST and how does it relate to the resources routes?</h4></blockquote>
 
-<p>輸入</p>
+<p>  REST is abbreviation for <code>Representational State Transfer</code>. It use a VERB and a URI to operate some action for web application. And it&rsquo;s corespond to 4 HTTP VERB: GET, POST, PUT, DELETE with 7 actions: index, show, new, create, edit, update, destroy.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git clone -b source git@github.com:username/username.github.io.git octopress</span></code></pre></td></tr></table></div></figure>
+<blockquote><h4>3. What&rsquo;s the major difference between model backed and non-model backed form helpers?</h4></blockquote>
 
+<p>  <code>Model backed form</code> from helpers like <code>form_for</code>, it can automatically association with objects in table, and it can dynamic generate coresponding element for different actions(ex. edit and new).</p>
 
-<p>然後clone master branch到_deploy資料夾</p>
+<p>  <code>Model backed form</code> from helpers like <code>form_tag</code>, it operate elements without relationship of tables in database.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ cd octopress
-</span><span class='line'>$ git clone git@github.com:username/username.github.io.git _deploy </span></code></pre></td></tr></table></div></figure>
+<blockquote><h4>4. How does form_for know how to build the <form> element?</h4></blockquote>
 
-
-<p>說明一下，branch <strong>source</strong> 就是存放原始資料，branch <strong>master</strong> 放的是rake後產生的資料，再上傳至github讓它來處理。</p>
-
-<p>接著在nitrous安裝需要的gem</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ gem install bundler
-</span><span class='line'>$ bundle install
-</span><span class='line'>$ rake setup_github_pages</span></code></pre></td></tr></table></div></figure>
-
-
-<p>輸入相關資料，這邊跟octopress上的安裝說明都是一樣的。
-然後所有資料就會從github上完整的clone一份到nitrous上。</p>
-
-<h3>Backup &amp; Sync</h3>
-
-<p>每次寫完文章，最重要的是要記得備份。</p>
-
-<p><code>rake deploy</code>就不用擔心，因為它就是把branch master上傳到github上。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake generate
-</span><span class='line'>$ rake deploy             # 更新 remote master branch</span></code></pre></td></tr></table></div></figure>
-
-
-<p>但是branch source就要自己處理：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git add .
-</span><span class='line'>$ git commit -m "message" 
-</span><span class='line'>$ git push origin source  # 更新 remote source branch </span></code></pre></td></tr></table></div></figure>
-
-
-<p>這樣子可以確保github上版本是最新的。</p>
-
-<p>然後如果要在本機做完到nitrous做，或者是nitrous做完回本機，記得pull branch source 和 master。</p>
+<p>  form_for based on given object, like this:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ cd octopress
-</span><span class='line'>$ git pull origin source  # 更新 local source branch
-</span><span class='line'>$ cd ./_deploy
-</span><span class='line'>$ git pull origin master  # 更新 local master branch</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  &lt;%= form_for @posts do |f| %&gt;
+</span><span class='line'>    &lt;%= f.label :title %&gt;
+</span><span class='line'>    &lt;%= f.text_field :title %&gt;
+</span><span class='line'>    &lt;%= f.submit %&gt;
+</span><span class='line'>  &lt;% end %&gt;</span></code></pre></td></tr></table></div></figure>
 
 
-<p>這樣子就算是在外面用別台電腦，也能夠透過nitrous來blog一下了，不錯吧！</p>
+<p>  There&rsquo;s a hidden attribute in form to record that what&rsquo;s action for this request. Rails regconize this hidden attribute to build <form> element. It will automatically create submit button by what action is called.</p>
+
+<blockquote><h4>5. What&rsquo;s the general pattern we use in the actions that handle submission of model-backed forms (ie, the create and update actions)?</h4></blockquote>
+
+<p>For creating a post: <code>POST posts</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def create
+</span><span class='line'>  @post = Post.new(params.require(:post).permit!)
+</span><span class='line'>  if @post.save
+</span><span class='line'>    redirect_to posts_path
+</span><span class='line'>  else
+</span><span class='line'>    render :new
+</span><span class='line'>  end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  For updating a post: <code>PUT posts/:id</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def update
+</span><span class='line'>  @post = Post.new(params.require(:post).permit!)
+</span><span class='line'>  if @post.save
+</span><span class='line'>    redirect_to post_path(@post)
+</span><span class='line'>  else
+</span><span class='line'>    render :edit
+</span><span class='line'>  end</span></code></pre></td></tr></table></div></figure>
+
+
+<blockquote><h4>6. How exactly do Rails validations get triggered? Where are the errors saved? How do we show the validation messages on the user interface?</h4></blockquote>
+
+<p>  Rails validations get triggered in Model, and errors save in Model.
+  We can use Model&rsquo;s method to show error messages like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  instance.errors.full_messages</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  which instance is Model&rsquo;s instance.</p>
+
+<blockquote><h4>7. What are Rails helpers?</h4></blockquote>
+
+<p>  Rails helpers is a way to implement DRY principle in <code>View</code>, it abstract redundant <strong>logic codes</strong> in Views into helpers.
+This make code in View more cleaner without too much logic in it.</p>
+
+<blockquote><h4>8. What are Rails partials?</h4></blockquote>
+
+<p>  Rails partials is a way to implement DRY principle in <code>View</code>, it abstract redundant <strong>HTML code</strong> in Views into partial forms.</p>
+
+<blockquote><h4>9. When do we use partials vs helpers?</h4></blockquote>
+
+<p>  Partials is to eliminate repeatedly HTML code in Views, and helpers is to eliminate repeatedly logic code in Views.</p>
+
+<blockquote><h4>10. When do we use non-model backed forms?</h4></blockquote>
+
+<p>  Some input or showing element is not associated with tables in database.</p>
 </div>
 
 
@@ -244,13 +318,13 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-16T13:10:08+00:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-16</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-02-08T06:13:48+00:00"  data-updated="true" itemprop="datePublished dateCreated">2015-02-08</time>
           
 
 <span class="glyphicon glyphicon-tags"></span>&nbsp;
 <span class="categories">
   
-    <a class='category' href='/blog/categories/github/'>github</a>, <a class='category' href='/blog/categories/nitrous/'>nitrous</a>, <a class='category' href='/blog/categories/octorpress/'>octorpress</a>
+    <a class='category' href='/blog/categories/rails/'>rails</a>, <a class='category' href='/blog/categories/tealeaf/'>tealeaf</a>
   
 </span>
 
@@ -259,7 +333,7 @@
         
           <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/02/08/tealeaf-course2-lesson2-quiz/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/02/08/tealeaf-course2-lesson2-quiz/" >Tweet</a>
   
   
   
@@ -271,10 +345,8 @@
         
           <ul class="meta text-muted pager">
             
-            <li class="previous"><a href="/blog/2015/01/14/show-http-is-stateless-by-sinatra/" title="Previous Post: show HTTP is stateless by Sinatra">&laquo; show HTTP is stateless by Sinatra</a></li>
+            <li class="previous"><a href="/blog/2015/02/02/newbie-for-rails-migration/" title="Previous Post: Newbie for Rails Migration">&laquo; Newbie for Rails Migration</a></li>
             
-            
-            <li class="next"><a href="/blog/2015/01/22/reflection-to-tealeaf-lesson-4/" title="Next Post: Reflection to Tealeaf Lesson 4">Reflection to Tealeaf Lesson 4 &raquo;</a></li>
             
           </ul>
         
@@ -305,7 +377,7 @@
   
   <div id="recent_posts" class="list-group">
     
-    <a class="list-group-item " href="/blog/2015/02/08/tealeaf-course2-lesson2-quiz/">Tealeaf Course2 Lesson2 Quiz</a>
+    <a class="list-group-item active" href="/blog/2015/02/08/tealeaf-course2-lesson2-quiz/">Tealeaf Course2 Lesson2 Quiz</a>
     
     <a class="list-group-item " href="/blog/2015/02/02/newbie-for-rails-migration/">Newbie for Rails Migration</a>
     
@@ -349,8 +421,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io/';
-        var disqus_url = 'http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io/';
+        var disqus_identifier = 'http://www.tomohung.com/blog/2015/02/08/tealeaf-course2-lesson2-quiz/';
+        var disqus_url = 'http://www.tomohung.com/blog/2015/02/08/tealeaf-course2-lesson2-quiz/';
         var disqus_script = 'embed.js';
       
     (function () {
