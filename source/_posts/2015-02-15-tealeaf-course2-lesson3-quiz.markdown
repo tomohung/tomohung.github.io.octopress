@@ -12,6 +12,8 @@ categories:
 - rendering: render a template HTML code, like `partial`.
 - redirecting: make a new request to controller.
 
+<!--more-->
+
 Regards to instance variables for showing view templates, instance variables only survive at the same request, so if we need some information like errors store in instance variables, we need to use `render` for this condition.
 
 > ####2. If I need to display a message on the view template, and I'm redirecting, what's the easiest way to accomplish this?
@@ -20,7 +22,9 @@ Use `flash` to store error message. This is the easiest way to store `one messag
 
 > ####3. If I need to display a message on the view template, and I'm rendering, what's the easiest way to accomplish this?
 
-Use `instance variable` to store errors.
+Use `instance variable` to store errors, then `render`.
+
+\* or use `flash.now` and render it.
 
 > ####4. Explain how we should save passwords to the database.
 
@@ -59,6 +63,7 @@ Add a helper method `required_login` in `before_action` for actions `create` and
 |2 ||7 ||  ||  ||3 |
 |3 ||2 ||6 ||  || |
 
+
 According to this table, there should be 5 tables in database:
 
 - User
@@ -69,9 +74,52 @@ According to this table, there should be 5 tables in database:
 
 And here are they might be in models:
 
+```ruby User.rb
+class User ActiveRecord::Base
+  has_many :likes, as: likeable
+end
+```
+
+```ruby Photo.rb
+class Photo ActiveRecord::Base
+  has_many :likes, as: likeable
+end
+```
+
+```ruby Video.rb
+class Video ActiveRecord::Base
+  has_many :likes, as: likeable
+end
+```
+
+```ruby Post.rb
+class Post ActiveRecord::Base
+  has_many :likes, as: likeable
+end
+```
+
+```ruby Like.rb
+class Like ActiveRecord::Base
+  belongs_to :user_id
+  belongs_to :likeable, polymorphic: true
+end
+```
 
 
 > ####9. How do we set up polymorphic associations at the model layer? Give example for the polymorphic model (eg, Vote) as well as an example parent model (the model on the 1 side, eg, Post).
 
+```ruby 
+class Vote < ActiveRecord::Base
+  belongs_to :voteable, polymorphic: true
+end
+
+class Post < ActiveRecord::Base
+  has_many :votes, as: voteable
+end
+```
+
+
 
 > ####10. What is an ERD diagram, and why do we need it?
+
+Entity Relationship Dirgram(ERD) stands for tables in database relationship between each others. It's a convinient way to communicate with others what the tables relationship, even for ourselves under developming.
