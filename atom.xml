@@ -4,7 +4,7 @@
   <title><![CDATA[The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-02-10T22:24:47+08:00</updated>
+  <updated>2015-02-15T15:25:17+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -12,6 +12,209 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Tealeaf Course2 Lesson3 Quiz]]></title>
+    <link href="http://www.tomohung.com/blog/2015/02/15/tealeaf-course2-lesson3-quiz/"/>
+    <updated>2015-02-15T08:22:00+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/02/15/tealeaf-course2-lesson3-quiz</id>
+    <content type="html"><![CDATA[<blockquote><h4>1. What&rsquo;s the difference between rendering and redirecting? What&rsquo;s the impact with regards to instance variables, view templates?</h4></blockquote>
+
+<ul>
+<li>rendering: render a template HTML code, like <code>partial</code>.</li>
+<li>redirecting: make a new request to controller.</li>
+</ul>
+
+
+<!--more-->
+
+
+<p>Regards to instance variables for showing view templates, instance variables only survive at the same request, so if we need some information like errors store in instance variables, we need to use <code>render</code> for this condition.</p>
+
+<blockquote><h4>2. If I need to display a message on the view template, and I&rsquo;m redirecting, what&rsquo;s the easiest way to accomplish this?</h4></blockquote>
+
+<p>Use <code>flash</code> to store error message. This is the easiest way to store <code>one message</code>.</p>
+
+<blockquote><h4>3. If I need to display a message on the view template, and I&rsquo;m rendering, what&rsquo;s the easiest way to accomplish this?</h4></blockquote>
+
+<p>Use <code>instance variable</code> to store errors, then <code>render</code>.</p>
+
+<p>* or use <code>flash.now</code> and render it.</p>
+
+<blockquote><h4>4. Explain how we should save passwords to the database.</h4></blockquote>
+
+<p>Use <code>one way hash</code>. Since we can&rsquo;t promise that data in database never be stolen, the way to protect our password is using a <code>one way hash</code> to store the digest. If someone get this digest, it&rsquo;s hard for him to decyphor this digest to a plain text password.</p>
+
+<blockquote><h4>5. What should we do if we have a method that is used in both controllers and views?</h4></blockquote>
+
+<p>Put the methods into controllers, and make them become helpers. Like:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>helper_method :current_user</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, method <code>current_user</code> can be used in both controllers and views.</p>
+
+<blockquote><h4>6. What is memoization? How is it a performance optimization?</h4></blockquote>
+
+<p>Some repeatedly query action for database will reduce our app performance, using <code>memoization</code> to overcome this.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@comment ||= User.find(session[:user_id]) if session[:user_id]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Syntax <code>||=</code> do a <code>OR</code> combined action, if <code>@comment</code> is <code>nil</code>, then <code>User.find</code> invokes; if <code>@comment</code> exist, just return @comment without invoke <code>User.find</code>. This prevent to invoke database query again.</p>
+
+<blockquote><h4>7. If we want to prevent unauthenticated users from creating a new comment on a post, what should we do?</h4></blockquote>
+
+<p>Add a helper method <code>required_login</code> in <code>before_action</code> for actions <code>create</code> and &lsquo;&rsquo;. Since this method is used in both <code>post</code> and <code>comment</code>, we can put this method into <code>ApplicationController.rb</code>.</p>
+
+<blockquote><h4>8. Suppose we have the following table for tracking &ldquo;likes&rdquo; in our application. How can we make this table polymorphic? Note that the &ldquo;user_id&rdquo; foreign key is tracking who created the like.</h4></blockquote>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:right;"> id </th>
+<th></th>
+<th style="text-align:right;"> user_id </th>
+<th></th>
+<th style="text-align:right;"> photo_id  </th>
+<th></th>
+<th style="text-align:right;"> video_id  </th>
+<th></th>
+<th style="text-align:right;"> post_id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">1 </td>
+<td></td>
+<td style="text-align:right;">4 </td>
+<td></td>
+<td style="text-align:right;"> </td>
+<td></td>
+<td style="text-align:right;"> 12 </td>
+<td></td>
+<td style="text-align:right;"> </td>
+</tr>
+<tr>
+<td style="text-align:right;">2 </td>
+<td></td>
+<td style="text-align:right;">7 </td>
+<td></td>
+<td style="text-align:right;">  </td>
+<td></td>
+<td style="text-align:right;">  </td>
+<td></td>
+<td style="text-align:right;">3 </td>
+</tr>
+<tr>
+<td style="text-align:right;">3 </td>
+<td></td>
+<td style="text-align:right;">2 </td>
+<td></td>
+<td style="text-align:right;">6 </td>
+<td></td>
+<td style="text-align:right;">  </td>
+<td></td>
+<td style="text-align:right;"> </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>According to this table, there should be 5 tables in database:</p>
+
+<ul>
+<li>User</li>
+<li>Photo</li>
+<li>Video</li>
+<li>Post</li>
+<li>Like</li>
+</ul>
+
+
+<p>And here are they might be in models:</p>
+
+<figure class='code'><figcaption><span>User.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:likes</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="n">likeable</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Photo.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Photo</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:likes</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="n">likeable</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Video.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Video</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:likes</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="n">likeable</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Post.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Post</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:likes</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="n">likeable</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Like.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Like</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:user_id</span>
+</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:likeable</span><span class="p">,</span> <span class="ss">polymorphic</span><span class="p">:</span> <span class="kp">true</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<blockquote><h4>9. How do we set up polymorphic associations at the model layer? Give example for the polymorphic model (eg, Vote) as well as an example parent model (the model on the 1 side, eg, Post).</h4></blockquote>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Vote</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:voteable</span><span class="p">,</span> <span class="ss">polymorphic</span><span class="p">:</span> <span class="kp">true</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:votes</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="n">voteable</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<blockquote><h4>10. What is an ERD diagram, and why do we need it?</h4></blockquote>
+
+<p>Entity Relationship Dirgram(ERD) stands for tables in database relationship between each others. It&rsquo;s a convinient way to communicate with others what the tables relationship, even for ourselves under developming.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Course2 Lesson2]]></title>
