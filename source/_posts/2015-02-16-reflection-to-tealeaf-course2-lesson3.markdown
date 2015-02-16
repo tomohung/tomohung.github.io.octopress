@@ -24,6 +24,7 @@ gem 'bcrypt', '~> 3.1.7' # use gem `bcrypt-ruby`, `=3.0.1` if any problem
 
 - run `bundle install` to install gem.
 - add migration for attribute:`password_digest`, like:
+
   ```
   class AddPasswordDigestToUsers < ActiveRecord::Migration
     def change
@@ -41,12 +42,12 @@ end
 
 `has_secure_password` built-in some validations, if we want to customize validation, add parameter:
 
-```
+```ruby
 has_secure_password validations: false
 ```
 
 here are some test from Rails API:
-```
+```ruby
 user = User.new(name: 'david', password: '', password_confirmation: 'nomatch')
 user.save                                                       # => false, password required
 user.password = 'mUc3m00RsqyRe'
@@ -63,7 +64,7 @@ User.find_by(name: 'david').try(:authenticate, 'mUc3m00RsqyRe') # => user
 
 We can use `session` to store our login information. First add routes
 
-```
+```ruby
   get '/register', to: 'users#new'
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
@@ -104,7 +105,7 @@ end
 
 Sometimes many tables have relationship with the same one table, like `User` has many gravatar images, and `Post` has many images. So `User` and `Post` are using the same table `Picture`. We can do `Polymorpic table` association like this:
 
-```
+```ruby
 class Picture < ActiveRecord::Base
   belongs_to :imageable, polymorphic: true
 end
@@ -118,15 +119,13 @@ class Post < ActiveRecord::Base
 end
 ```
 
-Then Rails will automatically assign two virtual attribute for us:
-- imageable_type
-- imageable_id
+Then Rails will automatically assign two virtual attribute for us:`imageable_type` and `imageable_id`
 
 `type` is stored which object type use this Picture, and `id` is for that object's table id.
 
 Then, we can save data like this:
 
-```
+```ruby
 @picture = Picture.create(imageable: post, user_id: current_user_id)
 ```
 
@@ -141,4 +140,4 @@ The only thing I'll record here is `make sure to run **heroku run rake db:migrat
 
 Seems that my app becomes more and more closer to real world app we used everyday. There're still a lot of things to combine them together for improvement, like `tab control`, `Ajax`, `friendly routes path name`, etc.
 
-Security is one of the most imporatant thing when we using internet, it's absolutely not safe if we store our password by plain text. Use a `one way has/ password digest` to instead of plain text password. There is one thing more, `MD5` has been broken too.
+Security is one of the most imporatant thing when we using internet, it's absolutely not safe if we store our password by plain text. Use a `one way has/ password digest` to instead of plain text password. There is one more thing, `MD5` has been broken too.
