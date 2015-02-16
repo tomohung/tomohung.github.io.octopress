@@ -4,7 +4,7 @@
   <title><![CDATA[The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-02-15T15:25:17+08:00</updated>
+  <updated>2015-02-16T03:11:25+00:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -14,9 +14,213 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Reflection to Tealeaf Course2 Lesson3]]></title>
+    <link href="http://www.tomohung.com/blog/2015/02/16/reflection-to-tealeaf-course2-lesson3/"/>
+    <updated>2015-02-16T00:37:25+00:00</updated>
+    <id>http://www.tomohung.com/blog/2015/02/16/reflection-to-tealeaf-course2-lesson3</id>
+    <content type="html"><![CDATA[<p>In Course2(Rapid Prototyping with Ruby on Rails), <a href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/">first week</a> I learned about <code>Models and database</code>, <a href="http://www.tomohung.com/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/">second week</a> I learned about <code>Controllers and Views</code>. This week I learned to add some features into my app, and make it vivid!!</p>
+
+<!--more-->
+
+
+<h3>Authentication</h3>
+
+<p>Rails offer built-in function to help us add authentication. Here are steps:</p>
+
+<ul>
+<li>install gem &lsquo;Bcrypt&rsquo;.</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem 'bcrypt', '~&gt; 3.1.7' # use gem `bcrypt-ruby`, `=3.0.1` if any problem</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>run <code>bundle install</code> to install gem.</li>
+<li>add migration for attribute:<code>password_digest</code>, like:
+<code>
+class AddPasswordDigestToUsers &lt; ActiveRecord::Migration
+  def change
+    add_column :users, :password_digest, :string
+  end
+end
+</code></li>
+<li>add method to <code>Use Model</code></li>
+</ul>
+
+
+<figure class='code'><figcaption><span>User.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">has_secure_password</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>has_secure_password</code> built-in some validations, if we want to customize validation, add parameter:</p>
+
+<figure class='code'><figcaption><span>User.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">has_secure_password</span> <span class="ss">validations</span><span class="p">:</span> <span class="kp">false</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>here are some test from Rails API:</p>
+
+<figure class='code'><figcaption><span>User.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;david&#39;</span><span class="p">,</span> <span class="ss">password</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="ss">password_confirmation</span><span class="p">:</span> <span class="s1">&#39;nomatch&#39;</span><span class="p">)</span>
+</span><span class='line'><span class="n">user</span><span class="o">.</span><span class="n">save</span>                                                       <span class="c1"># =&gt; false, password required</span>
+</span><span class='line'><span class="n">user</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="s1">&#39;mUc3m00RsqyRe&#39;</span>
+</span><span class='line'><span class="n">user</span><span class="o">.</span><span class="n">save</span>                                                       <span class="c1"># =&gt; false, confirmation doesn&#39;t match</span>
+</span><span class='line'><span class="n">user</span><span class="o">.</span><span class="n">password_confirmation</span> <span class="o">=</span> <span class="s1">&#39;mUc3m00RsqyRe&#39;</span>
+</span><span class='line'><span class="n">user</span><span class="o">.</span><span class="n">save</span>                                                       <span class="c1"># =&gt; true</span>
+</span><span class='line'><span class="n">user</span><span class="o">.</span><span class="n">authenticate</span><span class="p">(</span><span class="s1">&#39;notright&#39;</span><span class="p">)</span>                                   <span class="c1"># =&gt; false</span>
+</span><span class='line'><span class="n">user</span><span class="o">.</span><span class="n">authenticate</span><span class="p">(</span><span class="s1">&#39;mUc3m00RsqyRe&#39;</span><span class="p">)</span>                              <span class="c1"># =&gt; user</span>
+</span><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">find_by</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;david&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">try</span><span class="p">(</span><span class="ss">:authenticate</span><span class="p">,</span> <span class="s1">&#39;notright&#39;</span><span class="p">)</span>      <span class="c1"># =&gt; false</span>
+</span><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">find_by</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;david&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">try</span><span class="p">(</span><span class="ss">:authenticate</span><span class="p">,</span> <span class="s1">&#39;mUc3m00RsqyRe&#39;</span><span class="p">)</span> <span class="c1"># =&gt; user</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Login / Logout</h3>
+
+<p>We can use <code>session</code> to store our login information. First add routes</p>
+
+<figure class='code'><figcaption><span>User.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="n">get</span> <span class="s1">&#39;/register&#39;</span><span class="p">,</span> <span class="ss">to</span><span class="p">:</span> <span class="s1">&#39;users#new&#39;</span>
+</span><span class='line'>  <span class="n">get</span> <span class="s1">&#39;/login&#39;</span><span class="p">,</span> <span class="ss">to</span><span class="p">:</span> <span class="s1">&#39;sessions#new&#39;</span>
+</span><span class='line'>  <span class="n">post</span> <span class="s1">&#39;/login&#39;</span><span class="p">,</span> <span class="ss">to</span><span class="p">:</span> <span class="s1">&#39;sessions#create&#39;</span>
+</span><span class='line'>  <span class="n">delete</span> <span class="s1">&#39;/logout&#39;</span><span class="p">,</span> <span class="ss">to</span><span class="p">:</span> <span class="s1">&#39;sessions#destroy&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And <code>SessionsController</code>:</p>
+
+<figure class='code'><figcaption><span>SessionController.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">SessionsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">new</span>
+</span><span class='line'>    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">create</span>
+</span><span class='line'>    <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">find_by</span> <span class="ss">username</span><span class="p">:</span> <span class="n">params</span><span class="o">[</span><span class="ss">:username</span><span class="o">]</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">user</span> <span class="o">&amp;&amp;</span> <span class="n">user</span><span class="o">.</span><span class="n">authenticate</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:password</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">flash</span><span class="o">[</span><span class="ss">:notice</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;Login Success.&#39;</span>
+</span><span class='line'>      <span class="n">session</span><span class="o">[</span><span class="ss">:user_id</span><span class="o">]</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span>
+</span><span class='line'>      <span class="n">redirect_to</span> <span class="n">root_path</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>      <span class="n">flash</span><span class="o">[</span><span class="ss">:error</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;Username or Password may not correct. Try again.&quot;</span>
+</span><span class='line'>      <span class="n">render</span> <span class="ss">:new</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">destroy</span>
+</span><span class='line'>    <span class="n">session</span><span class="o">[</span><span class="ss">:user_id</span><span class="o">]</span> <span class="o">=</span> <span class="kp">nil</span>
+</span><span class='line'>    <span class="n">flash</span><span class="o">[</span><span class="ss">:notice</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;Log out&#39;</span>
+</span><span class='line'>    <span class="n">redirect_to</span> <span class="n">root_path</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Polymorphic table</h3>
+
+<p>Sometimes many tables have relationship with the same one table, like <code>User</code> has many gravatar images, and <code>Post</code> has many images. So <code>User</code> and <code>Post</code> are using the same table <code>Picture</code>. We can do <code>Polymorpic table</code> association like this:</p>
+
+<figure class='code'><figcaption><span>SessionController.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Picture</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:imageable</span><span class="p">,</span> <span class="ss">polymorphic</span><span class="p">:</span> <span class="kp">true</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:pictures</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="ss">:imageable</span>
+</span><span class='line'><span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:pictures</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="ss">:imageable</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then Rails will automatically assign two virtual attribute for us:
+- imageable_type
+- imageable_id</p>
+
+<p><code>type</code> is stored which object type use this Picture, and <code>id</code> is for that object&rsquo;s table id.</p>
+
+<p>Then, we can save data like this:</p>
+
+<figure class='code'><figcaption><span>SessionController.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="vi">@picture</span> <span class="o">=</span> <span class="no">Picture</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">imageable</span><span class="p">:</span> <span class="n">post</span><span class="p">,</span> <span class="ss">user_id</span><span class="p">:</span> <span class="n">current_user_id</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Deploy to Heroku</h3>
+
+<p>Last step, deploy to heroku makes this app engage with people!!</p>
+
+<p>The only thing I&rsquo;ll record here is <code>make sure to run **heroku run rake db:migrate**</code>. Otherwise heroku will not generate a database for us.</p>
+
+<h3>Conclusion</h3>
+
+<p>Seems that my app becomes more and more closer to real world app we used everyday. There&rsquo;re still a lot of things to combine them together for improvement, like <code>tab control</code>, <code>Ajax</code>, <code>friendly routes path name</code>, etc.</p>
+
+<p>Security is one of the most imporatant thing when we using internet, it&rsquo;s absolutely not safe if we store our password by plain text. Use a <code>one way has/ password digest</code> to instead of plain text password. There is one thing more, <code>MD5</code> has been broken too.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Tealeaf Course2 Lesson3 Quiz]]></title>
     <link href="http://www.tomohung.com/blog/2015/02/15/tealeaf-course2-lesson3-quiz/"/>
-    <updated>2015-02-15T08:22:00+08:00</updated>
+    <updated>2015-02-15T00:22:00+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/02/15/tealeaf-course2-lesson3-quiz</id>
     <content type="html"><![CDATA[<blockquote><h4>1. What&rsquo;s the difference between rendering and redirecting? What&rsquo;s the impact with regards to instance variables, view templates?</h4></blockquote>
 
@@ -219,7 +423,7 @@
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Course2 Lesson2]]></title>
     <link href="http://www.tomohung.com/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/"/>
-    <updated>2015-02-10T16:39:30+08:00</updated>
+    <updated>2015-02-10T08:39:30+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2</id>
     <content type="html"><![CDATA[<p><a href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/">Last week</a>, I know Models and Database side of Rails.</p>
 
@@ -388,7 +592,7 @@ end
   <entry>
     <title type="html"><![CDATA[Tealeaf Course2 Lesson2 Quiz]]></title>
     <link href="http://www.tomohung.com/blog/2015/02/08/tealeaf-course2-lesson2-quiz/"/>
-    <updated>2015-02-08T14:13:48+08:00</updated>
+    <updated>2015-02-08T06:13:48+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/02/08/tealeaf-course2-lesson2-quiz</id>
     <content type="html"><![CDATA[<blockquote><h4>1. Name all the 7 (or 8) routes exposed by the resources keyword in the routes.rb file. Also name the 4 named routes, and how the request is routed to the controller/action.</h4></blockquote>
 
@@ -556,7 +760,7 @@ This make code in View more cleaner without too much logic in it.</p>
   <entry>
     <title type="html"><![CDATA[Newbie for Rails Migration]]></title>
     <link href="http://www.tomohung.com/blog/2015/02/02/newbie-for-rails-migration/"/>
-    <updated>2015-02-02T21:46:35+08:00</updated>
+    <updated>2015-02-02T13:46:35+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/02/02/newbie-for-rails-migration</id>
     <content type="html"><![CDATA[<p>As a newbie for Rails, It&rsquo;s normal to do something stupid.</p>
 
@@ -617,7 +821,7 @@ This make code in View more cleaner without too much logic in it.</p>
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Course 2 Lesson 1]]></title>
     <link href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/"/>
-    <updated>2015-02-02T16:05:05+08:00</updated>
+    <updated>2015-02-02T08:05:05+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1</id>
     <content type="html"><![CDATA[<p>Finally, Rails is coming.</p>
 
@@ -650,7 +854,7 @@ This make code in View more cleaner without too much logic in it.</p>
   <entry>
     <title type="html"><![CDATA[Tealeaf Course2 Lesson1 Quiz]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/30/tealeaf-course2-lesson1-quiz/"/>
-    <updated>2015-01-30T16:13:42+08:00</updated>
+    <updated>2015-01-30T08:13:42+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/30/tealeaf-course2-lesson1-quiz</id>
     <content type="html"><![CDATA[<p>Answer these quizzes, then updated after watching solution.</p>
 
@@ -935,7 +1139,7 @@ has_and_belongs_to_many doesn&rsquo;t require a join model or a join table, but 
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Lesson 4]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/22/reflection-to-tealeaf-lesson-4/"/>
-    <updated>2015-01-22T11:59:53+08:00</updated>
+    <updated>2015-01-22T03:59:53+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/22/reflection-to-tealeaf-lesson-4</id>
     <content type="html"><![CDATA[<p><img class="right" src="http://i.minus.com/iS2bpDcNcj44W.jpg" width="320"></p>
 
@@ -962,7 +1166,7 @@ has_and_belongs_to_many doesn&rsquo;t require a join model or a join table, but 
   <entry>
     <title type="html"><![CDATA[在Nitrous上寫Octopress]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io/"/>
-    <updated>2015-01-16T21:10:08+08:00</updated>
+    <updated>2015-01-16T13:10:08+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io</id>
     <content type="html"><![CDATA[<h3>Octopress &amp; github</h3>
 
@@ -1052,7 +1256,7 @@ has_and_belongs_to_many doesn&rsquo;t require a join model or a join table, but 
   <entry>
     <title type="html"><![CDATA[Show HTTP Is Stateless by Sinatra]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra/"/>
-    <updated>2015-01-14T21:25:15+08:00</updated>
+    <updated>2015-01-14T13:25:15+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra</id>
     <content type="html"><![CDATA[<p>In tealeaf week 3, introduce to HTTP.</p>
 
@@ -1166,7 +1370,7 @@ then try this code:</p>
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Week 3]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3/"/>
-    <updated>2015-01-13T22:23:15+08:00</updated>
+    <updated>2015-01-13T14:23:15+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3</id>
     <content type="html"><![CDATA[<p><img class="right" src="http://i.minus.com/ilSTmPNHVpVTm.png" width="320"></p>
 
@@ -1209,9 +1413,9 @@ Moving to Lesson 4.</p>
   
   <entry>
     <title type="html"><![CDATA[[譯]Maker's Schedule, Manager's Schedule]]></title>
-    <link href="http://www.tomohung.com/blog/2015/01/12/yi-makers-schedule-managers-schedule/"/>
-    <updated>2015-01-12T06:30:34+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/01/12/yi-makers-schedule-managers-schedule</id>
+    <link href="http://www.tomohung.com/blog/2015/01/11/yi-makers-schedule-managers-schedule/"/>
+    <updated>2015-01-11T22:30:34+00:00</updated>
+    <id>http://www.tomohung.com/blog/2015/01/11/yi-makers-schedule-managers-schedule</id>
     <content type="html"><![CDATA[<p>我曾經試過，寫程式最有效率的反而是在假日，可以從早上六點就一直做到晚上十二點（當然中間有被吃飯時間中斷），比起平常日在公司，產出高出好幾倍。所以看到這篇文章心有戚戚焉。</p>
 
 <hr />
@@ -1349,7 +1553,7 @@ Those of us on the maker's schedule are willing to compromise. We know we have t
   <entry>
     <title type="html"><![CDATA[nitrous.io 開發環境]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing/"/>
-    <updated>2015-01-11T21:26:49+08:00</updated>
+    <updated>2015-01-11T13:26:49+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing</id>
     <content type="html"><![CDATA[<p><img src="http://i.minus.com/iyZNw6vDZnJa6.png" width="800"></p>
 
@@ -1408,7 +1612,7 @@ Those of us on the maker's schedule are willing to compromise. We know we have t
   <entry>
     <title type="html"><![CDATA[Reflection of Tealeaf Week 2]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2/"/>
-    <updated>2015-01-07T08:15:13+08:00</updated>
+    <updated>2015-01-07T00:15:13+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2</id>
     <content type="html"><![CDATA[<p><img class="right" src="http://i.minus.com/ibnRw2O1pxsQam.png" width="320"></p>
 
@@ -1439,7 +1643,7 @@ But I do look forward to it.</p>
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Week 1]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/01/reflection-to-tealeaf-lesson-1/"/>
-    <updated>2015-01-01T16:03:33+08:00</updated>
+    <updated>2015-01-01T08:03:33+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/01/reflection-to-tealeaf-lesson-1</id>
     <content type="html"><![CDATA[<p><img class="right" src="http://i.minus.com/ibsevSRoOPCEmU.png" width="320"></p>
 
@@ -1489,7 +1693,7 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
   <entry>
     <title type="html"><![CDATA[語言管理－續]]></title>
     <link href="http://www.tomohung.com/blog/2014/12/15/yu-yan-guan-li-xu/"/>
-    <updated>2014-12-15T20:34:40+08:00</updated>
+    <updated>2014-12-15T12:34:40+00:00</updated>
     <id>http://www.tomohung.com/blog/2014/12/15/yu-yan-guan-li-xu</id>
     <content type="html"><![CDATA[<p><img src="http://i.minus.com/ijEvqo7aLC7BY.jpg" width="640"></p>
 
@@ -1615,9 +1819,9 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
   
   <entry>
     <title type="html"><![CDATA[語言管理]]></title>
-    <link href="http://www.tomohung.com/blog/2014/12/12/language-management/"/>
-    <updated>2014-12-12T05:32:48+08:00</updated>
-    <id>http://www.tomohung.com/blog/2014/12/12/language-management</id>
+    <link href="http://www.tomohung.com/blog/2014/12/11/language-management/"/>
+    <updated>2014-12-11T21:32:48+00:00</updated>
+    <id>http://www.tomohung.com/blog/2014/12/11/language-management</id>
     <content type="html"><![CDATA[<p><img src="http://i.minus.com/ibp6diev7FKMoZ.jpg" width="640"></p>
 
 <p>這禮拜三晚上，特地到台大參加今周刊舉辦的講座『語言管理』，一開始完全就是為了范疇才報名的，想聽看看本人會說些什麼。但其實講座的主講人有兩位，一位是范疇，另一位是陳超明老師。</p>
@@ -1710,7 +1914,7 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
   <entry>
     <title type="html"><![CDATA[[Quora]為什麼軟體工程師可以賺這麼多錢？]]></title>
     <link href="http://www.tomohung.com/blog/2014/12/09/why-do-software-engineers-make-so-much/"/>
-    <updated>2014-12-09T20:51:53+08:00</updated>
+    <updated>2014-12-09T12:51:53+00:00</updated>
     <id>http://www.tomohung.com/blog/2014/12/09/why-do-software-engineers-make-so-much</id>
     <content type="html"><![CDATA[<p><img src="http://i.minus.com/iEq3JDsAn8DtA.jpg" width="640"></p>
 
@@ -1786,7 +1990,7 @@ This idea that software salaries are "crazy" is not only inaccurate, but deeply 
   <entry>
     <title type="html"><![CDATA[[Quora]大陸人怎麼看台灣民主？]]></title>
     <link href="http://www.tomohung.com/blog/2014/12/06/what-do-mainland-chinese-people-think-of-the-democracy-in-taiwan/"/>
-    <updated>2014-12-06T21:48:36+08:00</updated>
+    <updated>2014-12-06T13:48:36+00:00</updated>
     <id>http://www.tomohung.com/blog/2014/12/06/what-do-mainland-chinese-people-think-of-the-democracy-in-taiwan</id>
     <content type="html"><![CDATA[<p><img src="http://i.minus.com/ibw1BjtQuOWXDe.jpg" width="640"></p>
 
@@ -1866,7 +2070,7 @@ I for one never believe western model of democracy could work in China. We do ne
   <entry>
     <title type="html"><![CDATA[[Quora]IQ150的人是怎樣的體驗，是否生活變成很輕鬆？]]></title>
     <link href="http://www.tomohung.com/blog/2014/12/06/whats-it-like-to-have-a-150-iq-is-life-really-easy/"/>
-    <updated>2014-12-06T21:37:12+08:00</updated>
+    <updated>2014-12-06T13:37:12+00:00</updated>
     <id>http://www.tomohung.com/blog/2014/12/06/whats-it-like-to-have-a-150-iq-is-life-really-easy</id>
     <content type="html"><![CDATA[<p><img src="http://i.minus.com/ield6JjxHhryw.jpg" width="640"></p>
 

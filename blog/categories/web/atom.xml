@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Web | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/web/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-02-15T15:25:17+08:00</updated>
+  <updated>2015-02-16T03:11:25+00:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Show HTTP Is Stateless by Sinatra]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra/"/>
-    <updated>2015-01-14T21:25:15+08:00</updated>
+    <updated>2015-01-14T13:25:15+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra</id>
     <content type="html"><![CDATA[<p>In tealeaf week 3, introduce to HTTP.</p>
 
@@ -97,7 +97,7 @@ end
   <entry>
     <title type="html"><![CDATA[nitrous.io 開發環境]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing/"/>
-    <updated>2015-01-11T21:26:49+08:00</updated>
+    <updated>2015-01-11T13:26:49+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing</id>
     <content type="html"><![CDATA[<p><img class="<a" src="href="http://i.minus.com/iyZNw6vDZnJa6.png">http://i.minus.com/iyZNw6vDZnJa6.png</a>&#8221; width=&#8221;800&#8221;></p>
 

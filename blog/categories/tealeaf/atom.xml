@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tealeaf | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/tealeaf/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-02-15T15:25:17+08:00</updated>
+  <updated>2015-02-16T03:11:25+00:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -14,9 +14,314 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Reflection to Tealeaf Course2 Lesson3]]></title>
+    <link href="http://www.tomohung.com/blog/2015/02/16/reflection-to-tealeaf-course2-lesson3/"/>
+    <updated>2015-02-16T00:37:25+00:00</updated>
+    <id>http://www.tomohung.com/blog/2015/02/16/reflection-to-tealeaf-course2-lesson3</id>
+    <content type="html"><![CDATA[<p>In Course2(Rapid Prototyping with Ruby on Rails), <a href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/">first week</a> I learned about <code>Models and database</code>, <a href="http://www.tomohung.com/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/">second week</a> I learned about <code>Controllers and Views</code>. This week I learned to add some features into my app, and make it vivid!!</p>
+
+<!--more-->
+
+
+<h3>Authentication</h3>
+
+<p>Rails offer built-in function to help us add authentication. Here are steps:</p>
+
+<ul>
+<li>install gem &lsquo;Bcrypt&rsquo;.</li>
+</ul>
+
+
+<pre><code>gem 'bcrypt', '~&gt; 3.1.7' # use gem `bcrypt-ruby`, `=3.0.1` if any problem
+</code></pre>
+
+<ul>
+<li>run <code>bundle install</code> to install gem.</li>
+<li>add migration for attribute:<code>password_digest</code>, like:
+<code>
+class AddPasswordDigestToUsers &lt; ActiveRecord::Migration
+  def change
+    add_column :users, :password_digest, :string
+  end
+end
+</code></li>
+<li>add method to <code>Use Model</code></li>
+</ul>
+
+
+<pre><code class="ruby User.rb">class User &lt; ActiveRecord::Base
+  has_secure_password
+end
+</code></pre>
+
+<p><code>has_secure_password</code> built-in some validations, if we want to customize validation, add parameter:</p>
+
+<pre><code>has_secure_password validations: false
+</code></pre>
+
+<p>here are some test from Rails API:
+<code>
+user = User.new(name: 'david', password: '', password_confirmation: 'nomatch')
+user.save                                                       # =&gt; false, password required
+user.password = 'mUc3m00RsqyRe'
+user.save                                                       # =&gt; false, confirmation doesn't match
+user.password_confirmation = 'mUc3m00RsqyRe'
+user.save                                                       # =&gt; true
+user.authenticate('notright')                                   # =&gt; false
+user.authenticate('mUc3m00RsqyRe')                              # =&gt; user
+User.find_by(name: 'david').try(:authenticate, 'notright')      # =&gt; false
+User.find_by(name: 'david').try(:authenticate, 'mUc3m00RsqyRe') # =&gt; user
+</code></p>
+
+<h3>Login / Logout</h3>
+
+<p>We can use <code>session</code> to store our login information. First add routes</p>
+
+<pre><code>  get '/register', to: 'users#new'
+  get '/login', to: 'sessions#new'
+  post '/login', to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
+</code></pre>
+
+<p>And <code>SessionsController</code>:</p>
+
+<pre><code class="ruby SessionController.rb">class SessionsController &lt; ApplicationController
+
+  def new 
+    @user = User.new
+  end
+
+  def create
+    user = User.find_by username: params[:username]
+    if user &amp;&amp; user.authenticate(params[:password])
+      flash[:notice] = 'Login Success.'
+      session[:user_id] = user.id
+      redirect_to root_path
+    else
+      flash[:error] = "Username or Password may not correct. Try again."
+      render :new
+    end
+  end
+
+  def destroy
+    session[:user_id] = nil
+    flash[:notice] = 'Log out'
+    redirect_to root_path
+  end
+
+end
+</code></pre>
+
+<h3>Polymorphic table</h3>
+
+<p>Sometimes many tables have relationship with the same one table, like <code>User</code> has many gravatar images, and <code>Post</code> has many images. So <code>User</code> and <code>Post</code> are using the same table <code>Picture</code>. We can do <code>Polymorpic table</code> association like this:</p>
+
+<pre><code>class Picture &lt; ActiveRecord::Base
+  belongs_to :imageable, polymorphic: true
+end
+
+class User &lt; ActiveRecord::Base
+  has_many :pictures, as: :imageable
+end
+
+class Post &lt; ActiveRecord::Base
+  has_many :pictures, as: :imageable
+end
+</code></pre>
+
+<p>Then Rails will automatically assign two virtual attribute for us:
+- imageable_type
+- imageable_id</p>
+
+<p><code>type</code> is stored which object type use this Picture, and <code>id</code> is for that object&rsquo;s table id.</p>
+
+<p>Then, we can save data like this:</p>
+
+<pre><code>@picture = Picture.create(imageable: post, user_id: current_user_id)
+</code></pre>
+
+<h3>Deploy to Heroku</h3>
+
+<p>Last step, deploy to heroku makes this app engage with people!!</p>
+
+<p>The only thing I&rsquo;ll record here is <code>make sure to run **heroku run rake db:migrate**</code>. Otherwise heroku will not generate a database for us.</p>
+
+<h3>Conclusion</h3>
+
+<p>Seems that my app becomes more and more closer to real world app we used everyday. There&rsquo;re still a lot of things to combine them together for improvement, like <code>tab control</code>, <code>Ajax</code>, <code>friendly routes path name</code>, etc.</p>
+
+<p>Security is one of the most imporatant thing when we using internet, it&rsquo;s absolutely not safe if we store our password by plain text. Use a <code>one way has/ password digest</code> to instead of plain text password. There is one thing more, <code>MD5</code> has been broken too.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Tealeaf Course2 Lesson3 Quiz]]></title>
+    <link href="http://www.tomohung.com/blog/2015/02/15/tealeaf-course2-lesson3-quiz/"/>
+    <updated>2015-02-15T00:22:00+00:00</updated>
+    <id>http://www.tomohung.com/blog/2015/02/15/tealeaf-course2-lesson3-quiz</id>
+    <content type="html"><![CDATA[<blockquote><h4>1. What&rsquo;s the difference between rendering and redirecting? What&rsquo;s the impact with regards to instance variables, view templates?</h4></blockquote>
+
+<ul>
+<li>rendering: render a template HTML code, like <code>partial</code>.</li>
+<li>redirecting: make a new request to controller.</li>
+</ul>
+
+
+<!--more-->
+
+
+<p>Regards to instance variables for showing view templates, instance variables only survive at the same request, so if we need some information like errors store in instance variables, we need to use <code>render</code> for this condition.</p>
+
+<blockquote><h4>2. If I need to display a message on the view template, and I&rsquo;m redirecting, what&rsquo;s the easiest way to accomplish this?</h4></blockquote>
+
+<p>Use <code>flash</code> to store error message. This is the easiest way to store <code>one message</code>.</p>
+
+<blockquote><h4>3. If I need to display a message on the view template, and I&rsquo;m rendering, what&rsquo;s the easiest way to accomplish this?</h4></blockquote>
+
+<p>Use <code>instance variable</code> to store errors, then <code>render</code>.</p>
+
+<p>* or use <code>flash.now</code> and render it.</p>
+
+<blockquote><h4>4. Explain how we should save passwords to the database.</h4></blockquote>
+
+<p>Use <code>one way hash</code>. Since we can&rsquo;t promise that data in database never be stolen, the way to protect our password is using a <code>one way hash</code> to store the digest. If someone get this digest, it&rsquo;s hard for him to decyphor this digest to a plain text password.</p>
+
+<blockquote><h4>5. What should we do if we have a method that is used in both controllers and views?</h4></blockquote>
+
+<p>Put the methods into controllers, and make them become helpers. Like:</p>
+
+<pre><code>helper_method :current_user
+</code></pre>
+
+<p>Now, method <code>current_user</code> can be used in both controllers and views.</p>
+
+<blockquote><h4>6. What is memoization? How is it a performance optimization?</h4></blockquote>
+
+<p>Some repeatedly query action for database will reduce our app performance, using <code>memoization</code> to overcome this.</p>
+
+<pre><code>@comment ||= User.find(session[:user_id]) if session[:user_id]
+</code></pre>
+
+<p>Syntax <code>||=</code> do a <code>OR</code> combined action, if <code>@comment</code> is <code>nil</code>, then <code>User.find</code> invokes; if <code>@comment</code> exist, just return @comment without invoke <code>User.find</code>. This prevent to invoke database query again.</p>
+
+<blockquote><h4>7. If we want to prevent unauthenticated users from creating a new comment on a post, what should we do?</h4></blockquote>
+
+<p>Add a helper method <code>required_login</code> in <code>before_action</code> for actions <code>create</code> and &lsquo;&rsquo;. Since this method is used in both <code>post</code> and <code>comment</code>, we can put this method into <code>ApplicationController.rb</code>.</p>
+
+<blockquote><h4>8. Suppose we have the following table for tracking &ldquo;likes&rdquo; in our application. How can we make this table polymorphic? Note that the &ldquo;user_id&rdquo; foreign key is tracking who created the like.</h4></blockquote>
+
+<table>
+<thead>
+<tr>
+<th style="text-align:right;"> id </th>
+<th></th>
+<th style="text-align:right;"> user_id </th>
+<th></th>
+<th style="text-align:right;"> photo_id  </th>
+<th></th>
+<th style="text-align:right;"> video_id  </th>
+<th></th>
+<th style="text-align:right;"> post_id</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">1 </td>
+<td></td>
+<td style="text-align:right;">4 </td>
+<td></td>
+<td style="text-align:right;"> </td>
+<td></td>
+<td style="text-align:right;"> 12 </td>
+<td></td>
+<td style="text-align:right;"> </td>
+</tr>
+<tr>
+<td style="text-align:right;">2 </td>
+<td></td>
+<td style="text-align:right;">7 </td>
+<td></td>
+<td style="text-align:right;">  </td>
+<td></td>
+<td style="text-align:right;">  </td>
+<td></td>
+<td style="text-align:right;">3 </td>
+</tr>
+<tr>
+<td style="text-align:right;">3 </td>
+<td></td>
+<td style="text-align:right;">2 </td>
+<td></td>
+<td style="text-align:right;">6 </td>
+<td></td>
+<td style="text-align:right;">  </td>
+<td></td>
+<td style="text-align:right;"> </td>
+</tr>
+</tbody>
+</table>
+
+
+<p>According to this table, there should be 5 tables in database:</p>
+
+<ul>
+<li>User</li>
+<li>Photo</li>
+<li>Video</li>
+<li>Post</li>
+<li>Like</li>
+</ul>
+
+
+<p>And here are they might be in models:</p>
+
+<pre><code class="ruby User.rb">class User ActiveRecord::Base
+  has_many :likes, as: likeable
+end
+</code></pre>
+
+<pre><code class="ruby Photo.rb">class Photo ActiveRecord::Base
+  has_many :likes, as: likeable
+end
+</code></pre>
+
+<pre><code class="ruby Video.rb">class Video ActiveRecord::Base
+  has_many :likes, as: likeable
+end
+</code></pre>
+
+<pre><code class="ruby Post.rb">class Post ActiveRecord::Base
+  has_many :likes, as: likeable
+end
+</code></pre>
+
+<pre><code class="ruby Like.rb">class Like ActiveRecord::Base
+  belongs_to :user_id
+  belongs_to :likeable, polymorphic: true
+end
+</code></pre>
+
+<blockquote><h4>9. How do we set up polymorphic associations at the model layer? Give example for the polymorphic model (eg, Vote) as well as an example parent model (the model on the 1 side, eg, Post).</h4></blockquote>
+
+<pre><code class="ruby ">class Vote &lt; ActiveRecord::Base
+  belongs_to :voteable, polymorphic: true
+end
+
+class Post &lt; ActiveRecord::Base
+  has_many :votes, as: voteable
+end
+</code></pre>
+
+<blockquote><h4>10. What is an ERD diagram, and why do we need it?</h4></blockquote>
+
+<p>Entity Relationship Dirgram(ERD) stands for tables in database relationship between each others. It&rsquo;s a convinient way to communicate with others what the tables relationship, even for ourselves under developming.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Course2 Lesson2]]></title>
     <link href="http://www.tomohung.com/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/"/>
-    <updated>2015-02-10T16:39:30+08:00</updated>
+    <updated>2015-02-10T08:39:30+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2</id>
     <content type="html"><![CDATA[<p><a href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/">Last week</a>, I know Models and Database side of Rails.</p>
 
@@ -185,7 +490,7 @@ end
   <entry>
     <title type="html"><![CDATA[Tealeaf Course2 Lesson2 Quiz]]></title>
     <link href="http://www.tomohung.com/blog/2015/02/08/tealeaf-course2-lesson2-quiz/"/>
-    <updated>2015-02-08T14:13:48+08:00</updated>
+    <updated>2015-02-08T06:13:48+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/02/08/tealeaf-course2-lesson2-quiz</id>
     <content type="html"><![CDATA[<blockquote><h4>1. Name all the 7 (or 8) routes exposed by the resources keyword in the routes.rb file. Also name the 4 named routes, and how the request is routed to the controller/action.</h4></blockquote>
 
@@ -329,7 +634,7 @@ This make code in View more cleaner without too much logic in it.</p>
   <entry>
     <title type="html"><![CDATA[Newbie for Rails Migration]]></title>
     <link href="http://www.tomohung.com/blog/2015/02/02/newbie-for-rails-migration/"/>
-    <updated>2015-02-02T21:46:35+08:00</updated>
+    <updated>2015-02-02T13:46:35+00:00</updated>
     <id>http://www.tomohung.com/blog/2015/02/02/newbie-for-rails-migration</id>
     <content type="html"><![CDATA[<p>As a newbie for Rails, It&rsquo;s normal to do something stupid.</p>
 
@@ -368,264 +673,6 @@ end
 <h2>Only use <code>rails generate migration</code></h2>
 
 <p>Don&rsquo;t use <code>rails generate</code> for models or controllers etc. It contains a lot of rails magic. Although most of guide tour (including official guide) use this way. But it&rsquo;s easy to misunderstanding what is wrong for operating database layer and ActiveRecord layer. Take care of this!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Course 2 Lesson 1]]></title>
-    <link href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/"/>
-    <updated>2015-02-02T16:05:05+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1</id>
-    <content type="html"><![CDATA[<p>Finally, Rails is coming.</p>
-
-<p>Before join Tealeaf, I&rsquo;ve tried few times to follow some rails guide books. I just can type some magic codes to build simplest web app but didn&rsquo;t know why at all, because I even didn&rsquo;t know what ruby is.</p>
-
-<p>This time, passing through course 1, I knew what the ruby is, then following <a href="http://guides.rubyonrails.org/getting_started.html">official tour guide</a>, it&rsquo;s much clear than other books I&rsquo;ve seen. But I still got stuck on creating many-to-many relationship, because I made a stupid mistake here: <em>I modified migration file after running <code>rake db:migrate</code></em>.</p>
-
-<p>Then I dived into solution videos, and Chirs said that:</p>
-
-<blockquote><p>Don&rsquo;t use <code>rails generate</code> except <code>migration</code></p></blockquote>
-
-<p>I do love this way, because:</p>
-
-<ol>
-<li><p>I never saw other&rsquo;s show this way to build migration, they always use <code>rails generate model</code> to create model and migration. And the problem is, I thought this is the only way to create models and migrations!! And I just thought this is Rails magic, I don&rsquo;t need to think too much.</p></li>
-<li><p>When I got stuck because I didn&rsquo;t know I can&rsquo;t modified migration files after running <code>rake db:migrate</code>. Make sure migration setting is all done before running <code>rake db:migrate</code> is very important. And this is just for ActiveRecord layer, database is another layer. It&rsquo;s much easier to understand how could be a disaster to modified/delete migration files working with database layer.</p></li>
-</ol>
-
-
-<p>I make <a href="http://www.tomohung.com/blog/2015/02/02/newbie-for-rails-migration/">a post to record my big step for Rails</a>.</p>
-
-<p>I also try to detect tealeaf discus panel, becuase I think it&rsquo;s better to <code>show who kudos this post</code>. Sometimes I just want to give a kudos for people reply my post without saying something more, but it&rsquo;s wierd for others to read this post, because they can&rsquo;t see kudos I already gave the post. Anyway, here is my ERD for discuss panel.</p>
-
-<p><img class="<a" src="href="http://i.minus.com/ibfrZjiBfElndg.jpg">http://i.minus.com/ibfrZjiBfElndg.jpg</a>&#8221;></p>
-
-<p>I&rsquo;m super satisfied that this week I found my mistake when using migrations, and I think there must be other mistake for controller&rsquo;s and view&rsquo;s. Moving to next lesson!!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Tealeaf Course2 Lesson1 Quiz]]></title>
-    <link href="http://www.tomohung.com/blog/2015/01/30/tealeaf-course2-lesson1-quiz/"/>
-    <updated>2015-01-30T16:13:42+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/01/30/tealeaf-course2-lesson1-quiz</id>
-    <content type="html"><![CDATA[<p>Answer these quizzes, then updated after watching solution.</p>
-
-<h2>1. Why do they call it a relational database?</h2>
-
-<p>  Relational database can store the relationship between data and data. For example, a table store customer&rsquo;s info, and a table store consuming record, these two table can be associated with another table, to establish the customer&rsquo;s consuming history. There are relationships between data and data in relational database. ex. sqlite, MySQL, PostgreSQL ect.</p>
-
-<blockquote><p>the tables within the database are associated with each other. This association can be created with primary/foreign keys and various syntax.</p></blockquote>
-
-<h2>2. What is SQL?</h2>
-
-<p>  SQL(Structured Query Language), it&rsquo;s domain specific language to manipulate database.</p>
-
-<!--more-->
-
-
-<h2>3. There are two predominant views into a relational database. What are they, and how are they different?</h2>
-
-<p>  There are two associations concepts in relational database:</p>
-
-<ul>
-<li><p>1:M
-<strong>One to Many</strong> makes target object can associate with many other objects, like one customer can have many consuming records, we can track the customer&rsquo;s consuming history with this association or we can track the record is generated by which customer.</p></li>
-<li><p>M:M
-<strong>Many to Many</strong> makes target objects can associate with many other objects, like posts can be assign to many categories, and category can assign to many poasts. We also can track target post or target category is assigned to which one.</p></li>
-</ul>
-
-
-<blockquote><p>The two predominant views are the data and schema views.
-Data view displays like a spreadsheet, with the table columns at the top and rows of data per each object instance.
-A schema view shows us the column names and the value type of each column.</p></blockquote>
-
-<h2>4. In a table, what do we call the column that serves as the main identifier for a row of data? We&rsquo;re looking for the general database term, not the column name.</h2>
-
-<p>  Attributes. Column indicate that what the row values mean.</p>
-
-<blockquote><p>We call this the &ldquo;primary key&rdquo;.</p></blockquote>
-
-<h2>5. What is a foreign key, and how is it used?</h2>
-
-<p>  Every row data in a table is included a <strong>primary key</strong>. If we want to associated with other table, we need this primary key to store which row data we wanna to be connected with this one. The store primary key value&rsquo;s column is called <strong>foreign key</strong>.</p>
-
-<blockquote><p>A foreign key is the identifier that connects an association with the models involved. The foreign key is always on the &ldquo;many&rdquo; side and is always in an integer type.</p></blockquote>
-
-<h2>6. At a high level, describe the ActiveRecord pattern. This has nothing to do with Rails, but the actual pattern that ActiveRecord uses to perform its ORM duties.</h2>
-
-<p>  ActiveRecord is mapping the data operation in tables. It substitutes SQL operation and using migration files to define &amp; operate table column.</p>
-
-<blockquote><p>ActiveRecord is a way to access the database. A database table is related to a class. An object of that class is created as a row in the table. This object can have different attribute values shown as the columns in the table. We can create, retrieve, update, and delete the object instances by altering the database table.</p></blockquote>
-
-<h2>7. If there&rsquo;s an ActiveRecord model called &ldquo;CrazyMonkey&rdquo;, what should the table name be?</h2>
-
-<p>  If I&rsquo;m confused with this, I can use <code>rails console</code> mode, to run</p>
-
-<pre><code>"CrazyMonkey".tableize
-</code></pre>
-
-<p>  and the answer should be <code>crazy_monkeys</code>.</p>
-
-<h2>8. If I&rsquo;m building a 1:M association between Project and Issue, what will the model associations and foreign key be?</h2>
-
-<p>  in model files
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>class Project ActiveRecord::Base
-</span><span class='line'>  has_many :issues
-</span><span class='line'>end&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;class Issue ActiveRecord::Base
-</span><span class='line'>  belongs_to :project
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure></p>
-
-<p>  in migration files
-<code>
-class CreateIssue ActiveRecord:Migration
-  def change
-    create_table :issues do |t|
-      t.integer :project_id
-    end
-  end
-</code></p>
-
-<h2>9. Given this code</h2>
-
-<pre><code>class Zoo &lt; ActiveRecord::Base
-  has_many :animals
-end
-</code></pre>
-
-<ul>
-<li>What do you expect the other model to be and what does database schema look like?</li>
-</ul>
-
-
-<p>  There should be antoher class named &ldquo;Animal&rdquo;, and it belongs to Zoo. Animal should at least have name, and a foriegn key to set to zoo id.</p>
-
-<pre><code>class Animal &lt; ActiveRecord::Base
-  belongs_to :zoo
-end
-</code></pre>
-
-<pre><code>class CreateAnimal ActiveRecord:Migration
-  def change
-    create_table :animals do |t|
-      t.integer :zoo_id
-    end
-  end
-</code></pre>
-
-<ul>
-<li>What are the methods that are now available to a zoo to call related to animals?</li>
-</ul>
-
-
-<pre><code class="``">  zoo.animals
-</code></pre>
-
-<ul>
-<li>How do I create an animal called &ldquo;jumpster&rdquo; in a zoo called &ldquo;San Diego Zoo&rdquo;?</li>
-</ul>
-
-
-<p>  If in <code>rails console</code> mode:</p>
-
-<pre><code class="``">  $ zoo = Zoo.create(name: "San Diego Zoo")
-  $ animal = Animal.create(name: "jumpster")
-  $ zoo.animals &lt;&lt; animal  
-</code></pre>
-
-<h2>10. What is mass assignment? What&rsquo;s the non-mass assignment way of setting values?</h2>
-
-<p>With mass assignment, we can do</p>
-
-<p><code>assumption fields: [title, body]</code>
-<code>
-@post = Post.new(params[:post])
-</code></p>
-
-<p>without mass assignment, we need to do this
-<code>
-@post = Post.new
-post.title = "post title"
-post.body = "post body"
-</code></p>
-
-<h2>11. What does this code do? <code>Animal.first</code></h2>
-
-<p>Query the first data in table <code>Animal</code>.</p>
-
-<blockquote><p>This will return the first row of data for the first Animal instance object in the animals table.</p></blockquote>
-
-<h2>12. If I have a table called &ldquo;animals&rdquo; with columns called &ldquo;name&rdquo;, and a model called <code>Animal</code>, how do I instantiate an animal object with name set to &ldquo;Joe&rdquo;. Which methods makes sure it saves to the database?</h2>
-
-<p>This will make sure it saves to database
-<code>
-Animal.create(name: "Joe")
-</code></p>
-
-<p>And this will work too
-<code>
-animal = Animal.new(name: "Joe")
-animal.save
-</code></p>
-
-<h2>13. How does a M:M association work at the database level?</h2>
-
-<p>  There is a join table between two relational tables, and it needs these two tables row data primary key to be its foreign key. For example, there is a join table called post_categories, and it stores two foriegn key named: post_id and category_id.</p>
-
-<blockquote><p>On the database level of a M:M association, we use a join table to support it. Both of the primary models will each have a 1:M association with the join table.
-By using the has_many :through technique, we are able to create an indirect M:M association with the two primary models.</p></blockquote>
-
-<h2>14. What are the two ways to support a M:M association at the ActiveRecord model level? Pros and cons of each approach?</h2>
-
-<ul>
-<li><p>has_and_belongs_to_many
-Chris metioned that this method is deprecated. If you don&rsquo;t need to operate the join table, this method is easy to set up association between two tables. And it&rsquo;s doing a more implicit way.</p></li>
-<li><p>has_many through:
-You have to define has_many relation with join table, also define has_many through: realtion to both target table and join table. This explicit the way to connect target table and join table. It&rsquo;s much easier to understand all realtionship between tables.</p></li>
-</ul>
-
-
-<blockquote><p>has_many :through requires an explicit join model and a join table, but it is more flexible and we can add additional attributes to the join table.
-has_and_belongs_to_many doesn&rsquo;t require a join model or a join table, but it is less flexible and we cannot add additional attributes to the join table.</p></blockquote>
-
-<h2>15. Suppose we have a User model and a Group model, and we have a M:M association all set up. How do we associate the two?</h2>
-
-<pre><code class="ruby User.rb">class User &lt; ActiveRecord::Base
-  has_many :user_groups
-  has_many :groups, through: user_groups
-end
-</code></pre>
-
-<pre><code class="ruby Group.rb">class Group &lt; ActiveRecord::Base
-  has_many :user_groups
-  has_many :users, through: :user_groups
-end
-</code></pre>
-
-<pre><code class="ruby UserGroup.rb">class UserGroup &lt; ActiveRecord::Base
-  belongs_to :user
-  belongs_to :group
-end
-</code></pre>
-
-<pre><code class="ruby create_user_groups.rb">class CreateUserGroups &lt; ActiveRecord::Migration
-  def change
-    create_table :post_categories do |t|
-      t.integer :user_id
-      t.integer :group_id
-    end
-  end
-end
-</code></pre>
 ]]></content>
   </entry>
   
