@@ -4,7 +4,7 @@
   <title><![CDATA[The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-02-16T03:15:53+00:00</updated>
+  <updated>2015-02-16T03:18:46+00:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -190,9 +190,7 @@ end
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then Rails will automatically assign two virtual attribute for us:
-- imageable_type
-- imageable_id</p>
+<p>Then Rails will automatically assign two virtual attribute for us:<code>imageable_type</code> and <code>imageable_id</code></p>
 
 <p><code>type</code> is stored which object type use this Picture, and <code>id</code> is for that object&rsquo;s table id.</p>
 
