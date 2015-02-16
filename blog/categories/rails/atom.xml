@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-02-16T03:11:25+00:00</updated>
+  <updated>2015-02-16T03:14:54+00:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -37,14 +37,14 @@
 
 <ul>
 <li>run <code>bundle install</code> to install gem.</li>
-<li>add migration for attribute:<code>password_digest</code>, like:
-<code>
-class AddPasswordDigestToUsers &lt; ActiveRecord::Migration
+<li><p>add migration for attribute:<code>password_digest</code>, like:</p>
+
+<pre><code>class AddPasswordDigestToUsers &lt; ActiveRecord::Migration
   def change
     add_column :users, :password_digest, :string
   end
 end
-</code></li>
+</code></pre></li>
 <li>add method to <code>Use Model</code></li>
 </ul>
 
@@ -56,11 +56,11 @@ end
 
 <p><code>has_secure_password</code> built-in some validations, if we want to customize validation, add parameter:</p>
 
-<pre><code>has_secure_password validations: false
+<pre><code class="ruby">has_secure_password validations: false
 </code></pre>
 
 <p>here are some test from Rails API:
-<code>
+<code>ruby
 user = User.new(name: 'david', password: '', password_confirmation: 'nomatch')
 user.save                                                       # =&gt; false, password required
 user.password = 'mUc3m00RsqyRe'
@@ -77,7 +77,7 @@ User.find_by(name: 'david').try(:authenticate, 'mUc3m00RsqyRe') # =&gt; user
 
 <p>We can use <code>session</code> to store our login information. First add routes</p>
 
-<pre><code>  get '/register', to: 'users#new'
+<pre><code class="ruby">  get '/register', to: 'users#new'
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
@@ -116,7 +116,7 @@ end
 
 <p>Sometimes many tables have relationship with the same one table, like <code>User</code> has many gravatar images, and <code>Post</code> has many images. So <code>User</code> and <code>Post</code> are using the same table <code>Picture</code>. We can do <code>Polymorpic table</code> association like this:</p>
 
-<pre><code>class Picture &lt; ActiveRecord::Base
+<pre><code class="ruby">class Picture &lt; ActiveRecord::Base
   belongs_to :imageable, polymorphic: true
 end
 
@@ -137,7 +137,7 @@ end
 
 <p>Then, we can save data like this:</p>
 
-<pre><code>@picture = Picture.create(imageable: post, user_id: current_user_id)
+<pre><code class="ruby">@picture = Picture.create(imageable: post, user_id: current_user_id)
 </code></pre>
 
 <h3>Deploy to Heroku</h3>

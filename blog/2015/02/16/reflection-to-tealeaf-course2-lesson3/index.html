@@ -159,14 +159,14 @@
 
 <ul>
 <li>run <code>bundle install</code> to install gem.</li>
-<li>add migration for attribute:<code>password_digest</code>, like:
-<code>
-class AddPasswordDigestToUsers &lt; ActiveRecord::Migration
+<li><p>add migration for attribute:<code>password_digest</code>, like:</p>
+
+<pre><code>class AddPasswordDigestToUsers &lt; ActiveRecord::Migration
   def change
     add_column :users, :password_digest, :string
   end
 end
-</code></li>
+</code></pre></li>
 <li>add method to <code>Use Model</code></li>
 </ul>
 
@@ -182,14 +182,14 @@ end
 
 <p><code>has_secure_password</code> built-in some validations, if we want to customize validation, add parameter:</p>
 
-<figure class='code'><figcaption><span>User.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">has_secure_password</span> <span class="ss">validations</span><span class="p">:</span> <span class="kp">false</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
 <p>here are some test from Rails API:</p>
 
-<figure class='code'><figcaption><span>User.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -216,7 +216,7 @@ end
 
 <p>We can use <code>session</code> to store our login information. First add routes</p>
 
-<figure class='code'><figcaption><span>User.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -286,7 +286,7 @@ end
 
 <p>Sometimes many tables have relationship with the same one table, like <code>User</code> has many gravatar images, and <code>Post</code> has many images. So <code>User</code> and <code>Post</code> are using the same table <code>Picture</code>. We can do <code>Polymorpic table</code> association like this:</p>
 
-<figure class='code'><figcaption><span>SessionController.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -319,7 +319,7 @@ end
 
 <p>Then, we can save data like this:</p>
 
-<figure class='code'><figcaption><span>SessionController.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="vi">@picture</span> <span class="o">=</span> <span class="no">Picture</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">imageable</span><span class="p">:</span> <span class="n">post</span><span class="p">,</span> <span class="ss">user_id</span><span class="p">:</span> <span class="n">current_user_id</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
