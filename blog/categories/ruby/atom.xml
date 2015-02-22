@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-02-16T03:18:46+00:00</updated>
+  <updated>2015-02-22T22:45:09+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Show HTTP Is Stateless by Sinatra]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra/"/>
-    <updated>2015-01-14T13:25:15+00:00</updated>
+    <updated>2015-01-14T21:25:15+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra</id>
     <content type="html"><![CDATA[<p>In tealeaf week 3, introduce to HTTP.</p>
 
@@ -97,7 +97,7 @@ end
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Week 3]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3/"/>
-    <updated>2015-01-13T14:23:15+00:00</updated>
+    <updated>2015-01-13T22:23:15+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3</id>
     <content type="html"><![CDATA[<p><img class="right <a" src="href="http://i.minus.com/ilSTmPNHVpVTm.png">http://i.minus.com/ilSTmPNHVpVTm.png</a>&#8221; width=&#8221;320&#8221;></p>
 
@@ -141,7 +141,7 @@ Moving to Lesson 4.</p>
   <entry>
     <title type="html"><![CDATA[Reflection of Tealeaf Week 2]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2/"/>
-    <updated>2015-01-07T00:15:13+00:00</updated>
+    <updated>2015-01-07T08:15:13+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2</id>
     <content type="html"><![CDATA[<p><img class="right <a" src="href="http://i.minus.com/ibnRw2O1pxsQam.png">http://i.minus.com/ibnRw2O1pxsQam.png</a>&#8221; width=&#8221;320&#8221;></p>
 
@@ -172,7 +172,7 @@ But I do look forward to it.</p>
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Week 1]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/01/reflection-to-tealeaf-lesson-1/"/>
-    <updated>2015-01-01T08:03:33+00:00</updated>
+    <updated>2015-01-01T16:03:33+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/01/reflection-to-tealeaf-lesson-1</id>
     <content type="html"><![CDATA[<p><img class="right <a" src="href="http://i.minus.com/ibsevSRoOPCEmU.png">http://i.minus.com/ibsevSRoOPCEmU.png</a>&#8221; width=&#8221;320&#8221;></p>
 

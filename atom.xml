@@ -4,7 +4,7 @@
   <title><![CDATA[The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-02-16T03:18:46+00:00</updated>
+  <updated>2015-02-22T22:45:09+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -14,9 +14,264 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Reflection to Tealeaf Course2 Lesson4]]></title>
+    <link href="http://www.tomohung.com/blog/2015/02/22/reflection-to-tealeaf-course2-lesson4/"/>
+    <updated>2015-02-22T21:22:10+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/02/22/reflection-to-tealeaf-course2-lesson4</id>
+    <content type="html"><![CDATA[<p>In Course2(Rapid Prototyping with Ruby on Rails), <a href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/">first week</a> I learned about <code>Models and database</code>, <a href="http://www.tomohung.com/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/">second week</a> I learned about <code>Controllers and Views</code>. The <a href="http://www.tomohung.com/blog/2015/02/16/reflection-to-tealeaf-course2-lesson3/">third week</a> I learned to add <code>Authentication</code> and <code>Polymorphic table</code>.</p>
+
+<p>And this week, also the last week, I completed all basic functions I need to know. Including Ajax for voting, extract methods into gem, build and publish gem, display time info considering user&rsquo;s timezone.</p>
+
+<!--more-->
+
+
+<h3>Ajax for voting</h3>
+
+<p>Ajax is a clean way to change View template that is necessary changed, and we don&rsquo;t need to redirect and render full page. Rails offer a way to achieve this.</p>
+
+<ul>
+<li>in Controller</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">respond_to</span> <span class="k">do</span> <span class="o">|</span><span class="nb">format</span><span class="o">|</span>
+</span><span class='line'>  <span class="nb">format</span><span class="o">.</span><span class="n">html</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">redirect_to</span> <span class="ss">:back</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>  <span class="nb">format</span><span class="o">.</span><span class="n">js</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>in View</li>
+</ul>
+
+
+<p><code>format.js</code> will lead to the class#action View file, for example: <code>/votes/create.js.erb</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="err">$</span><span class="p">(</span><span class="s2">&quot;#voteable_&lt;%= @vote.voteable_type %&gt;_&lt;%= @vote.voteable_id %&gt;&quot;</span><span class="p">)</span><span class="o">.</span>
+</span><span class='line'>  <span class="n">html</span><span class="p">(</span><span class="s2">&quot;&lt;%= j render &#39;shared/show_dislike_link&#39;, vote: @vote %&gt;&quot;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>notice that in <code>js.erb</code> file, render should specify format by using <code>j render</code>.</p>
+
+<ul>
+<li>HTML ID</li>
+</ul>
+
+
+<p>ID is the key to do Ajax.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="n">span</span> <span class="nb">id</span> <span class="o">=</span> <span class="s1">&#39;vote_&lt;%=vote.id%&gt;&#39;</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="sx">%= link_to vote_path(vote), remote: true, method: :delete do %&gt;</span>
+</span><span class='line'><span class="sx">    &lt;i class=</span><span class="s1">&#39;icon-thumbs-up&#39;</span><span class="o">&gt;&lt;</span><span class="sr">/i&gt;</span>
+</span><span class='line'><span class="sr">    Cancel</span>
+</span><span class='line'><span class="sr">  &lt;% end %&gt;</span>
+</span><span class='line'><span class="sr">&lt;/s</span><span class="n">pan</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Add <code>id</code> for Ajax, and add <code>remote: true</code> for activate Ajax.</p>
+
+<h3>Extract methods</h3>
+
+<p>Using <code>ActiveSupport::Concern</code> to manage module, info from Rails API:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">module</span> <span class="nn">M</span>
+</span><span class='line'>  <span class="kp">extend</span> <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Concern</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">included</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">scope</span> <span class="ss">:disabled</span><span class="p">,</span> <span class="o">-&gt;</span> <span class="p">{</span> <span class="n">where</span><span class="p">(</span><span class="ss">disabled</span><span class="p">:</span> <span class="kp">true</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">class_methods</span> <span class="k">do</span>
+</span><span class='line'>    <span class="o">.</span><span class="n">.</span><span class="o">.</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When I using for vote methods:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">module</span> <span class="nn">Voteable</span>
+</span><span class='line'>  <span class="kp">extend</span> <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Concern</span>
+</span><span class='line'>  <span class="n">included</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">has_many</span> <span class="ss">:votes</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="ss">:voteable</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">like_votes</span>
+</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">votes</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Or Sluggable.rb</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">module</span> <span class="nn">Sluggable</span>
+</span><span class='line'>  <span class="kp">extend</span> <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">Concern</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">included</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">before_save</span> <span class="ss">:generate_slug</span>
+</span><span class='line'>    <span class="n">class_attribute</span> <span class="ss">:slug_column</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">to_param</span>
+</span><span class='line'>    <span class="nb">self</span><span class="o">.</span><span class="n">slug</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">generate_slug</span>
+</span><span class='line'>    <span class="c1"># ignore...</span>
+</span><span class='line'>    <span class="c1"># self.send(self.class.slug_column)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">module</span> <span class="nn">ClassMethods</span>
+</span><span class='line'>    <span class="k">def</span> <span class="nf">sluggable_column</span><span class="p">(</span><span class="n">noun</span><span class="p">)</span>
+</span><span class='line'>      <span class="nb">self</span><span class="o">.</span><span class="n">slug_column</span> <span class="o">=</span> <span class="n">noun</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Notice that using <code>class_attribute</code> to connect different class symbol. Setting <code>sluggable_column</code> in <code>Models</code>.</p>
+
+<p>Also notice that <code>slug_column</code> is a class methods and return a symbol, in order to get instance&rsquo;s value, use <code>self.send(self.class.slug_column)</code>.</p>
+
+<h3>Slug</h3>
+
+<p>There are two purpose using slug:</p>
+
+<ul>
+<li>Don&rsquo;t expose database information.</li>
+<li>URL for SEO friendly</li>
+</ul>
+
+
+<p>The concepts to generate slug are:</p>
+
+<ol>
+<li>add a slug column to store slug value</li>
+<li>substitute key word like <code>name</code> into slug, avoid some keywords for HTTP like <code>@&amp;``'</code> etc.</li>
+<li>check slug exsited or not, otherwise add a number for avoiding the same name.</li>
+</ol>
+
+
+<h3>Using Gems</h3>
+
+<p>Gem is a very convenient way to use the same methods between two different projects.</p>
+
+<ol>
+<li>build a gem spec file.</li>
+<li>copy exsited module codes into gem specify path.</li>
+<li>build the gem</li>
+<li>publish the gem</li>
+<li>add gem to Gemfile, then <code>bundle install</code>.</li>
+</ol>
+
+
+<h3>Time Zone</h3>
+
+<p>Rails offer time zone methods to do this.</p>
+
+<ul>
+<li>in model backed form</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">f</span><span class="o">.</span><span class="n">time_zone_select</span> <span class="ss">:time_zone</span><span class="p">,</span> <span class="no">ActiveSupport</span><span class="o">::</span><span class="no">TimeZone</span><span class="o">.</span><span class="n">us_zones</span><span class="p">,</span> <span class="ss">default</span><span class="p">:</span> <span class="no">Time</span><span class="o">.</span><span class="n">zone</span><span class="o">.</span><span class="n">name</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>in View template</li>
+</ul>
+
+
+<p>changing time zone by (if time zone is &lsquo;Arizona&rsquo;)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">datetime</span> <span class="o">=</span> <span class="n">post</span><span class="o">.</span><span class="n">created_at</span><span class="o">.</span><span class="n">in_time_zone</span><span class="p">(</span><span class="s2">&quot;Arizona&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Conclusion</h3>
+
+<p>Using gem is a way for Rails how to DRY our codes. Rails flavored Ajax is also antoher way to do that. Exciting to know these.</p>
+
+<p>Finally, the last week is coming to the end. The final project <code>Postit</code> seems become into reality app we daily use. And rails pieces are making together and show me how to build a basic function app.</p>
+
+<p>After these two course, I think now I have confidence to read through other Rails introducion books I used to not understand.About Course 3, there is no reason I do NOT keep going since I decide to make a career change. Glad that I survived through the first two courses, and I think I&rsquo;m ready for the course 3 challenge.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Course2 Lesson3]]></title>
     <link href="http://www.tomohung.com/blog/2015/02/16/reflection-to-tealeaf-course2-lesson3/"/>
-    <updated>2015-02-16T00:37:25+00:00</updated>
+    <updated>2015-02-16T08:37:25+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/02/16/reflection-to-tealeaf-course2-lesson3</id>
     <content type="html"><![CDATA[<p>In Course2(Rapid Prototyping with Ruby on Rails), <a href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/">first week</a> I learned about <code>Models and database</code>, <a href="http://www.tomohung.com/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/">second week</a> I learned about <code>Controllers and Views</code>. This week I learned to add some features into my app, and make it vivid!!</p>
 
@@ -218,7 +473,7 @@ end
   <entry>
     <title type="html"><![CDATA[Tealeaf Course2 Lesson3 Quiz]]></title>
     <link href="http://www.tomohung.com/blog/2015/02/15/tealeaf-course2-lesson3-quiz/"/>
-    <updated>2015-02-15T00:22:00+00:00</updated>
+    <updated>2015-02-15T08:22:00+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/02/15/tealeaf-course2-lesson3-quiz</id>
     <content type="html"><![CDATA[<blockquote><h4>1. What&rsquo;s the difference between rendering and redirecting? What&rsquo;s the impact with regards to instance variables, view templates?</h4></blockquote>
 
@@ -421,7 +676,7 @@ end
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Course2 Lesson2]]></title>
     <link href="http://www.tomohung.com/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/"/>
-    <updated>2015-02-10T08:39:30+00:00</updated>
+    <updated>2015-02-10T16:39:30+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2</id>
     <content type="html"><![CDATA[<p><a href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/">Last week</a>, I know Models and Database side of Rails.</p>
 
@@ -590,7 +845,7 @@ end
   <entry>
     <title type="html"><![CDATA[Tealeaf Course2 Lesson2 Quiz]]></title>
     <link href="http://www.tomohung.com/blog/2015/02/08/tealeaf-course2-lesson2-quiz/"/>
-    <updated>2015-02-08T06:13:48+00:00</updated>
+    <updated>2015-02-08T14:13:48+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/02/08/tealeaf-course2-lesson2-quiz</id>
     <content type="html"><![CDATA[<blockquote><h4>1. Name all the 7 (or 8) routes exposed by the resources keyword in the routes.rb file. Also name the 4 named routes, and how the request is routed to the controller/action.</h4></blockquote>
 
@@ -758,7 +1013,7 @@ This make code in View more cleaner without too much logic in it.</p>
   <entry>
     <title type="html"><![CDATA[Newbie for Rails Migration]]></title>
     <link href="http://www.tomohung.com/blog/2015/02/02/newbie-for-rails-migration/"/>
-    <updated>2015-02-02T13:46:35+00:00</updated>
+    <updated>2015-02-02T21:46:35+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/02/02/newbie-for-rails-migration</id>
     <content type="html"><![CDATA[<p>As a newbie for Rails, It&rsquo;s normal to do something stupid.</p>
 
@@ -819,7 +1074,7 @@ This make code in View more cleaner without too much logic in it.</p>
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Course 2 Lesson 1]]></title>
     <link href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/"/>
-    <updated>2015-02-02T08:05:05+00:00</updated>
+    <updated>2015-02-02T16:05:05+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1</id>
     <content type="html"><![CDATA[<p>Finally, Rails is coming.</p>
 
@@ -852,7 +1107,7 @@ This make code in View more cleaner without too much logic in it.</p>
   <entry>
     <title type="html"><![CDATA[Tealeaf Course2 Lesson1 Quiz]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/30/tealeaf-course2-lesson1-quiz/"/>
-    <updated>2015-01-30T08:13:42+00:00</updated>
+    <updated>2015-01-30T16:13:42+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/30/tealeaf-course2-lesson1-quiz</id>
     <content type="html"><![CDATA[<p>Answer these quizzes, then updated after watching solution.</p>
 
@@ -1137,7 +1392,7 @@ has_and_belongs_to_many doesn&rsquo;t require a join model or a join table, but 
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Lesson 4]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/22/reflection-to-tealeaf-lesson-4/"/>
-    <updated>2015-01-22T03:59:53+00:00</updated>
+    <updated>2015-01-22T11:59:53+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/22/reflection-to-tealeaf-lesson-4</id>
     <content type="html"><![CDATA[<p><img class="right" src="http://i.minus.com/iS2bpDcNcj44W.jpg" width="320"></p>
 
@@ -1164,7 +1419,7 @@ has_and_belongs_to_many doesn&rsquo;t require a join model or a join table, but 
   <entry>
     <title type="html"><![CDATA[在Nitrous上寫Octopress]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io/"/>
-    <updated>2015-01-16T13:10:08+00:00</updated>
+    <updated>2015-01-16T21:10:08+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io</id>
     <content type="html"><![CDATA[<h3>Octopress &amp; github</h3>
 
@@ -1254,7 +1509,7 @@ has_and_belongs_to_many doesn&rsquo;t require a join model or a join table, but 
   <entry>
     <title type="html"><![CDATA[Show HTTP Is Stateless by Sinatra]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra/"/>
-    <updated>2015-01-14T13:25:15+00:00</updated>
+    <updated>2015-01-14T21:25:15+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra</id>
     <content type="html"><![CDATA[<p>In tealeaf week 3, introduce to HTTP.</p>
 
@@ -1368,7 +1623,7 @@ then try this code:</p>
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Week 3]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3/"/>
-    <updated>2015-01-13T14:23:15+00:00</updated>
+    <updated>2015-01-13T22:23:15+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3</id>
     <content type="html"><![CDATA[<p><img class="right" src="http://i.minus.com/ilSTmPNHVpVTm.png" width="320"></p>
 
@@ -1411,9 +1666,9 @@ Moving to Lesson 4.</p>
   
   <entry>
     <title type="html"><![CDATA[[譯]Maker's Schedule, Manager's Schedule]]></title>
-    <link href="http://www.tomohung.com/blog/2015/01/11/yi-makers-schedule-managers-schedule/"/>
-    <updated>2015-01-11T22:30:34+00:00</updated>
-    <id>http://www.tomohung.com/blog/2015/01/11/yi-makers-schedule-managers-schedule</id>
+    <link href="http://www.tomohung.com/blog/2015/01/12/yi-makers-schedule-managers-schedule/"/>
+    <updated>2015-01-12T06:30:34+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/01/12/yi-makers-schedule-managers-schedule</id>
     <content type="html"><![CDATA[<p>我曾經試過，寫程式最有效率的反而是在假日，可以從早上六點就一直做到晚上十二點（當然中間有被吃飯時間中斷），比起平常日在公司，產出高出好幾倍。所以看到這篇文章心有戚戚焉。</p>
 
 <hr />
@@ -1551,7 +1806,7 @@ Those of us on the maker's schedule are willing to compromise. We know we have t
   <entry>
     <title type="html"><![CDATA[nitrous.io 開發環境]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing/"/>
-    <updated>2015-01-11T13:26:49+00:00</updated>
+    <updated>2015-01-11T21:26:49+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing</id>
     <content type="html"><![CDATA[<p><img src="http://i.minus.com/iyZNw6vDZnJa6.png" width="800"></p>
 
@@ -1610,7 +1865,7 @@ Those of us on the maker's schedule are willing to compromise. We know we have t
   <entry>
     <title type="html"><![CDATA[Reflection of Tealeaf Week 2]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2/"/>
-    <updated>2015-01-07T00:15:13+00:00</updated>
+    <updated>2015-01-07T08:15:13+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2</id>
     <content type="html"><![CDATA[<p><img class="right" src="http://i.minus.com/ibnRw2O1pxsQam.png" width="320"></p>
 
@@ -1641,7 +1896,7 @@ But I do look forward to it.</p>
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Week 1]]></title>
     <link href="http://www.tomohung.com/blog/2015/01/01/reflection-to-tealeaf-lesson-1/"/>
-    <updated>2015-01-01T08:03:33+00:00</updated>
+    <updated>2015-01-01T16:03:33+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/01/reflection-to-tealeaf-lesson-1</id>
     <content type="html"><![CDATA[<p><img class="right" src="http://i.minus.com/ibsevSRoOPCEmU.png" width="320"></p>
 
@@ -1691,7 +1946,7 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
   <entry>
     <title type="html"><![CDATA[語言管理－續]]></title>
     <link href="http://www.tomohung.com/blog/2014/12/15/yu-yan-guan-li-xu/"/>
-    <updated>2014-12-15T12:34:40+00:00</updated>
+    <updated>2014-12-15T20:34:40+08:00</updated>
     <id>http://www.tomohung.com/blog/2014/12/15/yu-yan-guan-li-xu</id>
     <content type="html"><![CDATA[<p><img src="http://i.minus.com/ijEvqo7aLC7BY.jpg" width="640"></p>
 
@@ -1817,9 +2072,9 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
   
   <entry>
     <title type="html"><![CDATA[語言管理]]></title>
-    <link href="http://www.tomohung.com/blog/2014/12/11/language-management/"/>
-    <updated>2014-12-11T21:32:48+00:00</updated>
-    <id>http://www.tomohung.com/blog/2014/12/11/language-management</id>
+    <link href="http://www.tomohung.com/blog/2014/12/12/language-management/"/>
+    <updated>2014-12-12T05:32:48+08:00</updated>
+    <id>http://www.tomohung.com/blog/2014/12/12/language-management</id>
     <content type="html"><![CDATA[<p><img src="http://i.minus.com/ibp6diev7FKMoZ.jpg" width="640"></p>
 
 <p>這禮拜三晚上，特地到台大參加今周刊舉辦的講座『語言管理』，一開始完全就是為了范疇才報名的，想聽看看本人會說些什麼。但其實講座的主講人有兩位，一位是范疇，另一位是陳超明老師。</p>
@@ -1912,7 +2167,7 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
   <entry>
     <title type="html"><![CDATA[[Quora]為什麼軟體工程師可以賺這麼多錢？]]></title>
     <link href="http://www.tomohung.com/blog/2014/12/09/why-do-software-engineers-make-so-much/"/>
-    <updated>2014-12-09T12:51:53+00:00</updated>
+    <updated>2014-12-09T20:51:53+08:00</updated>
     <id>http://www.tomohung.com/blog/2014/12/09/why-do-software-engineers-make-so-much</id>
     <content type="html"><![CDATA[<p><img src="http://i.minus.com/iEq3JDsAn8DtA.jpg" width="640"></p>
 
@@ -1988,7 +2243,7 @@ This idea that software salaries are "crazy" is not only inaccurate, but deeply 
   <entry>
     <title type="html"><![CDATA[[Quora]大陸人怎麼看台灣民主？]]></title>
     <link href="http://www.tomohung.com/blog/2014/12/06/what-do-mainland-chinese-people-think-of-the-democracy-in-taiwan/"/>
-    <updated>2014-12-06T13:48:36+00:00</updated>
+    <updated>2014-12-06T21:48:36+08:00</updated>
     <id>http://www.tomohung.com/blog/2014/12/06/what-do-mainland-chinese-people-think-of-the-democracy-in-taiwan</id>
     <content type="html"><![CDATA[<p><img src="http://i.minus.com/ibw1BjtQuOWXDe.jpg" width="640"></p>
 
@@ -2062,69 +2317,6 @@ I for one never believe western model of democracy could work in China. We do ne
 <p>我是一個從不相信西方民主模型可以在中國應用的人。但我們的確需要民主，但它必需是屬於我們的方式，替代其它模式，我們應該要找出我們自己的路。也許聽起來有點陳腔爛調或厭惡，他應該是”中國式的民主”</p>
 
 <p>Updated 14 Jul, 2013.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[[Quora]IQ150的人是怎樣的體驗，是否生活變成很輕鬆？]]></title>
-    <link href="http://www.tomohung.com/blog/2014/12/06/whats-it-like-to-have-a-150-iq-is-life-really-easy/"/>
-    <updated>2014-12-06T13:37:12+00:00</updated>
-    <id>http://www.tomohung.com/blog/2014/12/06/whats-it-like-to-have-a-150-iq-is-life-really-easy</id>
-    <content type="html"><![CDATA[<p><img src="http://i.minus.com/ield6JjxHhryw.jpg" width="640"></p>
-
-<p>原文出處： <a href="http://qr.ae/mT5sc">http://qr.ae/mT5sc</a></p>
-
-<h1>IQ150的人是怎樣的體驗，是否生活變成很輕鬆？</h1>
-
-<p><strong>Kerry Watson</strong></p>
-
-<!---
-I was once married to a man with an IQ of 170. After we broke up he was diagnosed with Asperger syndrome and ADD. Life is in no way easier; in many ways it is far more difficult. Nobody seems logical; everything and everyone is a shade of gray, nothing is black and white. Even easy decisions get mired in possibilities.
--->
-
-
-<p>我曾經嫁給一位IQ170的人。之後我們離婚因為他患有愛斯柏格症Asperger syndrome和注意力不足過動症ADD。生活沒有更輕鬆，而是再困難不過的事了。沒有人看起來是有邏輯性的，任何東西和任何人都是黑暗的陰影，沒有黑白對錯。甚至簡單的決擇都有可能變成一團亂。</p>
-
-<!---
-Sure, work is super-easy, but it’s also boring and hard to find real challenges, and one gets mired in the politics that are illogical and emotional and downright stupid. His difficulty in life was trying to reduce everything to a model. Of course the world cannot be reduced to a model. In a discussion, he would try to define the criteria by which to judge the discussion (the model), then he would “win” because he had defined them. Most people didn’t catch on to this. And nobody gets issued common sense to go with a high IQ. The two might even be inversely correlated.
--->
-
-
-<p>當然，工作是超級簡單，但它也令人覺得無聊也找不到真正值得挑戰的目標，一個人陷入非理性的情緒時完全變成個傻瓜。他的為難點就是在生活中把任何的事情都要歸納出一個模型。當然，世界並沒有辦法簡單的縮減成一個模型。在模型的討論中，也許他會”贏”，是因為他老早就定義這些模型了。大部份的人並無法理解這件事，也沒有人會對這種常識發出疑問。這兩件事甚至是相反的關係。</p>
-
-<!--more-->
-
-
-
-
-<!---
-EDIT: I have an IQ of 140, and since IQ can vary by 20 points so I’ll tell you about me. Obviously I still take things too literally. Intelligence does not give you insight into yourself. My mother did not believe in revealing my IQ because she thought it would  “go to my head” so I didn’t know I was intelligent until I was an adult.  I started school at age 4 and 6 weeks, yet my friends were always several years ahead of me. From this I developed a self-image of being short and immature, even though today I am neither. In sixth grade I tried to read every adult book in the local public library, about one per day. I tested for the Air Force in the top 2% for linguistic ability and became a linguist. 
--->
-
-
-<p>補充：我自己是IQ140，既然IQ的值變動大約上下20點，所以我可以說說我自己。明顯的，我處理事情仍然是一件一件的來。聰明並無法讓你看穿自己的內心。我媽從不相信我的高IQ，因為他說過這會讓我自負，所以我一直到成人才了解到這件事。我在4歲又6個月的時候上學，但我們朋友們總是都比我大好幾歲。因此我成長的環境總是帶著自己較矮小和不成熟的印像，甚至一直到今天都是。六年級的時候，我試著在圖書館一天一本地閱讀所有的成年書籍。我曾做過語言學的空軍測試，排名前2%，並成為了一位語言學者。</p>
-
-<!---
-I can do pretty much anything I put my mind to, so at times I took on far more than any one human being should do. I worked full time, and went to college, and raised a daughter, and built a house with my hands all at the same time. I have skydived, finished the San Francisco marathon, raced cars at famous road tracks and was even a track instructor for car clubs for several years. I scuba dive, ride a motorcycle and ride horses. I have a lot of kinesthetic intelligence as well as linguistic.
--->
-
-
-<p>我可以同時處理在大腦中的好幾件事，所以可以在同時間內完成遠超過一位正常人可以做的事。我全職工作並去大學（上課），扶養一位女兒，同時維持一個家庭。我曾高空跳傘，完成舊金山馬拉松，在知名的賽道上賽車，也曾在一個車子俱樂部擔任好幾年的指導員。我也會潛水，騎摩托車，騎馬。我也有著運動肌能學習一樣的天份在語言學上。</p>
-
-<!---
-Work-wise I have mostly worked with lawyers and techies because I like being around smart people.  I earned an MBA and owned my own business for much of my life. I worked myself nearly to death because I loved the rewards, I worked for a few wonderful companies that were meritocracies and I was like a rat hitting the bar for a pellet. 
--->
-
-
-<p>工作的時候我大部份都和律師和科技人一起工作，因為我喜歡和聰明人一起。我得到MBA學位，也有自己的生意。我把自己操到極限因為我喜歡最後的回報，我幫幾個很棒的精英公司工作，這完全出於自願。</p>
-
-<!---
-I am easily able to translate technical subjects into plain language and have been a technical writer for the last ten years. In 2003 I wrote the first book on osCommerce, an open source e-commerce program, and have continued to write books on various open source e-commerce programs because it is easy and rewarding for me.
--->
-
-
-<p>我可以輕鬆的用簡潔的語言來翻譯技術文章，也成為一位科技作家在過去十年。在2003年，我寫了第一本書關於osCommerce，是一本開源的電子商務程式，並持續地寫作更多不同開源式的電子商務程式，因為它對我來說是簡單並且可以得到回報的。<br/>
-Updated 1 Nov.</p>
 ]]></content>
   </entry>
   
