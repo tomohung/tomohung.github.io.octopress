@@ -296,14 +296,8 @@ Albert Agram (TA):
 <br/>
 
 Chris Lee (Tealeaf Instructor):
-> This is incredibly awesome! I'll let out a secret: we have a web-based 
-tic tac toe game in the works too, and I think yours may be more fun to 
-play :\
+> This is incredibly awesome! 
 <br/>
-
-> Great job!
-<br/>
-
 > This type of app doesn't lend itself well to Rails, because it's not 
 really "page oriented". Rails tends to be a better fit for apps like 
 social networks, or things like that where you have CRUD actions on some 
