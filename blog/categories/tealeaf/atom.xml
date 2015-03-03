@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tealeaf | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/tealeaf/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-03-03T12:44:39+08:00</updated>
+  <updated>2015-03-04T06:41:16+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -319,15 +319,9 @@ end
 
 <p>Chris Lee (Tealeaf Instructor):</p>
 
-<blockquote><p>This is incredibly awesome! I&rsquo;ll let out a secret: we have a web-based
-tic tac toe game in the works too, and I think yours may be more fun to
-play :\
-<br/></p>
-
-<p>Great job!
-<br/></p>
-
-<p>This type of app doesn&rsquo;t lend itself well to Rails, because it&rsquo;s not
+<blockquote><p>This is incredibly awesome!
+<br/>
+This type of app doesn&rsquo;t lend itself well to Rails, because it&rsquo;s not
 really &ldquo;page oriented&rdquo;. Rails tends to be a better fit for apps like
 social networks, or things like that where you have CRUD actions on some
 resources.
