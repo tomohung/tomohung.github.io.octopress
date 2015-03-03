@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tealeaf | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/tealeaf/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-02-22T22:45:09+08:00</updated>
+  <updated>2015-03-03T12:43:10+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -12,6 +12,334 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Titan's Tic Tac Toe]]></title>
+    <link href="http://www.tomohung.com/blog/2015/03/03/titans-tic-tac-toe/"/>
+    <updated>2015-03-03T09:11:10+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/03/03/titans-tic-tac-toe</id>
+    <content type="html"><![CDATA[<p><img class="<a" src="href="http://i.minus.com/i2XJ0y9E48CHg.png">http://i.minus.com/i2XJ0y9E48CHg.png</a>&#8221;></p>
+
+<h3>Prelude</h3>
+
+<p>This is a blog entry for record my first personal project for Rails, and focus on what&rsquo;s are first time if starting a new project <code>From Zero To One</code>.</p>
+
+<p><code>Titan's Tic Tac Toe</code> is my first personal app for Rails.</p>
+
+<p>Website: <a href="https://young-castle-5534.herokuapp.com/">https://young-castle-5534.herokuapp.com/</a></p>
+
+<p>GitHub repo: <a href="https://github.com/tomohung/tictactoe-rails">https://github.com/tomohung/tictactoe-rails</a></p>
+
+<p>This project is activated by Tealeaf Course 2(Rapid Prototyping with Ruby on Rails), we are asked to do a personal project by ourself. In course 1(Introduction to Ruby and Web Development), we have an optional assignment to build a game <code>Tic Tac Toe</code> engine by Object-Oriented, that is, to give this game AI. I spent a lot of time to design logic, and I believe I have a good job for this. This is why I choose this subject for my personal project. And reuse my code is also a kind of <code>DRY</code> way.</p>
+
+<p><strong>Warning</strong></p>
+
+<p>I have to admit that I make a big mistake, because I am using a class variable to control <strong>Game Board</strong> status. This work when only me to play with it, but after deployment it will become disaster when multiple player play together. Player share the same game status and sometimes it look weird.</p>
+
+<p>I should use sessions or database to store game status, and extract methods from class GameBoard to controller. I won&rsquo;t fix this problem but writing this blog entry to record this.</p>
+
+<p><strong>Do no use <code>class vars</code> and <code>global vars</code> in Rails.</strong></p>
+
+<h3>Concepts</h3>
+
+<p>Before implementation, I need to split works into pieces.</p>
+
+<ol>
+<li>Game enegine.</li>
+<li>Game board implementation.</li>
+<li>Ladder for record user&rsquo;s game result.</li>
+<li>User&rsquo;s register system and Login/out.</li>
+</ol>
+
+
+<h3>Update Environment</h3>
+
+<p>RVM and rbenv are two popular Ruby version manager. I choose RVM, but rbenv is also a good choice.
+It makes me easy to switch different versions Ruby between different projects.
+I use <code>Ruby version 2.2.0</code>, and <code>Rails 4.2.0</code> for this new project.</p>
+
+<p>Then create a new Rails project
+<code>
+$ rails new project_name
+</code></p>
+
+<p>Specify version in GemFile</p>
+
+<pre><code>gem 'rails', '4.2.0'
+ruby "2.2.0"
+
+gem 'bootstrap-sass', '~&gt; 3.3.3'
+</code></pre>
+
+<h3>Game Engine</h3>
+
+<p>The game engine is already done in Course 1, so I just modified some codes to fit web process.
+GitHub repo: <a href="https://github.com/tomohung/tictactoe-rails/blob/master/lib/oo_tic_tac_toe.rb">https://github.com/tomohung/tictactoe-rails/blob/master/lib/oo_tic_tac_toe.rb</a></p>
+
+<h3>Game Board</h3>
+
+<p>  I&rsquo;m a newbie for HTML &amp; CSS, so Bootstrap will be my best choice. It offer lots of template with high quality, and mobile first.</p>
+
+<p>  I choose <a href="http://getbootstrap.com/examples/cover/">template-cover</a> for my project, it looks clean and suit for my application.</p>
+
+<h4>Bootstrap</h4>
+
+<ol>
+<li> Download Bootstrap, unzip it, then find source code in <code>/docs/examples/cover</code>.</li>
+<li> I got two files, <code>index.html</code> and <code>cover.css</code>.</li>
+<li> combine <code>index.html</code> into Rails <code>views/layout/application.html.erb</code>.</li>
+</ol>
+
+
+<p>  It may looks like this:</p>
+
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;Tic Tac Toe&lt;/title&gt;
+  &lt;%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' =&gt; true %&gt;
+  &lt;%= javascript_include_tag 'application', 'data-turbolinks-track' =&gt; true %&gt;
+  &lt;%= csrf_meta_tags %&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class="site-wrapper"&gt;
+    &lt;div class="site-wrapper-inner"&gt;
+      &lt;div class="cover-container"&gt;
+        &lt;%= render 'layouts/navigator' %&gt;
+        &lt;%= render 'layouts/messages' %&gt;
+        &lt;%= yield %&gt;
+        &lt;%= render 'layouts/footer' %&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<p>  I use partial <code>layouts/navigator</code> and <code>layouts/footer</code> to clean the code.</p>
+
+<h4>CSS for cover.css</h4>
+
+<p>  The page looks not good, because CSS is not included. Copy <code>cover.css</code> to <code>/assets/stylesheets</code>. Rails will automatically include CSS files in this directory.</p>
+
+<p>  So far is good, but something wrong when I want to use other bootstrap components.
+  After google that, this is because I haven&rsquo;t import bootstrap!! I&rsquo;m using just cover.css for this template.</p>
+
+<p>  Changing file name <code>assets/applications.css</code> to <code>asstes/application.scss</code>, and add this code</p>
+
+<pre><code>  @import "bootstrap-sprockets";
+  @import "bootstrap";
+</code></pre>
+
+<p>  <code>bootstrap-sprockets</code> has to be imported otherwise <strong>icon</strong> can&rsquo;t be displayed.</p>
+
+<p>  Well, bootstrap components works, but ruin all my template.</p>
+
+<p>  After trial and error, I merge <code>cover.css</code> code into <code>application.scss</code>, and put behind <code>@import "bootstrap"</code>. Rails may load other css files in <code>assets</code> directory, then application.scss import bootstrap, overwrite those class attributes.</p>
+
+<p>  After these setting, now my cover template works well with Bootstrap. I aslo test on my iPhone, it shows pretty good, Bootstrap is awesome!!</p>
+
+<h4>CSS for GameBoard</h4>
+
+<p>  The hardest part for me is to build a game board. I search from web and get some solution, but there&rsquo;s no better solution to draw a symbol <code>X</code>, I decide to display it by another style circle. One more thing, I add the feature when mouse <code>hover</code> on choosen square, it will render a temparary fake circle. This makes game much friendly. Here is the css file:</p>
+
+<pre><code class="css">.doughnut { 
+  display: inline-block;
+  border: 10px solid #f00;
+  border-radius: 50px;
+  height:60px;
+  width:60px;
+}
+
+.host_doughnut { 
+  display: inline-block;
+  border: 5px solid #fff;
+  border-radius: 20px;
+  height:60px;
+  width:60px;
+}
+
+.unpicked {
+  display: inline-block;
+  height:60px;
+  width:60px;
+  border: 2px dashed #444;
+}
+
+.unpicked:hover {
+  border: 10px solid #f66;
+  border-radius: 50px;
+  height:60px;
+  width:60px;
+}
+</code></pre>
+
+<h4>Ajax</h4>
+
+<p>  Everytime player choose the square, the whole page will reload again. This is not good for a modern web app. Using Ajax to improve it.</p>
+
+<p>  The keyword is add a ID for picked squre.</p>
+
+<pre><code>  &lt;div id = 'pick_&lt;%= number %&gt;'&gt;
+</code></pre>
+
+<p>  in <code>GameController</code>, we use <code>respond_to</code> to trigger js:</p>
+
+<pre><code class="ruby">  respond_to do |format|
+    format.html do
+      redirect_to game_path
+    end
+    format.js do          
+      host_pick
+      winner = @board.game_is_over?
+      if winner
+        flash[:notice] = 'OH NO!! You are DEAD!' if winner == @host
+        render :js =&gt; "window.location = '/game/over'"
+      end
+    end
+  end
+</code></pre>
+
+<blockquote><p>Note: I use <code>render :js =&gt; "window.location = '/game/over'"</code> to render page /game/over if game is over.</p></blockquote>
+
+<p>  and <code>game.create.js</code> file looks like:</p>
+
+<pre><code class="ruby">  &lt;% (1..9).each do |number| %&gt;
+    &lt;% if @player_picked_numbers.include? number %&gt;
+      $('#pick_&lt;%= number %&gt;').html("&lt;div class='doughnut'&gt;&lt;/div&gt;");
+    &lt;% elsif @host_picked_numbers.include? number %&gt;
+      $('#pick_&lt;%= number %&gt;').html("&lt;div class='host_doughnut'&gt;&lt;/div&gt;")
+    &lt;% end %&gt;
+  &lt;% end %&gt;
+</code></pre>
+
+<p>  Ajax make this game vivid!!</p>
+
+<h3>User&rsquo;s Register</h3>
+
+<p>Since I need to store game record, I have to add User&rsquo;s Register, this is not a difficult stuff if you had gone through course 2. Here is a simple ERD:</p>
+
+<ul>
+<li>User: username, digest_password, timestamps, has_many :game_records</li>
+<li>GameRecord: user_id, game_result, attack_times</li>
+</ul>
+
+
+<p>User and GameRecord is a one-to-many assocaition.</p>
+
+<p>Create routes, model, controller, and views follow what we learned in course 2.</p>
+
+<h3>Login/out</h3>
+
+<p>  Create a SessionController to manager user login/logout.
+  Use session[:user_id] to store data in cookie.</p>
+
+<ul>
+<li>def <code>new</code> to render login page.</li>
+<li>def <code>create</code> for login.</li>
+<li>def <code>destroy</code> for logout.</li>
+</ul>
+
+
+<blockquote><p>Don&rsquo;t forget to add feature: auto login after user register.</p></blockquote>
+
+<h3>Ladder</h3>
+
+<p>I will show three kinds of game result: Keeper, Winner, Loser.
+And I need tab navigation here, still copy from Bootstrap:</p>
+
+<p>&#8220;`</p>
+
+<ul class="nav nav-tabs">
+    <% params[:tab] = 'WIN' if !params[:tab] %>
+    <li class="<%= 'active' if params[:tab] == 'TIE' %>&#8221;><a href="#TIE" data-toggle="tab">Keepers</a></li>
+    <li class="<%= 'active' if params[:tab] == 'WIN' %>&#8221;><a href="#WIN" data-toggle="tab">Heroes</a></li>
+    <li class="<%= 'active' if params[:tab] == 'LOSE' %>&#8221;><a href="#LOSE" data-toggle="tab">Loser</a></li>
+</ul>
+
+
+
+
+<div class="tab-content">
+  <%= render 'column_title' %>  
+  <div class="<%= if (params[:tab] == 'TIE' || !params[:tab]) then 'tab-pane active'  else 'tab-pane' end%>&#8221; id=&#8221;TIE&#8221;>
+    <%= render @game_records.where(status: 'TIE') %>
+  </div>
+  <div class="<%= if params[:tab] == 'WIN' then 'tab-pane active'  else 'tab-pane' end%>&#8221; id=&#8221;WIN&#8221;>
+    <%= render @game_records.where(status: 'WIN') %>
+  </div>
+  <div class="<%= if params[:tab] == 'LOSE' then 'tab-pane active'  else 'tab-pane' end%>&#8221; id=&#8221;LOSE&#8221;>
+    <%= render @game_records.where(status: 'LOSE') %>
+  </div>
+</div>
+
+
+<pre><code>
+Tabs do not work? This is because I haven't include javascript for Bootstrap. 
+
+Add this line in `/assets/javascripts/application.js`
+</code></pre>
+
+<p>//= require bootstrap-sprockets
+&#8220;`</p>
+
+<p>Well, it works now!!</p>
+
+<p>Then, I found Kevin(Tealeaf Instructor) also write a blog for <a href="http://www.gotealeaf.com/blog/integrating-rails-and-bootstrap-part-1">integrating rails and bootstrap</a>.</p>
+
+<h3>Deploy to Heroku</h3>
+
+<p>Finally, functions all work and ready to deploy to <a href="heroku.com">Heroku</a>. And follow by Heroku instruction, push code, then&hellip;<code>Fail</code>.</p>
+
+<p>Check the log and find something wrong about <code>gem pg</code>. pg is <code>Postgres</code> used by Heroku. Rails default setting is using <code>sqlite3</code>, so I need to do some work in Gemfile:</p>
+
+<pre><code>group :production do
+  gem 'pg'
+  gem 'rails_12factor'
+end
+</code></pre>
+
+<p>Add this code to Gemfile for config :production using Postgres. Run <code>bundle install</code> and git push again, it should work!!</p>
+
+<h3>Conclusion</h3>
+
+<p>In Course 2, we have lots assignments from a prepared template. If I don&rsquo;t start a new project, I will never knew there are lots of minor things I should know. After this project, I have chance to be more familiar with Ruby language, Rails routes, CRUD&hellip;etc.</p>
+
+<h3>Compliment from others</h3>
+
+<p>Record these just for encourage myself to keep going on.</p>
+
+<p>Albert Agram (TA):</p>
+
+<blockquote><p>Hey Tomo, nicely done! I played a few rounds and am impressed. Good job :)
+<br/></p></blockquote>
+
+<p>Chris Lee (Tealeaf Instructor):</p>
+
+<blockquote><p>This is incredibly awesome! I&rsquo;ll let out a secret: we have a web-based
+tic tac toe game in the works too, and I think yours may be more fun to
+play :\
+<br/></p>
+
+<p>Great job!
+<br/></p>
+
+<p>This type of app doesn&rsquo;t lend itself well to Rails, because it&rsquo;s not
+really &ldquo;page oriented&rdquo;. Rails tends to be a better fit for apps like
+social networks, or things like that where you have CRUD actions on some
+resources.
+<br/></p></blockquote>
+
+<p>Brandon Conway (TA):</p>
+
+<blockquote><p>This game is awesome! I really like the ladder implementation.
+<br/></p></blockquote>
+
+<p>Eugene Chang:</p>
+
+<blockquote><p>This is a really nice app! After seeing it, I had to constantly resist the temptation of spending more time trying to make my UI look better. Great job!</p></blockquote>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Course2 Lesson4]]></title>
@@ -668,150 +996,6 @@ end
 <p>  Watching option videos and reviewing disscusions also help me to dig out what I missed.</p>
 
 <p>  I should do the official guide again, and I think this time will be a totally different feeling compared with two weeks ago.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Tealeaf Course2 Lesson2 Quiz]]></title>
-    <link href="http://www.tomohung.com/blog/2015/02/08/tealeaf-course2-lesson2-quiz/"/>
-    <updated>2015-02-08T14:13:48+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/02/08/tealeaf-course2-lesson2-quiz</id>
-    <content type="html"><![CDATA[<blockquote><h4>1. Name all the 7 (or 8) routes exposed by the resources keyword in the routes.rb file. Also name the 4 named routes, and how the request is routed to the controller/action.</h4></blockquote>
-
-<p>  For example by table <code>posts</code>:</p>
-
-<table>
-<thead>
-<tr>
-<th>Prefix   </th>
-<th>Verb   </th>
-<th>URI   </th>
-<th>Controller#Action   </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>posts   </td>
-<td>GET   </td>
-<td>/posts   </td>
-<td>posts#index   </td>
-</tr>
-<tr>
-<td>new_post   </td>
-<td>GET   </td>
-<td>/posts/new   </td>
-<td>post#new   </td>
-</tr>
-<tr>
-<td>   </td>
-<td>POST   </td>
-<td>/posts   </td>
-<td>post#create   </td>
-</tr>
-<tr>
-<td>post   </td>
-<td>GET   </td>
-<td>/posts/:id   </td>
-<td>post#show   </td>
-</tr>
-<tr>
-<td>edit_post   </td>
-<td>GET   </td>
-<td>/posts/:id   </td>
-<td>post#edit   </td>
-</tr>
-<tr>
-<td>   </td>
-<td>PUT/PATCH   </td>
-<td>/posts/:id   </td>
-<td>post#update   </td>
-</tr>
-<tr>
-<td>   </td>
-<td>DELETE   </td>
-<td>/posts/:id   </td>
-<td>post#destroy   </td>
-</tr>
-</tbody>
-</table>
-
-
-<!--more-->
-
-
-<blockquote><h4>2. What is REST and how does it relate to the resources routes?</h4></blockquote>
-
-<p>  REST is abbreviation for <code>Representational State Transfer</code>. It use a VERB and a URI to operate some action for web application. And it&rsquo;s corespond to 4 HTTP VERB: GET, POST, PUT, DELETE with 7 actions: index, show, new, create, edit, update, destroy.</p>
-
-<blockquote><h4>3. What&rsquo;s the major difference between model backed and non-model backed form helpers?</h4></blockquote>
-
-<p>  <code>Model backed form</code> from helpers like <code>form_for</code>, it can automatically association with objects in table, and it can dynamic generate coresponding element for different actions(ex. edit and new).</p>
-
-<p>  <code>Non-model backed form</code> from helpers like <code>form_tag</code>, it operate elements without relationship of tables in database.</p>
-
-<blockquote><h4>4. How does form_for know how to build the <form> element?</h4></blockquote>
-
-<p>  form_for based on given object, like this:
-<code>
-  &lt;%= form_for @posts do |f| %&gt;
-    &lt;%= f.label :title %&gt;
-    &lt;%= f.text_field :title %&gt;
-    &lt;%= f.submit %&gt;
-  &lt;% end %&gt;
-</code>
-  There&rsquo;s a hidden attribute in form to record that what&rsquo;s action for this request. Rails regconize this hidden attribute to build <form> element. It will automatically create submit button by what action is called.</p>
-
-<blockquote><h4>5. What&rsquo;s the general pattern we use in the actions that handle submission of model-backed forms (ie, the create and update actions)?</h4></blockquote>
-
-<p>For creating a post: <code>POST /posts</code>
-<code>
-def create
-  @post = Post.new(params.require(:post).permit!)
-  if @post.save
-    redirect_to posts_path
-  else
-    render :new
-  end
-end  
-</code></p>
-
-<p>  For updating a post: <code>PUT /posts/:id</code>
-<code>
-def update
-  @post = Post.new(params.require(:post).permit!)
-  if @post.save
-    redirect_to post_path(@post)
-  else
-    render :edit
-  end
-end  
-</code></p>
-
-<blockquote><h4>6. How exactly do Rails validations get triggered? Where are the errors saved? How do we show the validation messages on the user interface?</h4></blockquote>
-
-<p>  Rails validations get triggered in Model(ActiveRecord::Base), and errors are saved in Model.
-  We can use Model&rsquo;s method to show error messages like this:
-<code>
-  instance.errors.full_messages
-</code>
-  which instance is Model&rsquo;s instance.</p>
-
-<blockquote><h4>7. What are Rails helpers?</h4></blockquote>
-
-<p>  Rails helpers is a way to implement DRY principle in <code>View</code>, it abstract redundant <strong>logic codes</strong> in Views into helpers.
-This make code in View more cleaner without too much logic in it.</p>
-
-<blockquote><h4>8. What are Rails partials?</h4></blockquote>
-
-<p>  Rails partials is a way to implement DRY principle in <code>View</code>, it abstract redundant <strong>HTML codes</strong> in Views into partial forms.</p>
-
-<blockquote><h4>9. When do we use partials vs helpers?</h4></blockquote>
-
-<p>  Partials is to eliminate repeatedly HTML codes in Views, and helpers is to eliminate repeatedly logic codes in Views.</p>
-
-<blockquote><h4>10. When do we use non-model backed forms?</h4></blockquote>
-
-<p>  Some input or showing requirements do not need to be associated with tables in database.</p>
 ]]></content>
   </entry>
   

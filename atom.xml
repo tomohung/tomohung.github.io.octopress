@@ -4,7 +4,7 @@
   <title><![CDATA[The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-02-22T22:45:09+08:00</updated>
+  <updated>2015-03-03T12:43:10+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -12,6 +12,438 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Titan's Tic Tac Toe]]></title>
+    <link href="http://www.tomohung.com/blog/2015/03/03/titans-tic-tac-toe/"/>
+    <updated>2015-03-03T09:11:10+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/03/03/titans-tic-tac-toe</id>
+    <content type="html"><![CDATA[<p><img src="http://i.minus.com/i2XJ0y9E48CHg.png"></p>
+
+<h3>Prelude</h3>
+
+<p>This is a blog entry for record my first personal project for Rails, and focus on what&rsquo;s are first time if starting a new project <code>From Zero To One</code>.</p>
+
+<p><code>Titan's Tic Tac Toe</code> is my first personal app for Rails.</p>
+
+<p>Website: <a href="https://young-castle-5534.herokuapp.com/">https://young-castle-5534.herokuapp.com/</a></p>
+
+<p>GitHub repo: <a href="https://github.com/tomohung/tictactoe-rails">https://github.com/tomohung/tictactoe-rails</a></p>
+
+<p>This project is activated by Tealeaf Course 2(Rapid Prototyping with Ruby on Rails), we are asked to do a personal project by ourself. In course 1(Introduction to Ruby and Web Development), we have an optional assignment to build a game <code>Tic Tac Toe</code> engine by Object-Oriented, that is, to give this game AI. I spent a lot of time to design logic, and I believe I have a good job for this. This is why I choose this subject for my personal project. And reuse my code is also a kind of <code>DRY</code> way.</p>
+
+<p><strong>Warning</strong></p>
+
+<p>I have to admit that I make a big mistake, because I am using a class variable to control <strong>Game Board</strong> status. This work when only me to play with it, but after deployment it will become disaster when multiple player play together. Player share the same game status and sometimes it look weird.</p>
+
+<p>I should use sessions or database to store game status, and extract methods from class GameBoard to controller. I won&rsquo;t fix this problem but writing this blog entry to record this.</p>
+
+<p><strong>Do no use <code>class vars</code> and <code>global vars</code> in Rails.</strong></p>
+
+<h3>Concepts</h3>
+
+<p>Before implementation, I need to split works into pieces.</p>
+
+<ol>
+<li>Game enegine.</li>
+<li>Game board implementation.</li>
+<li>Ladder for record user&rsquo;s game result.</li>
+<li>User&rsquo;s register system and Login/out.</li>
+</ol>
+
+
+<h3>Update Environment</h3>
+
+<p>RVM and rbenv are two popular Ruby version manager. I choose RVM, but rbenv is also a good choice.
+It makes me easy to switch different versions Ruby between different projects.
+I use <code>Ruby version 2.2.0</code>, and <code>Rails 4.2.0</code> for this new project.</p>
+
+<p>Then create a new Rails project</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rails new project_name</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Specify version in GemFile</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem 'rails', '4.2.0'
+</span><span class='line'>ruby "2.2.0"
+</span><span class='line'>
+</span><span class='line'>gem 'bootstrap-sass', '~&gt; 3.3.3'</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Game Engine</h3>
+
+<p>The game engine is already done in Course 1, so I just modified some codes to fit web process.
+GitHub repo: <a href="https://github.com/tomohung/tictactoe-rails/blob/master/lib/oo_tic_tac_toe.rb">https://github.com/tomohung/tictactoe-rails/blob/master/lib/oo_tic_tac_toe.rb</a></p>
+
+<h3>Game Board</h3>
+
+<p>  I&rsquo;m a newbie for HTML &amp; CSS, so Bootstrap will be my best choice. It offer lots of template with high quality, and mobile first.</p>
+
+<p>  I choose <a href="http://getbootstrap.com/examples/cover/">template-cover</a> for my project, it looks clean and suit for my application.</p>
+
+<h4>Bootstrap</h4>
+
+<ol>
+<li> Download Bootstrap, unzip it, then find source code in <code>/docs/examples/cover</code>.</li>
+<li> I got two files, <code>index.html</code> and <code>cover.css</code>.</li>
+<li> combine <code>index.html</code> into Rails <code>views/layout/application.html.erb</code>.</li>
+</ol>
+
+
+<p>  It may looks like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="cp">&lt;!DOCTYPE html&gt;</span>
+</span><span class='line'><span class="nt">&lt;html&gt;</span>
+</span><span class='line'><span class="nt">&lt;head&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;title&gt;</span>Tic Tac Toe<span class="nt">&lt;/title&gt;</span>
+</span><span class='line'>  <span class="err">&lt;</span>%= stylesheet_link_tag    &#39;application&#39;, media: &#39;all&#39;, &#39;data-turbolinks-track&#39; =&gt; true %&gt;
+</span><span class='line'>  <span class="err">&lt;</span>%= javascript_include_tag &#39;application&#39;, &#39;data-turbolinks-track&#39; =&gt; true %&gt;
+</span><span class='line'>  <span class="err">&lt;</span>%= csrf_meta_tags %&gt;
+</span><span class='line'><span class="nt">&lt;/head&gt;</span>
+</span><span class='line'><span class="nt">&lt;body&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;site-wrapper&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;site-wrapper-inner&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>      <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;cover-container&quot;</span><span class="nt">&gt;</span>
+</span><span class='line'>        <span class="err">&lt;</span>%= render &#39;layouts/navigator&#39; %&gt;
+</span><span class='line'>        <span class="err">&lt;</span>%= render &#39;layouts/messages&#39; %&gt;
+</span><span class='line'>        <span class="err">&lt;</span>%= yield %&gt;
+</span><span class='line'>        <span class="err">&lt;</span>%= render &#39;layouts/footer&#39; %&gt;
+</span><span class='line'>      <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>    <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'>  <span class="nt">&lt;/div&gt;</span>
+</span><span class='line'><span class="nt">&lt;/body&gt;</span>
+</span><span class='line'><span class="nt">&lt;/html&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  I use partial <code>layouts/navigator</code> and <code>layouts/footer</code> to clean the code.</p>
+
+<h4>CSS for cover.css</h4>
+
+<p>  The page looks not good, because CSS is not included. Copy <code>cover.css</code> to <code>/assets/stylesheets</code>. Rails will automatically include CSS files in this directory.</p>
+
+<p>  So far is good, but something wrong when I want to use other bootstrap components.
+  After google that, this is because I haven&rsquo;t import bootstrap!! I&rsquo;m using just cover.css for this template.</p>
+
+<p>  Changing file name <code>assets/applications.css</code> to <code>asstes/application.scss</code>, and add this code</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>  @import &quot;bootstrap-sprockets&quot;;
+</span><span class='line'>  @import &quot;bootstrap&quot;;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  <code>bootstrap-sprockets</code> has to be imported otherwise <strong>icon</strong> can&rsquo;t be displayed.</p>
+
+<p>  Well, bootstrap components works, but ruin all my template.</p>
+
+<p>  After trial and error, I merge <code>cover.css</code> code into <code>application.scss</code>, and put behind <code>@import "bootstrap"</code>. Rails may load other css files in <code>assets</code> directory, then application.scss import bootstrap, overwrite those class attributes.</p>
+
+<p>  After these setting, now my cover template works well with Bootstrap. I aslo test on my iPhone, it shows pretty good, Bootstrap is awesome!!</p>
+
+<h4>CSS for GameBoard</h4>
+
+<p>  The hardest part for me is to build a game board. I search from web and get some solution, but there&rsquo;s no better solution to draw a symbol <code>X</code>, I decide to display it by another style circle. One more thing, I add the feature when mouse <code>hover</code> on choosen square, it will render a temparary fake circle. This makes game much friendly. Here is the css file:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'><span class="nc">.doughnut</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">display</span><span class="o">:</span> <span class="k">inline</span><span class="o">-</span><span class="k">block</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">border</span><span class="o">:</span> <span class="m">10px</span> <span class="k">solid</span> <span class="m">#f00</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">border</span><span class="o">-</span><span class="n">radius</span><span class="o">:</span> <span class="m">50px</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">height</span><span class="o">:</span><span class="m">60px</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">width</span><span class="o">:</span><span class="m">60px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.host_doughnut</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">display</span><span class="o">:</span> <span class="k">inline</span><span class="o">-</span><span class="k">block</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">border</span><span class="o">:</span> <span class="m">5px</span> <span class="k">solid</span> <span class="m">#fff</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">border</span><span class="o">-</span><span class="n">radius</span><span class="o">:</span> <span class="m">20px</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">height</span><span class="o">:</span><span class="m">60px</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">width</span><span class="o">:</span><span class="m">60px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.unpicked</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">display</span><span class="o">:</span> <span class="k">inline</span><span class="o">-</span><span class="k">block</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">height</span><span class="o">:</span><span class="m">60px</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">width</span><span class="o">:</span><span class="m">60px</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">border</span><span class="o">:</span> <span class="m">2px</span> <span class="k">dashed</span> <span class="m">#444</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="nc">.unpicked</span><span class="nd">:hover</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">border</span><span class="o">:</span> <span class="m">10px</span> <span class="k">solid</span> <span class="m">#f66</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">border</span><span class="o">-</span><span class="n">radius</span><span class="o">:</span> <span class="m">50px</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">height</span><span class="o">:</span><span class="m">60px</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">width</span><span class="o">:</span><span class="m">60px</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Ajax</h4>
+
+<p>  Everytime player choose the square, the whole page will reload again. This is not good for a modern web app. Using Ajax to improve it.</p>
+
+<p>  The keyword is add a ID for picked squre.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='css'><span class='line'>  <span class="o">&lt;</span><span class="nt">div</span> <span class="nt">id</span> <span class="o">=</span> <span class="s1">&#39;pick_&lt;%= number %&gt;&#39;</span><span class="o">&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  in <code>GameController</code>, we use <code>respond_to</code> to trigger js:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="n">respond_to</span> <span class="k">do</span> <span class="o">|</span><span class="nb">format</span><span class="o">|</span>
+</span><span class='line'>    <span class="nb">format</span><span class="o">.</span><span class="n">html</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">redirect_to</span> <span class="n">game_path</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>    <span class="nb">format</span><span class="o">.</span><span class="n">js</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">host_pick</span>
+</span><span class='line'>      <span class="n">winner</span> <span class="o">=</span> <span class="vi">@board</span><span class="o">.</span><span class="n">game_is_over?</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">winner</span>
+</span><span class='line'>        <span class="n">flash</span><span class="o">[</span><span class="ss">:notice</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;OH NO!! You are DEAD!&#39;</span> <span class="k">if</span> <span class="n">winner</span> <span class="o">==</span> <span class="vi">@host</span>
+</span><span class='line'>        <span class="n">render</span> <span class="ss">:js</span> <span class="o">=&gt;</span> <span class="s2">&quot;window.location = &#39;/game/over&#39;&quot;</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<blockquote><p>Note: I use <code>render :js =&gt; "window.location = '/game/over'"</code> to render page /game/over if game is over.</p></blockquote>
+
+<p>  and <code>game.create.js</code> file looks like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="o">&lt;</span><span class="sx">% (1..9).each </span><span class="k">do</span> <span class="o">|</span><span class="n">number</span><span class="o">|</span> <span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx">    &lt;% if @player_picked_numbers.include? number %&gt;</span>
+</span><span class='line'>      <span class="err">$</span><span class="p">(</span><span class="s1">&#39;#pick_&lt;%= number %&gt;&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">html</span><span class="p">(</span><span class="s2">&quot;&lt;div class=&#39;doughnut&#39;&gt;&lt;/div&gt;&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="sx">% elsif </span><span class="vi">@host_picked_numbers</span><span class="o">.</span><span class="n">include?</span> <span class="n">number</span> <span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx">      $(&#39;#pick_&lt;%= number %&gt;</span><span class="s1">&#39;).html(&quot;&lt;div class=&#39;</span><span class="n">host_doughnut</span><span class="err">&#39;</span><span class="o">&gt;&lt;</span><span class="sr">/div&gt;&quot;)</span>
+</span><span class='line'><span class="sr">    &lt;% end %&gt;</span>
+</span><span class='line'><span class="sr">  &lt;% end %&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  Ajax make this game vivid!!</p>
+
+<h3>User&rsquo;s Register</h3>
+
+<p>Since I need to store game record, I have to add User&rsquo;s Register, this is not a difficult stuff if you had gone through course 2. Here is a simple ERD:</p>
+
+<ul>
+<li>User: username, digest_password, timestamps, has_many :game_records</li>
+<li>GameRecord: user_id, game_result, attack_times</li>
+</ul>
+
+
+<p>User and GameRecord is a one-to-many assocaition.</p>
+
+<p>Create routes, model, controller, and views follow what we learned in course 2.</p>
+
+<h3>Login/out</h3>
+
+<p>  Create a SessionController to manager user login/logout.
+  Use session[:user_id] to store data in cookie.</p>
+
+<ul>
+<li>def <code>new</code> to render login page.</li>
+<li>def <code>create</code> for login.</li>
+<li>def <code>destroy</code> for logout.</li>
+</ul>
+
+
+<blockquote><p>Don&rsquo;t forget to add feature: auto login after user register.</p></blockquote>
+
+<h3>Ladder</h3>
+
+<p>I will show three kinds of game result: Keeper, Winner, Loser.
+And I need tab navigation here, still copy from Bootstrap:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="o">&lt;</span><span class="n">ul</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;nav nav-tabs&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="sx">% params[:tab] </span><span class="o">=</span> <span class="s1">&#39;WIN&#39;</span> <span class="k">if</span> <span class="o">!</span><span class="n">params</span><span class="o">[</span><span class="ss">:tab</span><span class="o">]</span> <span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx">    &lt;li class=&quot;&lt;%= &#39;active&#39; if params[:tab] == &#39;TIE&#39; %&gt;</span><span class="s2">&quot;&gt;&lt;a href=&quot;</span><span class="c1">#TIE&quot; data-toggle=&quot;tab&quot;&gt;Keepers&lt;/a&gt;&lt;/li&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="n">li</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;&lt;%= &#39;active&#39; if params[:tab] == &#39;WIN&#39; %&gt;&quot;</span><span class="o">&gt;&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;#WIN&quot;</span> <span class="n">data</span><span class="o">-</span><span class="n">toggle</span><span class="o">=</span><span class="s2">&quot;tab&quot;</span><span class="o">&gt;</span><span class="no">Heroes</span><span class="o">&lt;</span><span class="sr">/a&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="n">li</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;&lt;%= &#39;active&#39; if params[:tab] == &#39;LOSE&#39; %&gt;&quot;</span><span class="o">&gt;&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;#LOSE&quot;</span> <span class="n">data</span><span class="o">-</span><span class="n">toggle</span><span class="o">=</span><span class="s2">&quot;tab&quot;</span><span class="o">&gt;</span><span class="no">Loser</span><span class="o">&lt;</span><span class="sr">/a&gt;&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="sr">/ul&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="sr">&lt;div class=&quot;tab-content&quot;&gt;</span>
+</span><span class='line'><span class="sr">  &lt;%= render &#39;column_title&#39; %&gt;  </span>
+</span><span class='line'><span class="sr">  &lt;div class=&quot;&lt;%= if (params[:tab] == &#39;TIE&#39; || !params[:tab]) then &#39;tab-pane active&#39;  else &#39;tab-pane&#39; end%&gt;&quot; id=&quot;TIE&quot;&gt;</span>
+</span><span class='line'><span class="sr">    &lt;%= render @game_records.where(status: &#39;TIE&#39;) %&gt;</span>
+</span><span class='line'><span class="sr">  &lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+</span><span class='line'>  <span class="o">&lt;</span><span class="n">div</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;&lt;%= if params[:tab] == &#39;WIN&#39; then &#39;tab-pane active&#39;  else &#39;tab-pane&#39; end%&gt;&quot;</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;WIN&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;</span><span class="sx">%= render @game_records.where(status: &#39;WIN&#39;) %&gt;</span>
+</span><span class='line'><span class="sx">  &lt;/div&gt;</span>
+</span><span class='line'><span class="sx">  &lt;div class=</span><span class="s2">&quot;&lt;%= if params[:tab] == &#39;LOSE&#39; then &#39;tab-pane active&#39;  else &#39;tab-pane&#39; end%&gt;&quot;</span> <span class="nb">id</span><span class="o">=</span><span class="s2">&quot;LOSE&quot;</span><span class="o">&gt;</span>
+</span><span class='line'>    <span class="o">&lt;%=</span> <span class="n">render</span> <span class="vi">@game_records</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="ss">status</span><span class="p">:</span> <span class="s1">&#39;LOSE&#39;</span><span class="p">)</span> <span class="sx">%&gt;</span>
+</span><span class='line'><span class="sx">  &lt;/div&gt;</span>
+</span><span class='line'><span class="o">&lt;</span><span class="sr">/div&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Tabs do not work? This is because I haven&rsquo;t include javascript for Bootstrap.</p>
+
+<p>Add this line in <code>/assets/javascripts/application.js</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="sr">//</span><span class="o">=</span> <span class="nb">require</span> <span class="n">bootstrap</span><span class="o">-</span><span class="n">sprockets</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Well, it works now!!</p>
+
+<p>Then, I found Kevin(Tealeaf Instructor) also write a blog for <a href="http://www.gotealeaf.com/blog/integrating-rails-and-bootstrap-part-1">integrating rails and bootstrap</a>.</p>
+
+<h3>Deploy to Heroku</h3>
+
+<p>Finally, functions all work and ready to deploy to <a href="heroku.com">Heroku</a>. And follow by Heroku instruction, push code, then&hellip;<code>Fail</code>.</p>
+
+<p>Check the log and find something wrong about <code>gem pg</code>. pg is <code>Postgres</code> used by Heroku. Rails default setting is using <code>sqlite3</code>, so I need to do some work in Gemfile:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">group</span> <span class="ss">:production</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">gem</span> <span class="s1">&#39;pg&#39;</span>
+</span><span class='line'>  <span class="n">gem</span> <span class="s1">&#39;rails_12factor&#39;</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Add this code to Gemfile for config :production using Postgres. Run <code>bundle install</code> and git push again, it should work!!</p>
+
+<h3>Conclusion</h3>
+
+<p>In Course 2, we have lots assignments from a prepared template. If I don&rsquo;t start a new project, I will never knew there are lots of minor things I should know. After this project, I have chance to be more familiar with Ruby language, Rails routes, CRUD&hellip;etc.</p>
+
+<h3>Compliment from others</h3>
+
+<p>Record these just for encourage myself to keep going on.</p>
+
+<p>Albert Agram (TA):</p>
+
+<blockquote><p>Hey Tomo, nicely done! I played a few rounds and am impressed. Good job :)
+<br/></p></blockquote>
+
+<p>Chris Lee (Tealeaf Instructor):</p>
+
+<blockquote><p>This is incredibly awesome! I&rsquo;ll let out a secret: we have a web-based
+tic tac toe game in the works too, and I think yours may be more fun to
+play :\
+<br/></p>
+
+<p>Great job!
+<br/></p>
+
+<p>This type of app doesn&rsquo;t lend itself well to Rails, because it&rsquo;s not
+really &ldquo;page oriented&rdquo;. Rails tends to be a better fit for apps like
+social networks, or things like that where you have CRUD actions on some
+resources.
+<br/></p></blockquote>
+
+<p>Brandon Conway (TA):</p>
+
+<blockquote><p>This game is awesome! I really like the ladder implementation.
+<br/></p></blockquote>
+
+<p>Eugene Chang:</p>
+
+<blockquote><p>This is a really nice app! After seeing it, I had to constantly resist the temptation of spending more time trying to make my UI look better. Great job!</p></blockquote>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Course2 Lesson4]]></title>
@@ -2237,86 +2669,6 @@ This idea that software salaries are "crazy" is not only inaccurate, but deeply 
 <p>關於說軟體工程師薪水多好多好是一件瘋狂的事，並不準確且傷人。停止謠言吧。</p>
 
 <p>Written 8 Jul.Suggest Edits</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[[Quora]大陸人怎麼看台灣民主？]]></title>
-    <link href="http://www.tomohung.com/blog/2014/12/06/what-do-mainland-chinese-people-think-of-the-democracy-in-taiwan/"/>
-    <updated>2014-12-06T21:48:36+08:00</updated>
-    <id>http://www.tomohung.com/blog/2014/12/06/what-do-mainland-chinese-people-think-of-the-democracy-in-taiwan</id>
-    <content type="html"><![CDATA[<p><img src="http://i.minus.com/ibw1BjtQuOWXDe.jpg" width="640"></p>
-
-<p>原文出處：<a href="http://qr.ae/DQj7j">http://qr.ae/DQj7j</a></p>
-
-<h1>大陸人怎麼看台灣民主？</h1>
-
-<p><strong>Feifei Wang</strong></p>
-
-<!---
-Mainland Chinese people have a rather mixed feeling about the democracy in Taiwan, that is, for those small group of intellectuals who do feel something about it. Most people simply don’t care. What does Taiwan have to do with us, other than “they’re part of China”. While it is nice for the Taiwanese to imagine that mainland Chinese actually “envy” their system, it’s no more than a self-indulging illusion. 
--->
-
-
-<p>大陸人有一種混雜的心情看待台灣的民主，就是只有小部份團體會關心它，而大部份的人並不會去關心。台灣會對我們做什麼，或者是台灣是中國的一部份。有時台灣人會想像大陸是一種”邪惡”的系統，但那只不過是種自我安慰罷了。</p>
-
-<!---
-There’re a certain group of people who kept a close watch on Taiwan democracy. They’re hoping that they might use Taiwan’s model and do something similar in Mainland China. These are the people who truly have the will (some even have the power) to change. 
--->
-
-
-<p>有一些保持近距離觀察台灣民主的團體，他們希望台灣民主的模式，也許有些類似的模式可以用在大陸上。他們是真正有願景（有些也有能力）去改變。</p>
-
-<!---
-And how they’re disappointed. 
--->
-
-
-<p>然後他們失望了。</p>
-
-<!--more-->
-
-
-
-
-<!--
-Yes, if I have to say what mainland Chinese people think of democracy in Taiwan, I’d say it’s bitter disappointment. So this is what democracy is. People shouting with each other in Legislative Yuan, or having mob fights in congress. And look at the results, the first non-Kuomintang democratically elected president turn out to be a shameless embezzler… and this is what we get to look forward to if we do democracy the same way Taiwan does. 
--->
-
-
-<p>是的，我必需說大陸人是有在考慮台灣的民主，但我說了這其實有點失望。這就是所謂的民主？人們在立法院互相大吼或者是在議會打架。結果呢，第一個非國民黨的民選總統變成了無恥的貪汙者，這是我們必需考慮如果將來要和台灣走一樣的民主路要面對的情況。</p>
-
-<!--
-We have hoped that with Taiwan’s success, we could use it as a strong argument for pushing democracy in China. We could even argue that Taiwan’s economic success during the 80s can be attribute to is democracy (which is, of course, completely not true, but we can argue that). But now, we can’t even use Taiwan, the closest in culture and situation as China, as an example. Because Taiwan had made democracy a laughingstock. Not only its process ridiculous (adult people cursing and get into physical fights), its results are also abysmal (electing a criminal with his entire family involved in embezzlement). 
--->
-
-
-<p>我們曾渴望像台灣一樣的成功，我們可以用這個來推動中國的民主。我們也可以討論台灣在80年代成功的經濟發展是因為民主推動（當然並不完全是對的，但我們可以討論）。但現在而言，我們無法利用台灣，這個在地理位置或文化上都與中國最相近的國家。舉例來說，因為台灣己經讓民主變成了個笑話。並不只是因為他的過程很滑䅾（成年人互相咒罵和互歐），結果也是糟透了（選了一個和整個家族都牽涉到貪汙）</p>
-
-<!--
-Right now, Taiwan probably served as a cautious tale about how democracy could go wrong or how democracy doesn’t really solve the corruption, or the worst “how democracy doesn’t work for China”. (Just look at Taiwan, they say).
--->
-
-
-<p>現在，也許台灣展示了錯誤的民主之道，民主為何不能實際地解決腐敗，或者更糟的是”為何民主在大陸行不通”（只看現在台灣的話）</p>
-
-<!--
- However, that’s not to say Taiwan democracy is a failure. Personally, I think Taiwan democracy is a success. Embezzler or not, people did come out and casting their votes, and that is important on a principle level. And for people who’re not used to democratic voting system, it is crucial to let them make mistakes and realize “voting have consequences that would impact their own lives”. I’d be more than happy to have a messy democratic congress than a quiet orderly totalitarian one. But you have to admit, it looks pretty bad, and people who’re against democracy can easily dismiss it. 
--->
-
-
-<p>雖說如此，這並不是說台灣民主是個錯誤。對我個人而言，台灣民主是成功的。無論貪汙與否，人民的確站出來投下一票，而這是重要的原則。而對那些無法利用民主投票系統的人來說，犯錯，並了解到投票是會對人民生活造成影響的。我寧可有一個混亂的民主議會而不要有個僵直老化的極權政府。但你必需承認，它看起來相當糟，而反對民主的人很容易反騻它。</p>
-
-<p>(update thanks to Fu Xing Liu and Don Johnson)</p>
-
-<!--
-I for one never believe western model of democracy could work in China. We do need democracy but it should be on our own term, and instead of following other people’s model, we should find out own way. As cliche and evil as it might sound, it should be a “Chinese style democracy”.
--->
-
-
-<p>我是一個從不相信西方民主模型可以在中國應用的人。但我們的確需要民主，但它必需是屬於我們的方式，替代其它模式，我們應該要找出我們自己的路。也許聽起來有點陳腔爛調或厭惡，他應該是”中國式的民主”</p>
-
-<p>Updated 14 Jul, 2013.</p>
 ]]></content>
   </entry>
   
