@@ -20,6 +20,8 @@ GitHub repo: https://github.com/tomohung/tictactoe-rails
 
 This project is activated by Tealeaf Course 2(Rapid Prototyping with Ruby on Rails), we are asked to do a personal project by ourself. In course 1(Introduction to Ruby and Web Development), we have an optional assignment to build a game `Tic Tac Toe` engine by Object-Oriented, that is, to give this game AI. I spent a lot of time to design logic, and I believe I have a good job for this. This is why I choose this subject for my personal project. And reuse my code is also a kind of `DRY` way.
 
+<!--more-->
+
 **Warning**
 
 I have to admit that I make a big mistake, because I am using a class variable to control **Game Board** status. This work when only me to play with it, but after deployment it will become disaster when multiple player play together. Player share the same game status and sometimes it look weird.
