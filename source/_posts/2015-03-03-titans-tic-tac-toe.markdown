@@ -6,16 +6,16 @@ comments: true
 categories: [tealeaf, rails]
 ---
 
-{% img http://i.minus.com/ioNX06lcdWVVd.png 640 %}
-
-[TOC]
+{% img http://i.minus.com/i2XJ0y9E48CHg.png %}
 
 ###Prelude
 
 This is a blog entry for record my first personal project for Rails, and focus on what's are first time if starting a new project `From Zero To One`.
 
 `Titan's Tic Tac Toe` is my first personal app for Rails.
-website: https://young-castle-5534.herokuapp.com/
+
+Website: https://young-castle-5534.herokuapp.com/
+
 GitHub repo: https://github.com/tomohung/tictactoe-rails
 
 This project is activated by Tealeaf Course 2(Rapid Prototyping with Ruby on Rails), we are asked to do a personal project by ourself. In course 1(Introduction to Ruby and Web Development), we have an optional assignment to build a game `Tic Tac Toe` engine by Object-Oriented, that is, to give this game AI. I spent a lot of time to design logic, and I believe I have a good job for this. This is why I choose this subject for my personal project. And reuse my code is also a kind of `DRY` way.
@@ -68,14 +68,15 @@ GitHub repo: https://github.com/tomohung/tictactoe-rails/blob/master/lib/oo_tic_
 
   I choose [template-cover](http://getbootstrap.com/examples/cover/) for my project, it looks clean and suit for my application.
 
-  #### Bootstrap
+#### Bootstrap
+
   1. Download Bootstrap, unzip it, then find source code in `/docs/examples/cover`.
   2. I got two files, `index.html` and `cover.css`.
   3. combine `index.html` into Rails `views/layout/application.html.erb`.
 
   It may looks like this:
 
-  ```
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -97,11 +98,11 @@ GitHub repo: https://github.com/tomohung/tictactoe-rails/blob/master/lib/oo_tic_
   </div>
 </body>
 </html>
-  ```
+```
 
   I use partial `layouts/navigator` and `layouts/footer` to clean the code.
 
-  #### CSS for cover.css
+#### CSS for cover.css
 
   The page looks not good, because CSS is not included. Copy `cover.css` to `/assets/stylesheets`. Rails will automatically include CSS files in this directory.
 
@@ -110,10 +111,10 @@ GitHub repo: https://github.com/tomohung/tictactoe-rails/blob/master/lib/oo_tic_
 
   Changing file name `assets/applications.css` to `asstes/application.scss`, and add this code
   
-  ```
+```
   @import "bootstrap-sprockets";
   @import "bootstrap";
-  ```
+```
 
   `bootstrap-sprockets` has to be imported otherwise **icon** can't be displayed.
 
@@ -123,11 +124,11 @@ GitHub repo: https://github.com/tomohung/tictactoe-rails/blob/master/lib/oo_tic_
 
   After these setting, now my cover template works well with Bootstrap. I aslo test on my iPhone, it shows pretty good, Bootstrap is awesome!!
 
-  #### CSS for GameBoard
+#### CSS for GameBoard
 
   The hardest part for me is to build a game board. I search from web and get some solution, but there's no better solution to draw a symbol `X`, I decide to display it by another style circle. One more thing, I add the feature when mouse `hover` on choosen square, it will render a temparary fake circle. This makes game much friendly. Here is the css file:
 
-  ```
+```css
 .doughnut { 
   display: inline-block;
   border: 10px solid #f00;
@@ -157,20 +158,21 @@ GitHub repo: https://github.com/tomohung/tictactoe-rails/blob/master/lib/oo_tic_
   height:60px;
   width:60px;
 }
-  ```
+```
 
-  ####Ajax
+####Ajax
+
   Everytime player choose the square, the whole page will reload again. This is not good for a modern web app. Using Ajax to improve it.
 
   The keyword is add a ID for picked squre.
 
-  ```
+```
   <div id = 'pick_<%= number %>'>
-  ```
+```
 
   in `GameController`, we use `respond_to` to trigger js:
 
-  ```
+```ruby
   respond_to do |format|
     format.html do
       redirect_to game_path
@@ -184,13 +186,13 @@ GitHub repo: https://github.com/tomohung/tictactoe-rails/blob/master/lib/oo_tic_
       end
     end
   end
-  ```
+```
 
   > Note: I use `render :js => "window.location = '/game/over'"` to render page /game/over if game is over.
 
   and `game.create.js` file looks like:
 
-  ```
+```ruby
   <% (1..9).each do |number| %>
     <% if @player_picked_numbers.include? number %>
       $('#pick_<%= number %>').html("<div class='doughnut'></div>");
@@ -198,7 +200,7 @@ GitHub repo: https://github.com/tomohung/tictactoe-rails/blob/master/lib/oo_tic_
       $('#pick_<%= number %>').html("<div class='host_doughnut'></div>")
     <% end %>
   <% end %>
-  ```
+```
 
   Ajax make this game vivid!!
 
@@ -249,6 +251,7 @@ And I need tab navigation here, still copy from Bootstrap:
     <%= render @game_records.where(status: 'LOSE') %>
   </div>
 </div>
+```
 
 Tabs do not work? This is because I haven't include javascript for Bootstrap. 
 
@@ -286,24 +289,30 @@ In Course 2, we have lots assignments from a prepared template. If I don't start
 
 Record these just for encourage myself to keep going on.
 
-> Albert Agram (TA):
+Albert Agram (TA):
 > Hey Tomo, nicely done! I played a few rounds and am impressed. Good job :)
+<br/>
 
-
-> Chris Lee (Tealeaf Instructor)
+Chris Lee (Tealeaf Instructor):
 > This is incredibly awesome! I'll let out a secret: we have a web-based 
 tic tac toe game in the works too, and I think yours may be more fun to 
 play :\
+<br/>
+
 > Great job!
+<br/>
+
 > This type of app doesn't lend itself well to Rails, because it's not 
 really "page oriented". Rails tends to be a better fit for apps like 
 social networks, or things like that where you have CRUD actions on some 
 resources.
+<br/>
 
 
-> Brandon Conway (TA)
+Brandon Conway (TA):
 > This game is awesome! I really like the ladder implementation. 
+<br/>
 
 
-> Eugene Chang
+Eugene Chang:
 > This is a really nice app! After seeing it, I had to constantly resist the temptation of spending more time trying to make my UI look better. Great job! 
