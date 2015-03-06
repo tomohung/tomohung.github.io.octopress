@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Show HTTP Is Stateless by Sinatra - The Life Alchemist</title>
+  <title>Reflection to Tealeaf Course3 Week1 - The Life Alchemist</title>
   <meta name="author" content="Tomo">
 
   
@@ -14,15 +14,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra">
+  <link rel="canonical" href="http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="The Life Alchemist" type="application/atom+xml">
 
   <!-- http://opengraphprotocol.org/ -->
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra">
-  <meta property="og:title" content="Show HTTP Is Stateless by Sinatra - The Life Alchemist">
+  <meta property="og:url" content="http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1">
+  <meta property="og:title" content="Reflection to Tealeaf Course3 Week1 - The Life Alchemist">
   
 
   <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
@@ -126,125 +126,33 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-14T21:25:15+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-14</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-06T08:40:32+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-03-06</time>
         
       </p>
     
     
     <h1 class="entry-title" itemprop="name headline">
-        Show HTTP Is Stateless by Sinatra
+        Reflection to Tealeaf Course3 Week1
         
     </h1>
     
   </header>
 
 
-<div class="entry-content clearfix" itemprop="articleBody description"><p>In tealeaf week 3, introduce to HTTP.</p>
+<div class="entry-content clearfix" itemprop="articleBody description"><p>In Course3 week1, Kevin give me a schema of what should developper do from beginning.</p>
 
-<p>The most important thing is that, HTTP is stateless.</p>
+<p>There are so many subjects I&rsquo;ve heard but not ever practicing in action, like: TDD, git flow(github flow), why test&hellip;etc.</p>
 
-<p>What&rsquo;s the influnce by this property? Showing this by Sinatra.</p>
+<p>I like the concept Red-Green-Refactor, it forced developper thinking about what you should do first. This may be argued by some experienced engineer, because they can do these works naturally.</p>
 
-<!--more-->
+<p>But followed by Green-Red-Refactor, seeing green light really makes me feel comfortable. I can&rsquo;t stop thinking about how it&rsquo;d become easier if I could use this method when developping AI for TicTacToe. Testing game logic in TicTacToe manually costs me lots of time.</p>
 
+<p>Git flow/ GitHub flow is also my first time to taste. I think this should be fun to start communicate with other programmers through pull request. Glad that Tealeaf built an environment to let us feel like we are really in work.</p>
 
-<p>first, follow <a href="http://www.sinatrarb.com/intro.html">Sinatra intro</a> to run basic function:
-then try this code:</p>
+<p>Matthew also metioned about this I should care about: <a href="http://stackoverflow.com/questions/729692/why-should-files-end-with-a-newline">Why should files end with a newline</a>.
+<br/></p>
 
-<figure class='code'><figcaption><span>main.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;sinatra&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">before</span> <span class="k">do</span>
-</span><span class='line'>  <span class="vi">@name</span> <span class="o">=</span> <span class="s1">&#39;Guest&#39;</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">get</span> <span class="s1">&#39;/&#39;</span> <span class="k">do</span>
-</span><span class='line'>  <span class="n">erb</span> <span class="ss">:home</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">post</span> <span class="s1">&#39;/set_name&#39;</span> <span class="k">do</span>
-</span><span class='line'>  <span class="vi">@name</span> <span class="o">=</span> <span class="s1">&#39;tealeaf&#39;</span>
-</span><span class='line'>  <span class="n">redirect</span> <span class="s1">&#39;/&#39;</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>and this will show a button, click the button will invoke a post request back to <code>set_name</code> in main.rb:</p>
-
-<figure class='code'><figcaption><span>home.erb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='erb'><span class='line'><span class="x">&lt;h4&gt;hi~ </span><span class="cp">&lt;%=</span> <span class="vi">@name</span> <span class="cp">%&gt;</span><span class="x"> &lt;/h4&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;form action=&quot;/set_name&quot; method=&quot;post&quot;&gt;</span>
-</span><span class='line'><span class="x">  &lt;input class=&quot;btn&quot; type=&quot;submit&quot; name=&quot;name&quot;&gt;</span>
-</span><span class='line'><span class="x">&lt;/form&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>OK, then what will <code>@name</code> show in home.erb after click button??</p>
-
-<p>It shows <code>Guest</code>, not <code>tealeaf</code>. Why?</p>
-
-<p><img src="http://i.minus.com/i9oeLWDYI4DBb.png"></p>
-
-<p>The key point is: when 2 redirect to 3, it&rsquo;s a new request, instance variable like @name will be deleted after redirect, then create a new one.</p>
-
-<p>That&rsquo;s why @name still shows <code>Guest</code>.</p>
-
-<p>How about this way:</p>
-
-<figure class='code'><figcaption><span>main.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;sinatra&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">before</span> <span class="k">do</span>
-</span><span class='line'>  <span class="vi">@name</span> <span class="o">=</span> <span class="s1">&#39;Guest&#39;</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">get</span> <span class="s1">&#39;/&#39;</span> <span class="k">do</span>
-</span><span class='line'>  <span class="n">erb</span> <span class="ss">:home</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">post</span> <span class="s1">&#39;/set_name&#39;</span> <span class="k">do</span>
-</span><span class='line'>  <span class="vi">@name</span> <span class="o">=</span> <span class="s1">&#39;tealeaf&#39;</span>
-</span><span class='line'>  <span class="n">erb</span> <span class="ss">:home</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now using erb to embeded <code>home.erb</code> into the same request(&lsquo;/set_name&rsquo;). Then you&rsquo;ll see <code>@name</code> shows <code>tealeaf</code>!!</p>
-
-<p>This experience shows me how HTTP is stateless.</p>
-
-<p>And how web developers make it like stateness is a long way to go.</p>
+<p>I also find a blog post talking about <a href="http://www.jamesshore.com/Blog/Red-Green-Refactor.html">Red-Green-Refactor</a>, the author split the process into 5 steps: <strong>Think, Red, Green, Refactor, Repeat</strong>, and called this <code>code design process</code>. :-)</p>
 </div>
 
 
@@ -268,13 +176,13 @@ then try this code:</p>
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-14T21:25:15+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-14</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-06T08:40:32+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-03-06</time>
           
 
 <span class="glyphicon glyphicon-tags"></span>&nbsp;
 <span class="categories">
   
-    <a class='category' href='/blog/categories/ruby/'>ruby</a>, <a class='category' href='/blog/categories/sinatra/'>sinatra</a>, <a class='category' href='/blog/categories/web/'>web</a>
+    <a class='category' href='/blog/categories/rails/'>rails</a>, <a class='category' href='/blog/categories/tealeaf/'>tealeaf</a>
   
 </span>
 
@@ -283,7 +191,7 @@ then try this code:</p>
         
           <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1/" >Tweet</a>
   
   
   
@@ -295,10 +203,8 @@ then try this code:</p>
         
           <ul class="meta text-muted pager">
             
-            <li class="previous"><a href="/blog/2015/01/13/reflection-to-tealeaf-week-3/" title="Previous Post: Reflection to tealeaf week 3">&laquo; Reflection to tealeaf week 3</a></li>
+            <li class="previous"><a href="/blog/2015/03/03/titans-tic-tac-toe/" title="Previous Post: Titan's Tic Tac Toe">&laquo; Titan&#8217;s Tic Tac Toe</a></li>
             
-            
-            <li class="next"><a href="/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io/" title="Next Post: 在Nitrous上寫Octopress">在Nitrous上寫Octopress &raquo;</a></li>
             
           </ul>
         
@@ -329,7 +235,7 @@ then try this code:</p>
   
   <div id="recent_posts" class="list-group">
     
-    <a class="list-group-item " href="/blog/2015/03/06/reflection-to-tealeaf-course3-week1/">Reflection to Tealeaf Course3 Week1</a>
+    <a class="list-group-item active" href="/blog/2015/03/06/reflection-to-tealeaf-course3-week1/">Reflection to Tealeaf Course3 Week1</a>
     
     <a class="list-group-item " href="/blog/2015/03/03/titans-tic-tac-toe/">Titan&#8217;s Tic Tac Toe</a>
     
@@ -373,8 +279,8 @@ then try this code:</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra/';
-        var disqus_url = 'http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra/';
+        var disqus_identifier = 'http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1/';
+        var disqus_url = 'http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1/';
         var disqus_script = 'embed.js';
       
     (function () {

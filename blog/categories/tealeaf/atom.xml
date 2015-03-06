@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tealeaf | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/tealeaf/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-03-04T06:41:16+08:00</updated>
+  <updated>2015-03-06T10:19:02+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -12,6 +12,28 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week1]]></title>
+    <link href="http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1/"/>
+    <updated>2015-03-06T08:40:32+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1</id>
+    <content type="html"><![CDATA[<p>In Course3 week1, Kevin give me a schema of what should developper do from beginning.</p>
+
+<p>There are so many subjects I&rsquo;ve heard but not ever practicing in action, like: TDD, git flow(github flow), why test&hellip;etc.</p>
+
+<p>I like the concept Red-Green-Refactor, it forced developper thinking about what you should do first. This may be argued by some experienced engineer, because they can do these works naturally.</p>
+
+<p>But followed by Green-Red-Refactor, seeing green light really makes me feel comfortable. I can&rsquo;t stop thinking about how it&rsquo;d become easier if I could use this method when developping AI for TicTacToe. Testing game logic in TicTacToe manually costs me lots of time.</p>
+
+<p>Git flow/ GitHub flow is also my first time to taste. I think this should be fun to start communicate with other programmers through pull request. Glad that Tealeaf built an environment to let us feel like we are really in work.</p>
+
+<p>Matthew also metioned about this I should care about: <a href="http://stackoverflow.com/questions/729692/why-should-files-end-with-a-newline">Why should files end with a newline</a>.
+<br/></p>
+
+<p>I also find a blog post talking about <a href="http://www.jamesshore.com/Blog/Red-Green-Refactor.html">Red-Green-Refactor</a>, the author split the process into 5 steps: <strong>Think, Red, Green, Refactor, Repeat</strong>, and called this <code>code design process</code>. :-)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Titan's Tic Tac Toe]]></title>
@@ -824,175 +846,6 @@ end
 <blockquote><h4>10. What is an ERD diagram, and why do we need it?</h4></blockquote>
 
 <p>Entity Relationship Dirgram(ERD) stands for tables in database relationship between each others. It&rsquo;s a convinient way to communicate with others what the tables relationship, even for ourselves under developming.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Course2 Lesson2]]></title>
-    <link href="http://www.tomohung.com/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/"/>
-    <updated>2015-02-10T16:39:30+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2</id>
-    <content type="html"><![CDATA[<p><a href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/">Last week</a>, I know Models and Database side of Rails.</p>
-
-<p>This week Tealeaf reveals the <code>Controller</code> and <code>View</code> part of MVC, I would like to summarize this lesson into two parts: <code>Don't Repeat Yourself</code> and <code>Conventions over Configuration</code>.</p>
-
-<!--more-->
-
-
-<h3>Don&rsquo;t Repeat Yourself</h3>
-
-<ul>
-<li><p>before_action</p>
-
-<p>Like Sinatra, before_action works at Controller, help us to remove repeatedly codes, like</p>
-
-<pre><code>  before_action: :set_post, only: [:show, :edit, :update]
-</code></pre>
-
-<pre><code>  def set_post
-    @post = Post.find(param[:id])
-  end
-</code></pre>
-
-<p>then, method <code>set_post</code> works at three actions : show, edit, update by once.</p></li>
-<li><p>form partial</p>
-
-<p>Rails offer <code>form partial</code> to help us eliminate repeatedly <code>HTML codes</code>, by Rails convention, if there is a file called <code>/app/views/posts/_post.erb</code>, I can just write code:</p>
-
-<pre><code>  &lt;%= render @post %&gt;
-</code></pre>
-
-<p>if @post is a class Post&rsquo;s instance, then Rails will automatically match to the file <code>_post.erb</code>, then render this file.</p>
-
-<p>There is another amazing way to show collection of instances. If I have a collection instance <code>@posts</code> by class Post, then I have write</p>
-
-<pre><code>  &lt;%= render @posts %&gt;
-</code></pre>
-
-<p>Rails will also automatically match the file <code>_post.erb</code> to iterate to render <code>@posts</code>. What a clean way to write such codes!</p></li>
-<li><p>Helpers for view: fix url and datetime</p>
-
-<p>We also can put some logic in Views into <code>/helpers</code>, like <code>application_helper.rb</code>. Put a lot of logic in Views is a dirty way when reviewing, and Rails have helpers to make us a clean way to do this. <code>Form Helper</code> is another good implement to help us. I&rsquo;ll metion later.</p></li>
-<li><p>validations</p>
-
-<p>Rails offer a simple to validate data in Model, like this</p>
-
-<pre><code class="ruby post.rb">validates :title, presence: true, length: {minimum: 5}
-</code></pre></li>
-</ul>
-
-
-<h3>Conventions over Configuration</h3>
-
-<ul>
-<li><p>CRUD
-For most popular actions on web, there are 4 actions: Create, Retrieve, Update, Delete.
-Rails offer a RESTful setting to make implemention these actions much simple.</p>
-
-<p>For example, in <code>routes.rb</code>:</p>
-
-<pre><code>  resources :posts
-</code></pre>
-
-<p>help us to build 7 actions corespond with VERBs and URIs.</p>
-
-<pre><code>get '/posts/', to: "posts#index", as: "posts"
-get '/posts/:id', to: "posts#show", as: "post"
-get '/posts/new', to: "posts#new", as: "new_post"
-post '/posts/', to: "posts#create",
-get '/posts/:id', to: "posts#edit", as: "edit_post"
-patch '/posts/:id', to: "posts#update"
-delete '/posts/:id', to: "posts#destroy"
-</code></pre>
-
-<p>I also can use key word <code>except:</code> or <code>only:</code> to assign which routes will be created:</p>
-
-<pre><code>  resources :posts, except: [:destory]
-  resources :comments, only: [:create]
-</code></pre></li>
-<li><p>nested routes
-Rails also offer a way to create nested path like <code>/posts/:id/comments</code></p>
-
-<pre><code>  resources :posts, except: [:destory] do
-    resources :comments, only: [:create]
-  end
-</code></pre>
-
-<p>And this will create route for <code>comments#create</code> by nested route</p>
-
-<pre><code>  post '/posts/:post_id/comments', to: "comments#create", as: "post_comments"
-</code></pre></li>
-<li><p>model backed form</p>
-
-<p>Using <code>Model backed form</code> can associated with instance, then Rails do a lot of task behind the form.</p>
-
-<pre><code>&lt;%= form_for [@post, @comment] do |f| %&gt;  
-  &lt;%= render 'shared/error_messages', instance: @comment %&gt;
-  &lt;%= f.label :body, 'Leave a Comment:'%&gt;
-  &lt;%= f.text_area :body , rows: 5, class: 'span4'%&gt;
-  &lt;br&gt;
-  &lt;%= f.submit class: 'btn btn-defualt'%&gt;
-&lt;% end %&gt;
-</code></pre>
-
-<p><code>[@post, @comment]</code> is a Rails convention for creating matching routes for <code>posts/coments</code>. And this form help us to create HTML element depends on what current action is. There are different actions in <strong>edit</strong> and <strong>new</strong> actions. <code>label</code> will update information if it&rsquo;s at edit action, and form action will generate a hidden attribute to store info that current actions VERB. This are all Rails conventions.</p></li>
-<li><p>category_ids for checkboxes</p>
-
-<p>Rails offer a helper to create checkboxes, like this</p>
-
-<pre><code>&lt;%= form_for @post do |f| %&gt;
-  &lt;%= f.collection_check_boxes :category_ids, Category.all, :id, :name do |cb| %&gt;
-    &lt;%= cb.label(class: 'checkbox inline') {cb.check_box(class: 'checkbox') + cb.text}%&gt;
-  &lt;% end %&gt;
-&lt;% end %&gt;
-</code></pre>
-
-<p>And there is a virtual attribute for <code>category_ids</code>, it&rsquo;s generated because we set posts and categories&rsquo;s associations in Post Models:</p>
-
-<pre><code>class Post &lt; ActiveRecord::Base
-  belongs_to :creator, foreign_key: :user_id, class_name: "User"
-  has_many :comments
-  has_many :post_categories
-  has_many :categories, through: :post_categories
-end
-</code></pre>
-
-<p>and <code>category_ids</code> store multiple values to match <code>collection_check_boxes</code>. Rails another magic show.</p></li>
-<li><p>auto association by mass-assignment</p>
-
-<p>We can write</p>
-
-<pre><code>  @comment = @post.comments.new(param.require(:comment).permit!)
-</code></pre>
-
-<p>Rails will auto assign post_id to @comment.</p></li>
-</ul>
-
-
-<h3>Others</h3>
-
-<ul>
-<li><p>Strong parameters</p>
-
-<p>After Rails 4, Rails lock params by default, we need to get params by this way</p>
-
-<pre><code>params.require(:post).permit(:title, :url, :description, category_ids:[])
-</code></pre>
-
-<p>If we have to get a collection values, remember to add <code>[]</code></p></li>
-<li><p>render vs redirect_to</p>
-
-<p><code>render</code> is for render HTML, and <code>redirect_to</code> is for make a new request. Although we see the page is changed, but it&rsquo;s totally different behind these two ways.</p></li>
-</ul>
-
-
-<h3>Conclusion</h3>
-
-<p>  I can&rsquo;t imagine how can I figure out such mass Rails knowledge by myself in two weeks. Here is my learning processes: <code>watch video -&gt; 'I knew it!' -&gt; do assignment -&gt; 'What? How to do that?' -&gt; watch solution -&gt; 'Ah! I got it!' -&gt; complete assignment</code>. And these things happen again and again.</p>
-
-<p>  Watching option videos and reviewing disscusions also help me to dig out what I missed.</p>
-
-<p>  I should do the official guide again, and I think this time will be a totally different feeling compared with two weeks ago.</p>
 ]]></content>
   </entry>
   
