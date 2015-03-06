@@ -12,7 +12,7 @@ There are so many subjects I've heard but not ever practicing in action, like: T
 
 I like the concept Red-Green-Refactor, it forced developper thinking about what you should do first. This may be argued by some experienced engineer, because they can do these works naturally.
 
-But followed by Green-Red-Refactor, seeing green light really makes me feel comfortable. I can't stop thinking about how it'd become easier if I could use this method when developping AI for TicTacToe. Testing game logic in TicTacToe manually costs me lots of time.
+But followed by Red-Green-Refactor, seeing green light really makes me feel comfortable. I can't stop thinking about how it'd become easier if I could use this method when developping AI for TicTacToe. Testing game logic in TicTacToe manually costs me lots of time.
 
 Git flow/ GitHub flow is also my first time to taste. I think this should be fun to start communicate with other programmers through pull request. Glad that Tealeaf built an environment to let us feel like we are really in work.
 
