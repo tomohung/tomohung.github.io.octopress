@@ -4,7 +4,7 @@
   <title><![CDATA[The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-03-06T10:22:09+08:00</updated>
+  <updated>2015-03-12T10:05:27+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -12,6 +12,70 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week2]]></title>
+    <link href="http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2/"/>
+    <updated>2015-03-11T11:21:17+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2</id>
+    <content type="html"><![CDATA[<p>There are 3 kinds of test: <code>Unit</code>, <code>Functional</code>, <code>Integration</code>. In <a href="http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1/">week 1</a>, we test <strong>Model</strong>, this should belong to <code>Unit test</code> . And this week we test <strong>Controller</strong>, this should belong to <code>Functional test</code>. I guess it should be <code>Integration test</code> when we move into part of <strong>View</strong> test.</p>
+
+<p>I have to heavily rely on solution videos, there are two main reasons:</p>
+
+<ol>
+<li><p>I&rsquo;m not familiar with <code>what to test</code>, because I&rsquo;m a starter for TDD. It&rsquo;s a big conversion <strong>from test laster to test driven</strong>.</p></li>
+<li><p>I&rsquo;m not familiar with <code>RSpec</code>. There are some tricks for test controllers when using RSpec.</p></li>
+</ol>
+
+
+<p>For example, when we test `QueueItemsController#create&#8217;, there are 7 tests:</p>
+
+<ul>
+<li>it &lsquo;redirects to my queue page&rsquo;</li>
+<li>it &lsquo;creates a queue item&rsquo;</li>
+<li>it &lsquo;creates the queue item associated with video&rsquo;</li>
+<li>it &lsquo;creates the queue item associated with current user&rsquo;</li>
+<li>it &lsquo;puts the video as the last one in the queue&rsquo;</li>
+<li>it &lsquo;does not add the video in the queue if already existed in the queue&rsquo;</li>
+<li>it &lsquo;redirects to sign in page if unauthenticated&rsquo;</li>
+</ul>
+
+
+<p>A simple action needs to do such lots of tests!!</p>
+
+<p>Or here is for <strong>Model</strong> methods: <code>search_by_title</code>:</p>
+
+<ul>
+<li>it &lsquo;returns empty array if no match&rsquo;</li>
+<li>it &lsquo;returns an array if one video&rsquo;</li>
+<li>it &lsquo;returns an array if partial match&rsquo;</li>
+<li>it &lsquo;returns an array of all matches ordered by DESC&rsquo;</li>
+<li>it &lsquo;returns an empty array for search an empty string&rsquo;</li>
+</ul>
+
+
+<p>To test every possible situations is not an easy work.</p>
+
+<p>Brandon also metioned me that care about using <code>let</code> and <code>before</code>. Because of lots of tests in spec files, we may miss some pre-declare vars by using <code>let</code> or <code>before</code>. Sometimes, it may be better do not clean duplicated codes for code readability.</p>
+
+<p>Second, extract methods into <strong>Model</strong>. ex:</p>
+
+<figure class='code'><figcaption><span>user.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">def</span> <span class="nf">queue_include?</span><span class="p">(</span><span class="n">video</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">queue_items</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:video</span><span class="p">)</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="n">video</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>then, I can use this method everywhere in my app.</p>
+
+<h3>Conclusion</h3>
+
+<p>Still on the way to be more familiar to do TDD. :-)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week1]]></title>
@@ -2518,100 +2582,6 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
 <h1>後續</h1>
 
 <p><a href="http://wiki.mbalib.com/zh-tw/%E6%B5%B7%E9%BE%9F%E4%BA%A4%E6%98%93%E6%B3%95">海龜</a>這個名詞勾起我多年前的回憶，一開始在信裡看到這個名詞，還想說怎麼在這裡突然冒出來？雖然此海龜非彼海龜，最後貼個海龜圖送給跟我一樣這三天書信往來，死了不少腦細胞的R&rsquo;s</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[語言管理]]></title>
-    <link href="http://www.tomohung.com/blog/2014/12/12/language-management/"/>
-    <updated>2014-12-12T05:32:48+08:00</updated>
-    <id>http://www.tomohung.com/blog/2014/12/12/language-management</id>
-    <content type="html"><![CDATA[<p><img src="http://i.minus.com/ibp6diev7FKMoZ.jpg" width="640"></p>
-
-<p>這禮拜三晚上，特地到台大參加今周刊舉辦的講座『語言管理』，一開始完全就是為了范疇才報名的，想聽看看本人會說些什麼。但其實講座的主講人有兩位，一位是范疇，另一位是陳超明老師。</p>
-
-<p>聽完後才覺得，這輩子學英文老是覺得學習英文很重要，但是總是處於半吊子的狀態，范疇說了，<code>英文不是拿來學習的，是要拿來用的</code>。怎麼樣建立目標與動機，永遠是學習最重要的課題啊。</p>
-
-<!--more-->
-
-
-<h1>陳超明</h1>
-
-<p><img src="http://i.minus.com/iCZF589L0a5oJ.png" width="640"></p>
-
-<p><a href="http://www.englishforlife.com.tw">陳超明</a>老師主要是推廣英文，用自己參加各國的會議經驗，來表達語言的重要性。
-幾個重點：</p>
-
-<ul>
-<li><p>低薪時代不是只有台灣才有，是全世界性的現像，中產階級慢慢在消失當中，在台灣，低階主管和高階主管的數量增加，但是中階主管的數量在過去幾年，己經減少了大約14萬。</p></li>
-<li><p>東南亞聯盟己經決定要將英文列為官方語言了。</p></li>
-<li><p>知識創新、人才創新，台灣要做加值貿易（這其實是范疇在<a href="http://www.books.com.tw/products/0010653477">與中國無關</a>這本書裡頭講的）</p></li>
-<li><p>2030年，大約有20億的工作會消失 by Tomas Frey。</p></li>
-<li><p>Work For Job，意思就是單純的工作（Job）會消失，而需要人類智能的工作（Work）才是重點</p></li>
-<li><p>Engagement 接觸參與才是王道</p></li>
-<li><p>Think Globally, prosper Regionally.</p></li>
-</ul>
-
-
-<h1>范疇</h1>
-
-<p><a href="http://www.books.com.tw/products/0010653477">與中國無關</a>的作者，我也是因為看過書驚為天人，才來報名這個講座的。</p>
-
-<p><img src="http://i.minus.com/ixXEGUqtlejfK.JPG" width="640"></p>
-
-<p>幾個重點：</p>
-
-<ul>
-<li><p>舊世界的來往是1對1，或是1對多；但新世界的來往己經是多對多，網對網。</p></li>
-<li><p><a href="http://brandont.pixnet.net/blog/post/29703956-%E6%97%A5%E6%9C%AC%E6%99%BA%E8%83%BD%E6%89%8B%E6%A9%9F%E7%82%BA%E4%BD%95%E6%B5%B7%E5%A4%96%E5%8F%97%E9%98%BB">Galapagos Syndrome</a>，台灣現在就是活在自己的島上，排斥與外界接觸。</p></li>
-<li><p>重視競爭力己經過時了，但是台灣現在還在追求這套，所以永遠對免稅、FTA等等，才會覺得這麼重要，現在這個時代重要的是<code>參與力Engaging</code>。</p></li>
-<li><p>積極參與，創造網絡。</p></li>
-<li><p>中國一直以來都是強盛大國，只有在文化大革命後的30年，台灣抓到這個機會站起來，現在的狀況只不過是回歸常態。要認清這個事實。</p></li>
-<li><p>建立讓世界走進心胸的說YES習慣。</p></li>
-</ul>
-
-
-<p>而這些，強化自己本身的語言，是最重要的第一步（最後他終於拉回主題了XD）</p>
-
-<h1>Panel Discussion</h1>
-
-<p><img src="http://i.minus.com/iPFNuh76KUl93.jpg" width="640"></p>
-
-<h3>廢除教育部</h3>
-
-<p>會後開放問答，最有趣的是陳超明與范疇都同意，或許要改善現行教育制度，就是要廢除教育部。教育部編列了一堆計劃，卻成效不彰，但其實只要列出學習目標審核，其它的要怎麼學習，用什麼方法來學習，都交給民間單位來自行決定。陳超明老師就提了，以一個中學生的程度，應該要能表現15分鐘的英文演說（汗顏~）。</p>
-
-<h3>在深山吃龍蝦</h3>
-
-<p>另一個有趣的是范疇用了「想在深山吃龍蝦」來比喻台灣的現況。深山裡要取得龍蝦是非常不易的，想吃，得付出代價，而重點在於，我們是否願意付出這個代價，而願意的話，學習語言走出第一步，擁抱世界，強化參與力。</p>
-
-<p>相反的，如果想到近海，容易取得的地方吃龍蝦呢？這在范疇的書裡有提到，台灣未來的其中一條路就是和大陸統一，靠著大陸的讓利，讓台灣可以用較輕鬆的方法取得龍蝦。</p>
-
-<p>而如前述，台灣的現況是<a href="http://brandont.pixnet.net/blog/post/29703956-%E6%97%A5%E6%9C%AC%E6%99%BA%E8%83%BD%E6%89%8B%E6%A9%9F%E7%82%BA%E4%BD%95%E6%B5%B7%E5%A4%96%E5%8F%97%E9%98%BB">Galapagos Syndrome</a>，只看的到中國的威脅，而沒有看到世界的機會。</p>
-
-<h3>競爭力大師Michael Porter</h3>
-
-<p>前陣子來台灣的<a href="http://zh.wikipedia.org/wiki/%E8%BF%88%E5%85%8B%E5%B0%94%C2%B7%E6%B3%A2%E7%89%B9">Michael Porter</a>也被兩個人拿出來嘲諷了一番，認為台灣這二十年來發展的走向就是深受他的影響，同時也提到了他其實<a href="http://www.businessweekly.com.tw/KBlogArticle.aspx?id=2478">公司己經破產</a>的事。</p>
-
-<p>回來查了資料，才知道<a href="http://zh.wikipedia.org/wiki/%E4%BA%94%E5%8A%9B%E5%88%86%E6%9E%90">五力分析</a>就是Porter所提倡的。
-看了wiki上的內容，可以發現其實台灣根本就是把五力分析發揮到極致，也可以說這幾年台灣的競爭力就是由此而生。</p>
-
-<p>競爭力(Competing)和參與力(Engaging)以軟體工程的角度來說，我覺得參與力比較像是用open source的概念，大量的讓所有願意開放的人進來參與。這有兩個好處，一個是讓各種強者進入完善這個project，另一個好處就是軟體工程一直強調的<a href="http://en.wikipedia.org/wiki/Don't_repeat_yourself">DRY原則(Don&rsquo;t Repeat Yourself)</a>，不要重複打造輪子，把時間花在你真正要做的核心價值上。</p>
-
-<h3>Globish</h3>
-
-<p><a href="http://www.toeic.com.tw/campaign/globish/">Globish</a>全球化英語是日本樂天正在進行的計劃，傳統上不同國家之間的交流，都是要靠少數精英當中間的翻譯，但現在則靠Globish提升員工與其它人的參與力，目的就是要底下員工都能直接面對全世界的客戶。</p>
-
-<h1>雜談</h1>
-
-<p>聽完講座，自己想強化英文的決心倒是有著重新開始的振作，希望自己能一鼓作氣，目標讓自己的英文一口氣提升至能夠進行15分鐘的演說。</p>
-
-<p>另外也有點感慨，之前參加商周辦的論壇，還是這次參加的講座，自己都必需從中壢趕到台北，在知識的交流上，桃園的位置似乎註定要因為台北而邊緣化。</p>
-
-<h1>後續 update</h1>
-
-<p>與朋友對此文章的對談後續
-<a href="http://www.tomohung.com/blog/2014/12/15/yu-yan-guan-li-xu/">http://www.tomohung.com/blog/2014/12/15/yu-yan-guan-li-xu/</a></p>
 ]]></content>
   </entry>
   

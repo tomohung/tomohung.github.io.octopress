@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-03-06T10:22:09+08:00</updated>
+  <updated>2015-03-12T10:05:27+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -12,6 +12,66 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week2]]></title>
+    <link href="http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2/"/>
+    <updated>2015-03-11T11:21:17+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2</id>
+    <content type="html"><![CDATA[<p>There are 3 kinds of test: <code>Unit</code>, <code>Functional</code>, <code>Integration</code>. In <a href="http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1/">week 1</a>, we test <strong>Model</strong>, this should belong to <code>Unit test</code> . And this week we test <strong>Controller</strong>, this should belong to <code>Functional test</code>. I guess it should be <code>Integration test</code> when we move into part of <strong>View</strong> test.</p>
+
+<p>I have to heavily rely on solution videos, there are two main reasons:</p>
+
+<ol>
+<li><p>I&rsquo;m not familiar with <code>what to test</code>, because I&rsquo;m a starter for TDD. It&rsquo;s a big conversion <strong>from test laster to test driven</strong>.</p></li>
+<li><p>I&rsquo;m not familiar with <code>RSpec</code>. There are some tricks for test controllers when using RSpec.</p></li>
+</ol>
+
+
+<p>For example, when we test `QueueItemsController#create&#8217;, there are 7 tests:</p>
+
+<ul>
+<li>it &lsquo;redirects to my queue page&rsquo;</li>
+<li>it &lsquo;creates a queue item&rsquo;</li>
+<li>it &lsquo;creates the queue item associated with video&rsquo;</li>
+<li>it &lsquo;creates the queue item associated with current user&rsquo;</li>
+<li>it &lsquo;puts the video as the last one in the queue&rsquo;</li>
+<li>it &lsquo;does not add the video in the queue if already existed in the queue&rsquo;</li>
+<li>it &lsquo;redirects to sign in page if unauthenticated&rsquo;</li>
+</ul>
+
+
+<p>A simple action needs to do such lots of tests!!</p>
+
+<p>Or here is for <strong>Model</strong> methods: <code>search_by_title</code>:</p>
+
+<ul>
+<li>it &lsquo;returns empty array if no match&rsquo;</li>
+<li>it &lsquo;returns an array if one video&rsquo;</li>
+<li>it &lsquo;returns an array if partial match&rsquo;</li>
+<li>it &lsquo;returns an array of all matches ordered by DESC&rsquo;</li>
+<li>it &lsquo;returns an empty array for search an empty string&rsquo;</li>
+</ul>
+
+
+<p>To test every possible situations is not an easy work.</p>
+
+<p>Brandon also metioned me that care about using <code>let</code> and <code>before</code>. Because of lots of tests in spec files, we may miss some pre-declare vars by using <code>let</code> or <code>before</code>. Sometimes, it may be better do not clean duplicated codes for code readability.</p>
+
+<p>Second, extract methods into <strong>Model</strong>. ex:</p>
+
+<pre><code class="ruby user.rb">  def queue_include?(video)
+    queue_items.map(&amp;:video).include?(video)
+  end
+</code></pre>
+
+<p>then, I can use this method everywhere in my app.</p>
+
+<h3>Conclusion</h3>
+
+<p>Still on the way to be more familiar to do TDD. :-)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week1]]></title>
@@ -682,170 +742,6 @@ end
 <p>Seems that my app becomes more and more closer to real world app we used everyday. There&rsquo;re still a lot of things to combine them together for improvement, like <code>tab control</code>, <code>Ajax</code>, <code>friendly routes path name</code>, etc.</p>
 
 <p>Security is one of the most imporatant thing when we using internet, it&rsquo;s absolutely not safe if we store our password by plain text. Use a <code>one way has/ password digest</code> to instead of plain text password. There is one more thing, <code>MD5</code> has been broken too.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Tealeaf Course2 Lesson3 Quiz]]></title>
-    <link href="http://www.tomohung.com/blog/2015/02/15/tealeaf-course2-lesson3-quiz/"/>
-    <updated>2015-02-15T08:22:00+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/02/15/tealeaf-course2-lesson3-quiz</id>
-    <content type="html"><![CDATA[<blockquote><h4>1. What&rsquo;s the difference between rendering and redirecting? What&rsquo;s the impact with regards to instance variables, view templates?</h4></blockquote>
-
-<ul>
-<li>rendering: render a template HTML code, like <code>partial</code>.</li>
-<li>redirecting: make a new request to controller.</li>
-</ul>
-
-
-<!--more-->
-
-
-<p>Regards to instance variables for showing view templates, instance variables only survive at the same request, so if we need some information like errors store in instance variables, we need to use <code>render</code> for this condition.</p>
-
-<blockquote><h4>2. If I need to display a message on the view template, and I&rsquo;m redirecting, what&rsquo;s the easiest way to accomplish this?</h4></blockquote>
-
-<p>Use <code>flash</code> to store error message. This is the easiest way to store <code>one message</code>.</p>
-
-<blockquote><h4>3. If I need to display a message on the view template, and I&rsquo;m rendering, what&rsquo;s the easiest way to accomplish this?</h4></blockquote>
-
-<p>Use <code>instance variable</code> to store errors, then <code>render</code>.</p>
-
-<p>* or use <code>flash.now</code> and render it.</p>
-
-<blockquote><h4>4. Explain how we should save passwords to the database.</h4></blockquote>
-
-<p>Use <code>one way hash</code>. Since we can&rsquo;t promise that data in database never be stolen, the way to protect our password is using a <code>one way hash</code> to store the digest. If someone get this digest, it&rsquo;s hard for him to decyphor this digest to a plain text password.</p>
-
-<blockquote><h4>5. What should we do if we have a method that is used in both controllers and views?</h4></blockquote>
-
-<p>Put the methods into controllers, and make them become helpers. Like:</p>
-
-<pre><code>helper_method :current_user
-</code></pre>
-
-<p>Now, method <code>current_user</code> can be used in both controllers and views.</p>
-
-<blockquote><h4>6. What is memoization? How is it a performance optimization?</h4></blockquote>
-
-<p>Some repeatedly query action for database will reduce our app performance, using <code>memoization</code> to overcome this.</p>
-
-<pre><code>@comment ||= User.find(session[:user_id]) if session[:user_id]
-</code></pre>
-
-<p>Syntax <code>||=</code> do a <code>OR</code> combined action, if <code>@comment</code> is <code>nil</code>, then <code>User.find</code> invokes; if <code>@comment</code> exist, just return @comment without invoke <code>User.find</code>. This prevent to invoke database query again.</p>
-
-<blockquote><h4>7. If we want to prevent unauthenticated users from creating a new comment on a post, what should we do?</h4></blockquote>
-
-<p>Add a helper method <code>required_login</code> in <code>before_action</code> for actions <code>create</code> and &lsquo;&rsquo;. Since this method is used in both <code>post</code> and <code>comment</code>, we can put this method into <code>ApplicationController.rb</code>.</p>
-
-<blockquote><h4>8. Suppose we have the following table for tracking &ldquo;likes&rdquo; in our application. How can we make this table polymorphic? Note that the &ldquo;user_id&rdquo; foreign key is tracking who created the like.</h4></blockquote>
-
-<table>
-<thead>
-<tr>
-<th style="text-align:right;"> id </th>
-<th></th>
-<th style="text-align:right;"> user_id </th>
-<th></th>
-<th style="text-align:right;"> photo_id  </th>
-<th></th>
-<th style="text-align:right;"> video_id  </th>
-<th></th>
-<th style="text-align:right;"> post_id</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">1 </td>
-<td></td>
-<td style="text-align:right;">4 </td>
-<td></td>
-<td style="text-align:right;"> </td>
-<td></td>
-<td style="text-align:right;"> 12 </td>
-<td></td>
-<td style="text-align:right;"> </td>
-</tr>
-<tr>
-<td style="text-align:right;">2 </td>
-<td></td>
-<td style="text-align:right;">7 </td>
-<td></td>
-<td style="text-align:right;">  </td>
-<td></td>
-<td style="text-align:right;">  </td>
-<td></td>
-<td style="text-align:right;">3 </td>
-</tr>
-<tr>
-<td style="text-align:right;">3 </td>
-<td></td>
-<td style="text-align:right;">2 </td>
-<td></td>
-<td style="text-align:right;">6 </td>
-<td></td>
-<td style="text-align:right;">  </td>
-<td></td>
-<td style="text-align:right;"> </td>
-</tr>
-</tbody>
-</table>
-
-
-<p>According to this table, there should be 5 tables in database:</p>
-
-<ul>
-<li>User</li>
-<li>Photo</li>
-<li>Video</li>
-<li>Post</li>
-<li>Like</li>
-</ul>
-
-
-<p>And here are they might be in models:</p>
-
-<pre><code class="ruby User.rb">class User ActiveRecord::Base
-  has_many :likes, as: likeable
-end
-</code></pre>
-
-<pre><code class="ruby Photo.rb">class Photo ActiveRecord::Base
-  has_many :likes, as: likeable
-end
-</code></pre>
-
-<pre><code class="ruby Video.rb">class Video ActiveRecord::Base
-  has_many :likes, as: likeable
-end
-</code></pre>
-
-<pre><code class="ruby Post.rb">class Post ActiveRecord::Base
-  has_many :likes, as: likeable
-end
-</code></pre>
-
-<pre><code class="ruby Like.rb">class Like ActiveRecord::Base
-  belongs_to :user_id
-  belongs_to :likeable, polymorphic: true
-end
-</code></pre>
-
-<blockquote><h4>9. How do we set up polymorphic associations at the model layer? Give example for the polymorphic model (eg, Vote) as well as an example parent model (the model on the 1 side, eg, Post).</h4></blockquote>
-
-<pre><code class="ruby ">class Vote &lt; ActiveRecord::Base
-  belongs_to :voteable, polymorphic: true
-end
-
-class Post &lt; ActiveRecord::Base
-  has_many :votes, as: voteable
-end
-</code></pre>
-
-<blockquote><h4>10. What is an ERD diagram, and why do we need it?</h4></blockquote>
-
-<p>Entity Relationship Dirgram(ERD) stands for tables in database relationship between each others. It&rsquo;s a convinient way to communicate with others what the tables relationship, even for ourselves under developming.</p>
 ]]></content>
   </entry>
   
