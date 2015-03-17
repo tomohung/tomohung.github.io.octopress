@@ -4,7 +4,7 @@
   <title><![CDATA[The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-03-12T10:07:14+08:00</updated>
+  <updated>2015-03-17T10:37:30+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -12,6 +12,274 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week3]]></title>
+    <link href="http://www.tomohung.com/blog/2015/03/17/reflection-to-tealeaf-course3-week3/"/>
+    <updated>2015-03-17T09:41:26+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/03/17/reflection-to-tealeaf-course3-week3</id>
+    <content type="html"><![CDATA[<p><a href="http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2/">In week 2</a>, Tealeaf talked about how to test controller, and this week, I got a more comprehensive test consideration for controller and user interaction.</p>
+
+<h3>For Controller Test</h3>
+
+<ul>
+<li>Everytime add a function feature, also need to add a test for it.</li>
+<li>Everytime find a bug, also add a test for it.</li>
+</ul>
+
+
+<h3>DRY</h3>
+
+<p>RSpec also offer two ways to DRY code.</p>
+
+<h4>- Macro</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mkdir spec/support
+</span><span class='line'>$ touch macros.rb</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And we can move repeatedly code into here, for example, we usually need to set a login user:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def set_current_user(user = nil)
+</span><span class='line'>  session[:user_id] = (user || Fabricate(:user)).id
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and find user</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def current_user
+</span><span class='line'>  User.find(session[:user_id])
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>- Shared Examples</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ touch spec/support/share_examples.rb</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A test method may be called through different controllers:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>shared_examples 'requre_sign_in' do
+</span><span class='line'>  it 'redirects to the root page'
+</span><span class='line'>    action
+</span><span class='line'>    expect(response).to redirect_to root_path
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Be careful: <code>action</code> is a <strong>variable</strong>, then when using it:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>it_behaves_like 'require_sign_in' do
+</span><span class='line'>  let(:action) { get :index }
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Feature Specs</h3>
+
+<p>There are two methods to test user interactions, one is <code>request spec</code> and this is deprecated by <strong>Capybara</strong>. The other one is <code>feature specs</code>, recommended by <strong>Capybara</strong>.</p>
+
+<p><strong>Capybara</strong> offer functions that we can click link/button, fill text field&hellip;etc, to interactive with UI.</p>
+
+<h4>- Install Capybara gem</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>group :test
+</span><span class='line'>  gem 'capybara'
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Also add this line to test helper file</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>requrire 'capybara/rails'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$mkdir spec/features
+</span><span class='line'>$touch user_signs_in_spec.rb</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>- A sample for user operation:</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>feature 'user interacts with the queue' do 
+</span><span class='line'>
+</span><span class='line'>  scenario 'user adds and reorder videos in the queue' do
+</span><span class='line'>    category    = Fabricate(:category)
+</span><span class='line'>    monk        = Fabricate(:video, title: 'monk', category: category)
+</span><span class='line'>    futurama    = Fabricate(:video, title: 'futurama', category: category)
+</span><span class='line'>    south_park  = Fabricate(:video, title: 'south park', category: category)
+</span><span class='line'>
+</span><span class='line'>    sign_in
+</span><span class='line'>    expect(page).to have_content 'You have signed in.'
+</span><span class='line'>
+</span><span class='line'>    add_video_to_queue(monk)
+</span><span class='line'>    expect(page).to have_content(monk.title)
+</span><span class='line'>
+</span><span class='line'>    visit video_path(monk)
+</span><span class='line'>    expect(page).not_to have_content('+ My Queue')
+</span><span class='line'>
+</span><span class='line'>    add_video_to_queue(futurama)
+</span><span class='line'>    add_video_to_queue(south_park)
+</span><span class='line'>
+</span><span class='line'>    set_video_order(monk, 3)
+</span><span class='line'>    set_video_order(futurama, 1)
+</span><span class='line'>    set_video_order(south_park, 2)
+</span><span class='line'>
+</span><span class='line'>    expect_video_order(monk, 3)
+</span><span class='line'>    expect_video_order(futurama, 1)
+</span><span class='line'>    expect_video_order(south_park, 2)
+</span><span class='line'>  end
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'>def add_video_to_queue(video)
+</span><span class='line'>  visit home_path
+</span><span class='line'>  find("a[href='/videos/#{video.id}']").click
+</span><span class='line'>  expect(page).to have_content(video.title)
+</span><span class='line'>  click_link '+ My Queue'
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'>def set_video_order(video, order)
+</span><span class='line'>  within(:xpath, "//tr[contains(.,'#{video.title}')]") do
+</span><span class='line'>    fill_in 'queue_items[][position]', with: order
+</span><span class='line'>  end
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'>def expect_video_order(video, order)
+</span><span class='line'>  expect(find(:xpath, "//tr[contains(.,'#{video.title}')]//input[@type='text']").value).to eq(order.to_s)
+</span><span class='line'>end
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>here I choose to use <code>:xpath</code>.</p>
+
+<h4>- One level for scenario</h4>
+
+<p>In above sample, I extract methods <code>add_video_to_queue</code>, <code>set_video_order</code>, and <code>expect_video_order</code>. This is we want to keep a principle <code>Abstract one level for scenario</code>. Encapsulating logic code and keep main code readable on the same abstract level can help reader to review.</p>
+
+<h3>Rails Conventions</h3>
+
+<h4>- Merge Params</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>= form_tag update_queue_path do
+</span><span class='line'>  ...
+</span><span class='line'>  %td= text_field_tag 'queue_items[][position]', queue_item.position
+</span><span class='line'>  =hidden_field_tag 'queue_items[][id]', queue_item.id
+</span><span class='line'>
+</span><span class='line'>  =submit_tag 'Update'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then we will get a hash value <code>params[queue_items] = {position: xxx, id: xxx}</code></p>
+
+<h4>- select_tag</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>%td= select_tag 'queue_items[][rating]', options_for_video_reviews(queue_item.rating), include_blank: true</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And <code>options_for_video_reviews</code>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def options_for_video_reviews(selected = nil)
+</span><span class='line'>  options_for_select((1..5).map { |num| [pluralize(num, 'Star'), num]}, selected)
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Be careful that <code>[pluralize(num, 'Star'), num]</code> is a pair value.</p>
+
+<h4>- ActiveRecord Transactions</h4>
+
+<p>A sample from Rails Tutorial</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ActiveRecord::Base.transaction do
+</span><span class='line'>  david.withdrawal(100)
+</span><span class='line'>  mary.deposit(100)
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If any one of <code>david.withdrawl</code> or <code>mary.deposit</code> raise an exception(<strong>Be careful: there must be a raising error to trigger transaction</strong>), all database record in this action will be rollback. It deal with batch action with database. So I have to care about what functions will raise an exception when fail. Ex. <code>update</code> return a fail, and <code>update!</code> raise an exception.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week2]]></title>
@@ -2455,133 +2723,6 @@ Without their help, I couldn&rsquo;t finished these assignments on time. Because
 <p>By the way, the most difficulty in Lesson 1 is completing &ldquo;Tic-Tac-Toe&rdquo; AI, it tooks me 10 hours more.
 If you are totally new to program, don&rsquo;t be disppointed at spending a lot of time, because me too!!
 If you are take these assignment as piece of cake, well, let&rsquo;s move to Lesson 2. See you.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[語言管理－續]]></title>
-    <link href="http://www.tomohung.com/blog/2014/12/15/yu-yan-guan-li-xu/"/>
-    <updated>2014-12-15T20:34:40+08:00</updated>
-    <id>http://www.tomohung.com/blog/2014/12/15/yu-yan-guan-li-xu</id>
-    <content type="html"><![CDATA[<p><img src="http://i.minus.com/ijEvqo7aLC7BY.jpg" width="640"></p>
-
-<p><a href="http://www.tomohung.com/blog/2014/12/12/language-management/">上一篇文章</a>關於聽了『語言管理』講座，朋友私底下來信討論，整理了一下對話留個記錄。刪去了一些朋友之間五四三的對話，盡量保留原意：</p>
-
-<h1>對話</h1>
-
-<p>R&rsquo;s:</p>
-
-<blockquote><p>  &ldquo;參與力&#8221;聽起來只是重新包裝過的&#8221;競爭力&#8221;耶&hellip;.你把他用&#8221;參與力&#8221;的句子全部代換成競爭力應該一樣通順吧？<br/>
-    他的所謂的新詞的話 得到的action item會跟原來用&#8221;競爭力&#8221;當重點的時候 不一樣在哪邊？<br/>
-    我想我的疑問來自於 結果都是要強調語言很重要的話，那特別創新的詞的用意？</p></blockquote>
-
-<!--more-->
-
-
-<p>Tomo:</p>
-
-<blockquote><p>  補了一段Michael Porter在後面，你看看有沒有回答到你的問題:</p>
-
-<p>  前陣子來台灣的Michael Porter也被兩個人拿出來嘲諷了一番，認為台灣這二十年來發展的走向就是深受他的影響，同時也提到了他其實公司己經破產的事。</p>
-
-<p>  回來查了資料，才知道五力分析就是Porter所提倡的。
-  看了wiki上的內容，可以發現其實台灣根本就是把五力分析發揮到極致，也可以說這幾年台灣的競爭力就是由此而生。</p>
-
-<p>  競爭力(Competing)和參與力(Engaging)以軟體工程的角度來說，我覺得參與力比較像是用open source的概念，大量的讓所有願意開放的人進來參與。這有兩個好處，一個是讓各種強者進入完善這個project，另一個好處就是軟體工程一直強調的DRY原則(Don&rsquo;t Repeat Yourself)，不要重複打造輪子，把時間花在你真正要做的核心價值上。</p></blockquote>
-
-<p>R&rsquo;s:</p>
-
-<blockquote><p>  倒是我原本想的&#8221;競爭力&#8221;並沒有特別的定義，而且我對信仰FTA零關稅的價值觀也很感冒
-  也同意開源與參與的價值(i love wiki)
-  但是最後還是要回歸到競爭力阿(沒特別定義，簡單來說就是要比別人好)。open source在價值觀上很美好 但並不保證出來的產品一定比較好
-  這是第一個問題
-  第二個呢就是 為什麼這個論述會導到&#8221;所以英文很重要&#8221;
-  &ldquo;英文很重要&#8221;的結論可以從各種我們已經聽到爛的論述來得到阿</p>
-
-<p>  我知道這些問題看起來可能像是枝微末節的找碴&hellip;但我真正懷疑的是&#8221;他想問什麼問題？對於這個問題他提供了什麼答案？&#8221;</p>
-
-<p>  好啦 吐槽了這麼多希望你不要生氣 謝謝你陪我抬槓 哈哈哈</p></blockquote>
-
-<p>Tomo:</p>
-
-<blockquote><p>  先說 這不叫吐糟，因為我自認為說的東西還沒糟到被人一戳即破XD  而且我覺得你這樣子的回覆很棒，我認為這就是一種參與力的表現。</p>
-
-<p>  我今年以來感受特別明顯，覺得自己的生活圈（包含工作和平日生活）非常窄，從臉書上來看就知道，只有上傳吃喝玩樂的文章才容易得到回響，但是稍微有討論空間的文章有反應的卻了了無幾。更不要說大部份只是轉錄的文章，卻沒有加入自己的看法，即使我有200多個朋友，看起來似乎己經開放給很多人看，但其實是沒有互動的。透過臉書看了再多轉貼的文章，卻反而讓我感覺到自己其實是在固步自封。</p>
-
-<p>  回到陳超明和范疇看到的問題，就是台灣是個資源缺凡的島嶼國家，但目前卻有限制自己只看到台灣和中國的危機，進而產生我只要有小確幸生活就可以的魯蛇生活。</p>
-
-<p>  第一步，也是最快的解決方法，就是把大量的人丟出國外去，而這也是韓國和中國在做的事。至於為什麼是英文，只是因為現在主流國際語言就是英文。</p>
-
-<p>  再到第一個問題，如果競爭力簡單說是比別人好，問題在這個比較上，如果今天這個東西（或概念，或服務）是從來沒出現過的？那它要跟什麼比？舉例來說iPhone跟Android算是競爭對手嗎？我覺得iPhone跟Android系統本身不是競爭對手，但是做同樣用Android做手機的各個廠商們是競爭對手</p>
-
-<p>  當然競爭力如果無限上綱，連創新，改變世界等等，都算是競爭的話，那的確做什麼都會被含括在內。但如果是針對Michael Porter 所說的五力分析，他針對的是成本，價格去做競爭，我想這是陳明超跟范疇所在意的點</p></blockquote>
-
-<p>R&rsquo;s:</p>
-
-<blockquote><p>  關於 &ldquo;就是台灣是個資源缺凡的島嶼國家，但目前卻有限制自己只看到台灣和中國的危機，進而產生我只要有小確幸生活就可以的魯蛇生活。&rdquo;</p>
-
-<p>  基本上我是同意 台灣人民眼光普遍有點狹隘</p>
-
-<p>  也能同意這是造成現在&#8221;台灣困境&#8221;的原因之一</p>
-
-<p>  然而這很只是近因</p>
-
-<p>  背後還有更根本的遠因。換句話說台灣人短視近利 說穿了也只是結果。</p>
-
-<p>  沒有注意到這點的話就會提出把一堆人丟到國外的solution。當然這肯定是有正面的效果，但是我認為不會解決問題</p>
-
-<p>  你要把它當成一個系統 現在的現象 是一連串遞迴(feedback)的結果。所謂的遞迴不單是指時間上的: 一個人多次的嘗試；同時也是指空間上的：每個人各自不同的嘗試</p>
-
-<p>  重點在於這一群人中的大部分 不約而同的選擇了短視近利。把這個現象歸因於&#8221;台灣人個性就是這樣&#8221;無疑的是很草率的</p>
-
-<p>  更有可能的答案是 這個社會(系統)無法有效率的篩選出&#8221;對的人&#8221;（非短視，有國際觀，英文好&hellip;etc.），無法讓傑出的人有傑出的收穫</p>
-
-<p>  拿我自己當例子好了 我因為興趣在四五年前開始注意國際新聞。但是否有因為對國際格局有比別人多的認識而在現實上有所收穫？答案是接近0</p>
-
-<p>  語文能力也是一樣 如果我今天不是在外商 英文也用不上 日文更是不用講</p>
-
-<p>  這就是為什麼大部分的時候學語言的熱情遲早會消退：因為根本沒用！我們本能的知道這是在浪費時間和能量</p>
-
-<p>  (沒用指的當然是相對機率而言)</p>
-
-<p>  回到一開始的話題。如果今天的問題是&#8221;如何突破台灣的困境&#8221;，把責任賴到全民身上是很容易但也很草率且不切實際</p>
-
-<p>  (你無法期待夠多的人在一夕之間一起變厲害，但少數厲害的人會在這個系統中被磨掉)</p>
-
-<p>  能改變這個系統的就是政府，而且一天之內就能改變。這就是我為什麼認為政府該負責。</p>
-
-<p>  但如果問題是&#8221;在台灣的困境中我個人能做什麼&#8221; 那麼加強自己似乎是唯一符合眼前利益的方法(這個系統讓傑出的人浮出來的機率很小，但畢竟不是0，增強自己的各種&#8221;力&#8221;有助於增加服出來的機率)</p>
-
-<p>  總結來說 我對於類似論點的 comment是&#8221;it&rsquo;s a great place to start, but a terrible place to stop&#8221; (借用某環保人士對垃圾分類的看法)</p></blockquote>
-
-<p>Tomo:</p>
-
-<blockquote><p>  我不曉得政府一天之內可以改變什麼?</p>
-
-<p>  而且坦白說我覺得現在的政府也不會改變什麼。318學運後隔幾個禮拜，有一次我在診所看電視時，旁邊一對跟我年紀差不多的夫妻看著電視上的林飛帆說:又是這個姓林的哦，這樣一直亂下去很糟糕耶。我那時候開始很真實地體認到，網路上鄉民喜歡拿&#8221;沉默的多數&#8221;來開玩笑，其實才是個笑話，因為不認同的人其實很多。看著上上下下的內閣，包括江宜樺，我不認為他們&#8221;不想&#8221;幫台灣做事，而是在做他們認為對的事。所以目前政府是由一群&#8221;理念相同的人&#8221;，而且這群人絕對不是少數，所以我才覺得政府並不會改變什麼。</p>
-
-<p>  我不大懂&#8221;it&rsquo;s a great place to start, but a terrible place to stop&#8221;的意思，是指&#8221;只&#8221;加強英文沒辦法改變什麼嗎?</p>
-
-<p>  陳超明在各種和政府單位開會的機會都會提供一些建議，但通常都沒回應。范疇在書裡有提到2個很有趣的概念，一個是讓高雄獨立，讓高雄財政和台灣脫勾自行發展，另一個是把台東賣給馬爾地夫，讓馬爾地夫來發展台東的觀光。</p>
-
-<p>  我想他們兩個都在各自的領域發揮他們的影響力，期待有一天相同理念的人會愈來愈多吧。</p>
-
-<p>  還有，那天講座是&#8221;TutorABC&#8221;讚助的，你要原諒兩位講者不能&#8221;離題&#8221;太多啦XD</p></blockquote>
-
-<p>R&rsquo;s:</p>
-
-<blockquote><p>  同意&#8221;現在的&#8221;政府無法期待，不過我反對的是不能因為這樣就覺得責任不在政府身上。要是有心的政府有很多事可以做阿&hellip;就拿我們說的英文教育好了 進步空間要多大有多大。還有產業升級阿，本來該是工研院該負的責任，你看現在的工研院像什麼話</p>
-
-<p>  &ldquo;terrible place to stop&#8221;指的是不該覺得問題是在台灣人的&#8221;本質&#8221;身上，而該思考是什麼樣的系統養成了現在一群這樣的人，要怎麼改變這個系統？(當然你可以說系統也是人組成的，有夠多人進步了的話系統自然也會變。理論上是有機會 但可行性太低，你要如何一次改變夠多的人？)
-當然我沒見過這兩位講者，書也沒看過，只讀了其中一位的一兩篇文章。就算有誤解也很有可能，不過我想我的誤解對他們也不會造成任何傷害，他們應該是不會介意啦ㄎㄎ</p>
-
-<p>  不過 你提到的他們提出的方案其實聽起來還蠻有趣的 有機會去書店翻翻</p>
-
-<p>  另外 我也不覺得那個海龜理論適用台灣。台灣嫩的跟什麼一樣 民主跟工業化都不到50年 海龜蛋還差不多</p></blockquote>
-
-<h1>後續</h1>
-
-<p><a href="http://wiki.mbalib.com/zh-tw/%E6%B5%B7%E9%BE%9F%E4%BA%A4%E6%98%93%E6%B3%95">海龜</a>這個名詞勾起我多年前的回憶，一開始在信裡看到這個名詞，還想說怎麼在這裡突然冒出來？雖然此海龜非彼海龜，最後貼個海龜圖送給跟我一樣這三天書信往來，死了不少腦細胞的R&rsquo;s</p>
 ]]></content>
   </entry>
   

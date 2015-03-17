@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Reflection to Tealeaf Course3 Week3 - The Life Alchemist</title>
+  <meta name="author" content="Tomo">
+
+  
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://www.tomohung.com/blog/2015/03/17/reflection-to-tealeaf-course3-week3">
+  <link href="/favicon.png" type="image/png" rel="icon">
+  <link href="/atom.xml" rel="alternate" title="The Life Alchemist" type="application/atom+xml">
+
+  <!-- http://opengraphprotocol.org/ -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://www.tomohung.com/blog/2015/03/17/reflection-to-tealeaf-course3-week3">
+  <meta property="og:title" content="Reflection to Tealeaf Course3 Week3 - The Life Alchemist">
+  
+
+  <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
+
+<link href="/assets/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/assets/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+
+
+  
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+  
+   <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-12830335-2', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+</head>
+
+  <body   >
+    <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    <div id="wrap">
+      <header role="banner">
+        <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">The Life Alchemist</a>
+        </div>
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a rel="index" href="/">Blog</a>
+                </li>
+                <li >
+                    <a href="/blog/archives">Archives</a>
+                </li>
+                <li >
+                    <a href="/about">About</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <form class="search navbar-form navbar-right" action="https://www.google.com/search" method="GET">
+                            <input type="hidden" name="q" value="site:www.tomohung.com">
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="q" placeholder="Search">
+                            </div>
+                        </form>
+                    </li>
+                
+                <li>
+                    <a class="subscribe-rss" href="/atom.xml" title="subscribe via RSS">
+                        <span class="visible-xs">RSS</span>
+                        <img class="hidden-xs" src="/images/rss.png" alt="RSS">
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+      </header>
+      <div id="main" role="main" class="container">
+        <div id="content">
+          <div class="row">
+  <div class="page-content col-md-9" itemscope itemtype="http://schema.org/Blog">
+    <meta itemprop="name" content="The Life Alchemist" />
+    
+    <meta itemprop="url" content="http://www.tomohung.com" />
+    <article class="hentry" role="article" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+      
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-17T09:41:26+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-03-17</time>
+        
+      </p>
+    
+    
+    <h1 class="entry-title" itemprop="name headline">
+        Reflection to Tealeaf Course3 Week3
+        
+    </h1>
+    
+  </header>
+
+
+<div class="entry-content clearfix" itemprop="articleBody description"><p><a href="http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2/">In week 2</a>, Tealeaf talked about how to test controller, and this week, I got a more comprehensive test consideration for controller and user interaction.</p>
+
+<h3>For Controller Test</h3>
+
+<ul>
+<li>Everytime add a function feature, also need to add a test for it.</li>
+<li>Everytime find a bug, also add a test for it.</li>
+</ul>
+
+
+<h3>DRY</h3>
+
+<p>RSpec also offer two ways to DRY code.</p>
+
+<h4>- Macro</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mkdir spec/support
+</span><span class='line'>$ touch macros.rb</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And we can move repeatedly code into here, for example, we usually need to set a login user:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def set_current_user(user = nil)
+</span><span class='line'>  session[:user_id] = (user || Fabricate(:user)).id
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and find user</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def current_user
+</span><span class='line'>  User.find(session[:user_id])
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>- Shared Examples</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ touch spec/support/share_examples.rb</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A test method may be called through different controllers:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>shared_examples 'requre_sign_in' do
+</span><span class='line'>  it 'redirects to the root page'
+</span><span class='line'>    action
+</span><span class='line'>    expect(response).to redirect_to root_path
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Be careful: <code>action</code> is a <strong>variable</strong>, then when using it:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>it_behaves_like 'require_sign_in' do
+</span><span class='line'>  let(:action) { get :index }
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Feature Specs</h3>
+
+<p>There are two methods to test user interactions, one is <code>request spec</code> and this is deprecated by <strong>Capybara</strong>. The other one is <code>feature specs</code>, recommended by <strong>Capybara</strong>.</p>
+
+<p><strong>Capybara</strong> offer functions that we can click link/button, fill text field&hellip;etc, to interactive with UI.</p>
+
+<h4>- Install Capybara gem</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>group :test
+</span><span class='line'>  gem 'capybara'
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Also add this line to test helper file</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>requrire 'capybara/rails'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$mkdir spec/features
+</span><span class='line'>$touch user_signs_in_spec.rb</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>- A sample for user operation:</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>feature 'user interacts with the queue' do 
+</span><span class='line'>
+</span><span class='line'>  scenario 'user adds and reorder videos in the queue' do
+</span><span class='line'>    category    = Fabricate(:category)
+</span><span class='line'>    monk        = Fabricate(:video, title: 'monk', category: category)
+</span><span class='line'>    futurama    = Fabricate(:video, title: 'futurama', category: category)
+</span><span class='line'>    south_park  = Fabricate(:video, title: 'south park', category: category)
+</span><span class='line'>
+</span><span class='line'>    sign_in
+</span><span class='line'>    expect(page).to have_content 'You have signed in.'
+</span><span class='line'>
+</span><span class='line'>    add_video_to_queue(monk)
+</span><span class='line'>    expect(page).to have_content(monk.title)
+</span><span class='line'>
+</span><span class='line'>    visit video_path(monk)
+</span><span class='line'>    expect(page).not_to have_content('+ My Queue')
+</span><span class='line'>
+</span><span class='line'>    add_video_to_queue(futurama)
+</span><span class='line'>    add_video_to_queue(south_park)
+</span><span class='line'>
+</span><span class='line'>    set_video_order(monk, 3)
+</span><span class='line'>    set_video_order(futurama, 1)
+</span><span class='line'>    set_video_order(south_park, 2)
+</span><span class='line'>
+</span><span class='line'>    expect_video_order(monk, 3)
+</span><span class='line'>    expect_video_order(futurama, 1)
+</span><span class='line'>    expect_video_order(south_park, 2)
+</span><span class='line'>  end
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'>def add_video_to_queue(video)
+</span><span class='line'>  visit home_path
+</span><span class='line'>  find("a[href='/videos/#{video.id}']").click
+</span><span class='line'>  expect(page).to have_content(video.title)
+</span><span class='line'>  click_link '+ My Queue'
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'>def set_video_order(video, order)
+</span><span class='line'>  within(:xpath, "//tr[contains(.,'#{video.title}')]") do
+</span><span class='line'>    fill_in 'queue_items[][position]', with: order
+</span><span class='line'>  end
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'>def expect_video_order(video, order)
+</span><span class='line'>  expect(find(:xpath, "//tr[contains(.,'#{video.title}')]//input[@type='text']").value).to eq(order.to_s)
+</span><span class='line'>end
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>here I choose to use <code>:xpath</code>.</p>
+
+<h4>- One level for scenario</h4>
+
+<p>In above sample, I extract methods <code>add_video_to_queue</code>, <code>set_video_order</code>, and <code>expect_video_order</code>. This is we want to keep a principle <code>Abstract one level for scenario</code>. Encapsulating logic code and keep main code readable on the same abstract level can help reader to review.</p>
+
+<h3>Rails Conventions</h3>
+
+<h4>- Merge Params</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>= form_tag update_queue_path do
+</span><span class='line'>  ...
+</span><span class='line'>  %td= text_field_tag 'queue_items[][position]', queue_item.position
+</span><span class='line'>  =hidden_field_tag 'queue_items[][id]', queue_item.id
+</span><span class='line'>
+</span><span class='line'>  =submit_tag 'Update'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then we will get a hash value <code>params[queue_items] = {position: xxx, id: xxx}</code></p>
+
+<h4>- select_tag</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>%td= select_tag 'queue_items[][rating]', options_for_video_reviews(queue_item.rating), include_blank: true</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And <code>options_for_video_reviews</code>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def options_for_video_reviews(selected = nil)
+</span><span class='line'>  options_for_select((1..5).map { |num| [pluralize(num, 'Star'), num]}, selected)
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Be careful that <code>[pluralize(num, 'Star'), num]</code> is a pair value.</p>
+
+<h4>- ActiveRecord Transactions</h4>
+
+<p>A sample from Rails Tutorial</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ActiveRecord::Base.transaction do
+</span><span class='line'>  david.withdrawal(100)
+</span><span class='line'>  mary.deposit(100)
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If any one of <code>david.withdrawl</code> or <code>mary.deposit</code> raise an exception(<strong>Be careful: there must be a raising error to trigger transaction</strong>), all database record in this action will be rollback. It deal with batch action with database. So I have to care about what functions will raise an exception when fail. Ex. <code>update</code> return a fail, and <code>update!</code> raise an exception.</p>
+</div>
+
+
+      <footer>
+        <p class="meta text-muted">
+          
+  
+
+<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard" itemprop="author" itemscope itemtype="http://schema.org/Person">Posted by <span class="fn" itemprop="name">Tomo</span></span>
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-17T09:41:26+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-03-17</time>
+          
+
+<span class="glyphicon glyphicon-tags"></span>&nbsp;
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/rails/'>rails</a>, <a class='category' href='/blog/categories/tealeaf/'>tealeaf</a>
+  
+</span>
+
+
+        </p>
+        
+          <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/03/17/reflection-to-tealeaf-course3-week3/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/03/17/reflection-to-tealeaf-course3-week3/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+        
+        
+          <ul class="meta text-muted pager">
+            
+            <li class="previous"><a href="/blog/2015/03/11/reflection-to-tealeaf-course3-week2/" title="Previous Post: Reflection to Tealeaf Course3 Week2">&laquo; Reflection to Tealeaf Course3 Week2</a></li>
+            
+            
+          </ul>
+        
+      </footer>
+    </article>
+    
+      <section>
+        <h2>Comments</h2>
+        <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+      </section>
+    
+  </div>
+
+  
+  <aside class="sidebar col-md-3">
+    
+      
+<section>
+	<span>
+		<img src="http://www.gravatar.com/avatar/8708c05d2568e10fb402516eeb954ef2" alt="Gravatar of Tomo " title="Gravatar of Tomo" />
+	</span>
+</section>
+<section class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Recent Posts</h3>
+  </div>
+  
+  <div id="recent_posts" class="list-group">
+    
+    <a class="list-group-item active" href="/blog/2015/03/17/reflection-to-tealeaf-course3-week3/">Reflection to Tealeaf Course3 Week3</a>
+    
+    <a class="list-group-item " href="/blog/2015/03/11/reflection-to-tealeaf-course3-week2/">Reflection to Tealeaf Course3 Week2</a>
+    
+    <a class="list-group-item " href="/blog/2015/03/06/reflection-to-tealeaf-course3-week1/">Reflection to Tealeaf Course3 Week1</a>
+    
+    <a class="list-group-item " href="/blog/2015/03/03/titans-tic-tac-toe/">Titan&#8217;s Tic Tac Toe</a>
+    
+    <a class="list-group-item " href="/blog/2015/02/22/reflection-to-tealeaf-course2-lesson4/">Reflection to Tealeaf Course2 Lesson4</a>
+    
+  </div>
+</section>
+
+
+
+
+
+
+    
+  </aside>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+    <footer role="contentinfo"><div class="container">
+    <p class="text-muted credits">
+  Copyright &copy; 2015 - Tomo<br>
+  <small>
+      <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>,
+      <span class="credit">customized with <a href="https://github.com/kAworu/octostrap3">octostrap3</a></span>.
+  </small>
+</p>
+
+</div>
+</footer>
+    
+
+<script type="text/javascript">
+      var disqus_shortname = 'tomohung';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.tomohung.com/blog/2015/03/17/reflection-to-tealeaf-course3-week3/';
+        var disqus_url = 'http://www.tomohung.com/blog/2015/03/17/reflection-to-tealeaf-course3-week3/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+<script src="/assets/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/javascripts/modernizr-2.0.js"></script>
+
+
+  </body>
+</html>
