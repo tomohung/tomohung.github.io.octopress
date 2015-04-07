@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-04-07T14:06:05+08:00</updated>
+  <updated>2015-04-08T06:24:38+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -111,6 +111,8 @@ end
 <li><a href="https://devcenter.heroku.com/articles/config-vars">Configuration and config Vars</a></li>
 </ol>
 
+
+<blockquote><p>Update: Tealeaf also have a post about <a href="http://www.gotealeaf.com/blog/managing-environment-configuration-variables-in-rails">Managing Environment Configuration Variables in Rails</a></p></blockquote>
 
 <h3>Test Email sending</h3>
 
