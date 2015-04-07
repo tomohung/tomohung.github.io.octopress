@@ -4,7 +4,7 @@
   <title><![CDATA[The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-04-07T13:47:55+08:00</updated>
+  <updated>2015-04-07T14:06:05+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -18,7 +18,7 @@
     <link href="http://www.tomohung.com/blog/2015/04/07/reflection-to-tealeaf-course3-week4/"/>
     <updated>2015-04-07T13:11:30+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/04/07/reflection-to-tealeaf-course3-week4</id>
-    <content type="html"><![CDATA[<h3>3 kinds of BDD</h3>
+    <content type="html"><![CDATA[<h3>Three kinds of BDD</h3>
 
 <p>In week 4 beginning, we got a brief intro for 3 kinds of BDD:</p>
 

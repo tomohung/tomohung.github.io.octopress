@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tealeaf | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/tealeaf/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-04-07T13:49:06+08:00</updated>
+  <updated>2015-04-07T14:06:05+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -402,7 +402,7 @@ end
     <link href="http://www.tomohung.com/blog/2015/03/03/titans-tic-tac-toe/"/>
     <updated>2015-03-03T09:11:10+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/03/03/titans-tic-tac-toe</id>
-    <content type="html"><![CDATA[<p>{% img <a href="http://i.minus.com/i2XJ0y9E48CHg.png">http://i.minus.com/i2XJ0y9E48CHg.png</a> %}</p>
+    <content type="html"><![CDATA[<p><img class="<a" src="href="http://i.minus.com/i2XJ0y9E48CHg.png">http://i.minus.com/i2XJ0y9E48CHg.png</a>&#8221;></p>
 
 <h3>Prelude</h3>
 

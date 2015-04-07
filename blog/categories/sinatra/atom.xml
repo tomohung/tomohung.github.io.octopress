@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Sinatra | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/sinatra/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-04-07T13:49:06+08:00</updated>
+  <updated>2015-04-07T14:06:05+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -18,7 +18,7 @@
     <link href="http://www.tomohung.com/blog/2015/01/22/reflection-to-tealeaf-lesson-4/"/>
     <updated>2015-01-22T11:59:53+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/22/reflection-to-tealeaf-lesson-4</id>
-    <content type="html"><![CDATA[<p>{% img right <a href="http://i.minus.com/iS2bpDcNcj44W.jpg">http://i.minus.com/iS2bpDcNcj44W.jpg</a> 320 %}</p>
+    <content type="html"><![CDATA[<p><img class="right <a" src="href="http://i.minus.com/iS2bpDcNcj44W.jpg">http://i.minus.com/iS2bpDcNcj44W.jpg</a>&#8221; width=&#8221;320&#8221;></p>
 
 <p>To be honest, I still feel uncomfortable with this week. From week 3, I learned html &amp; css, to week 4, I learned jQuery &amp; Ajax. It&rsquo;s definitely not enough only rely on Codecademy&rsquo;s course, so I decide to do one more app, tic-tac-toe on wep. I think this should make me more comfortable with these lessons.</p>
 
@@ -89,7 +89,7 @@ end
 
 <p>It shows <code>Guest</code>, not <code>tealeaf</code>. Why?</p>
 
-<p>{% img <a href="http://i.minus.com/i9oeLWDYI4DBb.png">http://i.minus.com/i9oeLWDYI4DBb.png</a> %}</p>
+<p><img class="<a" src="href="http://i.minus.com/i9oeLWDYI4DBb.png">http://i.minus.com/i9oeLWDYI4DBb.png</a>&#8221;></p>
 
 <p>The key point is: when 2 redirect to 3, it&rsquo;s a new request, instance variable like @name will be deleted after redirect, then create a new one.</p>
 
@@ -126,7 +126,7 @@ end
     <link href="http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3/"/>
     <updated>2015-01-13T22:23:15+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3</id>
-    <content type="html"><![CDATA[<p>{%img right <a href="http://i.minus.com/ilSTmPNHVpVTm.png">http://i.minus.com/ilSTmPNHVpVTm.png</a> 320 %}</p>
+    <content type="html"><![CDATA[<p><img class="right <a" src="href="http://i.minus.com/ilSTmPNHVpVTm.png">http://i.minus.com/ilSTmPNHVpVTm.png</a>&#8221; width=&#8221;320&#8221;></p>
 
 <p>It&rsquo;s realy a tough week for me, because I&rsquo;m totally new to web development.
 There are lots of material need to be done:</p>
