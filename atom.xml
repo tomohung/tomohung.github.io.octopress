@@ -4,7 +4,7 @@
   <title><![CDATA[The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-03-17T10:37:30+08:00</updated>
+  <updated>2015-04-07T13:47:55+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -12,6 +12,151 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week4]]></title>
+    <link href="http://www.tomohung.com/blog/2015/04/07/reflection-to-tealeaf-course3-week4/"/>
+    <updated>2015-04-07T13:11:30+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/04/07/reflection-to-tealeaf-course3-week4</id>
+    <content type="html"><![CDATA[<h3>3 kinds of BDD</h3>
+
+<p>In week 4 beginning, we got a brief intro for 3 kinds of BDD:</p>
+
+<ul>
+<li><p>meet in the middle</p>
+
+<p>I think this should be the popular one for modern development. The front-end engineer build the pages from mockups, then back-end developer connect UI with controllers and models.</p></li>
+<li><p>inside out</p>
+
+<p>It develops from models to controllers till views and integrations. It&rsquo;s hard to decide what models you really need in the beginning.</p></li>
+<li><p>outside in</p>
+
+<p>It devlops from integrations to controllers and models. It start from a big vision, and close to what user&rsquo;s need. But for developer, it&rsquo;s hard to code from this big vision, especially for integration test in the development beginning.</p></li>
+</ul>
+
+
+<h3>Self Referential Associations</h3>
+
+<p>We can use <strong>self referential association</strong> to let user track other users. For example:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># t.integer :follower_id, :leader_id
+</span><span class='line'>class Relationship &lt; ActiveRecord::Base
+</span><span class='line'>  belongs_to :follower, class_name: 'User'
+</span><span class='line'>  belongs_to :leader, class_name: 'User'
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then, model <code>User</code> can have these virtual attributes:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  has_many :following_relationships, class_name: 'Relationship', foreign_key: :follower_id
+</span><span class='line'>  has_many :leading_relationships, class_name: 'Relationship', foreign_key: :leader_id</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Sending Emails</h3>
+
+<p>Rails also offer <code>ActionMailer</code> for sending emails.</p>
+
+<ul>
+<li>create files in <code>app/mailers/app_mailer.rb</code></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class AppMailer &lt; ActionMailer::Base
+</span><span class='line'>
+</span><span class='line'>  def send_welcome_email(user)
+</span><span class='line'>    @user = user
+</span><span class='line'>    mail to: user.email, from: 'info@myflix.com', subject: 'Welcome to Myflix'
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><code>View</code> template in <code>app/views/app_mailers/send_welcome_email</code>:</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>%html(lang='en-US')
+</span><span class='line'>  %body
+</span><span class='line'>    %p Welcome to MyFlix, #{@user.full_name}</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Config for <code>config/environments/development.rb</code></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>config.action_mailer.delivery_method = :letter_opener</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>group :development do
+</span><span class='line'>  gem 'letter-opener'
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<blockquote><p>This is only for <code>development</code> setting, we also need to set for <code>test</code> and <code>production</code> independent</p></blockquote>
+
+<h3>Handling Sensitive Account Info</h3>
+
+<p>It&rsquo;s dangerous to upload config setting file to github or other public storage, there is someone update AWS key to GitHub and got a unbelievable credit bill.</p>
+
+<p>Use <code>ENV</code> to protect secret data, we can use gem <code>Figaro</code>.
+<a href="https://github.com/laserlemon/figaro">Figara</a> is the simplest way to keep our key value safe.</p>
+
+<p>There are two posts talking about this topic:</p>
+
+<ol>
+<li><a href="http://railsapps.github.io/rails-environment-variables.html">Rails Environment Variables</a></li>
+<li><a href="https://devcenter.heroku.com/articles/config-vars">Configuration and config Vars</a></li>
+</ol>
+
+
+<h3>Test Email sending</h3>
+
+<p>Remember to clear email deliveries before test:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>before { ActionMailer::Base.deliveries.clear }
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then we can validate email in the test by this</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>post :create
+</span><span class='line'>expect(ActionMailer::Base.deliveries.last.to).to eq([user_attributes["email"]])
+</span><span class='line'># expect(ActionMailer::Base.deliveries.last.body).to include(user_attributes["full_name"])</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Update database, use rake tasks</h3>
+
+<p>An advice from TA Tomtomecek, I update existing data in model User, and he suggest me to use <a href="http://guides.rubyonrails.org/command_line.html#custom-rake-tasks">custom rake tasks</a> to do that. I&rsquo;ve not taste that yet, just leave a memo here to remember.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week3]]></title>
@@ -2673,56 +2818,6 @@ One suggestion, If subclass&rsquo;s initialize method doesn&rsquo;t use super, t
 
 <p>Next lesson is absolutely my challenge, because I&rsquo;m totally new for web development.
 But I do look forward to it.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Week 1]]></title>
-    <link href="http://www.tomohung.com/blog/2015/01/01/reflection-to-tealeaf-lesson-1/"/>
-    <updated>2015-01-01T16:03:33+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/01/01/reflection-to-tealeaf-lesson-1</id>
-    <content type="html"><![CDATA[<p><img class="right" src="http://i.minus.com/ibsevSRoOPCEmU.png" width="320"></p>
-
-<p>Happy new year!!</p>
-
-<p>Before I talk about where I struggled with, I would like to say something before I join the course.
-I am using C++ for few years, and coding is part of my job. Before join the course, I&rsquo;ve also done the <a href="http://learnrubythehardway.org/book/">Learn Ruby The Hard Way</a> to lesson 45. <code>Learn Ruby The Hard Way</code> is also a good pratice, especially for <code>muscle memory</code>. It focus on <code>just typing ruby</code> when learning ruby knowledge.</p>
-
-<p>After that, I start <code>Prep Course</code> @ tealeaf, reading the book <a href="http://www.gotealeaf.com/books/ruby"><code>Introduce to Programing</code></a>. <code>Introduction to Programing</code> is also an amazing book, it use a simple way to explain more detail in ruby, and I really did several times &ldquo;Ah ha!&rdquo; when reading it. Then I thought I was ready for lesson 1, but maybe I&rsquo;m wrong :p</p>
-
-<p>About my struggles, as a C++ programmer, there are mainly two &ldquo;What?&rdquo; for ruby:</p>
-
-<ul>
-<li><p>variable scope: in C++, every local variable only survive in its scope, but in ruby, this is not always true. Even now, I&rsquo;m still a little confused with that. Glad that I find a way to deal with this: <code>Never use outside variable in insdie scope, make them in different name</code>.</p></li>
-<li><p>pointer &amp; reference: when passing a variable to functions(in ruby called: methods), if varaible has prefix like <code>*</code> or <code>&amp;</code>, it obvious means this variable may be modified in this methods. Ruby doesn&rsquo;t take this way, input variables in method could be modified just by what action do inside the method. Fotunately, ruby usaually append suffix <code>!</code> behind method&rsquo;s name to indicate this method modify input variable.</p></li>
-</ul>
-
-
-<p>Even these, I do love ruby.</p>
-
-<ul>
-<li>There are a lot of built-in convenient methods for String, Array, Hash&hellip;etc. And more are waiting to discover</li>
-<li>More fluent phrase for flow control, if, unless, while, until&hellip;etc. Readable code is becoming more and more important.</li>
-<li>type less key :p</li>
-</ul>
-
-
-<p>And special Thanks for TA&rsquo;s:
-Without their help, I couldn&rsquo;t finished these assignments on time. Because of unfamiliar with ruby methods, wrong code style, improper naming&hellip;etc. They always give me timely advice.</p>
-
-<p>Last, share my experience for developing game <code>Black Jack</code>:</p>
-
-<ul>
-<li>write psuedo code : 10 min</li>
-<li>coding : 2 hours</li>
-<li>debugging : 2 hours more</li>
-<li>feedback from TA, then refactor: 2 hours</li>
-</ul>
-
-
-<p>By the way, the most difficulty in Lesson 1 is completing &ldquo;Tic-Tac-Toe&rdquo; AI, it tooks me 10 hours more.
-If you are totally new to program, don&rsquo;t be disppointed at spending a lot of time, because me too!!
-If you are take these assignment as piece of cake, well, let&rsquo;s move to Lesson 2. See you.</p>
 ]]></content>
   </entry>
   

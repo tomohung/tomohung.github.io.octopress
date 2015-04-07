@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Bootstrap | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/bootstrap/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-03-17T10:37:30+08:00</updated>
+  <updated>2015-04-07T13:49:06+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -18,7 +18,7 @@
     <link href="http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3/"/>
     <updated>2015-01-13T22:23:15+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3</id>
-    <content type="html"><![CDATA[<p><img class="right <a" src="href="http://i.minus.com/ilSTmPNHVpVTm.png">http://i.minus.com/ilSTmPNHVpVTm.png</a>&#8221; width=&#8221;320&#8221;></p>
+    <content type="html"><![CDATA[<p>{%img right <a href="http://i.minus.com/ilSTmPNHVpVTm.png">http://i.minus.com/ilSTmPNHVpVTm.png</a> 320 %}</p>
 
 <p>It&rsquo;s realy a tough week for me, because I&rsquo;m totally new to web development.
 There are lots of material need to be done:</p>

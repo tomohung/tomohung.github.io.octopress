@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tealeaf | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/tealeaf/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-03-17T10:37:30+08:00</updated>
+  <updated>2015-04-07T13:49:06+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -12,6 +12,125 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week4]]></title>
+    <link href="http://www.tomohung.com/blog/2015/04/07/reflection-to-tealeaf-course3-week4/"/>
+    <updated>2015-04-07T13:11:30+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/04/07/reflection-to-tealeaf-course3-week4</id>
+    <content type="html"><![CDATA[<h3>Three kinds of BDD</h3>
+
+<p>In week 4 beginning, we got a brief intro for 3 kinds of BDD:</p>
+
+<ul>
+<li><p>meet in the middle</p>
+
+<p>I think this should be the popular one for modern development. The front-end engineer build the pages from mockups, then back-end developer connect UI with controllers and models.</p></li>
+<li><p>inside out</p>
+
+<p>It develops from models to controllers till views and integrations. It&rsquo;s hard to decide what models you really need in the beginning.</p></li>
+<li><p>outside in</p>
+
+<p>It devlops from integrations to controllers and models. It start from a big vision, and close to what user&rsquo;s need. But for developer, it&rsquo;s hard to code from this big vision, especially for integration test in the development beginning.</p></li>
+</ul>
+
+
+<h3>Self Referential Associations</h3>
+
+<p>We can use <strong>self referential association</strong> to let user track other users. For example:</p>
+
+<pre><code># t.integer :follower_id, :leader_id
+class Relationship &lt; ActiveRecord::Base
+  belongs_to :follower, class_name: 'User'
+  belongs_to :leader, class_name: 'User'
+end
+</code></pre>
+
+<p>Then, model <code>User</code> can have these virtual attributes:</p>
+
+<pre><code>  has_many :following_relationships, class_name: 'Relationship', foreign_key: :follower_id
+  has_many :leading_relationships, class_name: 'Relationship', foreign_key: :leader_id
+</code></pre>
+
+<h3>Sending Emails</h3>
+
+<p>Rails also offer <code>ActionMailer</code> for sending emails.</p>
+
+<ul>
+<li>create files in <code>app/mailers/app_mailer.rb</code></li>
+</ul>
+
+
+<pre><code>class AppMailer &lt; ActionMailer::Base
+
+  def send_welcome_email(user)
+    @user = user
+    mail to: user.email, from: 'info@myflix.com', subject: 'Welcome to Myflix'
+  end
+end
+</code></pre>
+
+<ul>
+<li><code>View</code> template in <code>app/views/app_mailers/send_welcome_email</code>:</li>
+</ul>
+
+
+<pre><code>%html(lang='en-US')
+  %body
+    %p Welcome to MyFlix, #{@user.full_name}
+</code></pre>
+
+<ul>
+<li>Config for <code>config/environments/development.rb</code></li>
+</ul>
+
+
+<pre><code>config.action_mailer.delivery_method = :letter_opener
+</code></pre>
+
+<p>And</p>
+
+<pre><code>group :development do
+  gem 'letter-opener'
+end
+</code></pre>
+
+<blockquote><p>This is only for <code>development</code> setting, we also need to set for <code>test</code> and <code>production</code> independent</p></blockquote>
+
+<h3>Handling Sensitive Account Info</h3>
+
+<p>It&rsquo;s dangerous to upload config setting file to github or other public storage, there is someone update AWS key to GitHub and got a unbelievable credit bill.</p>
+
+<p>Use <code>ENV</code> to protect secret data, we can use gem <code>Figaro</code>.
+<a href="https://github.com/laserlemon/figaro">Figara</a> is the simplest way to keep our key value safe.</p>
+
+<p>There are two posts talking about this topic:</p>
+
+<ol>
+<li><a href="http://railsapps.github.io/rails-environment-variables.html">Rails Environment Variables</a></li>
+<li><a href="https://devcenter.heroku.com/articles/config-vars">Configuration and config Vars</a></li>
+</ol>
+
+
+<h3>Test Email sending</h3>
+
+<p>Remember to clear email deliveries before test:</p>
+
+<pre><code>before { ActionMailer::Base.deliveries.clear }
+</code></pre>
+
+<p>Then we can validate email in the test by this</p>
+
+<pre><code>post :create
+expect(ActionMailer::Base.deliveries.last.to).to eq([user_attributes["email"]])
+# expect(ActionMailer::Base.deliveries.last.body).to include(user_attributes["full_name"])
+</code></pre>
+
+<h3>Update database, use rake tasks</h3>
+
+<p>An advice from TA Tomtomecek, I update existing data in model User, and he suggest me to use <a href="http://guides.rubyonrails.org/command_line.html#custom-rake-tasks">custom rake tasks</a> to do that. I&rsquo;ve not taste that yet, just leave a memo here to remember.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week3]]></title>
@@ -283,7 +402,7 @@ end
     <link href="http://www.tomohung.com/blog/2015/03/03/titans-tic-tac-toe/"/>
     <updated>2015-03-03T09:11:10+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/03/03/titans-tic-tac-toe</id>
-    <content type="html"><![CDATA[<p><img class="<a" src="href="http://i.minus.com/i2XJ0y9E48CHg.png">http://i.minus.com/i2XJ0y9E48CHg.png</a>&#8221;></p>
+    <content type="html"><![CDATA[<p>{% img <a href="http://i.minus.com/i2XJ0y9E48CHg.png">http://i.minus.com/i2XJ0y9E48CHg.png</a> %}</p>
 
 <h3>Prelude</h3>
 
@@ -600,192 +719,6 @@ resources.
 <p>Eugene Chang:</p>
 
 <blockquote><p>This is a really nice app! After seeing it, I had to constantly resist the temptation of spending more time trying to make my UI look better. Great job!</p></blockquote>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Course2 Lesson4]]></title>
-    <link href="http://www.tomohung.com/blog/2015/02/22/reflection-to-tealeaf-course2-lesson4/"/>
-    <updated>2015-02-22T21:22:10+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/02/22/reflection-to-tealeaf-course2-lesson4</id>
-    <content type="html"><![CDATA[<p>In Course2(Rapid Prototyping with Ruby on Rails), <a href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/">first week</a> I learned about <code>Models and database</code>, <a href="http://www.tomohung.com/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/">second week</a> I learned about <code>Controllers and Views</code>. The <a href="http://www.tomohung.com/blog/2015/02/16/reflection-to-tealeaf-course2-lesson3/">third week</a> I learned to add <code>Authentication</code> and <code>Polymorphic table</code>.</p>
-
-<p>And this week, also the last week, I completed all basic functions I need to know. Including Ajax for voting, extract methods into gem, build and publish gem, display time info considering user&rsquo;s timezone.</p>
-
-<!--more-->
-
-
-<h3>Ajax for voting</h3>
-
-<p>Ajax is a clean way to change View template that is necessary changed, and we don&rsquo;t need to redirect and render full page. Rails offer a way to achieve this.</p>
-
-<ul>
-<li>in Controller</li>
-</ul>
-
-
-<pre><code class="ruby">respond_to do |format|
-  format.html do
-    redirect_to :back
-  end
-  format.js
-end
-</code></pre>
-
-<ul>
-<li>in View</li>
-</ul>
-
-
-<p><code>format.js</code> will lead to the class#action View file, for example: <code>/votes/create.js.erb</code></p>
-
-<pre><code class="ruby">$("#voteable_&lt;%= @vote.voteable_type %&gt;_&lt;%= @vote.voteable_id %&gt;").
-  html("&lt;%= j render 'shared/show_dislike_link', vote: @vote %&gt;");
-</code></pre>
-
-<p>notice that in <code>js.erb</code> file, render should specify format by using <code>j render</code>.</p>
-
-<ul>
-<li>HTML ID</li>
-</ul>
-
-
-<p>ID is the key to do Ajax.</p>
-
-<pre><code class="ruby">&lt;span id = 'vote_&lt;%=vote.id%&gt;'&gt;
-  &lt;%= link_to vote_path(vote), remote: true, method: :delete do %&gt;
-    &lt;i class='icon-thumbs-up'&gt;&lt;/i&gt;
-    Cancel
-  &lt;% end %&gt;
-&lt;/span&gt;
-</code></pre>
-
-<p>Add <code>id</code> for Ajax, and add <code>remote: true</code> for activate Ajax.</p>
-
-<h3>Extract methods</h3>
-
-<p>Using <code>ActiveSupport::Concern</code> to manage module, info from Rails API:</p>
-
-<pre><code class="ruby">module M
-  extend ActiveSupport::Concern
-
-  included do
-    scope :disabled, -&gt; { where(disabled: true) }
-  end
-
-  class_methods do
-    ...
-  end
-end
-</code></pre>
-
-<p>When I using for vote methods:</p>
-
-<pre><code class="ruby">module Voteable
-  extend ActiveSupport::Concern
-  included do
-    has_many :votes, as: :voteable
-  end
-
-  def like_votes
-    self.votes
-  end
-end
-</code></pre>
-
-<p>Or Sluggable.rb</p>
-
-<pre><code class="ruby">module Sluggable
-  extend ActiveSupport::Concern
-
-  included do
-    before_save :generate_slug
-    class_attribute :slug_column
-  end
-
-  def to_param
-    self.slug
-  end
-
-  def generate_slug
-    # ignore...
-    # self.send(self.class.slug_column)
-  end
-
-  module ClassMethods
-    def sluggable_column(noun)
-      self.slug_column = noun
-    end
-  end
-
-end
-</code></pre>
-
-<p>Notice that using <code>class_attribute</code> to connect different class symbol. Setting <code>sluggable_column</code> in <code>Models</code>.</p>
-
-<p>Also notice that <code>slug_column</code> is a class methods and return a symbol, in order to get instance&rsquo;s value, use <code>self.send(self.class.slug_column)</code>.</p>
-
-<h3>Slug</h3>
-
-<p>There are two purpose using slug:</p>
-
-<ul>
-<li>Don&rsquo;t expose database information.</li>
-<li>URL for SEO friendly</li>
-</ul>
-
-
-<p>The concepts to generate slug are:</p>
-
-<ol>
-<li>add a slug column to store slug value</li>
-<li>substitute key word like <code>name</code> into slug, avoid some keywords for HTTP like <code>@&amp;``'</code> etc.</li>
-<li>check slug exsited or not, otherwise add a number for avoiding the same name.</li>
-</ol>
-
-
-<h3>Using Gems</h3>
-
-<p>Gem is a very convenient way to use the same methods between two different projects.</p>
-
-<ol>
-<li>build a gem spec file.</li>
-<li>copy exsited module codes into gem specify path.</li>
-<li>build the gem</li>
-<li>publish the gem</li>
-<li>add gem to Gemfile, then <code>bundle install</code>.</li>
-</ol>
-
-
-<h3>Time Zone</h3>
-
-<p>Rails offer time zone methods to do this.</p>
-
-<ul>
-<li>in model backed form</li>
-</ul>
-
-
-<pre><code class="ruby">f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, default: Time.zone.name
-</code></pre>
-
-<ul>
-<li>in View template</li>
-</ul>
-
-
-<p>changing time zone by (if time zone is &lsquo;Arizona&rsquo;)</p>
-
-<pre><code class="ruby">datetime = post.created_at.in_time_zone("Arizona")
-</code></pre>
-
-<h3>Conclusion</h3>
-
-<p>Using gem is a way for Rails how to DRY our codes. Rails flavored Ajax is also antoher way to do that. Exciting to know these.</p>
-
-<p>Finally, the last week is coming to the end. The final project <code>Postit</code> seems become into reality app we daily use. And rails pieces are making together and show me how to build a basic function app.</p>
-
-<p>After these two course, I think now I have confidence to read through other Rails introducion books I used to not understand.About Course 3, there is no reason I do NOT keep going since I decide to make a career change. Glad that I survived through the first two courses, and I think I&rsquo;m ready for the course 3 challenge.</p>
 ]]></content>
   </entry>
   
