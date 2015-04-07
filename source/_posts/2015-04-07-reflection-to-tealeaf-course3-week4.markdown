@@ -93,6 +93,8 @@ There are two posts talking about this topic:
 1. [Rails Environment Variables](http://railsapps.github.io/rails-environment-variables.html)
 2. [Configuration and config Vars](https://devcenter.heroku.com/articles/config-vars)
 
+> Update: Tealeaf also have a post about [Managing Environment Configuration Variables in Rails](http://www.gotealeaf.com/blog/managing-environment-configuration-variables-in-rails)
+
 ### Test Email sending
 
 Remember to clear email deliveries before test:
