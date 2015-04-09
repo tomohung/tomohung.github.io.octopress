@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tealeaf | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/tealeaf/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-04-09T16:42:46+08:00</updated>
+  <updated>2015-04-09T16:48:45+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -70,7 +70,7 @@ deployment:
       - heroku maintenance:off --app staging_app_name
 </code></pre>
 
-<p>I got a error when running Circle test: [counldn&rsquo;t find file &lsquo;bootstrap&rsquo;]</p>
+<p>I got an error when running Circle test: [counldn&rsquo;t find file &lsquo;bootstrap&rsquo;]</p>
 
 <p>Solution: Rename file <code>stylesheets/application.css</code> to <code>stylesheets/application.css.scss</code>. And add Line to the file:</p>
 
