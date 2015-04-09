@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Reflection to Tealeaf Course3 Week5 (1/2) - The Life Alchemist</title>
+  <meta name="author" content="Tomo">
+
+  
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://www.tomohung.com/blog/2015/04/09/reflection-to-tealeaf-course3-week5">
+  <link href="/favicon.png" type="image/png" rel="icon">
+  <link href="/atom.xml" rel="alternate" title="The Life Alchemist" type="application/atom+xml">
+
+  <!-- http://opengraphprotocol.org/ -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://www.tomohung.com/blog/2015/04/09/reflection-to-tealeaf-course3-week5">
+  <meta property="og:title" content="Reflection to Tealeaf Course3 Week5 (1/2) - The Life Alchemist">
+  
+
+  <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
+
+<link href="/assets/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/assets/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+
+
+  
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+  
+   <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-12830335-2', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+</head>
+
+  <body   >
+    <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    <div id="wrap">
+      <header role="banner">
+        <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">The Life Alchemist</a>
+        </div>
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a rel="index" href="/">Blog</a>
+                </li>
+                <li >
+                    <a href="/blog/archives">Archives</a>
+                </li>
+                <li >
+                    <a href="/about">About</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <form class="search navbar-form navbar-right" action="https://www.google.com/search" method="GET">
+                            <input type="hidden" name="q" value="site:www.tomohung.com">
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="q" placeholder="Search">
+                            </div>
+                        </form>
+                    </li>
+                
+                <li>
+                    <a class="subscribe-rss" href="/atom.xml" title="subscribe via RSS">
+                        <span class="visible-xs">RSS</span>
+                        <img class="hidden-xs" src="/images/rss.png" alt="RSS">
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+      </header>
+      <div id="main" role="main" class="container">
+        <div id="content">
+          <div class="row">
+  <div class="page-content col-md-9" itemscope itemtype="http://schema.org/Blog">
+    <meta itemprop="name" content="The Life Alchemist" />
+    
+    <meta itemprop="url" content="http://www.tomohung.com" />
+    <article class="hentry" role="article" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+      
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-09T14:39:06+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-09</time>
+        
+      </p>
+    
+    
+    <h1 class="entry-title" itemprop="name headline">
+        Reflection to Tealeaf Course3 Week5 (1/2)
+        
+    </h1>
+    
+  </header>
+
+
+<div class="entry-content clearfix" itemprop="articleBody description"><h3>Feature test for sending email</h3>
+
+<p>Following by <a href="http://www.tomohung.com/blog/2015/04/07/reflection-to-tealeaf-course3-week4/">previous week</a>, this week we have a feature test for sending email.</p>
+
+<p>Install gem,</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ gem 'capybara-email'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And added this line to <code>spec_helper.rb</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>require 'capybara/email/rspec'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>require 'spec_helper'
+</span><span class='line'>
+</span><span class='line'>feature 'User resets password' do
+</span><span class='line'>  scenario 'user successfully resets the password' do
+</span><span class='line'>    clear_emails
+</span><span class='line'>
+</span><span class='line'>    user = Fabricate(:user)
+</span><span class='line'>    visit sign_in_path
+</span><span class='line'>    click_link 'Forgot Password?'
+</span><span class='line'>
+</span><span class='line'>    fill_in 'Email Address', with: user.email
+</span><span class='line'>    click_button 'Send Email'
+</span><span class='line'>
+</span><span class='line'>    open_email(user.email)
+</span><span class='line'>    current_email.click_link("Reset Password")
+</span><span class='line'>
+</span><span class='line'>    fill_in 'New Password', with: 'new_password'
+</span><span class='line'>    click_button 'Reset Password'
+</span><span class='line'>
+</span><span class='line'>    fill_in 'Email Address', with: user.email
+</span><span class='line'>    fill_in 'Password', with: 'new_password'
+</span><span class='line'>    click_button 'Sign in'
+</span><span class='line'>    expect(page).to have_content("Welcome, #{user.full_name}")
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Especially notice for <code>open_email</code>, <code>current_email</code> functions are offered by <code>capybara-email</code> gem.</p>
+
+<h3>Invite Friend and Registeration</h3>
+
+<p>We also have a work on inviting friends through email, the key point here is how to use a secure <code>token</code> to tracking data.</p>
+
+<ul>
+<li>create an invitations data, including inviter, recipient email, name, and <code>token</code>.</li>
+<li><p>when user get the email, following the link provided to server, page will direct to the register page with existing data stored with this token.</p>
+
+<p>And set the routes for path</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>get 'register/:token', to: 'users#new_with_invitation_token'</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>we can have a hidden data in the register form for new#users to use.</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>= hidden_field_tag :token, @invitation_token</span></code></pre></td></tr></table></div></figure>
+
+
+<p>we don&rsquo;t use form_for element, becuase this hidden attribute does not belong to backend modeled form.</p>
+
+<h3>Concerns</h3>
+
+<p>To Dry our code, we can use <code>concern</code> with <code>module</code>. Here is a <a href="https://signalvnoise.com/posts/3372-put-chubby-models-on-a-diet-with-concerns">post by DHH</a> why we should do this.</p>
+
+<p>We can merge the same function feature into concern file. For example: <code>Tokenable</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#/lib/tokenable.rb
+</span><span class='line'>module Tokenable
+</span><span class='line'>  extend ActiveSupport::Concern
+</span><span class='line'>  included do
+</span><span class='line'>    before_create :generate_token
+</span><span class='line'>  end
+</span><span class='line'>
+</span><span class='line'>  private
+</span><span class='line'>  def generate_token
+</span><span class='line'>    self.token = SecureRandom.urlsafe_base64
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then add to model file</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>require 'tokenable'
+</span><span class='line'>
+</span><span class='line'>class User &lt; ActiveRecord::Base
+</span><span class='line'>  include Tokenable
+</span><span class='line'>  ...
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I prefer to specify require file name, or we can use <a href="http://stackoverflow.com/questions/19098663/auto-loading-lib-files-in-rails-4">auto loading library files</a>.</p>
+
+<h3>Email Service Providers</h3>
+
+<p>Since we have test email sending on ENV:development and EVN:test, now we have test it in the real world. That&rsquo;s why we need a real email service provider. Google has it but with many restriction, Tealeaf recommend <code>Mailgun</code> or <code>Postmark</code>. Here we have a taste for `Mailgun&#8217;.</p>
+
+<p>To setting <code>config/environments/production.rb</code>, add these lines:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>config.action_mailer.default_url_options = { :host =&gt; "tomo-myflix.herokuapp.com" }
+</span><span class='line'>  config.action_mailer.smtp_settings = {
+</span><span class='line'>    :port           =&gt; ENV['MAILGUN_SMTP_PORT'],
+</span><span class='line'>    :address        =&gt; ENV['MAILGUN_SMTP_SERVER'],
+</span><span class='line'>    :user_name      =&gt; ENV['MAILGUN_SMTP_LOGIN'],
+</span><span class='line'>    :password       =&gt; ENV['MAILGUN_SMTP_PASSWORD'],
+</span><span class='line'>    :domain         =&gt; 'tomo-myflix.herokuapp.com',
+</span><span class='line'>    :authentication =&gt; :plain,
+</span><span class='line'>  }
+</span><span class='line'>  config.action_mailer.delivery_method = :smtp</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>tomo-myflix.herokuapp.com</code> is my app name on Heroku. And ENV about Mailgun are maintained by Heroku.</p>
+
+<p>I aslo can use this command to check <code>Heroku configurations</code>.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ heroku config</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then push it to heroku and test for a real email address, it works!!</p>
+
+<h3>Background Jobs</h3>
+
+<p>Sometimes, some actions do not need to be synchrous, like sending email, we don&rsquo;t need to wait email sending action completed. That&rsquo;s why we need to use a background job to do sending email to speed up the flow.</p>
+
+<p><code>Sidekiq</code> and <code>Resque</code> are some of this concept product. And Tealeaf recommend to use <a href="https://github.com/mperham/sidekiq/wiki">Sidekiq</a>.</p>
+
+<p>Install gem Sidekiq</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem 'sidekiq'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Only a tiny change for using it by delay method</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>AppMailer.delay.notify_on_new_todo(current_user, @todo) # new 
+</span><span class='line'>AppMailer.notify_on_new_todo(current_user, @todo).deliver #older one
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Add this line in <code>spec/spec_helper.rb</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>require 'sidekiq/testing/inline'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here we setup sidekiq, but we still need start <code>Redis</code> server:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ brew install redis
+</span><span class='line'>$ redis-server /usr/local/etc/redis.conf</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And this start sidekiq with another terminal:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ bundle exec sidekiq</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So far, this makes <code>local</code> works fine with <code>sidekiq</code> for background jobs. If we want to use background jobs in ENV:production, Heroku take charges if dyno is more than 1, or try <a href="https://coderwall.com/p/fprnhg/free-background-jobs-on-heroku">this way to simulate</a></p>
+
+<p>I have not implemented this yet, but I&rsquo;ll try it later.</p>
+
+<p>There is also <a href="https://devcenter.heroku.com/articles/procfile#deploying-to-heroku">an article talking about Procfile and Foreman</a>.</p>
+
+<p>If sidekiq version >= 3.0, you might also run this line</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>heroku config:set REDIS_PROVIDER=REDISTOGO_URL</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Monitor Production Error</h3>
+
+<p>Here we have a try for <a href="https://getsentry.com/welcome/">Sentry</a>.</p>
+
+<p>Tracking errors is also a key for automation deployment.</p>
+</div>
+
+
+      <footer>
+        <p class="meta text-muted">
+          
+  
+
+<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard" itemprop="author" itemscope itemtype="http://schema.org/Person">Posted by <span class="fn" itemprop="name">Tomo</span></span>
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-09T14:39:06+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-09</time>
+          
+
+<span class="glyphicon glyphicon-tags"></span>&nbsp;
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/rails/'>rails</a>, <a class='category' href='/blog/categories/tealeaf/'>tealeaf</a>
+  
+</span>
+
+
+        </p>
+        
+          <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/04/09/reflection-to-tealeaf-course3-week5/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/04/09/reflection-to-tealeaf-course3-week5/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+        
+        
+          <ul class="meta text-muted pager">
+            
+            <li class="previous"><a href="/blog/2015/04/07/reflection-to-tealeaf-course3-week4/" title="Previous Post: Reflection to Tealeaf Course3 Week4">&laquo; Reflection to Tealeaf Course3 Week4</a></li>
+            
+            
+            <li class="next"><a href="/blog/2015/04/09/reflection-to-tealeaf-course3-week5-2-slash-2/" title="Next Post: Reflection to Tealeaf Course3 Week5 (2/2)">Reflection to Tealeaf Course3 Week5 (2/2) &raquo;</a></li>
+            
+          </ul>
+        
+      </footer>
+    </article>
+    
+      <section>
+        <h2>Comments</h2>
+        <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+      </section>
+    
+  </div>
+
+  
+  <aside class="sidebar col-md-3">
+    
+      
+<section>
+	<span>
+		<img src="http://www.gravatar.com/avatar/8708c05d2568e10fb402516eeb954ef2" alt="Gravatar of Tomo " title="Gravatar of Tomo" />
+	</span>
+</section>
+<section class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Recent Posts</h3>
+  </div>
+  
+  <div id="recent_posts" class="list-group">
+    
+    <a class="list-group-item " href="/blog/2015/04/09/reflection-to-tealeaf-course3-week5-2-slash-2/">Reflection to Tealeaf Course3 Week5 (2/2)</a>
+    
+    <a class="list-group-item active" href="/blog/2015/04/09/reflection-to-tealeaf-course3-week5/">Reflection to Tealeaf Course3 Week5 (1/2)</a>
+    
+    <a class="list-group-item " href="/blog/2015/04/07/reflection-to-tealeaf-course3-week4/">Reflection to Tealeaf Course3 Week4</a>
+    
+    <a class="list-group-item " href="/blog/2015/03/17/reflection-to-tealeaf-course3-week3/">Reflection to Tealeaf Course3 Week3</a>
+    
+    <a class="list-group-item " href="/blog/2015/03/11/reflection-to-tealeaf-course3-week2/">Reflection to Tealeaf Course3 Week2</a>
+    
+  </div>
+</section>
+
+
+
+
+
+
+    
+  </aside>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+    <footer role="contentinfo"><div class="container">
+    <p class="text-muted credits">
+  Copyright &copy; 2015 - Tomo<br>
+  <small>
+      <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>,
+      <span class="credit">customized with <a href="https://github.com/kAworu/octostrap3">octostrap3</a></span>.
+  </small>
+</p>
+
+</div>
+</footer>
+    
+
+<script type="text/javascript">
+      var disqus_shortname = 'tomohung';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.tomohung.com/blog/2015/04/09/reflection-to-tealeaf-course3-week5/';
+        var disqus_url = 'http://www.tomohung.com/blog/2015/04/09/reflection-to-tealeaf-course3-week5/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+<script src="/assets/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/javascripts/modernizr-2.0.js"></script>
+
+
+  </body>
+</html>

@@ -4,7 +4,7 @@
   <title><![CDATA[The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-04-08T06:24:38+08:00</updated>
+  <updated>2015-04-09T16:42:46+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -12,6 +12,369 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week5 (2/2)]]></title>
+    <link href="http://www.tomohung.com/blog/2015/04/09/reflection-to-tealeaf-course3-week5-2-slash-2/"/>
+    <updated>2015-04-09T15:58:27+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/04/09/reflection-to-tealeaf-course3-week5-2-slash-2</id>
+    <content type="html"><![CDATA[<h3>Continuous Integration(CI) and Continous Delivery(CD)</h3>
+
+<p>This part is super exciting so I decide to make it a individual post.</p>
+
+<p>Continuous Integration(CI) and Continous Delivery(CD) are two of most important part in automation development. There are plenty of innovation tools, but I think the work flow is the key to understand.</p>
+
+<ol>
+<li>Pull the latest code from GitHub.</li>
+<li>Create a new feature branch and develop.</li>
+<li>Finish development and put to a feature named branch on GitHub.</li>
+<li>Create a PR from this branch to <code>staging</code> branch.</li>
+<li>Wait CI test for staging branch.</li>
+<li>CI automatically deploy from staging branch to <code>staging server</code>.</li>
+<li>Manual test on staging server.</li>
+<li>Create PR from staging to <code>master</code> branch.</li>
+<li>trigger CI for master branch and automatically deploy to <code>production server</code>.</li>
+</ol>
+
+
+<h3>Setting CI and CD</h3>
+
+<p>Here we use <a href="https://circleci.com">Circle CI</a> for CI and CD. There is also well known service called <a href="https://travis-ci.org/">Travis CI</a>.</p>
+
+<ul>
+<li>Create a <code>staging</code> branch.</li>
+<li>Follow Circle CI project setting.</li>
+<li>You may need Heroku API key and SSH.</li>
+<li>[Key] Create a <code>circle.yml</code> in the root of project, adjust <code>production_app_name</code> and <code>staging_app_name</code>.</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>machine:
+</span><span class='line'>  ruby:
+</span><span class='line'>    version: 2.1.5
+</span><span class='line'>deployment:
+</span><span class='line'>  production:
+</span><span class='line'>    branch: master
+</span><span class='line'>    commands:
+</span><span class='line'>      - heroku maintenance:on --app production_app_name
+</span><span class='line'>      - heroku pg:backups capture --app production_app_name
+</span><span class='line'>      - git push git@heroku.com:production_app_name.git $CIRCLE_SHA1:refs/heads/master
+</span><span class='line'>      - heroku run rake db:migrate --app production_app_name
+</span><span class='line'>      - heroku maintenance:off --app production_app_name
+</span><span class='line'>  staging:
+</span><span class='line'>    branch: staging
+</span><span class='line'>    commands:
+</span><span class='line'>      - heroku maintenance:on --app staging_app_name
+</span><span class='line'>      - git push git@heroku.com:staging_app_name.git $CIRCLE_SHA1:refs/heads/master
+</span><span class='line'>      - heroku run rake db:migrate --app staging_app_name
+</span><span class='line'>      - heroku maintenance:off --app staging_app_name</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I got a error when running Circle test: [counldn&rsquo;t find file &lsquo;bootstrap&rsquo;]</p>
+
+<p>Solution: Rename file <code>stylesheets/application.css</code> to <code>stylesheets/application.css.scss</code>. And add Line to the file:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@import 'bootstrap-sprockents'
+</span><span class='line'>@import 'bootstrap'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and remove line <code>*= require bootstrap</code>.</p>
+
+<h3>Embeded Badget</h3>
+
+<p>I aslo try to use badget in my homepage.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>%img(src="https://circleci.com/gh/tomohung/myflix.png?circle-token=a7c782deb0d0022335fa1f095e268bb44eb4cab8")</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then I can see this passing test badget.</p>
+
+<p><img src="https://circleci.com/gh/tomohung/myflix.png?circle-token=a7c782deb0d0022335fa1f095e268bb44eb4cab8"></p>
+
+<h3>Slack ingegration with Github and Circle CI</h3>
+
+<p>I failed to use <a href="http://ccmenu.org/">CCMenu</a> to have a notification. But I use <a href="https://slack.com/">Slack</a> to integrate GitHub and Circle CI, and that&rsquo;s why I said it&rsquo;s exciting!!</p>
+
+<p>After setting done, the only thing I need to do is <code>git push origin staging</code> or <code>git push origin master</code>. I&rsquo;ll get notifications in Slack when Github got a push event, and Circle CI run the test and deployment in the same time. Surely I will also get a Circle CI result notification if test and deployment finished.</p>
+
+<p>This is what a programmer should do!! Don&rsquo;t Repeat Yourself!! Bravo!!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week5 (1/2)]]></title>
+    <link href="http://www.tomohung.com/blog/2015/04/09/reflection-to-tealeaf-course3-week5/"/>
+    <updated>2015-04-09T14:39:06+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/04/09/reflection-to-tealeaf-course3-week5</id>
+    <content type="html"><![CDATA[<h3>Feature test for sending email</h3>
+
+<p>Following by <a href="http://www.tomohung.com/blog/2015/04/07/reflection-to-tealeaf-course3-week4/">previous week</a>, this week we have a feature test for sending email.</p>
+
+<p>Install gem,</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ gem 'capybara-email'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And added this line to <code>spec_helper.rb</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>require 'capybara/email/rspec'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>require 'spec_helper'
+</span><span class='line'>
+</span><span class='line'>feature 'User resets password' do
+</span><span class='line'>  scenario 'user successfully resets the password' do
+</span><span class='line'>    clear_emails
+</span><span class='line'>
+</span><span class='line'>    user = Fabricate(:user)
+</span><span class='line'>    visit sign_in_path
+</span><span class='line'>    click_link 'Forgot Password?'
+</span><span class='line'>
+</span><span class='line'>    fill_in 'Email Address', with: user.email
+</span><span class='line'>    click_button 'Send Email'
+</span><span class='line'>
+</span><span class='line'>    open_email(user.email)
+</span><span class='line'>    current_email.click_link("Reset Password")
+</span><span class='line'>
+</span><span class='line'>    fill_in 'New Password', with: 'new_password'
+</span><span class='line'>    click_button 'Reset Password'
+</span><span class='line'>
+</span><span class='line'>    fill_in 'Email Address', with: user.email
+</span><span class='line'>    fill_in 'Password', with: 'new_password'
+</span><span class='line'>    click_button 'Sign in'
+</span><span class='line'>    expect(page).to have_content("Welcome, #{user.full_name}")
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Especially notice for <code>open_email</code>, <code>current_email</code> functions are offered by <code>capybara-email</code> gem.</p>
+
+<h3>Invite Friend and Registeration</h3>
+
+<p>We also have a work on inviting friends through email, the key point here is how to use a secure <code>token</code> to tracking data.</p>
+
+<ul>
+<li>create an invitations data, including inviter, recipient email, name, and <code>token</code>.</li>
+<li><p>when user get the email, following the link provided to server, page will direct to the register page with existing data stored with this token.</p>
+
+<p>And set the routes for path</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>get 'register/:token', to: 'users#new_with_invitation_token'</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>we can have a hidden data in the register form for new#users to use.</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>= hidden_field_tag :token, @invitation_token</span></code></pre></td></tr></table></div></figure>
+
+
+<p>we don&rsquo;t use form_for element, becuase this hidden attribute does not belong to backend modeled form.</p>
+
+<h3>Concerns</h3>
+
+<p>To Dry our code, we can use <code>concern</code> with <code>module</code>. Here is a <a href="https://signalvnoise.com/posts/3372-put-chubby-models-on-a-diet-with-concerns">post by DHH</a> why we should do this.</p>
+
+<p>We can merge the same function feature into concern file. For example: <code>Tokenable</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#/lib/tokenable.rb
+</span><span class='line'>module Tokenable
+</span><span class='line'>  extend ActiveSupport::Concern
+</span><span class='line'>  included do
+</span><span class='line'>    before_create :generate_token
+</span><span class='line'>  end
+</span><span class='line'>
+</span><span class='line'>  private
+</span><span class='line'>  def generate_token
+</span><span class='line'>    self.token = SecureRandom.urlsafe_base64
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then add to model file</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>require 'tokenable'
+</span><span class='line'>
+</span><span class='line'>class User &lt; ActiveRecord::Base
+</span><span class='line'>  include Tokenable
+</span><span class='line'>  ...
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I prefer to specify require file name, or we can use <a href="http://stackoverflow.com/questions/19098663/auto-loading-lib-files-in-rails-4">auto loading library files</a>.</p>
+
+<h3>Email Service Providers</h3>
+
+<p>Since we have test email sending on ENV:development and EVN:test, now we have test it in the real world. That&rsquo;s why we need a real email service provider. Google has it but with many restriction, Tealeaf recommend <code>Mailgun</code> or <code>Postmark</code>. Here we have a taste for `Mailgun&#8217;.</p>
+
+<p>To setting <code>config/environments/production.rb</code>, add these lines:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>config.action_mailer.default_url_options = { :host =&gt; "tomo-myflix.herokuapp.com" }
+</span><span class='line'>  config.action_mailer.smtp_settings = {
+</span><span class='line'>    :port           =&gt; ENV['MAILGUN_SMTP_PORT'],
+</span><span class='line'>    :address        =&gt; ENV['MAILGUN_SMTP_SERVER'],
+</span><span class='line'>    :user_name      =&gt; ENV['MAILGUN_SMTP_LOGIN'],
+</span><span class='line'>    :password       =&gt; ENV['MAILGUN_SMTP_PASSWORD'],
+</span><span class='line'>    :domain         =&gt; 'tomo-myflix.herokuapp.com',
+</span><span class='line'>    :authentication =&gt; :plain,
+</span><span class='line'>  }
+</span><span class='line'>  config.action_mailer.delivery_method = :smtp</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>tomo-myflix.herokuapp.com</code> is my app name on Heroku. And ENV about Mailgun are maintained by Heroku.</p>
+
+<p>I aslo can use this command to check <code>Heroku configurations</code>.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ heroku config</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then push it to heroku and test for a real email address, it works!!</p>
+
+<h3>Background Jobs</h3>
+
+<p>Sometimes, some actions do not need to be synchrous, like sending email, we don&rsquo;t need to wait email sending action completed. That&rsquo;s why we need to use a background job to do sending email to speed up the flow.</p>
+
+<p><code>Sidekiq</code> and <code>Resque</code> are some of this concept product. And Tealeaf recommend to use <a href="https://github.com/mperham/sidekiq/wiki">Sidekiq</a>.</p>
+
+<p>Install gem Sidekiq</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem 'sidekiq'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Only a tiny change for using it by delay method</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>AppMailer.delay.notify_on_new_todo(current_user, @todo) # new 
+</span><span class='line'>AppMailer.notify_on_new_todo(current_user, @todo).deliver #older one
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Add this line in <code>spec/spec_helper.rb</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>require 'sidekiq/testing/inline'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here we setup sidekiq, but we still need start <code>Redis</code> server:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ brew install redis
+</span><span class='line'>$ redis-server /usr/local/etc/redis.conf</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And this start sidekiq with another terminal:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ bundle exec sidekiq</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So far, this makes <code>local</code> works fine with <code>sidekiq</code> for background jobs. If we want to use background jobs in ENV:production, Heroku take charges if dyno is more than 1, or try <a href="https://coderwall.com/p/fprnhg/free-background-jobs-on-heroku">this way to simulate</a></p>
+
+<p>I have not implemented this yet, but I&rsquo;ll try it later.</p>
+
+<p>There is also <a href="https://devcenter.heroku.com/articles/procfile#deploying-to-heroku">an article talking about Procfile and Foreman</a>.</p>
+
+<p>If sidekiq version >= 3.0, you might also run this line</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>heroku config:set REDIS_PROVIDER=REDISTOGO_URL</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Monitor Production Error</h3>
+
+<p>Here we have a try for <a href="https://getsentry.com/welcome/">Sentry</a>.</p>
+
+<p>Tracking errors is also a key for automation deployment.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week4]]></title>
@@ -2730,96 +3093,6 @@ Those of us on the maker's schedule are willing to compromise. We know we have t
 
 
 <p>那些希望我們這種製造者模式的人要妥協的，也知道我們必需去參加些會議，我們希望的只是那些管理者模式的人，知道這些會議背後的代價。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[nitrous.io 開發環境]]></title>
-    <link href="http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing/"/>
-    <updated>2015-01-11T21:26:49+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/01/11/nitroukai-fa-huan-jing</id>
-    <content type="html"><![CDATA[<p><img src="http://i.minus.com/iyZNw6vDZnJa6.png" width="800"></p>
-
-<ul>
-<li>太強了</li>
-<li>太強了</li>
-<li>太強了</li>
-</ul>
-
-
-<p>因為<a href="http://nitrous.io">nitrous</a>太強了，所以說三遍。</p>
-
-<p>入門網路應用程式開發一開始最大的門檻就是安裝適合的環境，尤其是OS用Windows的，好像是次等公民一樣，一下是終端機要用跟別人不一樣的，一下又是安裝套件卡住，一開始一頭熱的想要投入，馬上就被潑盆冷水。</p>
-
-<!--more-->
-
-
-<p>之前我自己的桌機就是用Windows，弄了很久才裝起來可以跑，但就是常遇到怪事，所以就放棄了。現在有一台MBA，少了很多問題，至少按照網路上搜尋到的指引文章照著做，多半都沒什麼意外。</p>
-
-<p>但有時候在外面想用其它電腦看一下自己做的東西時，這時候<a href="http://nitrous.io">nitrous</a>配合<a href="http://github.com">github</a>就派上用場了。nitrous當作雲端編輯平台，github負責同步資料，至少目前我在學習的階段都沒遇到什麼問題，聽說<a href="http://gotealeaf.com">tealeaf</a>裡也有人用nitrous完成所有課程。</p>
-
-<p><img src="http://i.minus.com/ibjA5RfvgDSmp6.png" width="640"></p>
-
-<p>Ruby Girls也是用這套教學，要知道還沒開始就在安裝遇到挫折，真的沒有動力再做下去 &lt;== 就是在說我自己</p>
-
-<p><img src="http://i.minus.com/ibKMcP19URJvJ.png" width="640"></p>
-
-<p>首頁寫的60秒完成不是開完笑的，註冊後有200閃電幣可以用，綽綽有餘，開一個Box只要10個閃電幣，可以選擇的有上圖幾種。</p>
-
-<p><img src="http://i.minus.com/iDo0NvpKvypX6.png" width="640"></p>
-
-<p>登入後可以選擇要IDE介面還是Terminal介面，如果選IDE就像上面一樣。</p>
-
-<p>以編輯器來說，內建的己經蠻好用的，也可以選擇Vim模式。</p>
-
-<p>上圖左邊就是雲端儲存的資料夾，有1.5Gb，寫程式來說應該是夠放，下面就是Terminal，git都己經裝好可以直接用，可以直接把自己github上放的project直接clone下來，五分鐘內就可以從無到有開工。</p>
-
-<h3>Preview</h3>
-
-<p>比較要注意的是Preview時，根據官方Support說，Localhost ip必需設定為0.0.0.0，port的話可以參考下圖：</p>
-
-<p><img src="http://i.minus.com/ioeX2cUhUAC5A.png"></p>
-
-<p>所以如果是Ruby配合shotgun gem來啟動的話，可以用下面指令：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ shotgun xxx.rb -o 0.0.0.0 -p 3000</span></code></pre></td></tr></table></div></figure>
-
-
-<p>指定<code>Localhost ip = 0.0.0.0, port = 3000</code></p>
-
-<p>本機的開發環境當然還是要建立，不過可以等真正入門後再來考慮吧。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection of Tealeaf Week 2]]></title>
-    <link href="http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2/"/>
-    <updated>2015-01-07T08:15:13+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2</id>
-    <content type="html"><![CDATA[<p><img class="right" src="http://i.minus.com/ibnRw2O1pxsQam.png" width="320"></p>
-
-<p>Although I have some option video not done yet, I want to share some of my reflection.</p>
-
-<p>When I came to lesson 2, first I found that discussion is less than lesson 1 obviously. I think this imply the lesson OOP is harder than before. Thank god I finished three assignments in a week, how I can do this is because:</p>
-
-<ol>
-<li><p>As a C++ programmer, OOP concept is also the same in Ruby, like inheritance, polymorphism, composition&hellip;etc. Since I have some experience to OOP, familiar with Ruby&rsquo;s style is not a hard work for me.</p></li>
-<li><p><a href="http://www.gotealeaf.com/books/oo_ruby"><code>Object Oriented Program book</code></a> is fantastic!! I spent one night to read it, then next day I can just start to implement my idea without too much struggles. It clearly explain the relationship between <code>is-a</code> and <code>has-a</code> corresponding to inheritance and mixin.</p></li>
-</ol>
-
-
-<p>And I do fall in love with Ruby, <code>convention</code> is over configuration becomes nature. In lesson 1, it&rsquo;s weird for me to pass a variable into method, but modified or not depends on what actions in the method. Now I start to think it&rsquo;s convenient to decide modified the variable in the method.
-<code>attr_accessor</code> is another kind of example, default getter and setter helps a lot to reduce typing time.</p>
-
-<p>Using polymorphism, I don&rsquo;t need to care about how using virtual function, just inheritance class then use it.
-Especially for method <code>super</code>, the best way to reduce redundant code.
-One suggestion, If subclass&rsquo;s initialize method doesn&rsquo;t use super, then you might think the superclass and subclass relationship is <code>has-a</code>, not <code>is-a</code>.</p>
-
-<p>I do love my <a href="https://github.com/tomohung/tealeaf/blob/master/Lesson2/oo_tic_tac_toe.rb">Tic-Tac-Toe</a> and <a href="https://github.com/tomohung/tealeaf/blob/master/Lesson2/oo_blackjack.rb">Black Jack</a> implemented by OO. In Tic-Tac-Toe, I use polymorphism to implement single player and double players mode. In Black Jack, I add feature that player can play with others NPC together, not just with dealer. This make the game likely in the real world. Without OO concept, these features are hard to implement.</p>
-
-<p>Next lesson is absolutely my challenge, because I&rsquo;m totally new for web development.
-But I do look forward to it.</p>
 ]]></content>
   </entry>
   

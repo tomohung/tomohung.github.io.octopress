@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tealeaf | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/tealeaf/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-04-08T06:24:38+08:00</updated>
+  <updated>2015-04-09T16:42:46+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -12,6 +12,280 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week5 (2/2)]]></title>
+    <link href="http://www.tomohung.com/blog/2015/04/09/reflection-to-tealeaf-course3-week5-2-slash-2/"/>
+    <updated>2015-04-09T15:58:27+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/04/09/reflection-to-tealeaf-course3-week5-2-slash-2</id>
+    <content type="html"><![CDATA[<h3>Continuous Integration(CI) and Continous Delivery(CD)</h3>
+
+<p>This part is super exciting so I decide to make it a individual post.</p>
+
+<p>Continuous Integration(CI) and Continous Delivery(CD) are two of most important part in automation development. There are plenty of innovation tools, but I think the work flow is the key to understand.</p>
+
+<ol>
+<li>Pull the latest code from GitHub.</li>
+<li>Create a new feature branch and develop.</li>
+<li>Finish development and put to a feature named branch on GitHub.</li>
+<li>Create a PR from this branch to <code>staging</code> branch.</li>
+<li>Wait CI test for staging branch.</li>
+<li>CI automatically deploy from staging branch to <code>staging server</code>.</li>
+<li>Manual test on staging server.</li>
+<li>Create PR from staging to <code>master</code> branch.</li>
+<li>trigger CI for master branch and automatically deploy to <code>production server</code>.</li>
+</ol>
+
+
+<h3>Setting CI and CD</h3>
+
+<p>Here we use <a href="https://circleci.com">Circle CI</a> for CI and CD. There is also well known service called <a href="https://travis-ci.org/">Travis CI</a>.</p>
+
+<ul>
+<li>Create a <code>staging</code> branch.</li>
+<li>Follow Circle CI project setting.</li>
+<li>You may need Heroku API key and SSH.</li>
+<li>[Key] Create a <code>circle.yml</code> in the root of project, adjust <code>production_app_name</code> and <code>staging_app_name</code>.</li>
+</ul>
+
+
+<pre><code>machine:
+  ruby:
+    version: 2.1.5
+deployment:
+  production:
+    branch: master
+    commands:
+      - heroku maintenance:on --app production_app_name
+      - heroku pg:backups capture --app production_app_name
+      - git push git@heroku.com:production_app_name.git $CIRCLE_SHA1:refs/heads/master
+      - heroku run rake db:migrate --app production_app_name
+      - heroku maintenance:off --app production_app_name
+  staging:
+    branch: staging
+    commands:
+      - heroku maintenance:on --app staging_app_name
+      - git push git@heroku.com:staging_app_name.git $CIRCLE_SHA1:refs/heads/master
+      - heroku run rake db:migrate --app staging_app_name
+      - heroku maintenance:off --app staging_app_name
+</code></pre>
+
+<p>I got a error when running Circle test: [counldn&rsquo;t find file &lsquo;bootstrap&rsquo;]</p>
+
+<p>Solution: Rename file <code>stylesheets/application.css</code> to <code>stylesheets/application.css.scss</code>. And add Line to the file:</p>
+
+<pre><code>@import 'bootstrap-sprockents'
+@import 'bootstrap'
+</code></pre>
+
+<p>and remove line <code>*= require bootstrap</code>.</p>
+
+<h3>Embeded Badget</h3>
+
+<p>I aslo try to use badget in my homepage.</p>
+
+<pre><code>%img(src="https://circleci.com/gh/tomohung/myflix.png?circle-token=a7c782deb0d0022335fa1f095e268bb44eb4cab8")
+</code></pre>
+
+<p>Then I can see this passing test badget.</p>
+
+<p><img class="<a" src="href="https://circleci.com/gh/tomohung/myflix.png?circle-token=a7c782deb0d0022335fa1f095e268bb44eb4cab8">https://circleci.com/gh/tomohung/myflix.png?circle-token=a7c782deb0d0022335fa1f095e268bb44eb4cab8</a>&#8221;></p>
+
+<h3>Slack ingegration with Github and Circle CI</h3>
+
+<p>I failed to use <a href="http://ccmenu.org/">CCMenu</a> to have a notification. But I use <a href="https://slack.com/">Slack</a> to integrate GitHub and Circle CI, and that&rsquo;s why I said it&rsquo;s exciting!!</p>
+
+<p>After setting done, the only thing I need to do is <code>git push origin staging</code> or <code>git push origin master</code>. I&rsquo;ll get notifications in Slack when Github got a push event, and Circle CI run the test and deployment in the same time. Surely I will also get a Circle CI result notification if test and deployment finished.</p>
+
+<p>This is what a programmer should do!! Don&rsquo;t Repeat Yourself!! Bravo!!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week5 (1/2)]]></title>
+    <link href="http://www.tomohung.com/blog/2015/04/09/reflection-to-tealeaf-course3-week5/"/>
+    <updated>2015-04-09T14:39:06+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/04/09/reflection-to-tealeaf-course3-week5</id>
+    <content type="html"><![CDATA[<h3>Feature test for sending email</h3>
+
+<p>Following by <a href="http://www.tomohung.com/blog/2015/04/07/reflection-to-tealeaf-course3-week4/">previous week</a>, this week we have a feature test for sending email.</p>
+
+<p>Install gem,</p>
+
+<pre><code>$ gem 'capybara-email'
+</code></pre>
+
+<p>And added this line to <code>spec_helper.rb</code></p>
+
+<pre><code>require 'capybara/email/rspec'
+</code></pre>
+
+<p>Then</p>
+
+<pre><code>require 'spec_helper'
+
+feature 'User resets password' do
+  scenario 'user successfully resets the password' do
+    clear_emails
+
+    user = Fabricate(:user)
+    visit sign_in_path
+    click_link 'Forgot Password?'
+
+    fill_in 'Email Address', with: user.email
+    click_button 'Send Email'
+
+    open_email(user.email)
+    current_email.click_link("Reset Password")
+
+    fill_in 'New Password', with: 'new_password'
+    click_button 'Reset Password'
+
+    fill_in 'Email Address', with: user.email
+    fill_in 'Password', with: 'new_password'
+    click_button 'Sign in'
+    expect(page).to have_content("Welcome, #{user.full_name}")
+  end
+end
+</code></pre>
+
+<p>Especially notice for <code>open_email</code>, <code>current_email</code> functions are offered by <code>capybara-email</code> gem.</p>
+
+<h3>Invite Friend and Registeration</h3>
+
+<p>We also have a work on inviting friends through email, the key point here is how to use a secure <code>token</code> to tracking data.</p>
+
+<ul>
+<li>create an invitations data, including inviter, recipient email, name, and <code>token</code>.</li>
+<li><p>when user get the email, following the link provided to server, page will direct to the register page with existing data stored with this token.</p>
+
+<p>And set the routes for path</p></li>
+</ul>
+
+
+<pre><code>get 'register/:token', to: 'users#new_with_invitation_token'
+</code></pre>
+
+<ul>
+<li>we can have a hidden data in the register form for new#users to use.</li>
+</ul>
+
+
+<pre><code>= hidden_field_tag :token, @invitation_token
+</code></pre>
+
+<p>we don&rsquo;t use form_for element, becuase this hidden attribute does not belong to backend modeled form.</p>
+
+<h3>Concerns</h3>
+
+<p>To Dry our code, we can use <code>concern</code> with <code>module</code>. Here is a <a href="https://signalvnoise.com/posts/3372-put-chubby-models-on-a-diet-with-concerns">post by DHH</a> why we should do this.</p>
+
+<p>We can merge the same function feature into concern file. For example: <code>Tokenable</code></p>
+
+<pre><code>#/lib/tokenable.rb
+module Tokenable
+  extend ActiveSupport::Concern
+  included do
+    before_create :generate_token
+  end
+
+  private
+  def generate_token
+    self.token = SecureRandom.urlsafe_base64
+  end
+end
+</code></pre>
+
+<p>Then add to model file</p>
+
+<pre><code>require 'tokenable'
+
+class User &lt; ActiveRecord::Base
+  include Tokenable
+  ...
+end
+</code></pre>
+
+<p>I prefer to specify require file name, or we can use <a href="http://stackoverflow.com/questions/19098663/auto-loading-lib-files-in-rails-4">auto loading library files</a>.</p>
+
+<h3>Email Service Providers</h3>
+
+<p>Since we have test email sending on ENV:development and EVN:test, now we have test it in the real world. That&rsquo;s why we need a real email service provider. Google has it but with many restriction, Tealeaf recommend <code>Mailgun</code> or <code>Postmark</code>. Here we have a taste for `Mailgun&#8217;.</p>
+
+<p>To setting <code>config/environments/production.rb</code>, add these lines:</p>
+
+<pre><code>config.action_mailer.default_url_options = { :host =&gt; "tomo-myflix.herokuapp.com" }
+  config.action_mailer.smtp_settings = {
+    :port           =&gt; ENV['MAILGUN_SMTP_PORT'],
+    :address        =&gt; ENV['MAILGUN_SMTP_SERVER'],
+    :user_name      =&gt; ENV['MAILGUN_SMTP_LOGIN'],
+    :password       =&gt; ENV['MAILGUN_SMTP_PASSWORD'],
+    :domain         =&gt; 'tomo-myflix.herokuapp.com',
+    :authentication =&gt; :plain,
+  }
+  config.action_mailer.delivery_method = :smtp
+</code></pre>
+
+<p><code>tomo-myflix.herokuapp.com</code> is my app name on Heroku. And ENV about Mailgun are maintained by Heroku.</p>
+
+<p>I aslo can use this command to check <code>Heroku configurations</code>.</p>
+
+<pre><code>$ heroku config
+</code></pre>
+
+<p>Then push it to heroku and test for a real email address, it works!!</p>
+
+<h3>Background Jobs</h3>
+
+<p>Sometimes, some actions do not need to be synchrous, like sending email, we don&rsquo;t need to wait email sending action completed. That&rsquo;s why we need to use a background job to do sending email to speed up the flow.</p>
+
+<p><code>Sidekiq</code> and <code>Resque</code> are some of this concept product. And Tealeaf recommend to use <a href="https://github.com/mperham/sidekiq/wiki">Sidekiq</a>.</p>
+
+<p>Install gem Sidekiq</p>
+
+<pre><code>gem 'sidekiq'
+</code></pre>
+
+<p>Only a tiny change for using it by delay method</p>
+
+<pre><code>AppMailer.delay.notify_on_new_todo(current_user, @todo) # new 
+AppMailer.notify_on_new_todo(current_user, @todo).deliver #older one
+</code></pre>
+
+<p>Add this line in <code>spec/spec_helper.rb</code></p>
+
+<pre><code>require 'sidekiq/testing/inline'
+</code></pre>
+
+<p>Here we setup sidekiq, but we still need start <code>Redis</code> server:</p>
+
+<pre><code>$ brew install redis
+$ redis-server /usr/local/etc/redis.conf
+</code></pre>
+
+<p>And this start sidekiq with another terminal:</p>
+
+<pre><code>$ bundle exec sidekiq
+</code></pre>
+
+<p>So far, this makes <code>local</code> works fine with <code>sidekiq</code> for background jobs. If we want to use background jobs in ENV:production, Heroku take charges if dyno is more than 1, or try <a href="https://coderwall.com/p/fprnhg/free-background-jobs-on-heroku">this way to simulate</a></p>
+
+<p>I have not implemented this yet, but I&rsquo;ll try it later.</p>
+
+<p>There is also <a href="https://devcenter.heroku.com/articles/procfile#deploying-to-heroku">an article talking about Procfile and Foreman</a>.</p>
+
+<p>If sidekiq version >= 3.0, you might also run this line
+<code>
+heroku config:set REDIS_PROVIDER=REDISTOGO_URL
+</code></p>
+
+<h3>Monitor Production Error</h3>
+
+<p>Here we have a try for <a href="https://getsentry.com/welcome/">Sentry</a>.</p>
+
+<p>Tracking errors is also a key for automation deployment.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week4]]></title>
@@ -374,353 +648,6 @@ end
 <h3>Conclusion</h3>
 
 <p>Still on the way to be more familiar to do TDD. :-)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week1]]></title>
-    <link href="http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1/"/>
-    <updated>2015-03-06T08:40:32+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1</id>
-    <content type="html"><![CDATA[<p>In Course3 week1, Kevin give me a schema of what should developper do from beginning.</p>
-
-<p>There are so many subjects I&rsquo;ve heard but not ever practicing in action, like: TDD, git flow(github flow), why test&hellip;etc.</p>
-
-<p>I like the concept Red-Green-Refactor, it forced developper thinking about what you should do first. This may be argued by some experienced engineer, because they can do these works naturally.</p>
-
-<p>But followed by Red-Green-Refactor, seeing green light really makes me feel comfortable. I can&rsquo;t stop thinking about how it&rsquo;d become easier if I could use this method when developping AI for TicTacToe. Testing game logic in TicTacToe manually costs me lots of time.</p>
-
-<p>Git flow/ GitHub flow is also my first time to taste. I think this should be fun to start communicate with other programmers through pull request. Glad that Tealeaf built an environment to let us feel like we are really in work.</p>
-
-<p>Matthew also metioned about this I should care about: <a href="http://stackoverflow.com/questions/729692/why-should-files-end-with-a-newline">Why should files end with a newline</a>.
-<br/></p>
-
-<p>I also find a blog post talking about <a href="http://www.jamesshore.com/Blog/Red-Green-Refactor.html">Red-Green-Refactor</a>, the author split the process into 5 steps: <strong>Think, Red, Green, Refactor, Repeat</strong>, and called this <code>code design process</code>. :-)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Titan's Tic Tac Toe]]></title>
-    <link href="http://www.tomohung.com/blog/2015/03/03/titans-tic-tac-toe/"/>
-    <updated>2015-03-03T09:11:10+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/03/03/titans-tic-tac-toe</id>
-    <content type="html"><![CDATA[<p><img class="<a" src="href="http://i.minus.com/i2XJ0y9E48CHg.png">http://i.minus.com/i2XJ0y9E48CHg.png</a>&#8221;></p>
-
-<h3>Prelude</h3>
-
-<p>This is a blog entry for record my first personal project for Rails, and focus on what&rsquo;s are first time if starting a new project <code>From Zero To One</code>.</p>
-
-<p><code>Titan's Tic Tac Toe</code> is my first personal app for Rails.</p>
-
-<p>Website: <a href="https://young-castle-5534.herokuapp.com/">https://young-castle-5534.herokuapp.com/</a></p>
-
-<p>GitHub repo: <a href="https://github.com/tomohung/tictactoe-rails">https://github.com/tomohung/tictactoe-rails</a></p>
-
-<p>This project is activated by Tealeaf Course 2(Rapid Prototyping with Ruby on Rails), we are asked to do a personal project by ourself. In course 1(Introduction to Ruby and Web Development), we have an optional assignment to build a game <code>Tic Tac Toe</code> engine by Object-Oriented, that is, to give this game AI. I spent a lot of time to design logic, and I believe I have a good job for this. This is why I choose this subject for my personal project. And reuse my code is also a kind of <code>DRY</code> way.</p>
-
-<!--more-->
-
-
-<p><strong>Warning</strong></p>
-
-<p>I have to admit that I make a big mistake, because I am using a class variable to control <strong>Game Board</strong> status. This work when only me to play with it, but after deployment it will become disaster when multiple player play together. Player share the same game status and sometimes it look weird.</p>
-
-<p>I should use sessions or database to store game status, and extract methods from class GameBoard to controller. I won&rsquo;t fix this problem but writing this blog entry to record this.</p>
-
-<p><strong>Do no use <code>class vars</code> and <code>global vars</code> in Rails.</strong></p>
-
-<h3>Concepts</h3>
-
-<p>Before implementation, I need to split works into pieces.</p>
-
-<ol>
-<li>Game enegine.</li>
-<li>Game board implementation.</li>
-<li>Ladder for record user&rsquo;s game result.</li>
-<li>User&rsquo;s register system and Login/out.</li>
-</ol>
-
-
-<h3>Update Environment</h3>
-
-<p>RVM and rbenv are two popular Ruby version manager. I choose RVM, but rbenv is also a good choice.
-It makes me easy to switch different versions Ruby between different projects.
-I use <code>Ruby version 2.2.0</code>, and <code>Rails 4.2.0</code> for this new project.</p>
-
-<p>Then create a new Rails project
-<code>
-$ rails new project_name
-</code></p>
-
-<p>Specify version in GemFile</p>
-
-<pre><code>gem 'rails', '4.2.0'
-ruby "2.2.0"
-
-gem 'bootstrap-sass', '~&gt; 3.3.3'
-</code></pre>
-
-<h3>Game Engine</h3>
-
-<p>The game engine is already done in Course 1, so I just modified some codes to fit web process.
-GitHub repo: <a href="https://github.com/tomohung/tictactoe-rails/blob/master/lib/oo_tic_tac_toe.rb">https://github.com/tomohung/tictactoe-rails/blob/master/lib/oo_tic_tac_toe.rb</a></p>
-
-<h3>Game Board</h3>
-
-<p>  I&rsquo;m a newbie for HTML &amp; CSS, so Bootstrap will be my best choice. It offer lots of template with high quality, and mobile first.</p>
-
-<p>  I choose <a href="http://getbootstrap.com/examples/cover/">template-cover</a> for my project, it looks clean and suit for my application.</p>
-
-<h4>Bootstrap</h4>
-
-<ol>
-<li> Download Bootstrap, unzip it, then find source code in <code>/docs/examples/cover</code>.</li>
-<li> I got two files, <code>index.html</code> and <code>cover.css</code>.</li>
-<li> combine <code>index.html</code> into Rails <code>views/layout/application.html.erb</code>.</li>
-</ol>
-
-
-<p>  It may looks like this:</p>
-
-<pre><code class="html">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;
-  &lt;title&gt;Tic Tac Toe&lt;/title&gt;
-  &lt;%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' =&gt; true %&gt;
-  &lt;%= javascript_include_tag 'application', 'data-turbolinks-track' =&gt; true %&gt;
-  &lt;%= csrf_meta_tags %&gt;
-&lt;/head&gt;
-&lt;body&gt;
-  &lt;div class="site-wrapper"&gt;
-    &lt;div class="site-wrapper-inner"&gt;
-      &lt;div class="cover-container"&gt;
-        &lt;%= render 'layouts/navigator' %&gt;
-        &lt;%= render 'layouts/messages' %&gt;
-        &lt;%= yield %&gt;
-        &lt;%= render 'layouts/footer' %&gt;
-      &lt;/div&gt;
-    &lt;/div&gt;
-  &lt;/div&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
-
-<p>  I use partial <code>layouts/navigator</code> and <code>layouts/footer</code> to clean the code.</p>
-
-<h4>CSS for cover.css</h4>
-
-<p>  The page looks not good, because CSS is not included. Copy <code>cover.css</code> to <code>/assets/stylesheets</code>. Rails will automatically include CSS files in this directory.</p>
-
-<p>  So far is good, but something wrong when I want to use other bootstrap components.
-  After google that, this is because I haven&rsquo;t import bootstrap!! I&rsquo;m using just cover.css for this template.</p>
-
-<p>  Changing file name <code>assets/applications.css</code> to <code>asstes/application.scss</code>, and add this code</p>
-
-<pre><code>  @import "bootstrap-sprockets";
-  @import "bootstrap";
-</code></pre>
-
-<p>  <code>bootstrap-sprockets</code> has to be imported otherwise <strong>icon</strong> can&rsquo;t be displayed.</p>
-
-<p>  Well, bootstrap components works, but ruin all my template.</p>
-
-<p>  After trial and error, I merge <code>cover.css</code> code into <code>application.scss</code>, and put behind <code>@import "bootstrap"</code>. Rails may load other css files in <code>assets</code> directory, then application.scss import bootstrap, overwrite those class attributes.</p>
-
-<p>  After these setting, now my cover template works well with Bootstrap. I aslo test on my iPhone, it shows pretty good, Bootstrap is awesome!!</p>
-
-<h4>CSS for GameBoard</h4>
-
-<p>  The hardest part for me is to build a game board. I search from web and get some solution, but there&rsquo;s no better solution to draw a symbol <code>X</code>, I decide to display it by another style circle. One more thing, I add the feature when mouse <code>hover</code> on choosen square, it will render a temparary fake circle. This makes game much friendly. Here is the css file:</p>
-
-<pre><code class="css">.doughnut { 
-  display: inline-block;
-  border: 10px solid #f00;
-  border-radius: 50px;
-  height:60px;
-  width:60px;
-}
-
-.host_doughnut { 
-  display: inline-block;
-  border: 5px solid #fff;
-  border-radius: 20px;
-  height:60px;
-  width:60px;
-}
-
-.unpicked {
-  display: inline-block;
-  height:60px;
-  width:60px;
-  border: 2px dashed #444;
-}
-
-.unpicked:hover {
-  border: 10px solid #f66;
-  border-radius: 50px;
-  height:60px;
-  width:60px;
-}
-</code></pre>
-
-<h4>Ajax</h4>
-
-<p>  Everytime player choose the square, the whole page will reload again. This is not good for a modern web app. Using Ajax to improve it.</p>
-
-<p>  The keyword is add a ID for picked squre.</p>
-
-<pre><code>  &lt;div id = 'pick_&lt;%= number %&gt;'&gt;
-</code></pre>
-
-<p>  in <code>GameController</code>, we use <code>respond_to</code> to trigger js:</p>
-
-<pre><code class="ruby">  respond_to do |format|
-    format.html do
-      redirect_to game_path
-    end
-    format.js do          
-      host_pick
-      winner = @board.game_is_over?
-      if winner
-        flash[:notice] = 'OH NO!! You are DEAD!' if winner == @host
-        render :js =&gt; "window.location = '/game/over'"
-      end
-    end
-  end
-</code></pre>
-
-<blockquote><p>Note: I use <code>render :js =&gt; "window.location = '/game/over'"</code> to render page /game/over if game is over.</p></blockquote>
-
-<p>  and <code>game.create.js</code> file looks like:</p>
-
-<pre><code class="ruby">  &lt;% (1..9).each do |number| %&gt;
-    &lt;% if @player_picked_numbers.include? number %&gt;
-      $('#pick_&lt;%= number %&gt;').html("&lt;div class='doughnut'&gt;&lt;/div&gt;");
-    &lt;% elsif @host_picked_numbers.include? number %&gt;
-      $('#pick_&lt;%= number %&gt;').html("&lt;div class='host_doughnut'&gt;&lt;/div&gt;")
-    &lt;% end %&gt;
-  &lt;% end %&gt;
-</code></pre>
-
-<p>  Ajax make this game vivid!!</p>
-
-<h3>User&rsquo;s Register</h3>
-
-<p>Since I need to store game record, I have to add User&rsquo;s Register, this is not a difficult stuff if you had gone through course 2. Here is a simple ERD:</p>
-
-<ul>
-<li>User: username, digest_password, timestamps, has_many :game_records</li>
-<li>GameRecord: user_id, game_result, attack_times</li>
-</ul>
-
-
-<p>User and GameRecord is a one-to-many assocaition.</p>
-
-<p>Create routes, model, controller, and views follow what we learned in course 2.</p>
-
-<h3>Login/out</h3>
-
-<p>  Create a SessionController to manager user login/logout.
-  Use session[:user_id] to store data in cookie.</p>
-
-<ul>
-<li>def <code>new</code> to render login page.</li>
-<li>def <code>create</code> for login.</li>
-<li>def <code>destroy</code> for logout.</li>
-</ul>
-
-
-<blockquote><p>Don&rsquo;t forget to add feature: auto login after user register.</p></blockquote>
-
-<h3>Ladder</h3>
-
-<p>I will show three kinds of game result: Keeper, Winner, Loser.
-And I need tab navigation here, still copy from Bootstrap:</p>
-
-<p>&#8220;`</p>
-
-<ul class="nav nav-tabs">
-    <% params[:tab] = 'WIN' if !params[:tab] %>
-    <li class="<%= 'active' if params[:tab] == 'TIE' %>&#8221;><a href="#TIE" data-toggle="tab">Keepers</a></li>
-    <li class="<%= 'active' if params[:tab] == 'WIN' %>&#8221;><a href="#WIN" data-toggle="tab">Heroes</a></li>
-    <li class="<%= 'active' if params[:tab] == 'LOSE' %>&#8221;><a href="#LOSE" data-toggle="tab">Loser</a></li>
-</ul>
-
-
-
-
-<div class="tab-content">
-  <%= render 'column_title' %>  
-  <div class="<%= if (params[:tab] == 'TIE' || !params[:tab]) then 'tab-pane active'  else 'tab-pane' end%>&#8221; id=&#8221;TIE&#8221;>
-    <%= render @game_records.where(status: 'TIE') %>
-  </div>
-  <div class="<%= if params[:tab] == 'WIN' then 'tab-pane active'  else 'tab-pane' end%>&#8221; id=&#8221;WIN&#8221;>
-    <%= render @game_records.where(status: 'WIN') %>
-  </div>
-  <div class="<%= if params[:tab] == 'LOSE' then 'tab-pane active'  else 'tab-pane' end%>&#8221; id=&#8221;LOSE&#8221;>
-    <%= render @game_records.where(status: 'LOSE') %>
-  </div>
-</div>
-
-
-<pre><code>
-Tabs do not work? This is because I haven't include javascript for Bootstrap. 
-
-Add this line in `/assets/javascripts/application.js`
-</code></pre>
-
-<p>//= require bootstrap-sprockets
-&#8220;`</p>
-
-<p>Well, it works now!!</p>
-
-<p>Then, I found Kevin(Tealeaf Instructor) also write a blog for <a href="http://www.gotealeaf.com/blog/integrating-rails-and-bootstrap-part-1">integrating rails and bootstrap</a>.</p>
-
-<h3>Deploy to Heroku</h3>
-
-<p>Finally, functions all work and ready to deploy to <a href="heroku.com">Heroku</a>. And follow by Heroku instruction, push code, then&hellip;<code>Fail</code>.</p>
-
-<p>Check the log and find something wrong about <code>gem pg</code>. pg is <code>Postgres</code> used by Heroku. Rails default setting is using <code>sqlite3</code>, so I need to do some work in Gemfile:</p>
-
-<pre><code>group :production do
-  gem 'pg'
-  gem 'rails_12factor'
-end
-</code></pre>
-
-<p>Add this code to Gemfile for config :production using Postgres. Run <code>bundle install</code> and git push again, it should work!!</p>
-
-<h3>Conclusion</h3>
-
-<p>In Course 2, we have lots assignments from a prepared template. If I don&rsquo;t start a new project, I will never knew there are lots of minor things I should know. After this project, I have chance to be more familiar with Ruby language, Rails routes, CRUD&hellip;etc.</p>
-
-<h3>Compliment from others</h3>
-
-<p>Record these just for encourage myself to keep going on.</p>
-
-<p>Albert Agram (TA):</p>
-
-<blockquote><p>Hey Tomo, nicely done! I played a few rounds and am impressed. Good job :)
-<br/></p></blockquote>
-
-<p>Chris Lee (Tealeaf Instructor):</p>
-
-<blockquote><p>This is incredibly awesome!
-<br/>
-This type of app doesn&rsquo;t lend itself well to Rails, because it&rsquo;s not
-really &ldquo;page oriented&rdquo;. Rails tends to be a better fit for apps like
-social networks, or things like that where you have CRUD actions on some
-resources.
-<br/></p></blockquote>
-
-<p>Brandon Conway (TA):</p>
-
-<blockquote><p>This game is awesome! I really like the ladder implementation.
-<br/></p></blockquote>
-
-<p>Eugene Chang:</p>
-
-<blockquote><p>This is a really nice app! After seeing it, I had to constantly resist the temptation of spending more time trying to make my UI look better. Great job!</p></blockquote>
 ]]></content>
   </entry>
   

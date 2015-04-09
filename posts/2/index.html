@@ -130,6 +130,150 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-02-10T16:39:30+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-02-10</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/" itemprop="url">Reflection to Tealeaf Course2 Lesson2</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p><a href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/">Last week</a>, I know Models and Database side of Rails.</p>
+
+<p>This week Tealeaf reveals the <code>Controller</code> and <code>View</code> part of MVC, I would like to summarize this lesson into two parts: <code>Don't Repeat Yourself</code> and <code>Conventions over Configuration</code>.</p>
+
+</div>
+  
+  
+    <footer>
+      <a class="btn btn-default" href="/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/">繼續閱讀 Read on &rarr;</a>
+    </footer>
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-02-08T14:13:48+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-02-08</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/02/08/tealeaf-course2-lesson2-quiz/" itemprop="url">Tealeaf Course2 Lesson2 Quiz</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><blockquote><h4>1. Name all the 7 (or 8) routes exposed by the resources keyword in the routes.rb file. Also name the 4 named routes, and how the request is routed to the controller/action.</h4></blockquote>
+
+<p>  For example by table <code>posts</code>:</p>
+
+<table>
+<thead>
+<tr>
+<th>Prefix   </th>
+<th>Verb   </th>
+<th>URI   </th>
+<th>Controller#Action   </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>posts   </td>
+<td>GET   </td>
+<td>/posts   </td>
+<td>posts#index   </td>
+</tr>
+<tr>
+<td>new_post   </td>
+<td>GET   </td>
+<td>/posts/new   </td>
+<td>post#new   </td>
+</tr>
+<tr>
+<td>   </td>
+<td>POST   </td>
+<td>/posts   </td>
+<td>post#create   </td>
+</tr>
+<tr>
+<td>post   </td>
+<td>GET   </td>
+<td>/posts/:id   </td>
+<td>post#show   </td>
+</tr>
+<tr>
+<td>edit_post   </td>
+<td>GET   </td>
+<td>/posts/:id   </td>
+<td>post#edit   </td>
+</tr>
+<tr>
+<td>   </td>
+<td>PUT/PATCH   </td>
+<td>/posts/:id   </td>
+<td>post#update   </td>
+</tr>
+<tr>
+<td>   </td>
+<td>DELETE   </td>
+<td>/posts/:id   </td>
+<td>post#destroy   </td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+  
+  
+    <footer>
+      <a class="btn btn-default" href="/blog/2015/02/08/tealeaf-course2-lesson2-quiz/">繼續閱讀 Read on &rarr;</a>
+    </footer>
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-02-02T21:46:35+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-02-02</time>
         
       </p>
@@ -575,118 +719,6 @@ There are two types of schedule, which I'll call the manager's schedule and the 
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-11T21:26:49+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-11</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/01/11/nitroukai-fa-huan-jing/" itemprop="url">nitrous.io 開發環境</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p><img src="http://i.minus.com/iyZNw6vDZnJa6.png" width="800"></p>
-
-<ul>
-<li>太強了</li>
-<li>太強了</li>
-<li>太強了</li>
-</ul>
-
-
-<p>因為<a href="http://nitrous.io">nitrous</a>太強了，所以說三遍。</p>
-
-<p>入門網路應用程式開發一開始最大的門檻就是安裝適合的環境，尤其是OS用Windows的，好像是次等公民一樣，一下是終端機要用跟別人不一樣的，一下又是安裝套件卡住，一開始一頭熱的想要投入，馬上就被潑盆冷水。</p>
-
-</div>
-  
-  
-    <footer>
-      <a class="btn btn-default" href="/blog/2015/01/11/nitroukai-fa-huan-jing/">繼續閱讀 Read on &rarr;</a>
-    </footer>
-  
-
-
-        </article>
-      
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-07T08:15:13+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-07</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/01/07/reflection-to-tealeaf-lesson-2/" itemprop="url">Reflection of Tealeaf Week 2</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p><img class="right" src="http://i.minus.com/ibnRw2O1pxsQam.png" width="320"></p>
-
-<p>Although I have some option video not done yet, I want to share some of my reflection.</p>
-
-<p>When I came to lesson 2, first I found that discussion is less than lesson 1 obviously. I think this imply the lesson OOP is harder than before. Thank god I finished three assignments in a week, how I can do this is because:</p>
-
-<ol>
-<li><p>As a C++ programmer, OOP concept is also the same in Ruby, like inheritance, polymorphism, composition&hellip;etc. Since I have some experience to OOP, familiar with Ruby&rsquo;s style is not a hard work for me.</p></li>
-<li><p><a href="http://www.gotealeaf.com/books/oo_ruby"><code>Object Oriented Program book</code></a> is fantastic!! I spent one night to read it, then next day I can just start to implement my idea without too much struggles. It clearly explain the relationship between <code>is-a</code> and <code>has-a</code> corresponding to inheritance and mixin.</p></li>
-</ol>
-
-
-<p>And I do fall in love with Ruby, <code>convention</code> is over configuration becomes nature. In lesson 1, it&rsquo;s weird for me to pass a variable into method, but modified or not depends on what actions in the method. Now I start to think it&rsquo;s convenient to decide modified the variable in the method.
-<code>attr_accessor</code> is another kind of example, default getter and setter helps a lot to reduce typing time.</p>
-
-<p>Using polymorphism, I don&rsquo;t need to care about how using virtual function, just inheritance class then use it.
-Especially for method <code>super</code>, the best way to reduce redundant code.
-One suggestion, If subclass&rsquo;s initialize method doesn&rsquo;t use super, then you might think the superclass and subclass relationship is <code>has-a</code>, not <code>is-a</code>.</p>
-
-<p>I do love my <a href="https://github.com/tomohung/tealeaf/blob/master/Lesson2/oo_tic_tac_toe.rb">Tic-Tac-Toe</a> and <a href="https://github.com/tomohung/tealeaf/blob/master/Lesson2/oo_blackjack.rb">Black Jack</a> implemented by OO. In Tic-Tac-Toe, I use polymorphism to implement single player and double players mode. In Black Jack, I add feature that player can play with others NPC together, not just with dealer. This make the game likely in the real world. Without OO concept, these features are hard to implement.</p>
-
-<p>Next lesson is absolutely my challenge, because I&rsquo;m totally new for web development.
-But I do look forward to it.</p>
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -716,15 +748,15 @@ But I do look forward to it.</p>
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2015/04/09/reflection-to-tealeaf-course3-week5-2-slash-2/">Reflection to Tealeaf Course3 Week5 (2/2)</a>
+    
+    <a class="list-group-item " href="/blog/2015/04/09/reflection-to-tealeaf-course3-week5/">Reflection to Tealeaf Course3 Week5 (1/2)</a>
+    
     <a class="list-group-item " href="/blog/2015/04/07/reflection-to-tealeaf-course3-week4/">Reflection to Tealeaf Course3 Week4</a>
     
     <a class="list-group-item " href="/blog/2015/03/17/reflection-to-tealeaf-course3-week3/">Reflection to Tealeaf Course3 Week3</a>
     
     <a class="list-group-item " href="/blog/2015/03/11/reflection-to-tealeaf-course3-week2/">Reflection to Tealeaf Course3 Week2</a>
-    
-    <a class="list-group-item " href="/blog/2015/03/06/reflection-to-tealeaf-course3-week1/">Reflection to Tealeaf Course3 Week1</a>
-    
-    <a class="list-group-item " href="/blog/2015/03/03/titans-tic-tac-toe/">Titan&#8217;s Tic Tac Toe</a>
     
   </div>
 </section>
