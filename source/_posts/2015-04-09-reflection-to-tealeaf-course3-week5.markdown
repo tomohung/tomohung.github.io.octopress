@@ -142,7 +142,7 @@ Then push it to heroku and test for a real email address, it works!!
 
 Sometimes, some actions do not need to be synchrous, like sending email, we don't need to wait email sending action completed. That's why we need to use a background job to do sending email to speed up the flow.
 
-`Sidekiq` and `Resque` are some of this concept product. And Tealeaf recommend to use `[Sidekiq](https://github.com/mperham/sidekiq/wiki)`.
+`Sidekiq` and `Resque` are some of this concept product. And Tealeaf recommend to use [Sidekiq](https://github.com/mperham/sidekiq/wiki).
 
 Install gem Sidekiq
 

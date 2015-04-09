@@ -53,7 +53,7 @@ deployment:
       - heroku maintenance:off --app staging_app_name
 ```
 
-I got a error when running Circle test: [counldn't find file 'bootstrap']
+I got an error when running Circle test: [counldn't find file 'bootstrap']
 
 Solution: Rename file `stylesheets/application.css` to `stylesheets/application.css.scss`. And add Line to the file:
 
@@ -61,6 +61,8 @@ Solution: Rename file `stylesheets/application.css` to `stylesheets/application.
 @import 'bootstrap-sprockents'
 @import 'bootstrap'
 ```
+
+and remove line `*= require bootstrap`.
 
 ###Embeded Badget
 
@@ -73,6 +75,9 @@ I aslo try to use badget in my homepage.
 Then I can see this passing test badget.
 
 {% img https://circleci.com/gh/tomohung/myflix.png?circle-token=a7c782deb0d0022335fa1f095e268bb44eb4cab8 %}
+
+
+### Slack ingegration with Github and Circle CI
 
 I failed to use [CCMenu](http://ccmenu.org/) to have a notification. But I use [Slack](https://slack.com/) to integrate GitHub and Circle CI, and that's why I said it's exciting!!
 
