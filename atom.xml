@@ -4,7 +4,7 @@
   <title><![CDATA[The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-04-24T16:17:23+08:00</updated>
+  <updated>2015-04-24T16:57:57+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -12,6 +12,117 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Eloquent Ruby -3]]></title>
+    <link href="http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-3/"/>
+    <updated>2015-04-24T16:33:18+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-3</id>
+    <content type="html"><![CDATA[<h1>Chapter 3 - Take Advantage of Ruby’s Smart Collections</h1>
+
+<ul>
+<li>如果是要初始化一個給值的陣列，如</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>love_words = ["Nancy", "I", "love", "you"]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>也可以這樣產生</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>love_words = %w{ Nancy I love you }</span></code></pre></td></tr></table></div></figure>
+
+
+<p>－ Ruby沒有指標，但是也有個類似指標的用法</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def echo_all( *args )
+</span><span class='line'>  args.each { |arg| puts arg }
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>*暗示arg其實是個陣列值，可以遞進來做陣列處理。</p>
+
+<ul>
+<li>對於hash，可以這樣用</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>run( {speed: :fast, tools: :train} )</span></code></pre></td></tr></table></div></figure>
+
+
+<p>也可以不要大括號，這樣寫</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>run( speed: :fast, tools: :train )</span></code></pre></td></tr></table></div></figure>
+
+
+<p>甚至</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>run speed: :fast, tools: :train</span></code></pre></td></tr></table></div></figure>
+
+
+<p>不過在參數只傳遞一個hash時，這樣寫蠻清爽的，如果是像form_for中要傳html_options時還這樣寫，簡直是個閱讀災難，我被誤導了好久。</p>
+
+<p>－ 雖然array和hash都有提供each這個method，不過hash在使用上有些不一樣的地方</p>
+
+<p>只給定一個參數的話</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>hash_value = { one: 1, two: 2, three: 3 }
+</span><span class='line'>
+</span><span class='line'>hash_value.each do |value|
+</span><span class='line'>  #something for value
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>value其實是個矩陣，如[:one, 1], [:two, 2], [:three, 3]。</p>
+
+<p>也可以給2個參數</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>hash_value.each do |key, value|
+</span><span class='line'>  #something for value
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>key和value就分別對應到hash值上，這就不用多說了。</p>
+
+<ul>
+<li>另外有個<code>inject</code> method可以幫助加總所有元素</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def average_word_length
+</span><span class='line'>  total = words.inject(0.0){ |result, word| word.size + result}
+</span><span class='line'>  total / word_count
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>－ 不要再each裡面操作delete的動作，如果需要的話可以用<code>array.delete_if</code> method。</p>
+
+<p>－ 如果只是要檢查某個元素有沒有已經存在陣列中，可以考慮改用<code>Set</code>這個class，而不是用Array。
+<a href="http://ruby-doc.org/stdlib-2.2.2/libdoc/set/rdoc/Set.html">http://ruby-doc.org/stdlib-2.2.2/libdoc/set/rdoc/Set.html</a></p>
+
+<p>它在檢查效率上比較好。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Eloquent Ruby -2]]></title>
@@ -110,7 +221,19 @@ True if the receiver and argument have the same object id.</p>
 <p>這個以前在C++我就蠻愛用的，可以很漂亮的縮短一些簡單的if-else</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>result = (face == :beauty) ? "handsome" : "ugly"</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>result = (face == :beauty) ? "handsome" : "ugly" # 同等於下式
+</span><span class='line'>
+</span><span class='line'>if face == :beauty
+</span><span class='line'> result = "handsome"
+</span><span class='line'>else
+</span><span class='line'> result = "ugly"
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
 
 
 <ul>
@@ -2967,120 +3090,6 @@ has_and_belongs_to_many doesn&rsquo;t require a join model or a join table, but 
 
 
 <p>這樣子就算是在外面用別台電腦，也能夠透過nitrous來blog一下了，不錯吧！</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Show HTTP Is Stateless by Sinatra]]></title>
-    <link href="http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra/"/>
-    <updated>2015-01-14T21:25:15+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra</id>
-    <content type="html"><![CDATA[<p>In tealeaf week 3, introduce to HTTP.</p>
-
-<p>The most important thing is that, HTTP is stateless.</p>
-
-<p>What&rsquo;s the influnce by this property? Showing this by Sinatra.</p>
-
-<!--more-->
-
-
-<p>first, follow <a href="http://www.sinatrarb.com/intro.html">Sinatra intro</a> to run basic function:
-then try this code:</p>
-
-<figure class='code'><figcaption><span>main.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;sinatra&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">before</span> <span class="k">do</span>
-</span><span class='line'>  <span class="vi">@name</span> <span class="o">=</span> <span class="s1">&#39;Guest&#39;</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">get</span> <span class="s1">&#39;/&#39;</span> <span class="k">do</span>
-</span><span class='line'>  <span class="n">erb</span> <span class="ss">:home</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">post</span> <span class="s1">&#39;/set_name&#39;</span> <span class="k">do</span>
-</span><span class='line'>  <span class="vi">@name</span> <span class="o">=</span> <span class="s1">&#39;tealeaf&#39;</span>
-</span><span class='line'>  <span class="n">redirect</span> <span class="s1">&#39;/&#39;</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>and this will show a button, click the button will invoke a post request back to <code>set_name</code> in main.rb:</p>
-
-<figure class='code'><figcaption><span>home.erb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='erb'><span class='line'><span class="x">&lt;h4&gt;hi~ </span><span class="cp">&lt;%=</span> <span class="vi">@name</span> <span class="cp">%&gt;</span><span class="x"> &lt;/h4&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="x">&lt;form action=&quot;/set_name&quot; method=&quot;post&quot;&gt;</span>
-</span><span class='line'><span class="x">  &lt;input class=&quot;btn&quot; type=&quot;submit&quot; name=&quot;name&quot;&gt;</span>
-</span><span class='line'><span class="x">&lt;/form&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>OK, then what will <code>@name</code> show in home.erb after click button??</p>
-
-<p>It shows <code>Guest</code>, not <code>tealeaf</code>. Why?</p>
-
-<p><img src="http://i.minus.com/i9oeLWDYI4DBb.png"></p>
-
-<p>The key point is: when 2 redirect to 3, it&rsquo;s a new request, instance variable like @name will be deleted after redirect, then create a new one.</p>
-
-<p>That&rsquo;s why @name still shows <code>Guest</code>.</p>
-
-<p>How about this way:</p>
-
-<figure class='code'><figcaption><span>main.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;sinatra&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">before</span> <span class="k">do</span>
-</span><span class='line'>  <span class="vi">@name</span> <span class="o">=</span> <span class="s1">&#39;Guest&#39;</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">get</span> <span class="s1">&#39;/&#39;</span> <span class="k">do</span>
-</span><span class='line'>  <span class="n">erb</span> <span class="ss">:home</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">post</span> <span class="s1">&#39;/set_name&#39;</span> <span class="k">do</span>
-</span><span class='line'>  <span class="vi">@name</span> <span class="o">=</span> <span class="s1">&#39;tealeaf&#39;</span>
-</span><span class='line'>  <span class="n">erb</span> <span class="ss">:home</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now using erb to embeded <code>home.erb</code> into the same request(&lsquo;/set_name&rsquo;). Then you&rsquo;ll see <code>@name</code> shows <code>tealeaf</code>!!</p>
-
-<p>This experience shows me how HTTP is stateless.</p>
-
-<p>And how web developers make it like stateness is a long way to go.</p>
 ]]></content>
   </entry>
   

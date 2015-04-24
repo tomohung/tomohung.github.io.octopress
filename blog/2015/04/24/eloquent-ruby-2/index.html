@@ -231,7 +231,19 @@ True if the receiver and argument have the same object id.</p>
 <p>這個以前在C++我就蠻愛用的，可以很漂亮的縮短一些簡單的if-else</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>result = (face == :beauty) ? "handsome" : "ugly"</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>result = (face == :beauty) ? "handsome" : "ugly" # 同等於下式
+</span><span class='line'>
+</span><span class='line'>if face == :beauty
+</span><span class='line'> result = "handsome"
+</span><span class='line'>else
+</span><span class='line'> result = "ugly"
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
 
 
 <ul>
@@ -270,6 +282,13 @@ True if the receiver and argument have the same object id.</p>
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-24T15:37:46+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-24</time>
           
 
+<span class="glyphicon glyphicon-tags"></span>&nbsp;
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/book/'>book</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>
+  
+</span>
+
 
         </p>
         
@@ -289,6 +308,8 @@ True if the receiver and argument have the same object id.</p>
             
             <li class="previous"><a href="/blog/2015/04/24/eloquent-ruby-1/" title="Previous Post: Eloquent Ruby -1">&laquo; Eloquent Ruby -1</a></li>
             
+            
+            <li class="next"><a href="/blog/2015/04/24/eloquent-ruby-3/" title="Next Post: Eloquent Ruby -3">Eloquent Ruby -3 &raquo;</a></li>
             
           </ul>
         
@@ -319,6 +340,8 @@ True if the receiver and argument have the same object id.</p>
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2015/04/24/eloquent-ruby-3/">Eloquent Ruby -3</a>
+    
     <a class="list-group-item active" href="/blog/2015/04/24/eloquent-ruby-2/">Eloquent Ruby -2</a>
     
     <a class="list-group-item " href="/blog/2015/04/24/eloquent-ruby-1/">Eloquent Ruby -1</a>
@@ -326,8 +349,6 @@ True if the receiver and argument have the same object id.</p>
     <a class="list-group-item " href="/blog/2015/04/09/reflection-to-tealeaf-course3-week5-2-slash-2/">Reflection to Tealeaf Course3 Week5 (2/2)</a>
     
     <a class="list-group-item " href="/blog/2015/04/09/reflection-to-tealeaf-course3-week5/">Reflection to Tealeaf Course3 Week5 (1/2)</a>
-    
-    <a class="list-group-item " href="/blog/2015/04/07/reflection-to-tealeaf-course3-week4/">Reflection to Tealeaf Course3 Week4</a>
     
   </div>
 </section>

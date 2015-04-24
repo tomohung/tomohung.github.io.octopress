@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Reflection of Tealeaf Week 2 - The Life Alchemist</title>
+  <title>Eloquent Ruby -3 - The Life Alchemist</title>
   <meta name="author" content="Tomo">
 
   
@@ -14,15 +14,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2">
+  <link rel="canonical" href="http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-3">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="The Life Alchemist" type="application/atom+xml">
 
   <!-- http://opengraphprotocol.org/ -->
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2">
-  <meta property="og:title" content="Reflection of Tealeaf Week 2 - The Life Alchemist">
+  <meta property="og:url" content="http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-3">
+  <meta property="og:title" content="Eloquent Ruby -3 - The Life Alchemist">
   
 
   <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
@@ -126,42 +126,122 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-07T08:15:13+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-07</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-24T16:33:18+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-24</time>
         
       </p>
     
     
     <h1 class="entry-title" itemprop="name headline">
-        Reflection of Tealeaf Week 2
+        Eloquent Ruby -3
         
     </h1>
     
   </header>
 
 
-<div class="entry-content clearfix" itemprop="articleBody description"><p><img class="right" src="http://i.minus.com/ibnRw2O1pxsQam.png" width="320"></p>
+<div class="entry-content clearfix" itemprop="articleBody description"><h1>Chapter 3 - Take Advantage of Ruby’s Smart Collections</h1>
 
-<p>Although I have some option video not done yet, I want to share some of my reflection.</p>
-
-<p>When I came to lesson 2, first I found that discussion is less than lesson 1 obviously. I think this imply the lesson OOP is harder than before. Thank god I finished three assignments in a week, how I can do this is because:</p>
-
-<ol>
-<li><p>As a C++ programmer, OOP concept is also the same in Ruby, like inheritance, polymorphism, composition&hellip;etc. Since I have some experience to OOP, familiar with Ruby&rsquo;s style is not a hard work for me.</p></li>
-<li><p><a href="http://www.gotealeaf.com/books/oo_ruby"><code>Object Oriented Program book</code></a> is fantastic!! I spent one night to read it, then next day I can just start to implement my idea without too much struggles. It clearly explain the relationship between <code>is-a</code> and <code>has-a</code> corresponding to inheritance and mixin.</p></li>
-</ol>
+<ul>
+<li>如果是要初始化一個給值的陣列，如</li>
+</ul>
 
 
-<p>And I do fall in love with Ruby, <code>convention</code> is over configuration becomes nature. In lesson 1, it&rsquo;s weird for me to pass a variable into method, but modified or not depends on what actions in the method. Now I start to think it&rsquo;s convenient to decide modified the variable in the method.
-<code>attr_accessor</code> is another kind of example, default getter and setter helps a lot to reduce typing time.</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>love_words = ["Nancy", "I", "love", "you"]</span></code></pre></td></tr></table></div></figure>
 
-<p>Using polymorphism, I don&rsquo;t need to care about how using virtual function, just inheritance class then use it.
-Especially for method <code>super</code>, the best way to reduce redundant code.
-One suggestion, If subclass&rsquo;s initialize method doesn&rsquo;t use super, then you might think the superclass and subclass relationship is <code>has-a</code>, not <code>is-a</code>.</p>
 
-<p>I do love my <a href="https://github.com/tomohung/tealeaf/blob/master/Lesson2/oo_tic_tac_toe.rb">Tic-Tac-Toe</a> and <a href="https://github.com/tomohung/tealeaf/blob/master/Lesson2/oo_blackjack.rb">Black Jack</a> implemented by OO. In Tic-Tac-Toe, I use polymorphism to implement single player and double players mode. In Black Jack, I add feature that player can play with others NPC together, not just with dealer. This make the game likely in the real world. Without OO concept, these features are hard to implement.</p>
+<p>也可以這樣產生</p>
 
-<p>Next lesson is absolutely my challenge, because I&rsquo;m totally new for web development.
-But I do look forward to it.</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>love_words = %w{ Nancy I love you }</span></code></pre></td></tr></table></div></figure>
+
+
+<p>－ Ruby沒有指標，但是也有個類似指標的用法</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def echo_all( *args )
+</span><span class='line'>  args.each { |arg| puts arg }
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>*暗示arg其實是個陣列值，可以遞進來做陣列處理。</p>
+
+<ul>
+<li>對於hash，可以這樣用</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>run( {speed: :fast, tools: :train} )</span></code></pre></td></tr></table></div></figure>
+
+
+<p>也可以不要大括號，這樣寫</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>run( speed: :fast, tools: :train )</span></code></pre></td></tr></table></div></figure>
+
+
+<p>甚至</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>run speed: :fast, tools: :train</span></code></pre></td></tr></table></div></figure>
+
+
+<p>不過在參數只傳遞一個hash時，這樣寫蠻清爽的，如果是像form_for中要傳html_options時還這樣寫，簡直是個閱讀災難，我被誤導了好久。</p>
+
+<p>－ 雖然array和hash都有提供each這個method，不過hash在使用上有些不一樣的地方</p>
+
+<p>只給定一個參數的話</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>hash_value = { one: 1, two: 2, three: 3 }
+</span><span class='line'>
+</span><span class='line'>hash_value.each do |value|
+</span><span class='line'>  #something for value
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>value其實是個矩陣，如[:one, 1], [:two, 2], [:three, 3]。</p>
+
+<p>也可以給2個參數</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>hash_value.each do |key, value|
+</span><span class='line'>  #something for value
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>key和value就分別對應到hash值上，這就不用多說了。</p>
+
+<ul>
+<li>另外有個<code>inject</code> method可以幫助加總所有元素</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def average_word_length
+</span><span class='line'>  total = words.inject(0.0){ |result, word| word.size + result}
+</span><span class='line'>  total / word_count
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>－ 不要再each裡面操作delete的動作，如果需要的話可以用<code>array.delete_if</code> method。</p>
+
+<p>－ 如果只是要檢查某個元素有沒有已經存在陣列中，可以考慮改用<code>Set</code>這個class，而不是用Array。
+<a href="http://ruby-doc.org/stdlib-2.2.2/libdoc/set/rdoc/Set.html">http://ruby-doc.org/stdlib-2.2.2/libdoc/set/rdoc/Set.html</a></p>
+
+<p>它在檢查效率上比較好。</p>
 </div>
 
 
@@ -185,13 +265,13 @@ But I do look forward to it.</p>
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-07T08:15:13+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-07</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-24T16:33:18+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-24</time>
           
 
 <span class="glyphicon glyphicon-tags"></span>&nbsp;
 <span class="categories">
   
-    <a class='category' href='/blog/categories/ruby/'>ruby</a>, <a class='category' href='/blog/categories/tealeaf/'>tealeaf</a>
+    <a class='category' href='/blog/categories/book/'>book</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>
   
 </span>
 
@@ -200,7 +280,7 @@ But I do look forward to it.</p>
         
           <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-3/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-3/" >Tweet</a>
   
   
   
@@ -212,10 +292,8 @@ But I do look forward to it.</p>
         
           <ul class="meta text-muted pager">
             
-            <li class="previous"><a href="/blog/2015/01/01/reflection-to-tealeaf-lesson-1/" title="Previous Post: Reflection to Tealeaf week 1">&laquo; Reflection to Tealeaf week 1</a></li>
+            <li class="previous"><a href="/blog/2015/04/24/eloquent-ruby-2/" title="Previous Post: Eloquent Ruby -2">&laquo; Eloquent Ruby -2</a></li>
             
-            
-            <li class="next"><a href="/blog/2015/01/11/nitroukai-fa-huan-jing/" title="Next Post: nitrous.io 開發環境">nitrous.io 開發環境 &raquo;</a></li>
             
           </ul>
         
@@ -246,7 +324,7 @@ But I do look forward to it.</p>
   
   <div id="recent_posts" class="list-group">
     
-    <a class="list-group-item " href="/blog/2015/04/24/eloquent-ruby-3/">Eloquent Ruby -3</a>
+    <a class="list-group-item active" href="/blog/2015/04/24/eloquent-ruby-3/">Eloquent Ruby -3</a>
     
     <a class="list-group-item " href="/blog/2015/04/24/eloquent-ruby-2/">Eloquent Ruby -2</a>
     
@@ -290,8 +368,8 @@ But I do look forward to it.</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2/';
-        var disqus_url = 'http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2/';
+        var disqus_identifier = 'http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-3/';
+        var disqus_url = 'http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-3/';
         var disqus_script = 'embed.js';
       
     (function () {
