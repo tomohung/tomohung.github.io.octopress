@@ -3,7 +3,7 @@ layout: post
 title: "Eloquent Ruby -2"
 date: 2015-04-24 15:37:46 +0800
 comments: true
-categories: 
+categories: [book, ruby]
 ---
 
 #Chapter 2 - Choose the Right Control Structure
@@ -80,7 +80,13 @@ end
 這個以前在C++我就蠻愛用的，可以很漂亮的縮短一些簡單的if-else
 
 ```
-result = (face == :beauty) ? "handsome" : "ugly"
+result = (face == :beauty) ? "handsome" : "ugly" # 同等於下式
+
+if face == :beauty
+ result = "handsome"
+else
+ result = "ugly"
+end
 ```
 
 - 另一個是常用的變數初始化技巧
