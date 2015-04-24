@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Reflection to Tealeaf Course 2 Lesson 1 - The Life Alchemist</title>
+  <title>Eloquent Ruby -2 - The Life Alchemist</title>
   <meta name="author" content="Tomo">
 
   
@@ -14,15 +14,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1">
+  <link rel="canonical" href="http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-2">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="The Life Alchemist" type="application/atom+xml">
 
   <!-- http://opengraphprotocol.org/ -->
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1">
-  <meta property="og:title" content="Reflection to Tealeaf Course 2 Lesson 1 - The Life Alchemist">
+  <meta property="og:url" content="http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-2">
+  <meta property="og:title" content="Eloquent Ruby -2 - The Life Alchemist">
   
 
   <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
@@ -126,44 +126,124 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-02-02T16:05:05+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-02-02</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-24T15:37:46+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-24</time>
         
       </p>
     
     
     <h1 class="entry-title" itemprop="name headline">
-        Reflection to Tealeaf Course 2 Lesson 1
+        Eloquent Ruby -2
         
     </h1>
     
   </header>
 
 
-<div class="entry-content clearfix" itemprop="articleBody description"><p>Finally, Rails is coming.</p>
+<div class="entry-content clearfix" itemprop="articleBody description"><h1>Chapter 2 - Choose the Right Control Structure</h1>
 
-<p>Before join Tealeaf, I&rsquo;ve tried few times to follow some rails guide books. I just can type some magic codes to build simplest web app but didn&rsquo;t know why at all, because I even didn&rsquo;t know what ruby is.</p>
+<p>說是Control Structure，我比較習慣說Control Flow，簡單就是說幾乎所有程式語言都有的流程控制語法，像是if, while, case等。</p>
 
-<p>This time, passing through course 1, I knew what the ruby is, then following <a href="http://guides.rubyonrails.org/getting_started.html">official tour guide</a>, it&rsquo;s much clear than other books I&rsquo;ve seen. But I still got stuck on creating many-to-many relationship, because I made a stupid mistake here: <em>I modified migration file after running <code>rake db:migrate</code></em>.</p>
-
-<p>Then I dived into solution videos, and Chirs said that:</p>
-
-<blockquote><p>Don&rsquo;t use <code>rails generate</code> except <code>migration</code></p></blockquote>
-
-<p>I do love this way, because:</p>
-
-<ol>
-<li><p>I never saw other&rsquo;s show this way to build migration, they always use <code>rails generate model</code> to create model and migration. And the problem is, I thought this is the only way to create models and migrations!! And I just thought this is Rails magic, I don&rsquo;t need to think too much.</p></li>
-<li><p>When I got stuck because I didn&rsquo;t know I can&rsquo;t modified migration files after running <code>rake db:migrate</code>. Make sure migration setting is all done before running <code>rake db:migrate</code> is very important. And this is just for ActiveRecord layer, database is another layer. It&rsquo;s much easier to understand how could be a disaster to modified/delete migration files working with database layer.</p></li>
-</ol>
+<ul>
+<li>Ruby比較特別的是有unless, until反向詞語，一開始用不大習慣，但後來寫著寫著，心裡慢慢習慣照著口語的語法說，現在反而比較喜歡這樣寫了，總之照Ruby的理念就是這些反向詞語的目的就是為了要減少在閱讀程式碼時，心裡還需要做轉換的浪費。</li>
+</ul>
 
 
-<p>I make <a href="http://www.tomohung.com/blog/2015/02/02/newbie-for-rails-migration/">a post to record my big step for Rails</a>.</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>if not @read_only</span></code></pre></td></tr></table></div></figure>
 
-<p>I also try to detect tealeaf discus panel, becuase I think it&rsquo;s better to <code>show who kudos this post</code>. Sometimes I just want to give a kudos for people reply my post without saying something more, but it&rsquo;s wierd for others to read this post, because they can&rsquo;t see kudos I already gave the post. Anyway, here is my ERD for discuss panel.</p>
 
-<p><img src="http://i.minus.com/ibfrZjiBfElndg.jpg"></p>
+<p>看到not心裡還要先把@read_only的值反向</p>
 
-<p>I&rsquo;m super satisfied that this week I found my mistake when using migrations, and I think there must be other mistake for controller&rsquo;s and view&rsquo;s. Moving to next lesson!!</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>unless @read_only</span></code></pre></td></tr></table></div></figure>
+
+
+<p>讀起來比較順口</p>
+
+<ul>
+<li>另一個蠻特別的點是，條件式可以放在最後面，也是為了配合口語語法</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@title = new_title unless @read_only</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>Ruby也有for迴圈，不過直接被捨棄不用（那當初幹嘛創造=___=），都用<code>each</code>。而且<code>for</code>也是用each實踐的，所以直接用each就好了。註：for語法不包含block，所以內中的變數scope是和for同一個，和each只存在於block中不一樣，each和for還是有些不同。</p></li>
+<li><p>case, 要注意的是在case中比較是用<code>===</code>，另外條件式也可以用regex來比較</p></li>
+</ul>
+
+
+<p>這邊惡補一下幾個我不熟的operator</p>
+
+<p><code>&lt;=&gt;</code>
+Combined comparison operator. Returns 0 if first operand equals second, 1 if first operand is greater than the second and -1 if first operand is less than the second.</p>
+
+<p><code>(a &lt;=&gt; b) returns -1.</code></p>
+
+<p><code>===</code>
+Used to test equality within a when clause of a case statement.</p>
+
+<p><code>(1...10) === 5 returns true.</code></p>
+
+<p><code>.eql?</code>
+True if the receiver and argument have both the same type and equal values.</p>
+
+<p><code>1 == 1.0 returns true, but 1.eql?(1.0) is false.</code></p>
+
+<p><code>equal?</code>
+True if the receiver and argument have the same object id.</p>
+
+<p><code>if aObj is duplicate of bObj then aObj == bObj is true, a.equal?bObj is false but a.equal?aObj is true.</code></p>
+
+<ul>
+<li><p>只有false和nil被測試時才會回傳false，<code>0</code>不是！還特別highlight以前寫C的人（哈哈），因為在C裡面<code>0</code>值被測試也是算false</p></li>
+<li><p>延續上，因為false和nil被測試都是回傳false，所以要特別注意條件式中會不會false和nil混在一起</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>while next_object = get_next_object
+</span><span class='line'>  # Do something with the object
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上面的迴圈是假設next_object最後會變成nil，而nil測試後回傳false。但萬一今天next_object本身的值就是false呢。改成下面的碼會比較好</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>until (next_object = get_next_object).nil?
+</span><span class='line'>  # Do something with the object
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>明確指定出next_object是nil才會跳離迴圈</p>
+
+<ul>
+<li>Ternery operator</li>
+</ul>
+
+
+<p>這個以前在C++我就蠻愛用的，可以很漂亮的縮短一些簡單的if-else</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>result = (face == :beauty) ? "handsome" : "ugly"</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>另一個是常用的變數初始化技巧</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@first_name ||= ''</span></code></pre></td></tr></table></div></figure>
+
+
+<p>@first_name如果還沒初始化，會被賦值&#8217;&lsquo;，如果已經有值，那就回傳本身。不過不要拿來對boolean type的變數這樣做，因為它也是倚賴 || operator機制。</p>
 </div>
 
 
@@ -187,22 +267,15 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-02-02T16:05:05+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-02-02</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-24T15:37:46+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-24</time>
           
-
-<span class="glyphicon glyphicon-tags"></span>&nbsp;
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/rails/'>rails</a>, <a class='category' href='/blog/categories/tealeaf/'>tealeaf</a>
-  
-</span>
 
 
         </p>
         
           <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-2/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-2/" >Tweet</a>
   
   
   
@@ -214,10 +287,8 @@
         
           <ul class="meta text-muted pager">
             
-            <li class="previous"><a href="/blog/2015/01/30/tealeaf-course2-lesson1-quiz/" title="Previous Post: Tealeaf Course2 Lesson1 Quiz">&laquo; Tealeaf Course2 Lesson1 Quiz</a></li>
+            <li class="previous"><a href="/blog/2015/04/24/eloquent-ruby-1/" title="Previous Post: Eloquent Ruby -1">&laquo; Eloquent Ruby -1</a></li>
             
-            
-            <li class="next"><a href="/blog/2015/02/02/newbie-for-rails-migration/" title="Next Post: Newbie for Rails Migration">Newbie for Rails Migration &raquo;</a></li>
             
           </ul>
         
@@ -248,7 +319,7 @@
   
   <div id="recent_posts" class="list-group">
     
-    <a class="list-group-item " href="/blog/2015/04/24/eloquent-ruby-2/">Eloquent Ruby -2</a>
+    <a class="list-group-item active" href="/blog/2015/04/24/eloquent-ruby-2/">Eloquent Ruby -2</a>
     
     <a class="list-group-item " href="/blog/2015/04/24/eloquent-ruby-1/">Eloquent Ruby -1</a>
     
@@ -292,8 +363,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/';
-        var disqus_url = 'http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/';
+        var disqus_identifier = 'http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-2/';
+        var disqus_url = 'http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-2/';
         var disqus_script = 'embed.js';
       
     (function () {
