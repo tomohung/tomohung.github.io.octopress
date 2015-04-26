@@ -14,9 +14,15 @@ http://ruby-doc.org/core-2.2.2/String.html
 
 本章的結論就有Ruby提供的string非常好用，但壞處就是你要熟讀它。
 
-- double quoted string "", 比\'還多了點用途
+-------
 
-像是在字串中加入變數時#{}，我常忘了用\'就沒有這個效果。
+- double quoted string ", 比'還多了點用途
+
+像是在字串中加入變數時#{}，我常忘了用'就沒有這個效果。
+
+```
+"Hi, #{user.name}."
+```
 
 - 遇到很煩的字串含有一堆單引號雙引號，可以用
 
@@ -74,7 +80,7 @@ EOF
 會回傳"a strin"，回傳截掉最後一個字的結果。
 
 
-－ sub & gsub
+- sub & gsub
 
 替換字串內容
 
