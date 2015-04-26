@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-04-24T16:57:57+08:00</updated>
+  <updated>2015-04-26T22:49:49+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -14,11 +14,168 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Eloquent Ruby -4]]></title>
+    <link href="http://www.tomohung.com/blog/2015/04/26/eloquent-ruby-4/"/>
+    <updated>2015-04-26T21:25:50+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/04/26/eloquent-ruby-4</id>
+    <content type="html"><![CDATA[<h1>Chapter 4 - Take Advantage of Ruby’s Smart Strings</h1>
+
+<p>string也和array, hash一樣有豐富的函式庫</p>
+
+<p><a href="http://ruby-doc.org/core-2.2.2/String.html">http://ruby-doc.org/core-2.2.2/String.html</a></p>
+
+<p>本章的結論就有Ruby提供的string非常好用，但壞處就是你要熟讀它。</p>
+
+<ul>
+<li>double quoted string &ldquo;&rdquo;, 比\&lsquo;還多了點用途</li>
+</ul>
+
+
+<p>像是在字串中加入變數時#{}，我常忘了用\&lsquo;就沒有這個效果。</p>
+
+<ul>
+<li>遇到很煩的字串含有一堆單引號雙引號，可以用</li>
+</ul>
+
+
+<pre><code>%q{"Oh No", "I can't tell what's the difference between 's' and "s"."}
+</code></pre>
+
+<p>像上面的小寫q，也有對應用大寫Q的，效果就是像要加入變數時用：</p>
+
+<pre><code>%Q{ "Hi, I'm #{user.name}."}
+</code></pre>
+
+<ul>
+<li>可以隨意斷行</li>
+</ul>
+
+
+<pre><code>multi_line_string = '你抓
+不到我
+'
+
+another_multi_line_string = %q{ 你抓
+不到我 }
+</code></pre>
+
+<p>如果不想有new line，可以用back slash</p>
+
+<pre><code>multi_line_with_no_new_line = '你抓\
+不到我'
+</code></pre>
+
+<ul>
+<li>超長文字可以這樣寫</li>
+</ul>
+
+
+<pre><code>really_long_string = &lt;&lt;EOF
+這是開頭
+...
+這是結尾
+EOF
+</code></pre>
+
+<ul>
+<li>chop &amp; chomp</li>
+</ul>
+
+
+<p>長的很像的兩個函數，用法天差地遠</p>
+
+<pre><code>"a string with new line\n".chomp
+</code></pre>
+
+<p>會回傳 <code>a string with new line</code>，尾巴的new line會截掉。注意如果結尾含有多個new line，它只會截掉一個。</p>
+
+<pre><code>"a string".chop
+</code></pre>
+
+<p>會回傳&#8221;a strin&#8221;，回傳截掉最後一個字的結果。</p>
+
+<p>－ sub &amp; gsub</p>
+
+<p>替換字串內容</p>
+
+<pre><code>puts 'good good'.sub( 'good', 'bad' )
+puts 'good good'.gsub( 'good', 'bad' )
+</code></pre>
+
+<p>得到的結果是</p>
+
+<pre><code>'bad good'
+'bad bad'
+</code></pre>
+
+<ul>
+<li>split 分割字串</li>
+</ul>
+
+
+<pre><code>"one two three four five".split
+</code></pre>
+
+<p>回傳一個矩陣</p>
+
+<pre><code>["one", "two", "three", "four", "five"]
+</code></pre>
+
+<p>或是分割參數</p>
+
+<pre><code>"one;two;three;four;five".split(";")
+</code></pre>
+
+<p>回傳結果同上</p>
+
+<ul>
+<li>index 搜尋字串位置</li>
+</ul>
+
+
+<pre><code>"actions speak louder than words".index("speak") # return 8
+</code></pre>
+
+<ul>
+<li>each_char, each_byte, each_line</li>
+</ul>
+
+
+<p>分別用迴圈回傳字元，位元數，每一行</p>
+
+<ul>
+<li>Ruby string is mutable</li>
+</ul>
+
+
+<p>mutable雖然翻譯是可變異，但我覺得它的意義和指標有點類似</p>
+
+<pre><code>street_name = 'taiwan street'
+road_name = street_name
+street_name.upcase!
+</code></pre>
+
+<p>結果road_name = ?</p>
+
+<p>注意像帶有!的函數常會有mutate的作用，所以上述結果road_name = &lsquo;TAIWAN STREET&rsquo;</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Eloquent Ruby -3]]></title>
     <link href="http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-3/"/>
     <updated>2015-04-24T16:33:18+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-3</id>
     <content type="html"><![CDATA[<h1>Chapter 3 - Take Advantage of Ruby’s Smart Collections</h1>
+
+<p>直接結論，Ruby的Array跟Hash提供很多方便的函數可用，可以參考</p>
+
+<p><a href="http://ruby-doc.org/core-2.2.0/Array.html">Array</a>
+<a href="http://ruby-doc.org/core-2.2.0/Hash.html">Hash</a></p>
+
+<p>以下才是正文開始</p>
+
+<hr />
 
 <ul>
 <li>如果是要初始化一個給值的陣列，如</li>
@@ -344,50 +501,6 @@ end
 <p>This experience shows me how HTTP is stateless.</p>
 
 <p>And how web developers make it like stateness is a long way to go.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Week 3]]></title>
-    <link href="http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3/"/>
-    <updated>2015-01-13T22:23:15+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/01/13/reflection-to-tealeaf-week-3</id>
-    <content type="html"><![CDATA[<p><img class="right <a" src="href="http://i.minus.com/ilSTmPNHVpVTm.png">http://i.minus.com/ilSTmPNHVpVTm.png</a>&#8221; width=&#8221;320&#8221;></p>
-
-<p>It&rsquo;s realy a tough week for me, because I&rsquo;m totally new to web development.
-There are lots of material need to be done:</p>
-
-<ul>
-<li>One new concept book: HTTP <a href="https://www.gotealeaf.com/books/http">https://www.gotealeaf.com/books/http</a></li>
-<li>Two new languages: HTML &amp; CSS <a href="http://www.codecademy.com/tracks/htmlcss">http://www.codecademy.com/tracks/htmlcss</a></li>
-<li>Two new frameworks: <a href="http://www.sinatrarb.com/intro.html">Sinatra</a> &amp; <a href="http://getbootstrap.com/">bootstrap</a></li>
-</ul>
-
-
-<p>I think the most important thing in this week is &ldquo;HTTP is stateless&rdquo;.</p>
-
-<p>And using Sinatra show me this property explicit.</p>
-
-<p>Every request in main.rb is independant with each other, using instance variables to store data only survive its scope.</p>
-
-<p>I also write a brief post to memo this property<a href="http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra/">(HTTP is Stateless)</a>.
-Using chache is another way to feel free in thinking programming in the old way.</p>
-
-<p>Though I still use class to complete this assignment, I feel comfortable with this, because I don&rsquo;t need to make a wheel again.</p>
-
-<p>The first struggle in this week is when I saw something like <code>&lt;form action..../&gt;</code>, I have no idea what&rsquo;s this?! because HTML &amp; CSS course in codecademy never metion this. After google that, I found there are plenty of other syntax I didn&rsquo;t know, <a href="http://www.w3schools.com/html/html5_intro.asp">w3shool</a> help me to know more about HTML.</p>
-
-<p>Another struggle is Sinatra, when I first time read the intro, I totally had no idea what those nouns mean. <code>get '/' {}</code> seems not a nature ruby way; what <code>get</code> <code>post</code> are ??</p>
-
-<p>Following with video and implement functions and pages, then I read Sinatra intro again, this time I feel much clear what its said.</p>
-
-<p>Another horrible thing is on viewing video introduce to modern web development. There are so many tools, concepts, languages need to know. Wow&hellip;</p>
-
-<p>To be a web development, I know I have to keep going.
-Moving to Lesson 4.</p>
-
-<p>Finally, here is my blog talking about Reflections for tealeaf lessons.
-<a href="http://www.tomohung.com/blog/categories/tealeaf/">http://www.tomohung.com/blog/categories/tealeaf/</a></p>
 ]]></content>
   </entry>
   

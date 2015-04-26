@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Reflection to Tealeaf Course3 Week4 - The Life Alchemist</title>
+  <title>Eloquent Ruby -4 - The Life Alchemist</title>
   <meta name="author" content="Tomo">
 
   
@@ -14,15 +14,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.tomohung.com/blog/2015/04/07/reflection-to-tealeaf-course3-week4">
+  <link rel="canonical" href="http://www.tomohung.com/blog/2015/04/26/eloquent-ruby-4">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="The Life Alchemist" type="application/atom+xml">
 
   <!-- http://opengraphprotocol.org/ -->
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://www.tomohung.com/blog/2015/04/07/reflection-to-tealeaf-course3-week4">
-  <meta property="og:title" content="Reflection to Tealeaf Course3 Week4 - The Life Alchemist">
+  <meta property="og:url" content="http://www.tomohung.com/blog/2015/04/26/eloquent-ruby-4">
+  <meta property="og:title" content="Eloquent Ruby -4 - The Life Alchemist">
   
 
   <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
@@ -126,66 +126,51 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-07T13:11:30+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-07</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-26T21:25:50+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-26</time>
         
       </p>
     
     
     <h1 class="entry-title" itemprop="name headline">
-        Reflection to Tealeaf Course3 Week4
+        Eloquent Ruby -4
         
     </h1>
     
   </header>
 
 
-<div class="entry-content clearfix" itemprop="articleBody description"><h3>Three kinds of BDD</h3>
+<div class="entry-content clearfix" itemprop="articleBody description"><h1>Chapter 4 - Take Advantage of Ruby’s Smart Strings</h1>
 
-<p>In week 4 beginning, we got a brief intro for 3 kinds of BDD:</p>
+<p>string也和array, hash一樣有豐富的函式庫</p>
+
+<p><a href="http://ruby-doc.org/core-2.2.2/String.html">http://ruby-doc.org/core-2.2.2/String.html</a></p>
+
+<p>本章的結論就有Ruby提供的string非常好用，但壞處就是你要熟讀它。</p>
 
 <ul>
-<li><p>meet in the middle</p>
-
-<p>I think this should be the popular one for modern development. The front-end engineer build the pages from mockups, then back-end developer connect UI with controllers and models.</p></li>
-<li><p>inside out</p>
-
-<p>It develops from models to controllers till views and integrations. It&rsquo;s hard to decide what models you really need in the beginning.</p></li>
-<li><p>outside in</p>
-
-<p>It devlops from integrations to controllers and models. It start from a big vision, and close to what user&rsquo;s need. But for developer, it&rsquo;s hard to code from this big vision, especially for integration test in the development beginning.</p></li>
+<li>double quoted string &ldquo;&rdquo;, 比\&lsquo;還多了點用途</li>
 </ul>
 
 
-<h3>Self Referential Associations</h3>
-
-<p>We can use <strong>self referential association</strong> to let user track other users. For example:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># t.integer :follower_id, :leader_id
-</span><span class='line'>class Relationship &lt; ActiveRecord::Base
-</span><span class='line'>  belongs_to :follower, class_name: 'User'
-</span><span class='line'>  belongs_to :leader, class_name: 'User'
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then, model <code>User</code> can have these virtual attributes:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  has_many :following_relationships, class_name: 'Relationship', foreign_key: :follower_id
-</span><span class='line'>  has_many :leading_relationships, class_name: 'Relationship', foreign_key: :leader_id</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Sending Emails</h3>
-
-<p>Rails also offer <code>ActionMailer</code> for sending emails.</p>
+<p>像是在字串中加入變數時#{}，我常忘了用\&lsquo;就沒有這個效果。</p>
 
 <ul>
-<li>create files in <code>app/mailers/app_mailer.rb</code></li>
+<li>遇到很煩的字串含有一堆單引號雙引號，可以用</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>%q{"Oh No", "I can't tell what's the difference between 's' and "s"."}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>像上面的小寫q，也有對應用大寫Q的，效果就是像要加入變數時用：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>%Q{ "Hi, I'm #{user.name}."}</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>可以隨意斷行</li>
 </ul>
 
 
@@ -195,89 +180,134 @@
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>class AppMailer &lt; ActionMailer::Base
+</pre></td><td class='code'><pre><code class=''><span class='line'>multi_line_string = '你抓
+</span><span class='line'>不到我
+</span><span class='line'>'
 </span><span class='line'>
-</span><span class='line'>  def send_welcome_email(user)
-</span><span class='line'>    @user = user
-</span><span class='line'>    mail to: user.email, from: 'info@myflix.com', subject: 'Welcome to Myflix'
-</span><span class='line'>  end
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><code>View</code> template in <code>app/views/app_mailers/send_welcome_email</code>:</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>%html(lang='en-US')
-</span><span class='line'>  %body
-</span><span class='line'>    %p Welcome to MyFlix, #{@user.full_name}</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Config for <code>config/environments/development.rb</code></li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>config.action_mailer.delivery_method = :letter_opener</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>group :development do
-</span><span class='line'>  gem 'letter-opener'
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<blockquote><p>This is only for <code>development</code> setting, we also need to set for <code>test</code> and <code>production</code> independent</p></blockquote>
-
-<h3>Handling Sensitive Account Info</h3>
-
-<p>It&rsquo;s dangerous to upload config setting file to github or other public storage, there is someone update AWS key to GitHub and got a unbelievable credit bill.</p>
-
-<p>Use <code>ENV</code> to protect secret data, we can use gem <code>Figaro</code>.
-<a href="https://github.com/laserlemon/figaro">Figara</a> is the simplest way to keep our key value safe.</p>
-
-<p>There are two posts talking about this topic:</p>
-
-<ol>
-<li><a href="http://railsapps.github.io/rails-environment-variables.html">Rails Environment Variables</a></li>
-<li><a href="https://devcenter.heroku.com/articles/config-vars">Configuration and config Vars</a></li>
-</ol>
-
-
-<blockquote><p>Update: Tealeaf also have a post about <a href="http://www.gotealeaf.com/blog/managing-environment-configuration-variables-in-rails">Managing Environment Configuration Variables in Rails</a></p></blockquote>
-
-<h3>Test Email sending</h3>
-
-<p>Remember to clear email deliveries before test:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>before { ActionMailer::Base.deliveries.clear }
+</span><span class='line'>another_multi_line_string = %q{ 你抓
+</span><span class='line'>不到我 }
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Then we can validate email in the test by this</p>
+<p>如果不想有new line，可以用back slash</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>multi_line_with_no_new_line = '你抓\
+</span><span class='line'>不到我'</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>超長文字可以這樣寫</li>
+</ul>
+
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>post :create
-</span><span class='line'>expect(ActionMailer::Base.deliveries.last.to).to eq([user_attributes["email"]])
-</span><span class='line'># expect(ActionMailer::Base.deliveries.last.body).to include(user_attributes["full_name"])</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>really_long_string = &lt;&lt;EOF
+</span><span class='line'>這是開頭
+</span><span class='line'>...
+</span><span class='line'>這是結尾
+</span><span class='line'>EOF</span></code></pre></td></tr></table></div></figure>
 
 
-<h3>Update database, use rake tasks</h3>
+<ul>
+<li>chop &amp; chomp</li>
+</ul>
 
-<p>An advice from TA Tomtomecek, I update existing data in model User, and he suggest me to use <a href="http://guides.rubyonrails.org/command_line.html#custom-rake-tasks">custom rake tasks</a> to do that. I&rsquo;ve not taste that yet, just leave a memo here to remember.</p>
+
+<p>長的很像的兩個函數，用法天差地遠</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"a string with new line\n".chomp</span></code></pre></td></tr></table></div></figure>
+
+
+<p>會回傳 <code>a string with new line</code>，尾巴的new line會截掉。注意如果結尾含有多個new line，它只會截掉一個。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"a string".chop</span></code></pre></td></tr></table></div></figure>
+
+
+<p>會回傳&#8221;a strin&#8221;，回傳截掉最後一個字的結果。</p>
+
+<p>－ sub &amp; gsub</p>
+
+<p>替換字串內容</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>puts 'good good'.sub( 'good', 'bad' )
+</span><span class='line'>puts 'good good'.gsub( 'good', 'bad' )</span></code></pre></td></tr></table></div></figure>
+
+
+<p>得到的結果是</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>'bad good'
+</span><span class='line'>'bad bad'</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>split 分割字串</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"one two three four five".split</span></code></pre></td></tr></table></div></figure>
+
+
+<p>回傳一個矩陣</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>["one", "two", "three", "four", "five"]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>或是分割參數</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"one;two;three;four;five".split(";")</span></code></pre></td></tr></table></div></figure>
+
+
+<p>回傳結果同上</p>
+
+<ul>
+<li>index 搜尋字串位置</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"actions speak louder than words".index("speak") # return 8</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>each_char, each_byte, each_line</li>
+</ul>
+
+
+<p>分別用迴圈回傳字元，位元數，每一行</p>
+
+<ul>
+<li>Ruby string is mutable</li>
+</ul>
+
+
+<p>mutable雖然翻譯是可變異，但我覺得它的意義和指標有點類似</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>street_name = 'taiwan street'
+</span><span class='line'>road_name = street_name
+</span><span class='line'>street_name.upcase!</span></code></pre></td></tr></table></div></figure>
+
+
+<p>結果road_name = ?</p>
+
+<p>注意像帶有!的函數常會有mutate的作用，所以上述結果road_name = &lsquo;TAIWAN STREET&rsquo;</p>
 </div>
 
 
@@ -301,13 +331,13 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-07T13:11:30+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-07</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-26T21:25:50+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-26</time>
           
 
 <span class="glyphicon glyphicon-tags"></span>&nbsp;
 <span class="categories">
   
-    <a class='category' href='/blog/categories/rails/'>rails</a>, <a class='category' href='/blog/categories/tealeaf/'>tealeaf</a>
+    <a class='category' href='/blog/categories/book/'>book</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>
   
 </span>
 
@@ -316,7 +346,7 @@
         
           <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/04/07/reflection-to-tealeaf-course3-week4/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/04/07/reflection-to-tealeaf-course3-week4/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/04/26/eloquent-ruby-4/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/04/26/eloquent-ruby-4/" >Tweet</a>
   
   
   
@@ -328,10 +358,8 @@
         
           <ul class="meta text-muted pager">
             
-            <li class="previous"><a href="/blog/2015/03/17/reflection-to-tealeaf-course3-week3/" title="Previous Post: Reflection to Tealeaf Course3 Week3">&laquo; Reflection to Tealeaf Course3 Week3</a></li>
+            <li class="previous"><a href="/blog/2015/04/24/eloquent-ruby-3/" title="Previous Post: Eloquent Ruby -3">&laquo; Eloquent Ruby -3</a></li>
             
-            
-            <li class="next"><a href="/blog/2015/04/09/reflection-to-tealeaf-course3-week5/" title="Next Post: Reflection to Tealeaf Course3 Week5 (1/2)">Reflection to Tealeaf Course3 Week5 (1/2) &raquo;</a></li>
             
           </ul>
         
@@ -362,7 +390,7 @@
   
   <div id="recent_posts" class="list-group">
     
-    <a class="list-group-item " href="/blog/2015/04/26/eloquent-ruby-4/">Eloquent Ruby -4</a>
+    <a class="list-group-item active" href="/blog/2015/04/26/eloquent-ruby-4/">Eloquent Ruby -4</a>
     
     <a class="list-group-item " href="/blog/2015/04/24/eloquent-ruby-3/">Eloquent Ruby -3</a>
     
@@ -406,8 +434,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://www.tomohung.com/blog/2015/04/07/reflection-to-tealeaf-course3-week4/';
-        var disqus_url = 'http://www.tomohung.com/blog/2015/04/07/reflection-to-tealeaf-course3-week4/';
+        var disqus_identifier = 'http://www.tomohung.com/blog/2015/04/26/eloquent-ruby-4/';
+        var disqus_url = 'http://www.tomohung.com/blog/2015/04/26/eloquent-ruby-4/';
         var disqus_script = 'embed.js';
       
     (function () {
