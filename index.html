@@ -151,11 +151,15 @@
 <hr />
 
 <ul>
-<li>double quoted string &ldquo;&rdquo;, 比\&lsquo;還多了點用途</li>
+<li>double quoted string &ldquo;, 比&#8217;還多了點用途</li>
 </ul>
 
 
-<p>像是在字串中加入變數時#{}，我常忘了用\&lsquo;就沒有這個效果。</p>
+<p>像是在字串中加入變數時#{}，我常忘了用&#8217;就沒有這個效果。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"Hi, #{user.name}."</span></code></pre></td></tr></table></div></figure>
+
 
 <ul>
 <li>遇到很煩的字串含有一堆單引號雙引號，可以用</li>
