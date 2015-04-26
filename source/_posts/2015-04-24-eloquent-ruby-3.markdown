@@ -8,6 +8,15 @@ categories: [book, ruby]
 
 #Chapter 3 - Take Advantage of Ruby’s Smart Collections
 
+直接結論，Ruby的Array跟Hash提供很多方便的函數可用，可以參考
+
+[Array](http://ruby-doc.org/core-2.2.0/Array.html)
+[Hash](http://ruby-doc.org/core-2.2.0/Hash.html)
+
+以下才是正文開始
+
+------
+
 - 如果是要初始化一個給值的陣列，如
 
 ```
