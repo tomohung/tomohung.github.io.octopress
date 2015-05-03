@@ -16,9 +16,9 @@ http://ruby-doc.org/core-2.2.2/String.html
 
 -------
 
-- double quoted string ", 比'還多了點用途
+- double quoted string `"`, 比`'`還多了點用途
 
-像是在字串中加入變數時#{}，我常忘了用'就沒有這個效果。
+像是在字串中加入變數時`#{}`，我常忘了用`'`就沒有這個效果。
 
 ```
 "Hi, #{user.name}."
