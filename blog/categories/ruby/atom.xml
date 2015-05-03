@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ruby | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/ruby/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-04-26T23:39:05+08:00</updated>
+  <updated>2015-05-03T21:38:11+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -12,6 +12,112 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Eloquent Ruby -5]]></title>
+    <link href="http://www.tomohung.com/blog/2015/05/03/eloquent-ruby-5/"/>
+    <updated>2015-05-03T20:38:53+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/05/03/eloquent-ruby-5</id>
+    <content type="html"><![CDATA[<h1>Chapter 5 - Find the Right String with Regular Expressions</h1>
+
+<h2>Match One Character</h2>
+
+<ul>
+<li><p><code>.</code>可以match任何單一字元(except new line)</p></li>
+<li><p>如果想match <code>.</code>本身，可以用<code>\</code>，如<code>3\.14</code></p></li>
+<li><p>再譬如<code>.r\.</code>，可以match <code>Mr.</code> or <code>Dr.</code></p></li>
+</ul>
+
+
+<h2>Sets, Range, Alternatives</h2>
+
+<h3>Sets</h3>
+
+<ul>
+<li><p>例如<code>[0123456789]</code>可以match任何一個數字字元</p></li>
+<li><p><code>[pPaA][Mm]</code>可以match <code>Am</code> or <code>pm</code>.</p></li>
+</ul>
+
+
+<h3>Range</h3>
+
+<ul>
+<li><p><code>[0-9a-f]</code>可以match任何一個16進位的字元</p></li>
+<li><p><code>\d</code>可以match任何一個數字字元，<code>\d\d</code>可以match 連續2個數字字元</p></li>
+<li><p><code>\w</code>可以match任何一個字元，包含數字、底線等</p></li>
+<li><p><code>\s</code>可以match任何一個空白字元，包含space, tab, new line.</p></li>
+</ul>
+
+
+<h3>Alternatives</h3>
+
+<ul>
+<li><p><code>|</code>是替換符號</p></li>
+<li><p><code>A\.M\.|AM|P\.M\.|PM</code> 可以match <code>A.M.</code> or <code>AM</code>, or <code>P.M.</code> or <code>PM</code></p></li>
+<li><p>處理時間格式可以用 <code>\d\d:\d\d (AM|PM)</code></p></li>
+</ul>
+
+
+<h2>Asterist <code>*</code></h2>
+
+<ul>
+<li><p>*星號可以表示在星號前的字元有任意個，包含零個。</p></li>
+<li><p><code>AB*</code>，可以match <code>AB</code>, <code>A</code>, or <code>ABBBB</code></p></li>
+<li><p>所以可以用 <code>[0–9]*</code>，match任何長度的數字</p></li>
+</ul>
+
+
+<h2>Regular Expression in Ruby</h2>
+
+<ul>
+<li><p>Format regex by slash: <code>/\d\d:\d\d (AM|PM)/</code></p></li>
+<li><p>use operator <code>=~</code></p></li>
+<li><p>所以在irb中跑這段</p></li>
+</ul>
+
+
+<pre><code>/\d\d:\d\d (AM|PM)/ =~ '10:24 PM'
+</code></pre>
+
+<p>回傳<code>0</code>，這表示字串有符合，從index = 0的位置開始。</p>
+
+<ul>
+<li><p>如果沒有符合，回傳<code>nil</code></p></li>
+<li><p>可以變成case insensitive，加上i，如：<code>/AM/i =~ 'am'</code></p></li>
+<li><p>也可以當參數傳入gsub來用</p></li>
+</ul>
+
+
+<pre><code>time_string.gsub!( /\d\d:\d\d (AM|PM)/, '**:** **' )
+</code></pre>
+
+<h2>Beginning and Ending</h2>
+
+<ul>
+<li><p>如果想要match字串的開頭用指定的文字，可以加入<code>\A</code>，如<code>\AIn the Beginning</code>，可以match字串前面為<code>In the Beginning</code></p></li>
+<li><p>反過來如果想要match字串結尾用指定的文字，可以在尾巴加入<code>\z</code></p></li>
+<li><p>如果想要match字串中<code>任何一行的開頭</code>有滿足，可以在條件字串前面加上<code>^</code></p></li>
+<li><p>如果想要match字串中<code>任何一行的結尾</code>有滿足，可以在條件字串尾巴加上<code>$</code></p></li>
+<li><p>如果想要進階同時match開頭跟結尾</p></li>
+</ul>
+
+
+<pre><code>/^Once upon a time.*happily ever after\.$/
+</code></pre>
+
+<p>這樣會失敗，因為<code>.</code>配合<code>*</code>雖然可以取代中間的任意數量的字元，但<code>.</code>不包含new line</p>
+
+<pre><code>/^Once upon a time.*happily ever after\.$/m
+</code></pre>
+
+<p>在結尾加上<code>m</code>可以關閉<code>.</code>這個特性。</p>
+
+<ul>
+<li><code>?</code>的作用和<code>*</code>類似</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Eloquent Ruby -4]]></title>
@@ -29,11 +135,11 @@
 <hr />
 
 <ul>
-<li>double quoted string &ldquo;, 比&#8217;還多了點用途</li>
+<li>double quoted string <code>"</code>, 比<code>'</code>還多了點用途</li>
 </ul>
 
 
-<p>像是在字串中加入變數時#{}，我常忘了用&#8217;就沒有這個效果。</p>
+<p>像是在字串中加入變數時<code>#{}</code>，我常忘了用<code>'</code>就沒有這個效果。</p>
 
 <pre><code>"Hi, #{user.name}."
 </code></pre>
@@ -428,87 +534,6 @@ end
 </code></pre>
 
 <p>Float開頭是大寫而不是小寫。為什麼我也不知道@_@</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Show HTTP Is Stateless by Sinatra]]></title>
-    <link href="http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra/"/>
-    <updated>2015-01-14T21:25:15+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra</id>
-    <content type="html"><![CDATA[<p>In tealeaf week 3, introduce to HTTP.</p>
-
-<p>The most important thing is that, HTTP is stateless.</p>
-
-<p>What&rsquo;s the influnce by this property? Showing this by Sinatra.</p>
-
-<!--more-->
-
-
-<p>first, follow <a href="http://www.sinatrarb.com/intro.html">Sinatra intro</a> to run basic function:
-then try this code:</p>
-
-<pre><code class="ruby main.rb">require 'sinatra'
-
-before do
-  @name = 'Guest'
-end
-
-get '/' do
-  erb :home
-end
-
-post '/set_name' do
-  @name = 'tealeaf'
-  redirect '/'
-end
-</code></pre>
-
-<p>and this will show a button, click the button will invoke a post request back to <code>set_name</code> in main.rb:</p>
-
-<p>&#8220;` erb home.erb</p>
-
-<h4>hi~ <%= @name %> </h4>
-
-
-<p><form action="/set_name" method="post">
-  <input class="btn" type="submit" name="name">
-</form>
-&#8220;`</p>
-
-<p>OK, then what will <code>@name</code> show in home.erb after click button??</p>
-
-<p>It shows <code>Guest</code>, not <code>tealeaf</code>. Why?</p>
-
-<p><img class="<a" src="href="http://i.minus.com/i9oeLWDYI4DBb.png">http://i.minus.com/i9oeLWDYI4DBb.png</a>&#8221;></p>
-
-<p>The key point is: when 2 redirect to 3, it&rsquo;s a new request, instance variable like @name will be deleted after redirect, then create a new one.</p>
-
-<p>That&rsquo;s why @name still shows <code>Guest</code>.</p>
-
-<p>How about this way:</p>
-
-<pre><code class="ruby main.rb">require 'sinatra'
-
-before do
-  @name = 'Guest'
-end
-
-get '/' do
-  erb :home
-end
-
-post '/set_name' do
-  @name = 'tealeaf'
-  erb :home
-end
-</code></pre>
-
-<p>Now using erb to embeded <code>home.erb</code> into the same request(&lsquo;/set_name&rsquo;). Then you&rsquo;ll see <code>@name</code> shows <code>tealeaf</code>!!</p>
-
-<p>This experience shows me how HTTP is stateless.</p>
-
-<p>And how web developers make it like stateness is a long way to go.</p>
 ]]></content>
   </entry>
   
