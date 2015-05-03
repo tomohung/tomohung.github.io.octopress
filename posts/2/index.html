@@ -130,6 +130,98 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-11T11:21:17+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-03-11</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/03/11/reflection-to-tealeaf-course3-week2/" itemprop="url">Reflection to Tealeaf Course3 Week2</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>There are 3 kinds of test: <code>Unit</code>, <code>Functional</code>, <code>Integration</code>. In <a href="http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1/">week 1</a>, we test <strong>Model</strong>, this should belong to <code>Unit test</code> . And this week we test <strong>Controller</strong>, this should belong to <code>Functional test</code>. I guess it should be <code>Integration test</code> when we move into part of <strong>View</strong> test.</p>
+
+<p>I have to heavily rely on solution videos, there are two main reasons:</p>
+
+<ol>
+<li><p>I&rsquo;m not familiar with <code>what to test</code>, because I&rsquo;m a starter for TDD. It&rsquo;s a big conversion <strong>from test laster to test driven</strong>.</p></li>
+<li><p>I&rsquo;m not familiar with <code>RSpec</code>. There are some tricks for test controllers when using RSpec.</p></li>
+</ol>
+
+
+<p>For example, when we test `QueueItemsController#create&#8217;, there are 7 tests:</p>
+
+<ul>
+<li>it &lsquo;redirects to my queue page&rsquo;</li>
+<li>it &lsquo;creates a queue item&rsquo;</li>
+<li>it &lsquo;creates the queue item associated with video&rsquo;</li>
+<li>it &lsquo;creates the queue item associated with current user&rsquo;</li>
+<li>it &lsquo;puts the video as the last one in the queue&rsquo;</li>
+<li>it &lsquo;does not add the video in the queue if already existed in the queue&rsquo;</li>
+<li>it &lsquo;redirects to sign in page if unauthenticated&rsquo;</li>
+</ul>
+
+
+<p>A simple action needs to do such lots of tests!!</p>
+
+<p>Or here is for <strong>Model</strong> methods: <code>search_by_title</code>:</p>
+
+<ul>
+<li>it &lsquo;returns empty array if no match&rsquo;</li>
+<li>it &lsquo;returns an array if one video&rsquo;</li>
+<li>it &lsquo;returns an array if partial match&rsquo;</li>
+<li>it &lsquo;returns an array of all matches ordered by DESC&rsquo;</li>
+<li>it &lsquo;returns an empty array for search an empty string&rsquo;</li>
+</ul>
+
+
+<p>To test every possible situations is not an easy work.</p>
+
+<p>Brandon also metioned me that care about using <code>let</code> and <code>before</code>. Because of lots of tests in spec files, we may miss some pre-declare vars by using <code>let</code> or <code>before</code>. Sometimes, it may be better do not clean duplicated codes for code readability.</p>
+
+<p>Second, extract methods into <strong>Model</strong>. ex:</p>
+
+<figure class='code'><figcaption><span>user.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">def</span> <span class="nf">queue_include?</span><span class="p">(</span><span class="n">video</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">queue_items</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:video</span><span class="p">)</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="n">video</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>then, I can use this method everywhere in my app.</p>
+
+<h3>Conclusion</h3>
+
+<p>Still on the way to be more familiar to do TDD. :-)</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-06T08:40:32+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-03-06</time>
         
       </p>
@@ -620,58 +712,6 @@
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-30T16:13:42+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-30</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/01/30/tealeaf-course2-lesson1-quiz/" itemprop="url">Tealeaf Course2 Lesson1 Quiz</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>Answer these quizzes, then updated after watching solution.</p>
-
-<h2>1. Why do they call it a relational database?</h2>
-
-<p>  Relational database can store the relationship between data and data. For example, a table store customer&rsquo;s info, and a table store consuming record, these two table can be associated with another table, to establish the customer&rsquo;s consuming history. There are relationships between data and data in relational database. ex. sqlite, MySQL, PostgreSQL ect.</p>
-
-<blockquote><p>the tables within the database are associated with each other. This association can be created with primary/foreign keys and various syntax.</p></blockquote>
-
-<h2>2. What is SQL?</h2>
-
-<p>  SQL(Structured Query Language), it&rsquo;s domain specific language to manipulate database.</p>
-
-</div>
-  
-  
-    <footer>
-      <a class="btn btn-default" href="/blog/2015/01/30/tealeaf-course2-lesson1-quiz/">繼續閱讀 Read on &rarr;</a>
-    </footer>
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -701,6 +741,8 @@
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2015/05/03/eloquent-ruby-6/">Eloquent Ruby -6</a>
+    
     <a class="list-group-item " href="/blog/2015/05/03/eloquent-ruby-5/">Eloquent Ruby -5</a>
     
     <a class="list-group-item " href="/blog/2015/04/26/eloquent-ruby-4/">Eloquent Ruby -4</a>
@@ -718,8 +760,6 @@
     <a class="list-group-item " href="/blog/2015/04/07/reflection-to-tealeaf-course3-week4/">Reflection to Tealeaf Course3 Week4</a>
     
     <a class="list-group-item " href="/blog/2015/03/17/reflection-to-tealeaf-course3-week3/">Reflection to Tealeaf Course3 Week3</a>
-    
-    <a class="list-group-item " href="/blog/2015/03/11/reflection-to-tealeaf-course3-week2/">Reflection to Tealeaf Course3 Week2</a>
     
   </div>
 </section>

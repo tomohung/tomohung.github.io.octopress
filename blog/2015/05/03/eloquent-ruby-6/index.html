@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Reflection to Tealeaf Course3 Week1 - The Life Alchemist</title>
+  <title>Eloquent Ruby -6 - The Life Alchemist</title>
   <meta name="author" content="Tomo">
 
   
@@ -14,15 +14,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1">
+  <link rel="canonical" href="http://www.tomohung.com/blog/2015/05/03/eloquent-ruby-6">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="The Life Alchemist" type="application/atom+xml">
 
   <!-- http://opengraphprotocol.org/ -->
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1">
-  <meta property="og:title" content="Reflection to Tealeaf Course3 Week1 - The Life Alchemist">
+  <meta property="og:url" content="http://www.tomohung.com/blog/2015/05/03/eloquent-ruby-6">
+  <meta property="og:title" content="Eloquent Ruby -6 - The Life Alchemist">
   
 
   <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
@@ -126,33 +126,53 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-06T08:40:32+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-03-06</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-03T22:06:44+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-03</time>
         
       </p>
     
     
     <h1 class="entry-title" itemprop="name headline">
-        Reflection to Tealeaf Course3 Week1
+        Eloquent Ruby -6
         
     </h1>
     
   </header>
 
 
-<div class="entry-content clearfix" itemprop="articleBody description"><p>In Course3 week1, Kevin give me a schema of what should developper do from beginning.</p>
+<div class="entry-content clearfix" itemprop="articleBody description"><h1>Chapter 6 - Use Symbols to Stand for Something</h1>
 
-<p>There are so many subjects I&rsquo;ve heard but not ever practicing in action, like: TDD, git flow(github flow), why test&hellip;etc.</p>
+<p>String和Symbol很類似，都可以用來代表程式中的某個事物，但字串還多了可以被用來處理得到額外資訊，如果我們單純只是想要用來代表程式中的某個事物，用Symbol就可以了。</p>
 
-<p>I like the concept Red-Green-Refactor, it forced developper thinking about what you should do first. This may be argued by some experienced engineer, because they can do these works naturally.</p>
+<p>－ 同一個symbol永遠指著同一個物件，如</p>
 
-<p>But followed by Red-Green-Refactor, seeing green light really makes me feel comfortable. I can&rsquo;t stop thinking about how it&rsquo;d become easier if I could use this method when developping AI for TicTacToe. Testing game logic in TicTacToe manually costs me lots of time.</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>a = :sym 
+</span><span class='line'>b= a
+</span><span class='line'>c = :sym</span></code></pre></td></tr></table></div></figure>
 
-<p>Git flow/ GitHub flow is also my first time to taste. I think this should be fun to start communicate with other programmers through pull request. Glad that Tealeaf built an environment to let us feel like we are really in work.</p>
 
-<p>Matthew also metioned about this I should care about: <a href="http://stackoverflow.com/questions/729692/why-should-files-end-with-a-newline">Why should files end with a newline</a>.
-<br/></p>
+<p>a, b, c都是相同的物件</p>
 
-<p>I also find a blog post talking about <a href="http://www.jamesshore.com/Blog/Red-Green-Refactor.html">Red-Green-Refactor</a>, the author split the process into 5 steps: <strong>Think, Red, Green, Refactor, Repeat</strong>, and called this <code>code design process</code>. :-)</p>
+<p>但如果是string</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>a = "sym"
+</span><span class='line'>b = "sym"</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>a.equal? b</code> 會回傳false</p>
+
+<ul>
+<li>所有Ruby的物件都有一個<code>public_methods</code>的函數，會回傳一個Array of symbols</li>
+</ul>
+
+
+<hr />
+
+<p>簡單總結這章，Symbol因為有著unique, immutable這兩個特性，在用來當作代表性詞時就很實用，尤其是在應用hash時。</p>
 </div>
 
 
@@ -176,13 +196,13 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-06T08:40:32+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-03-06</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-03T22:06:44+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-03</time>
           
 
 <span class="glyphicon glyphicon-tags"></span>&nbsp;
 <span class="categories">
   
-    <a class='category' href='/blog/categories/rails/'>rails</a>, <a class='category' href='/blog/categories/tealeaf/'>tealeaf</a>
+    <a class='category' href='/blog/categories/book/'>book</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>
   
 </span>
 
@@ -191,7 +211,7 @@
         
           <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/05/03/eloquent-ruby-6/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/05/03/eloquent-ruby-6/" >Tweet</a>
   
   
   
@@ -203,10 +223,8 @@
         
           <ul class="meta text-muted pager">
             
-            <li class="previous"><a href="/blog/2015/03/03/titans-tic-tac-toe/" title="Previous Post: Titan's Tic Tac Toe">&laquo; Titan&#8217;s Tic Tac Toe</a></li>
+            <li class="previous"><a href="/blog/2015/05/03/eloquent-ruby-5/" title="Previous Post: Eloquent Ruby -5">&laquo; Eloquent Ruby -5</a></li>
             
-            
-            <li class="next"><a href="/blog/2015/03/11/reflection-to-tealeaf-course3-week2/" title="Next Post: Reflection to Tealeaf Course3 Week2">Reflection to Tealeaf Course3 Week2 &raquo;</a></li>
             
           </ul>
         
@@ -237,7 +255,7 @@
   
   <div id="recent_posts" class="list-group">
     
-    <a class="list-group-item " href="/blog/2015/05/03/eloquent-ruby-6/">Eloquent Ruby -6</a>
+    <a class="list-group-item active" href="/blog/2015/05/03/eloquent-ruby-6/">Eloquent Ruby -6</a>
     
     <a class="list-group-item " href="/blog/2015/05/03/eloquent-ruby-5/">Eloquent Ruby -5</a>
     
@@ -291,8 +309,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1/';
-        var disqus_url = 'http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1/';
+        var disqus_identifier = 'http://www.tomohung.com/blog/2015/05/03/eloquent-ruby-6/';
+        var disqus_url = 'http://www.tomohung.com/blog/2015/05/03/eloquent-ruby-6/';
         var disqus_script = 'embed.js';
       
     (function () {
