@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Eloquent Ruby -3 - The Life Alchemist</title>
+  <title>Eloquent Ruby -7 - The Life Alchemist</title>
   <meta name="author" content="Tomo">
 
   
@@ -14,15 +14,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-3">
+  <link rel="canonical" href="http://www.tomohung.com/blog/2015/05/04/eloquent-ruby-7">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="The Life Alchemist" type="application/atom+xml">
 
   <!-- http://opengraphprotocol.org/ -->
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-3">
-  <meta property="og:title" content="Eloquent Ruby -3 - The Life Alchemist">
+  <meta property="og:url" content="http://www.tomohung.com/blog/2015/05/04/eloquent-ruby-7">
+  <meta property="og:title" content="Eloquent Ruby -7 - The Life Alchemist">
   
 
   <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
@@ -126,131 +126,185 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-24T16:33:18+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-24</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-04T06:19:26+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-04</time>
         
       </p>
     
     
     <h1 class="entry-title" itemprop="name headline">
-        Eloquent Ruby -3
+        Eloquent Ruby -7
         
     </h1>
     
   </header>
 
 
-<div class="entry-content clearfix" itemprop="articleBody description"><h1>Chapter 3 - Take Advantage of Ruby’s Smart Collections</h1>
+<div class="entry-content clearfix" itemprop="articleBody description"><h1>Chapter 7 - Treat Everything Like an Object—Because Everything Is</h1>
 
-<p>直接結論，Ruby的Array跟Hash提供很多方便的函數可用，可以參考</p>
-
-<p><a href="http://ruby-doc.org/core-2.2.0/Array.html">Array</a>
-<a href="http://ruby-doc.org/core-2.2.0/Hash.html">Hash</a></p>
-
-<p>以下才是正文開始</p>
-
-<hr />
+<h2>Classes, Instances, Methods</h2>
 
 <ul>
-<li>如果是要初始化一個給值的陣列，如</li>
+<li><p>Class就像是容器，可以裝很多Method。Class也像是工廠，製造出很多副本Instances</p></li>
+<li><p>如果沒有指定superclass時，<code>Object</code>為預設繼承的類別。<code>Object</code>也是繼承了<code>BasicObject</code></p></li>
 </ul>
 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>love_words = ["Nancy", "I", "love", "you"]</span></code></pre></td></tr></table></div></figure>
+<h2>Objects</h2>
 
+<ul>
+<li>反正什麼東西在Ruby裡面都是Object，可以測試這些</li>
+</ul>
 
-<p>也可以這樣產生</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>love_words = %w{ Nancy I love you }</span></code></pre></td></tr></table></div></figure>
-
-
-<p>－ Ruby沒有指標，但是也有個類似指標的用法</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>def echo_all( *args )
-</span><span class='line'>  args.each { |arg| puts arg }
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>-1.class
+</span><span class='line'>true.class
+</span><span class='line'>nil.class
+</span><span class='line'>/regex/.class</span></code></pre></td></tr></table></div></figure>
 
-
-<p>*暗示arg其實是個陣列值，可以遞進來做陣列處理。</p>
 
 <ul>
-<li>對於hash，可以這樣用</li>
+<li>如果puts出來，預設會用<code>to_s</code>轉換</li>
 </ul>
 
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>run( {speed: :fast, tools: :train} )</span></code></pre></td></tr></table></div></figure>
-
-
-<p>也可以不要大括號，這樣寫</p>
+<h2>eval</h2>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>run( speed: :fast, tools: :train )</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cmd = 'gets'
+</span><span class='line'>puts eval(cmd)</span></code></pre></td></tr></table></div></figure>
 
 
-<p>甚至</p>
+<p><code>eval</code>可以像irb執行字串所代表的程式，這也是由Object繼承而來的函數</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>run speed: :fast, tools: :train</span></code></pre></td></tr></table></div></figure>
+<h2>public, private, protected</h2>
 
-
-<p>不過在參數只傳遞一個hash時，這樣寫蠻清爽的，如果是像form_for中要傳html_options時還這樣寫，簡直是個閱讀災難，我被誤導了好久。</p>
-
-<p>－ 雖然array和hash都有提供each這個method，不過hash在使用上有些不一樣的地方</p>
-
-<p>只給定一個參數的話</p>
+<p>三種屬性來控制method的曝露性</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>hash_value = { one: 1, two: 2, three: 3 }
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Method
+</span><span class='line'>  def public_method
+</span><span class='line'>    #預設為public，所有public method都可以呼叫
+</span><span class='line'>  end
 </span><span class='line'>
-</span><span class='line'>hash_value.each do |value|
-</span><span class='line'>  #something for value
+</span><span class='line'>  private # 在此之後方法都是private，只有在該instance內可以呼叫
+</span><span class='line'>  def private_method
+</span><span class='line'>  end
 </span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
 
 
-<p>value其實是個矩陣，如[:one, 1], [:two, 2], [:three, 3]。</p>
-
-<p>也可以給2個參數</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>hash_value.each do |key, value|
-</span><span class='line'>  #something for value
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>key和value就分別對應到hash值上，這就不用多說了。</p>
-
-<ul>
-<li>另外有個<code>inject</code> method可以幫助加總所有元素</li>
-</ul>
-
+<p>也可以這樣寫，不過我還沒看過實際有人這樣寫</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>def average_word_length
-</span><span class='line'>  total = words.inject(0.0){ |result, word| word.size + result}
-</span><span class='line'>  total / word_count
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Method
+</span><span class='line'>  def private_method
+</span><span class='line'>  end
+</span><span class='line'>
+</span><span class='line'>  private :prviate_method #在這指定private_method屬性是private</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>private內的方法繼承到subclass後，<strong>同樣可以呼叫</strong>，這跟在C++中不一樣</p></li>
+<li><p>protected有夠難理解，原文是這樣的</p></li>
+</ul>
+
+
+<blockquote><p>Any instance of a class can call a protected method on any other instance of the class</p></blockquote>
+
+<p>我是參考高見龍<a href="http://blog.eddie.com.tw/2011/07/26/public-protected-and-private-method-in-ruby/">這篇文章</a>才比較理解為什麼</p>
+
+<p>可以在irb這樣測試</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Base
+</span><span class='line'>  private 
+</span><span class='line'>  def private_show
+</span><span class='line'>    puts self.class
+</span><span class='line'>  end
+</span><span class='line'>
+</span><span class='line'>  protected
+</span><span class='line'>  def protected_show
+</span><span class='line'>    puts self.class
+</span><span class='line'>  end
 </span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
 
 
-<p>－ 不要再each裡面操作delete的動作，如果需要的話可以用<code>array.delete_if</code> method。</p>
+<p>然後</p>
 
-<p>－ 如果只是要檢查某個元素有沒有已經存在陣列中，可以考慮改用<code>Set</code>這個class，而不是用Array。
-<a href="http://ruby-doc.org/stdlib-2.2.2/libdoc/set/rdoc/Set.html">http://ruby-doc.org/stdlib-2.2.2/libdoc/set/rdoc/Set.html</a></p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class SubBase &lt; Base
+</span><span class='line'>  def use_private
+</span><span class='line'>    private_show # 如果寫成self.private_show，會產生錯誤
+</span><span class='line'>  end
+</span><span class='line'>
+</span><span class='line'>  def use_protected
+</span><span class='line'>    self.protected_show # 可以指定在self這個instance上
+</span><span class='line'>  end</span></code></pre></td></tr></table></div></figure>
 
-<p>它在檢查效率上比較好。</p>
+
+<ul>
+<li><p>原生Ruby source code中，20萬行的程式碼，大約有1000個private methods, protected methods只有50幾個。意思就是用到的機會也不多啦。</p></li>
+<li><p>另外Ruby也有個設計，如果你實在想突破限制使用class內的方法，可以用<code>send</code></p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sub_base.send(:private_show)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>不過一般的作法大概都是另外寫一個public method把private method包起來給外部呼叫。</p>
+
+<ul>
+<li>public, private, protected並不是什麼特別的Ruby Magic，其實他們都是methods，呼叫後面帶參數</li>
+</ul>
+
+
+<p>相同的還有<code>require</code>載入檔案</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>require 'rails_spec'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>或者是<code>attr_accessor</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>attr_accessor :name</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然後我們就可以有<code>name</code>的getter和setter方法</p>
 </div>
 
 
@@ -274,22 +328,15 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-24T16:33:18+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-24</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-04T06:19:26+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-04</time>
           
-
-<span class="glyphicon glyphicon-tags"></span>&nbsp;
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/book/'>book</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>
-  
-</span>
 
 
         </p>
         
           <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-3/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-3/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/05/04/eloquent-ruby-7/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/05/04/eloquent-ruby-7/" >Tweet</a>
   
   
   
@@ -301,10 +348,8 @@
         
           <ul class="meta text-muted pager">
             
-            <li class="previous"><a href="/blog/2015/04/24/eloquent-ruby-2/" title="Previous Post: Eloquent Ruby -2">&laquo; Eloquent Ruby -2</a></li>
+            <li class="previous"><a href="/blog/2015/05/03/eloquent-ruby-6/" title="Previous Post: Eloquent Ruby -6">&laquo; Eloquent Ruby -6</a></li>
             
-            
-            <li class="next"><a href="/blog/2015/04/26/eloquent-ruby-4/" title="Next Post: Eloquent Ruby -4">Eloquent Ruby -4 &raquo;</a></li>
             
           </ul>
         
@@ -335,7 +380,7 @@
   
   <div id="recent_posts" class="list-group">
     
-    <a class="list-group-item " href="/blog/2015/05/04/eloquent-ruby-7/">Eloquent Ruby -7</a>
+    <a class="list-group-item active" href="/blog/2015/05/04/eloquent-ruby-7/">Eloquent Ruby -7</a>
     
     <a class="list-group-item " href="/blog/2015/05/03/eloquent-ruby-6/">Eloquent Ruby -6</a>
     
@@ -343,7 +388,7 @@
     
     <a class="list-group-item " href="/blog/2015/04/26/eloquent-ruby-4/">Eloquent Ruby -4</a>
     
-    <a class="list-group-item active" href="/blog/2015/04/24/eloquent-ruby-3/">Eloquent Ruby -3</a>
+    <a class="list-group-item " href="/blog/2015/04/24/eloquent-ruby-3/">Eloquent Ruby -3</a>
     
     <a class="list-group-item " href="/blog/2015/04/24/eloquent-ruby-2/">Eloquent Ruby -2</a>
     
@@ -389,8 +434,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-3/';
-        var disqus_url = 'http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-3/';
+        var disqus_identifier = 'http://www.tomohung.com/blog/2015/05/04/eloquent-ruby-7/';
+        var disqus_url = 'http://www.tomohung.com/blog/2015/05/04/eloquent-ruby-7/';
         var disqus_script = 'embed.js';
       
     (function () {

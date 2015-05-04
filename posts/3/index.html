@@ -130,6 +130,67 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-02-02T16:05:05+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-02-02</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/" itemprop="url">Reflection to Tealeaf Course 2 Lesson 1</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>Finally, Rails is coming.</p>
+
+<p>Before join Tealeaf, I&rsquo;ve tried few times to follow some rails guide books. I just can type some magic codes to build simplest web app but didn&rsquo;t know why at all, because I even didn&rsquo;t know what ruby is.</p>
+
+<p>This time, passing through course 1, I knew what the ruby is, then following <a href="http://guides.rubyonrails.org/getting_started.html">official tour guide</a>, it&rsquo;s much clear than other books I&rsquo;ve seen. But I still got stuck on creating many-to-many relationship, because I made a stupid mistake here: <em>I modified migration file after running <code>rake db:migrate</code></em>.</p>
+
+<p>Then I dived into solution videos, and Chirs said that:</p>
+
+<blockquote><p>Don&rsquo;t use <code>rails generate</code> except <code>migration</code></p></blockquote>
+
+<p>I do love this way, because:</p>
+
+<ol>
+<li><p>I never saw other&rsquo;s show this way to build migration, they always use <code>rails generate model</code> to create model and migration. And the problem is, I thought this is the only way to create models and migrations!! And I just thought this is Rails magic, I don&rsquo;t need to think too much.</p></li>
+<li><p>When I got stuck because I didn&rsquo;t know I can&rsquo;t modified migration files after running <code>rake db:migrate</code>. Make sure migration setting is all done before running <code>rake db:migrate</code> is very important. And this is just for ActiveRecord layer, database is another layer. It&rsquo;s much easier to understand how could be a disaster to modified/delete migration files working with database layer.</p></li>
+</ol>
+
+
+<p>I make <a href="http://www.tomohung.com/blog/2015/02/02/newbie-for-rails-migration/">a post to record my big step for Rails</a>.</p>
+
+<p>I also try to detect tealeaf discus panel, becuase I think it&rsquo;s better to <code>show who kudos this post</code>. Sometimes I just want to give a kudos for people reply my post without saying something more, but it&rsquo;s wierd for others to read this post, because they can&rsquo;t see kudos I already gave the post. Anyway, here is my ERD for discuss panel.</p>
+
+<p><img src="http://i.minus.com/ibfrZjiBfElndg.jpg"></p>
+
+<p>I&rsquo;m super satisfied that this week I found my mistake when using migrations, and I think there must be other mistake for controller&rsquo;s and view&rsquo;s. Moving to next lesson!!</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-30T16:13:42+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-30</time>
         
       </p>
@@ -638,58 +699,6 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2014-12-15T20:34:40+08:00"  data-updated="true" itemprop="datePublished dateCreated">2014-12-15</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2014/12/15/yu-yan-guan-li-xu/" itemprop="url">語言管理－續</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p><img src="http://i.minus.com/ijEvqo7aLC7BY.jpg" width="640"></p>
-
-<p><a href="http://www.tomohung.com/blog/2014/12/12/language-management/">上一篇文章</a>關於聽了『語言管理』講座，朋友私底下來信討論，整理了一下對話留個記錄。刪去了一些朋友之間五四三的對話，盡量保留原意：</p>
-
-<h1>對話</h1>
-
-<p>R&rsquo;s:</p>
-
-<blockquote><p>  &ldquo;參與力&#8221;聽起來只是重新包裝過的&#8221;競爭力&#8221;耶&hellip;.你把他用&#8221;參與力&#8221;的句子全部代換成競爭力應該一樣通順吧？<br/>
-    他的所謂的新詞的話 得到的action item會跟原來用&#8221;競爭力&#8221;當重點的時候 不一樣在哪邊？<br/>
-    我想我的疑問來自於 結果都是要強調語言很重要的話，那特別創新的詞的用意？</p></blockquote>
-
-</div>
-  
-  
-    <footer>
-      <a class="btn btn-default" href="/blog/2014/12/15/yu-yan-guan-li-xu/">繼續閱讀 Read on &rarr;</a>
-    </footer>
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -719,6 +728,8 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2015/05/04/eloquent-ruby-7/">Eloquent Ruby -7</a>
+    
     <a class="list-group-item " href="/blog/2015/05/03/eloquent-ruby-6/">Eloquent Ruby -6</a>
     
     <a class="list-group-item " href="/blog/2015/05/03/eloquent-ruby-5/">Eloquent Ruby -5</a>
@@ -736,8 +747,6 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
     <a class="list-group-item " href="/blog/2015/04/09/reflection-to-tealeaf-course3-week5/">Reflection to Tealeaf Course3 Week5 (1/2)</a>
     
     <a class="list-group-item " href="/blog/2015/04/07/reflection-to-tealeaf-course3-week4/">Reflection to Tealeaf Course3 Week4</a>
-    
-    <a class="list-group-item " href="/blog/2015/03/17/reflection-to-tealeaf-course3-week3/">Reflection to Tealeaf Course3 Week3</a>
     
   </div>
 </section>

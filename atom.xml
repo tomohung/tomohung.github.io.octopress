@@ -4,7 +4,7 @@
   <title><![CDATA[The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-05-03T22:22:39+08:00</updated>
+  <updated>2015-05-04T09:08:18+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -12,6 +12,180 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Eloquent Ruby -7]]></title>
+    <link href="http://www.tomohung.com/blog/2015/05/04/eloquent-ruby-7/"/>
+    <updated>2015-05-04T06:19:26+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/05/04/eloquent-ruby-7</id>
+    <content type="html"><![CDATA[<h1>Chapter 7 - Treat Everything Like an Object—Because Everything Is</h1>
+
+<h2>Classes, Instances, Methods</h2>
+
+<ul>
+<li><p>Class就像是容器，可以裝很多Method。Class也像是工廠，製造出很多副本Instances</p></li>
+<li><p>如果沒有指定superclass時，<code>Object</code>為預設繼承的類別。<code>Object</code>也是繼承了<code>BasicObject</code></p></li>
+</ul>
+
+
+<h2>Objects</h2>
+
+<ul>
+<li>反正什麼東西在Ruby裡面都是Object，可以測試這些</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>-1.class
+</span><span class='line'>true.class
+</span><span class='line'>nil.class
+</span><span class='line'>/regex/.class</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>如果puts出來，預設會用<code>to_s</code>轉換</li>
+</ul>
+
+
+<h2>eval</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cmd = 'gets'
+</span><span class='line'>puts eval(cmd)</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>eval</code>可以像irb執行字串所代表的程式，這也是由Object繼承而來的函數</p>
+
+<h2>public, private, protected</h2>
+
+<p>三種屬性來控制method的曝露性</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Method
+</span><span class='line'>  def public_method
+</span><span class='line'>    #預設為public，所有public method都可以呼叫
+</span><span class='line'>  end
+</span><span class='line'>
+</span><span class='line'>  private # 在此之後方法都是private，只有在該instance內可以呼叫
+</span><span class='line'>  def private_method
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>也可以這樣寫，不過我還沒看過實際有人這樣寫</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Method
+</span><span class='line'>  def private_method
+</span><span class='line'>  end
+</span><span class='line'>
+</span><span class='line'>  private :prviate_method #在這指定private_method屬性是private</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>private內的方法繼承到subclass後，<strong>同樣可以呼叫</strong>，這跟在C++中不一樣</p></li>
+<li><p>protected有夠難理解，原文是這樣的</p></li>
+</ul>
+
+
+<blockquote><p>Any instance of a class can call a protected method on any other instance of the class</p></blockquote>
+
+<p>我是參考高見龍<a href="http://blog.eddie.com.tw/2011/07/26/public-protected-and-private-method-in-ruby/">這篇文章</a>才比較理解為什麼</p>
+
+<p>可以在irb這樣測試</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Base
+</span><span class='line'>  private 
+</span><span class='line'>  def private_show
+</span><span class='line'>    puts self.class
+</span><span class='line'>  end
+</span><span class='line'>
+</span><span class='line'>  protected
+</span><span class='line'>  def protected_show
+</span><span class='line'>    puts self.class
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然後</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class SubBase &lt; Base
+</span><span class='line'>  def use_private
+</span><span class='line'>    private_show # 如果寫成self.private_show，會產生錯誤
+</span><span class='line'>  end
+</span><span class='line'>
+</span><span class='line'>  def use_protected
+</span><span class='line'>    self.protected_show # 可以指定在self這個instance上
+</span><span class='line'>  end</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>原生Ruby source code中，20萬行的程式碼，大約有1000個private methods, protected methods只有50幾個。意思就是用到的機會也不多啦。</p></li>
+<li><p>另外Ruby也有個設計，如果你實在想突破限制使用class內的方法，可以用<code>send</code></p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sub_base.send(:private_show)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>不過一般的作法大概都是另外寫一個public method把private method包起來給外部呼叫。</p>
+
+<ul>
+<li>public, private, protected並不是什麼特別的Ruby Magic，其實他們都是methods，呼叫後面帶參數</li>
+</ul>
+
+
+<p>相同的還有<code>require</code>載入檔案</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>require 'rails_spec'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>或者是<code>attr_accessor</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>attr_accessor :name</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然後我們就可以有<code>name</code>的getter和setter方法</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Eloquent Ruby -6]]></title>
@@ -3002,39 +3176,6 @@ This make code in View more cleaner without too much logic in it.</p>
 <h2>Only use <code>rails generate migration</code></h2>
 
 <p>Don&rsquo;t use <code>rails generate</code> for models or controllers etc. It contains a lot of rails magic. Although most of guide tour (including official guide) use this way. But it&rsquo;s easy to misunderstanding what is wrong for operating database layer and ActiveRecord layer. Take care of this!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Course 2 Lesson 1]]></title>
-    <link href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/"/>
-    <updated>2015-02-02T16:05:05+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1</id>
-    <content type="html"><![CDATA[<p>Finally, Rails is coming.</p>
-
-<p>Before join Tealeaf, I&rsquo;ve tried few times to follow some rails guide books. I just can type some magic codes to build simplest web app but didn&rsquo;t know why at all, because I even didn&rsquo;t know what ruby is.</p>
-
-<p>This time, passing through course 1, I knew what the ruby is, then following <a href="http://guides.rubyonrails.org/getting_started.html">official tour guide</a>, it&rsquo;s much clear than other books I&rsquo;ve seen. But I still got stuck on creating many-to-many relationship, because I made a stupid mistake here: <em>I modified migration file after running <code>rake db:migrate</code></em>.</p>
-
-<p>Then I dived into solution videos, and Chirs said that:</p>
-
-<blockquote><p>Don&rsquo;t use <code>rails generate</code> except <code>migration</code></p></blockquote>
-
-<p>I do love this way, because:</p>
-
-<ol>
-<li><p>I never saw other&rsquo;s show this way to build migration, they always use <code>rails generate model</code> to create model and migration. And the problem is, I thought this is the only way to create models and migrations!! And I just thought this is Rails magic, I don&rsquo;t need to think too much.</p></li>
-<li><p>When I got stuck because I didn&rsquo;t know I can&rsquo;t modified migration files after running <code>rake db:migrate</code>. Make sure migration setting is all done before running <code>rake db:migrate</code> is very important. And this is just for ActiveRecord layer, database is another layer. It&rsquo;s much easier to understand how could be a disaster to modified/delete migration files working with database layer.</p></li>
-</ol>
-
-
-<p>I make <a href="http://www.tomohung.com/blog/2015/02/02/newbie-for-rails-migration/">a post to record my big step for Rails</a>.</p>
-
-<p>I also try to detect tealeaf discus panel, becuase I think it&rsquo;s better to <code>show who kudos this post</code>. Sometimes I just want to give a kudos for people reply my post without saying something more, but it&rsquo;s wierd for others to read this post, because they can&rsquo;t see kudos I already gave the post. Anyway, here is my ERD for discuss panel.</p>
-
-<p><img src="http://i.minus.com/ibfrZjiBfElndg.jpg"></p>
-
-<p>I&rsquo;m super satisfied that this week I found my mistake when using migrations, and I think there must be other mistake for controller&rsquo;s and view&rsquo;s. Moving to next lesson!!</p>
 ]]></content>
   </entry>
   
