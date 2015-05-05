@@ -265,6 +265,7 @@
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
+<span class='line-number'>9</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>class SubBase &lt; Base
 </span><span class='line'>  def use_private
 </span><span class='line'>    private_show # 如果寫成self.private_show，會產生錯誤
@@ -272,7 +273,8 @@
 </span><span class='line'>
 </span><span class='line'>  def use_protected
 </span><span class='line'>    self.protected_show # 可以指定在self這個instance上
-</span><span class='line'>  end</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
 
 
 <ul>
