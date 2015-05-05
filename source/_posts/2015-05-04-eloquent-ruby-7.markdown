@@ -97,6 +97,7 @@ class SubBase < Base
   def use_protected
     self.protected_show # 可以指定在self這個instance上
   end
+end
 ```
 
 - 原生Ruby source code中，20萬行的程式碼，大約有1000個private methods, protected methods只有50幾個。意思就是用到的機會也不多啦。

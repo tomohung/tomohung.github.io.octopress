@@ -14,7 +14,7 @@ This is a blog entry for record my first personal project for Rails, and focus o
 
 `Titan's Tic Tac Toe` is my first personal app for Rails.
 
-Website: https://young-castle-5534.herokuapp.com/
+Website: https://tomo-tictactoe.herokuapp.com/
 
 GitHub repo: https://github.com/tomohung/tictactoe-rails
 
