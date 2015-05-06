@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-05-06T20:10:18+08:00</updated>
+  <updated>2015-05-06T20:38:30+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -372,7 +372,7 @@ end
 end
 </code></pre>
 
-<p>But there is a problem, everytime we test, it will send a request to Stripe server. We don&rsquo;t want to do this and want to reduce test consumer time, use gme <code>vcr</code>.</p>
+<p>But there is a problem, everytime we test, it will send a request to Stripe server. We don&rsquo;t want to do this and want to reduce test consumer time, use gem <code>vcr</code>.</p>
 
 <pre><code>$ gem install vcr
 $ gem install webmock
@@ -385,7 +385,7 @@ $ gem install webmock
 end
 </code></pre>
 
-<p>vcr will record the reponse in <code>spec/cassettes</code>, when next time it find that test emit the same request again, it will not send the request outside to the server, instead of replaying saved response.</p>
+<p>vcr will record the reponse in <code>spec/cassettes</code>, when next time it find that test emit the same request again, it will not send the request outside to the server, but replaying saved response.</p>
 
 <p>Here is vcr setting:</p>
 
