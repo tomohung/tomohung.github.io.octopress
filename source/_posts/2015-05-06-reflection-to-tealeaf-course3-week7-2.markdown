@@ -19,6 +19,7 @@ Some tips from gem `Draper`:
 Or
 
 > Decorators are the ideal place to:
+
 > - format complex data for user display
 > - define commonly-used representations of an object, like a `name` method that combine `first_name` and `last_name` attributes.
 > - mark up attributes with a little semantic HTML, like turning a url fiedl into a hyperlink.
