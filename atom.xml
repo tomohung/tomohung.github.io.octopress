@@ -4,7 +4,7 @@
   <title><![CDATA[The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-05-06T20:01:42+08:00</updated>
+  <updated>2015-05-06T20:04:39+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -20,7 +20,7 @@
     <id>http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week7-3-slash-3</id>
     <content type="html"><![CDATA[<h1>Messsage Expectation</h1>
 
-<p>We has metioned <a href="http://tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week7">Test Double at post (1/3)</a>, and here is another kind of Test Double, called <code>Mock Objects</code>.</p>
+<p>We has metioned <a href="http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week7-1/">Test Double at post (1/3)</a>, and here is another kind of Test Double, called <code>Mock Objects</code>.</p>
 
 <blockquote><p>Assert communication, not response</p></blockquote>
 
