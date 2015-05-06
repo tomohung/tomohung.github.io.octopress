@@ -78,6 +78,15 @@ Stripe.setPublishableKey("#{ENV['STRIPE_PUBLISHABLE_KEY']}");
 
 ```
 
+> When deploy to Heroku, I got this error `Failed to load resource: the server responded with a status of 404 (Not Found)`
+
+> This is becuase assets pipeline, add this to the file
+
+```ruby config/initializers/assets.rb
+Rails.application.config.assets.precompile += ['payment.js']
+```
+
+
 Key Points:
 
 - use `for` and `id` to connect label and input
