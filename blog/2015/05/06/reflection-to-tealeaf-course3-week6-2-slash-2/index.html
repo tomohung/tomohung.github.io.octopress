@@ -234,6 +234,15 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
+<blockquote><p>When deploy to Heroku, I got this error <code>Failed to load resource: the server responded with a status of 404 (Not Found)</code></p>
+
+<p>This is becuase assets pipeline, add this to the file</p></blockquote>
+
+<figure class='code'><figcaption><span>config/initializers/assets.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Rails</span><span class="o">.</span><span class="n">application</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">assets</span><span class="o">.</span><span class="n">precompile</span> <span class="o">+=</span> <span class="o">[</span><span class="s1">&#39;payment.js&#39;</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
 <p>Key Points:</p>
 
 <ul>
