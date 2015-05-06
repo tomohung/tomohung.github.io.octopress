@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tealeaf | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/tealeaf/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-05-07T07:00:11+08:00</updated>
+  <updated>2015-05-07T07:05:09+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -57,9 +57,9 @@ end
 <p>Here we got 3 resources of discussion test.</p>
 
 <ul>
-<li><a href="https://www.youtube.com/watch?v=R9FOchgTtLM">Why you don&rsquo;t get mock objects by Gregory</a></li>
-<li><a href="http://martinfowler.com/articles/mocksArentStubs.html">Mock Aren&rsquo;t Stub by Mark Folwer</a></li>
-<li><a href="https://www.youtube.com/watch?v=URSWYvyc42M">The Magic tricks of Testing by Sandi Mets</a></li>
+<li><a href="https://www.youtube.com/watch?v=R9FOchgTtLM">Why you don&rsquo;t get mock objects</a> by Gregory</li>
+<li><a href="http://martinfowler.com/articles/mocksArentStubs.html">Mock Aren&rsquo;t Stub</a> by Mark Folwer</li>
+<li><a href="https://www.youtube.com/watch?v=URSWYvyc42M">The Magic tricks of Testing</a> by Sandi Mets</li>
 </ul>
 
 
