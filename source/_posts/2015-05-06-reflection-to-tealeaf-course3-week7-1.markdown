@@ -78,7 +78,7 @@ describe StripeWrapper do
 end
 ```
 
-But there is a problem, everytime we test, it will send a request to Stripe server. We don't want to do this and want to reduce test consumer time, use gme `vcr`.
+But there is a problem, everytime we test, it will send a request to Stripe server. We don't want to do this and want to reduce test consumer time, use gem `vcr`.
 
 ```
 $ gem install vcr
@@ -93,7 +93,7 @@ it 'make successful charge', vcr: true do
 end
 ```
 
-vcr will record the reponse in `spec/cassettes`, when next time it find that test emit the same request again, it will not send the request outside to the server, instead of replaying saved response.
+vcr will record the reponse in `spec/cassettes`, when next time it find that test emit the same request again, it will not send the request outside to the server, but replaying saved response.
 
 Here is vcr setting:
 
