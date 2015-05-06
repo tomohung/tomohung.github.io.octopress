@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Reflection to Tealeaf Course3 Week6 (2/2) - The Life Alchemist</title>
+  <meta name="author" content="Tomo">
+
+  
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week6-2-slash-2">
+  <link href="/favicon.png" type="image/png" rel="icon">
+  <link href="/atom.xml" rel="alternate" title="The Life Alchemist" type="application/atom+xml">
+
+  <!-- http://opengraphprotocol.org/ -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week6-2-slash-2">
+  <meta property="og:title" content="Reflection to Tealeaf Course3 Week6 (2/2) - The Life Alchemist">
+  
+
+  <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
+
+<link href="/assets/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/assets/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+
+
+  
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+  
+   <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-12830335-2', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+</head>
+
+  <body   >
+    <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    <div id="wrap">
+      <header role="banner">
+        <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">The Life Alchemist</a>
+        </div>
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a rel="index" href="/">Blog</a>
+                </li>
+                <li >
+                    <a href="/blog/archives">Archives</a>
+                </li>
+                <li >
+                    <a href="/about">About</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <form class="search navbar-form navbar-right" action="https://www.google.com/search" method="GET">
+                            <input type="hidden" name="q" value="site:www.tomohung.com">
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="q" placeholder="Search">
+                            </div>
+                        </form>
+                    </li>
+                
+                <li>
+                    <a class="subscribe-rss" href="/atom.xml" title="subscribe via RSS">
+                        <span class="visible-xs">RSS</span>
+                        <img class="hidden-xs" src="/images/rss.png" alt="RSS">
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+      </header>
+      <div id="main" role="main" class="container">
+        <div id="content">
+          <div class="row">
+  <div class="page-content col-md-9" itemscope itemtype="http://schema.org/Blog">
+    <meta itemprop="name" content="The Life Alchemist" />
+    
+    <meta itemprop="url" content="http://www.tomohung.com" />
+    <article class="hentry" role="article" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+      
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-06T09:50:50+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-06</time>
+        
+      </p>
+    
+    
+    <h1 class="entry-title" itemprop="name headline">
+        Reflection to Tealeaf Course3 Week6 (2/2)
+        
+    </h1>
+    
+  </header>
+
+
+<div class="entry-content clearfix" itemprop="articleBody description"><p>These week we have two main part: <a href="https://github.com/carrierwaveuploader/carrierwave">CarrierWave</a> for uploading images as an admin, <a href="http://stripe.com">Stripe</a> for payments</p>
+
+<p>The first part about CarrierWave for uploading images as an Admin is <a href="http://tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week6/">here</a>.</p>
+
+<h1>Stripe for Payments</h1>
+
+<p>Two articles about payments:</p>
+
+<ul>
+<li><a href="https://signalvnoise.com/posts/753-ask-37signals-how-do-you-process-credit-cards">How Do You Process Credit Card</a> by Jason Fried</li>
+</ul>
+
+
+<blockquote><p>The one thing we’re often surprised by is how many accounts have charge issues so it’s important to really think about the error handling and customer experience issues related to declined cards.</p></blockquote>
+
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Payment_Card_Industry_Data_Security_Standard">Payment Card Industry Data Security Standard by wiki</a></li>
+</ul>
+
+
+<h3>Stripe &amp; Figaro</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem 'stripe'
+</span><span class='line'>gem 'figaro'</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>$ figaro install</code></p>
+
+<p>Use Figaro to set Environment variables, Do Not hard code it!!</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#config/application.yaml
+</span><span class='line'>test:
+</span><span class='line'>  STRIPE_SECRET_KEY: sk_test_xxxxxxxxx
+</span><span class='line'>  STRIPE_PUBLISHABLE_KEY: pk_test_xxxxxxxxxx
+</span><span class='line'>
+</span><span class='line'>development:
+</span><span class='line'>  STRIPE_SECRET_KEY: sk_test_xxxxxxx
+</span><span class='line'>  STRIPE_PUBLISHABLE_KEY: pk_test_xxxxxxx
+</span><span class='line'>
+</span><span class='line'>production:
+</span><span class='line'>  STRIPE_SECRET_KEY: sk_live_xxxxxx
+</span><span class='line'>  STRIPE_PUBLISHABLE_KEY: pk_live_xxxxxxxx
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I also add this file <code>config/initailizers/figaro.rb</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Figaro.require_keys("STRIPE_SECRET_KEY", "STRIPE_PUBLISHABLE_KEY")</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It&rsquo;s convenient to check if you forget to set Environment variables on deploy machine(ex. Circle CI or Heroku).</p>
+
+<p>Figaro also provide a way to set Heroku ENV.</p>
+
+<p><code>$ figaro heroku:set -e production</code></p>
+
+<h3>Stripe Custom Form</h3>
+
+<ol>
+<li>Setting form view</li>
+</ol>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;script type="text/javascript" src="https://js.stripe.com/v2/"&gt;&lt;/script&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;script type="text/javascript"&gt;
+</span><span class='line'>Stripe.setPublishableKey("#{ENV['STRIPE_PUBLISHABLE_KEY']}");
+</span><span class='line'>&lt;/script&gt;
+</span><span class='line'>
+</span><span class='line'>= javascript_include_tag 'payment'
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Key Points:</p>
+
+<ul>
+<li>use <code>for</code> and <code>id</code> to connect label and input</li>
+<li><code>data-stripe = "number"</code> and <code>data-stripe="cvc"</code></li>
+<li><code>data: { stripe: "exp-yaer"}</code> and <code>data: { stripe: "exp-month"}</code></li>
+</ul>
+
+
+<p>Attributes of <code>data-stripe</code> is for Stripe to know credit infomation.</p>
+
+<p>Then in our custom form:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='haml'><span class='line'><span class="nt">%section</span><span class="nc">.register.container</span>
+</span><span class='line'>  <span class="nc">.row</span>
+</span><span class='line'>    <span class="nc">.col-sm-10.col-sm-offset-1</span>
+</span><span class='line'>      <span class="p">=</span> <span class="n">bootstrap_form_for</span> <span class="vi">@user</span><span class="p">,</span> <span class="ss">layout</span><span class="p">:</span> <span class="ss">:horizontal</span><span class="p">,</span> <span class="ss">html</span><span class="p">:</span> <span class="p">{</span><span class="nb">id</span><span class="p">:</span> <span class="s1">&#39;payment-form&#39;</span><span class="p">}</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span>
+</span><span class='line'>        <span class="nt">%header</span>
+</span><span class='line'>          <span class="nt">%h1</span> Register
+</span><span class='line'>        <span class="nt">%fieldset</span>
+</span><span class='line'>          <span class="p">=</span> <span class="n">f</span><span class="o">.</span><span class="n">email_field</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">label</span><span class="p">:</span> <span class="s2">&quot;Email Address&quot;</span>
+</span><span class='line'>          <span class="p">=</span> <span class="n">f</span><span class="o">.</span><span class="n">password_field</span> <span class="ss">:password</span>
+</span><span class='line'>          <span class="p">=</span> <span class="n">f</span><span class="o">.</span><span class="n">text_field</span> <span class="ss">:full_name</span><span class="p">,</span> <span class="ss">label</span><span class="p">:</span> <span class="s1">&#39;Full Name&#39;</span>
+</span><span class='line'>          <span class="p">=</span> <span class="n">hidden_field_tag</span> <span class="ss">:token</span><span class="p">,</span> <span class="vi">@invitation_token</span>
+</span><span class='line'>        <span class="nt">%fieldset</span><span class="nc">.credit_card</span>
+</span><span class='line'>          <span class="nt">%span</span><span class="nc">.payment-errors</span>
+</span><span class='line'>          <span class="nc">.form-group</span>
+</span><span class='line'>            <span class="nt">%label</span><span class="nc">.control-label.col-sm-2</span>(<span class="na">for=</span><span class="s">&quot;credit_card_number&quot;</span>) Credit Card Number
+</span><span class='line'>            <span class="nc">.col-sm-6</span>
+</span><span class='line'>              <span class="nt">%input</span><span class="nc">.form-control</span>(<span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">data-stripe=</span><span class="s">&quot;number&quot;</span> <span class="na">id=</span><span class="s">&quot;credit_card_number&quot;</span>)
+</span><span class='line'>          <span class="nc">.form-group</span>
+</span><span class='line'>            <span class="nt">%label</span><span class="nc">.control-label.col-sm-2</span>(<span class="na">for=</span><span class="s">&quot;security_code&quot;</span>) Security Code
+</span><span class='line'>            <span class="nc">.col-sm-6</span>
+</span><span class='line'>              <span class="nt">%input</span><span class="nc">.form-control</span>(<span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">data-stripe=</span><span class="s">&quot;cvc&quot;</span> <span class="na">id=</span><span class="s">&quot;security_code&quot;</span>)
+</span><span class='line'>          <span class="nc">.form-group</span>
+</span><span class='line'>            <span class="nt">%label</span><span class="nc">.control-label.col-sm-2</span> Expiration
+</span><span class='line'>            <span class="nc">.col-sm-3</span>
+</span><span class='line'>              <span class="p">=</span> <span class="n">select_month</span><span class="p">(</span><span class="no">Date</span><span class="o">.</span><span class="n">today</span><span class="p">,</span> <span class="p">{</span><span class="ss">add_month_numbers</span><span class="p">:</span> <span class="kp">true</span><span class="p">},</span>  <span class="ss">class</span><span class="p">:</span> <span class="s1">&#39;form-control&#39;</span><span class="p">,</span> <span class="ss">data</span><span class="p">:</span> <span class="p">{</span> <span class="ss">stripe</span><span class="p">:</span> <span class="s2">&quot;exp-month&quot;</span><span class="p">})</span>
+</span><span class='line'>            <span class="nc">.col-sm-2</span>
+</span><span class='line'>              <span class="p">=</span> <span class="n">select_year</span><span class="p">(</span><span class="no">Date</span><span class="o">.</span><span class="n">today</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="p">{</span><span class="ss">start_year</span><span class="p">:</span> <span class="no">Date</span><span class="o">.</span><span class="n">today</span><span class="o">.</span><span class="n">year</span><span class="p">,</span> <span class="ss">end_year</span><span class="p">:</span> <span class="no">Date</span><span class="o">.</span><span class="n">today</span><span class="o">.</span><span class="n">year</span> <span class="o">+</span> <span class="mi">4</span><span class="p">},</span> <span class="ss">class</span><span class="p">:</span> <span class="s1">&#39;form-control&#39;</span><span class="p">,</span> <span class="ss">data</span><span class="p">:</span> <span class="p">{</span> <span class="ss">stripe</span><span class="p">:</span> <span class="s2">&quot;exp-year&quot;</span><span class="p">}</span> <span class="p">)</span>
+</span><span class='line'>        <span class="nt">%fieldset</span><span class="nc">.actions.control-group.col-sm-offset-2</span>
+</span><span class='line'>          <span class="nc">.controls</span>
+</span><span class='line'>            <span class="nt">%input</span>(<span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">value=</span><span class="s">&quot;Sign Up&quot;</span> <span class="na">class=</span><span class="s">&quot;btn btn-default&quot;</span>)
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Setting in Controller Action</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='haml'><span class='line'># Set your secret key: remember to change this to your live secret key in production
+</span><span class='line'># See your keys here https://dashboard.stripe.com/account/apikeys
+</span><span class='line'>Stripe.api_key = &quot;sk_test_yNosIrCvrAuVttjO60dxy7zy&quot;
+</span><span class='line'>
+</span><span class='line'># Get the credit card details submitted by the form
+</span><span class='line'>token = params[:stripeToken]
+</span><span class='line'>
+</span><span class='line'># Create the charge on Stripe&#39;s servers - this will charge the user&#39;s card
+</span><span class='line'>begin
+</span><span class='line'>  charge = Stripe::Charge.create(
+</span><span class='line'>    <span class="nd">:amount =&gt; 1000, # amount in cents, again</span>
+</span><span class='line'>    <span class="nd">:currency =&gt; &quot;usd&quot;,</span>
+</span><span class='line'>    <span class="nd">:source =&gt; token,</span>
+</span><span class='line'>    <span class="nd">:description =&gt; &quot;Example charge&quot;</span>
+</span><span class='line'>  )
+</span><span class='line'>rescue Stripe::CardError =&gt; e
+</span><span class='line'>  # The card has been declined
+</span><span class='line'>end
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now we click submit button, charge will be deliever to Stripe.</p>
+
+<blockquote><p>Notice again, don&rsquo;t foget to set ENV on Circle CI or Heroku if you deploy code to there.</p></blockquote>
+</div>
+
+
+      <footer>
+        <p class="meta text-muted">
+          
+  
+
+<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard" itemprop="author" itemscope itemtype="http://schema.org/Person">Posted by <span class="fn" itemprop="name">Tomo</span></span>
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-06T09:50:50+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-06</time>
+          
+
+<span class="glyphicon glyphicon-tags"></span>&nbsp;
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/rails/'>rails</a>, <a class='category' href='/blog/categories/tealeaf/'>tealeaf</a>
+  
+</span>
+
+
+        </p>
+        
+          <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week6-2-slash-2/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week6-2-slash-2/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+        
+        
+          <ul class="meta text-muted pager">
+            
+            <li class="previous"><a href="/blog/2015/05/06/reflection-to-tealeaf-course3-week6/" title="Previous Post: Reflection to Tealeaf Course3 Week6 (1/2)">&laquo; Reflection to Tealeaf Course3 Week6 (1/2)</a></li>
+            
+            
+          </ul>
+        
+      </footer>
+    </article>
+    
+      <section>
+        <h2>Comments</h2>
+        <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+      </section>
+    
+  </div>
+
+  
+  <aside class="sidebar col-md-3">
+    
+      
+<section>
+	<span>
+		<img src="http://www.gravatar.com/avatar/8708c05d2568e10fb402516eeb954ef2" alt="Gravatar of Tomo " title="Gravatar of Tomo" />
+	</span>
+</section>
+<section class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Recent Posts</h3>
+  </div>
+  
+  <div id="recent_posts" class="list-group">
+    
+    <a class="list-group-item active" href="/blog/2015/05/06/reflection-to-tealeaf-course3-week6-2-slash-2/">Reflection to Tealeaf Course3 Week6 (2/2)</a>
+    
+    <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week6/">Reflection to Tealeaf Course3 Week6 (1/2)</a>
+    
+    <a class="list-group-item " href="/blog/2015/05/04/eloquent-ruby-7/">Eloquent Ruby -7</a>
+    
+    <a class="list-group-item " href="/blog/2015/05/03/eloquent-ruby-6/">Eloquent Ruby -6</a>
+    
+    <a class="list-group-item " href="/blog/2015/05/03/eloquent-ruby-5/">Eloquent Ruby -5</a>
+    
+    <a class="list-group-item " href="/blog/2015/04/26/eloquent-ruby-4/">Eloquent Ruby -4</a>
+    
+    <a class="list-group-item " href="/blog/2015/04/24/eloquent-ruby-3/">Eloquent Ruby -3</a>
+    
+    <a class="list-group-item " href="/blog/2015/04/24/eloquent-ruby-2/">Eloquent Ruby -2</a>
+    
+    <a class="list-group-item " href="/blog/2015/04/24/eloquent-ruby-1/">Eloquent Ruby -1</a>
+    
+    <a class="list-group-item " href="/blog/2015/04/09/reflection-to-tealeaf-course3-week5-2-slash-2/">Reflection to Tealeaf Course3 Week5 (2/2)</a>
+    
+  </div>
+</section>
+
+
+
+
+
+
+    
+  </aside>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+    <footer role="contentinfo"><div class="container">
+    <p class="text-muted credits">
+  Copyright &copy; 2015 - Tomo<br>
+  <small>
+      <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>,
+      <span class="credit">customized with <a href="https://github.com/kAworu/octostrap3">octostrap3</a></span>.
+  </small>
+</p>
+
+</div>
+</footer>
+    
+
+<script type="text/javascript">
+      var disqus_shortname = 'tomohung';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week6-2-slash-2/';
+        var disqus_url = 'http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week6-2-slash-2/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+<script src="/assets/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/javascripts/modernizr-2.0.js"></script>
+
+
+  </body>
+</html>

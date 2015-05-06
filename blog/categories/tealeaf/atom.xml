@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tealeaf | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/tealeaf/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-05-05T15:56:57+08:00</updated>
+  <updated>2015-05-06T11:30:32+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -12,6 +12,331 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week6 (2/2)]]></title>
+    <link href="http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week6-2-slash-2/"/>
+    <updated>2015-05-06T09:50:50+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week6-2-slash-2</id>
+    <content type="html"><![CDATA[<p>These week we have two main part: <a href="https://github.com/carrierwaveuploader/carrierwave">CarrierWave</a> for uploading images as an admin, <a href="http://stripe.com">Stripe</a> for payments</p>
+
+<p>The first part about CarrierWave for uploading images as an Admin is <a href="http://tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week6/">here</a>.</p>
+
+<h1>Stripe for Payments</h1>
+
+<p>Two articles about payments:</p>
+
+<ul>
+<li><a href="https://signalvnoise.com/posts/753-ask-37signals-how-do-you-process-credit-cards">How Do You Process Credit Card</a> by Jason Fried</li>
+</ul>
+
+
+<blockquote><p>The one thing we’re often surprised by is how many accounts have charge issues so it’s important to really think about the error handling and customer experience issues related to declined cards.</p></blockquote>
+
+<ul>
+<li><a href="http://en.wikipedia.org/wiki/Payment_Card_Industry_Data_Security_Standard">Payment Card Industry Data Security Standard by wiki</a></li>
+</ul>
+
+
+<h3>Stripe &amp; Figaro</h3>
+
+<pre><code>gem 'stripe'
+gem 'figaro'
+</code></pre>
+
+<p><code>$ figaro install</code></p>
+
+<p>Use Figaro to set Environment variables, Do Not hard code it!!</p>
+
+<pre><code>#config/application.yaml
+test:
+  STRIPE_SECRET_KEY: sk_test_xxxxxxxxx
+  STRIPE_PUBLISHABLE_KEY: pk_test_xxxxxxxxxx
+
+development:
+  STRIPE_SECRET_KEY: sk_test_xxxxxxx
+  STRIPE_PUBLISHABLE_KEY: pk_test_xxxxxxx
+
+production:
+  STRIPE_SECRET_KEY: sk_live_xxxxxx
+  STRIPE_PUBLISHABLE_KEY: pk_live_xxxxxxxx
+</code></pre>
+
+<p>I also add this file <code>config/initailizers/figaro.rb</code></p>
+
+<pre><code>Figaro.require_keys("STRIPE_SECRET_KEY", "STRIPE_PUBLISHABLE_KEY")
+</code></pre>
+
+<p>It&rsquo;s convenient to check if you forget to set Environment variables on deploy machine(ex. Circle CI or Heroku).</p>
+
+<p>Figaro also provide a way to set Heroku ENV.</p>
+
+<p><code>$ figaro heroku:set -e production</code></p>
+
+<h3>Stripe Custom Form</h3>
+
+<ol>
+<li>Setting form view</li>
+</ol>
+
+
+<p>&#8220;`</p>
+
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
+
+
+
+<script type="text/javascript">
+Stripe.setPublishableKey("#{ENV['STRIPE_PUBLISHABLE_KEY']}");
+</script>
+
+
+<p>= javascript_include_tag &lsquo;payment&rsquo;</p>
+
+<pre><code>
+Key Points:
+
+- use `for` and `id` to connect label and input
+- `data-stripe = "number"` and `data-stripe="cvc"`
+- `data: { stripe: "exp-yaer"}` and `data: { stripe: "exp-month"}`
+
+Attributes of `data-stripe` is for Stripe to know credit infomation. 
+
+Then in our custom form:
+</code></pre>
+
+<p>%section.register.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      = bootstrap_form_for @user, layout: :horizontal, html: {id: &lsquo;payment-form&rsquo;} do |f|
+        %header
+          %h1 Register
+        %fieldset
+          = f.email_field :email, label: &ldquo;Email Address&rdquo;
+          = f.password_field :password
+          = f.text_field :full_name, label: &lsquo;Full Name&rsquo;
+          = hidden_field_tag :token, @invitation_token
+        %fieldset.credit_card
+          %span.payment-errors
+          .form-group
+            %label.control-label.col-sm-2(for=&ldquo;credit_card_number&rdquo;) Credit Card Number
+            .col-sm-6
+              %input.form-control(type=&ldquo;text&rdquo; data-stripe=&ldquo;number&rdquo; id=&ldquo;credit_card_number&rdquo;)
+          .form-group
+            %label.control-label.col-sm-2(for=&ldquo;security_code&rdquo;) Security Code
+            .col-sm-6
+              %input.form-control(type=&ldquo;text&rdquo; data-stripe=&ldquo;cvc&rdquo; id=&ldquo;security_code&rdquo;)
+          .form-group
+            %label.control-label.col-sm-2 Expiration
+            .col-sm-3
+              = select_month(Date.today, {add_month_numbers: true},  class: &lsquo;form-control&rsquo;, data: { stripe: &ldquo;exp-month&rdquo;})
+            .col-sm-2
+              = select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, class: &lsquo;form-control&rsquo;, data: { stripe: &ldquo;exp-year&rdquo;} )
+        %fieldset.actions.control-group.col-sm-offset-2
+          .controls
+            %input(type=&ldquo;submit&rdquo; value=&ldquo;Sign Up&rdquo; class=&ldquo;btn btn-default&rdquo;)
+&#8220;`</p>
+
+<h3>Setting in Controller Action</h3>
+
+<pre><code># Set your secret key: remember to change this to your live secret key in production
+# See your keys here https://dashboard.stripe.com/account/apikeys
+Stripe.api_key = "sk_test_yNosIrCvrAuVttjO60dxy7zy"
+
+# Get the credit card details submitted by the form
+token = params[:stripeToken]
+
+# Create the charge on Stripe's servers - this will charge the user's card
+begin
+  charge = Stripe::Charge.create(
+    :amount =&gt; 1000, # amount in cents, again
+    :currency =&gt; "usd",
+    :source =&gt; token,
+    :description =&gt; "Example charge"
+  )
+rescue Stripe::CardError =&gt; e
+  # The card has been declined
+end
+</code></pre>
+
+<p>Now we click submit button, charge will be deliever to Stripe.</p>
+
+<blockquote><p>Notice again, don&rsquo;t foget to set ENV on Circle CI or Heroku if you deploy code to there.</p></blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week6 (1/2)]]></title>
+    <link href="http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week6/"/>
+    <updated>2015-05-06T08:57:30+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week6</id>
+    <content type="html"><![CDATA[<p>These week we have two main part: <a href="https://github.com/carrierwaveuploader/carrierwave">CarrierWave</a> for uploading images as an admin, <a href="http://stripe.com">Stripe</a> for payments</p>
+
+<h1>CarrierWave for uploading images as an Admin</h1>
+
+<h3>Admin</h3>
+
+<p>In order to controll user is a admin or not, the best practice is to build a admin its own self routes and controllers.</p>
+
+<p>In <code>routes.rb</code></p>
+
+<pre><code>namespace :admin do
+  resources :todos, only: [:index, :destroy]
+end
+</code></pre>
+
+<p>Then <code>rake routes</code>, we got</p>
+
+<pre><code>admin_todos  admin/todos  admin/todos#index
+</code></pre>
+
+<p>Build the controller file in the path: <code>/controllers/admin/todos_controller.rb</code></p>
+
+<pre><code>class Admin::TodosController &lt; ApplicationController
+end
+</code></pre>
+
+<blockquote><p>It&rsquo;s aother rails convention for the path <code>/controllers/admin/</code> and class name <code>Admin::</code>.</p></blockquote>
+
+<p>Then add <code>admin</code> column to migration</p>
+
+<p><code>$ rails g migration add_admin_to_users</code></p>
+
+<pre><code>add_column :users, :admin, :boolean
+</code></pre>
+
+<p>Rails will create a method for all boolean attributes: <code>admin?</code></p>
+
+<h3>Secure Access for different roles</h3>
+
+<p>Next, we can create a <code>AdminController</code> for all other controllers belongs to Admin.</p>
+
+<pre><code>class AdminController &lt; ApplicationController
+  before_filter :ensure_admin
+
+  def ensure_admin
+    if !current_user.admin?
+      #do something
+    end
+  end
+end
+</code></pre>
+
+<p>Then other controllers belong to Admin could be like this:</p>
+
+<pre><code>class Admin::TodoController &lt; AdminController
+  def index
+    @todo = Todo.all
+  end
+end
+</code></pre>
+
+<h3>CarrierWave upload images to AWS S3</h3>
+
+<p>Install gem</p>
+
+<pre><code>gem 'carrierwave'
+gem 'mini_magick'
+</code></pre>
+
+<p>Add column to stored migration, for example: videos</p>
+
+<p><code>$rails migration add_large_cover_to_videos</code></p>
+
+<pre><code>add_column :videos, :large_cover, :string
+</code></pre>
+
+<p>In <code>models/video.rb</code></p>
+
+<pre><code>mount_uploader :large_cover, LargeCoverUploader
+</code></pre>
+
+<p>Create <code>app/uploaders/large_cover_uploader.rb</code>, and use <code>mini_magick to resize image</code></p>
+
+<pre><code>class LargeCoverUploader &lt; CarrierWave::Uploader::Base
+  include CarrierWave::MiniMagick
+  process :resize_to_fill =&gt; [665, 375]
+end
+</code></pre>
+
+<p>Finally, set CarrierWave for AWS S3, in <code>initializers/carrier_wave.rb</code></p>
+
+<pre><code>CarrierWave.configure do |config|
+  config.fog_provider = 'fog/aws'                        # required
+  config.fog_credentials = {
+    provider:              'AWS',                        # required
+    aws_access_key_id:     'xxx',                        # required
+    aws_secret_access_key: 'yyy',                        # required
+    region:                'eu-west-1',                  # optional, defaults to 'us-east-1'
+    host:                  's3.example.com',             # optional, defaults to nil
+    endpoint:              'https://s3.example.com:8080' # optional, defaults to nil
+  }
+  config.fog_directory  = 'name_of_directory'                          # required
+  config.fog_public     = false                                        # optional, defaults to true
+  config.fog_attributes = { 'Cache-Control' =&gt; "max-age=#{365.day.to_i}" } # optional, defaults to {}
+end
+</code></pre>
+
+<p>Unfortunately, my AWS account has been suspended, so I change the code to store at local</p>
+
+<pre><code>CarrierWave.configure do |config|
+  if Rails.env.staging? || Rails.env.production?
+    config.storage = :file
+    config.enable_processing = true
+  else
+    config.storage = :file
+    config.enable_processing = Rails.env.development?
+  end
+end
+</code></pre>
+
+<p>This code also show that if you want to deal with different environment for <code>product</code> or <code>development</code></p>
+
+<blockquote><p>Usually, only upload small size files direct through web page, we can use other AWS S3 client to upload big file.</p></blockquote>
+
+<p>Another tip here, don&rsquo;t forget to add new attributes to <code>params.require</code>, otherwise upload will be failed.</p>
+
+<pre><code>params.require(:video).permit(:title, :description, :category_id, :large_cover, :small_cover, :video_url)
+</code></pre>
+
+<h3>RSpec Feature Test</h3>
+
+<p>Key Points:</p>
+
+<ul>
+<li>attach_file</li>
+<li>have_selector</li>
+</ul>
+
+
+<pre><code>feature 'Admin adds new video' do
+  scenario 'Admin successfully adds a new video' do
+    admin = Fabricate(:admin)
+    dramas = Fabricate(:category, title: 'Dramas')
+
+    sign_in(admin)
+    visit new_admin_video_path
+
+    fill_in 'Title', with: 'Monk'
+    select 'Dramas', from: 'Category'
+    fill_in 'Description', with: 'SF detective'
+    attach_file 'Large cover', 'spec/support/uploads/monk_large.jpg'
+    attach_file 'Small cover', 'spec/support/uploads/monk.jpg'
+    fill_in 'Video URL', with: 'http://www.example.com/video.mp4'
+    click_button 'Add Video'
+
+    sign_out
+    sign_in
+
+    visit video_path(Video.first)
+    expect(page).to have_selector("img[src='/uploads/monk_large.jpg']")
+    expect(page).to have_selector("a[href='http://www.example.com/video.mp4']")
+  end
+end
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week5 (2/2)]]></title>
@@ -405,249 +730,6 @@ expect(ActionMailer::Base.deliveries.last.to).to eq([user_attributes["email"]])
 <h3>Update database, use rake tasks</h3>
 
 <p>An advice from TA Tomtomecek, I update existing data in model User, and he suggest me to use <a href="http://guides.rubyonrails.org/command_line.html#custom-rake-tasks">custom rake tasks</a> to do that. I&rsquo;ve not taste that yet, just leave a memo here to remember.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week3]]></title>
-    <link href="http://www.tomohung.com/blog/2015/03/17/reflection-to-tealeaf-course3-week3/"/>
-    <updated>2015-03-17T09:41:26+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/03/17/reflection-to-tealeaf-course3-week3</id>
-    <content type="html"><![CDATA[<p><a href="http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2/">In week 2</a>, Tealeaf talked about how to test controller, and this week, I got a more comprehensive test consideration for controller and user interaction.</p>
-
-<h3>For Controller Test</h3>
-
-<ul>
-<li>Everytime add a function feature, also need to add a test for it.</li>
-<li>Everytime find a bug, also add a test for it.</li>
-</ul>
-
-
-<h3>DRY</h3>
-
-<p>RSpec also offer two ways to DRY code.</p>
-
-<h4>- Macro</h4>
-
-<pre><code>$ mkdir spec/support
-$ touch macros.rb
-</code></pre>
-
-<p>And we can move repeatedly code into here, for example, we usually need to set a login user:</p>
-
-<pre><code>def set_current_user(user = nil)
-  session[:user_id] = (user || Fabricate(:user)).id
-end
-</code></pre>
-
-<p>and find user</p>
-
-<pre><code>def current_user
-  User.find(session[:user_id])
-end
-</code></pre>
-
-<h4>- Shared Examples</h4>
-
-<pre><code>$ touch spec/support/share_examples.rb
-</code></pre>
-
-<p>A test method may be called through different controllers:</p>
-
-<pre><code>shared_examples 'requre_sign_in' do
-  it 'redirects to the root page'
-    action
-    expect(response).to redirect_to root_path
-  end
-end
-</code></pre>
-
-<p>Be careful: <code>action</code> is a <strong>variable</strong>, then when using it:</p>
-
-<pre><code>it_behaves_like 'require_sign_in' do
-  let(:action) { get :index }
-end
-</code></pre>
-
-<h3>Feature Specs</h3>
-
-<p>There are two methods to test user interactions, one is <code>request spec</code> and this is deprecated by <strong>Capybara</strong>. The other one is <code>feature specs</code>, recommended by <strong>Capybara</strong>.</p>
-
-<p><strong>Capybara</strong> offer functions that we can click link/button, fill text field&hellip;etc, to interactive with UI.</p>
-
-<h4>- Install Capybara gem</h4>
-
-<pre><code>group :test
-  gem 'capybara'
-end
-</code></pre>
-
-<p>Also add this line to test helper file</p>
-
-<pre><code>requrire 'capybara/rails'
-</code></pre>
-
-<p>And</p>
-
-<pre><code>$mkdir spec/features
-$touch user_signs_in_spec.rb
-</code></pre>
-
-<h4>- A sample for user operation:</h4>
-
-<pre><code>feature 'user interacts with the queue' do 
-
-  scenario 'user adds and reorder videos in the queue' do
-    category    = Fabricate(:category)
-    monk        = Fabricate(:video, title: 'monk', category: category)
-    futurama    = Fabricate(:video, title: 'futurama', category: category)
-    south_park  = Fabricate(:video, title: 'south park', category: category)
-
-    sign_in
-    expect(page).to have_content 'You have signed in.'
-
-    add_video_to_queue(monk)
-    expect(page).to have_content(monk.title)
-
-    visit video_path(monk)
-    expect(page).not_to have_content('+ My Queue')
-
-    add_video_to_queue(futurama)
-    add_video_to_queue(south_park)
-
-    set_video_order(monk, 3)
-    set_video_order(futurama, 1)
-    set_video_order(south_park, 2)
-
-    expect_video_order(monk, 3)
-    expect_video_order(futurama, 1)
-    expect_video_order(south_park, 2)
-  end
-end
-
-def add_video_to_queue(video)
-  visit home_path
-  find("a[href='/videos/#{video.id}']").click
-  expect(page).to have_content(video.title)
-  click_link '+ My Queue'
-end
-
-def set_video_order(video, order)
-  within(:xpath, "//tr[contains(.,'#{video.title}')]") do
-    fill_in 'queue_items[][position]', with: order
-  end
-end
-
-def expect_video_order(video, order)
-  expect(find(:xpath, "//tr[contains(.,'#{video.title}')]//input[@type='text']").value).to eq(order.to_s)
-end
-</code></pre>
-
-<p>here I choose to use <code>:xpath</code>.</p>
-
-<h4>- One level for scenario</h4>
-
-<p>In above sample, I extract methods <code>add_video_to_queue</code>, <code>set_video_order</code>, and <code>expect_video_order</code>. This is we want to keep a principle <code>Abstract one level for scenario</code>. Encapsulating logic code and keep main code readable on the same abstract level can help reader to review.</p>
-
-<h3>Rails Conventions</h3>
-
-<h4>- Merge Params</h4>
-
-<pre><code>= form_tag update_queue_path do
-  ...
-  %td= text_field_tag 'queue_items[][position]', queue_item.position
-  =hidden_field_tag 'queue_items[][id]', queue_item.id
-
-  =submit_tag 'Update'
-</code></pre>
-
-<p>Then we will get a hash value <code>params[queue_items] = {position: xxx, id: xxx}</code></p>
-
-<h4>- select_tag</h4>
-
-<pre><code>%td= select_tag 'queue_items[][rating]', options_for_video_reviews(queue_item.rating), include_blank: true
-</code></pre>
-
-<p>And <code>options_for_video_reviews</code>:</p>
-
-<pre><code>def options_for_video_reviews(selected = nil)
-  options_for_select((1..5).map { |num| [pluralize(num, 'Star'), num]}, selected)
-end
-</code></pre>
-
-<p>Be careful that <code>[pluralize(num, 'Star'), num]</code> is a pair value.</p>
-
-<h4>- ActiveRecord Transactions</h4>
-
-<p>A sample from Rails Tutorial</p>
-
-<pre><code>ActiveRecord::Base.transaction do
-  david.withdrawal(100)
-  mary.deposit(100)
-end
-</code></pre>
-
-<p>If any one of <code>david.withdrawl</code> or <code>mary.deposit</code> raise an exception(<strong>Be careful: there must be a raising error to trigger transaction</strong>), all database record in this action will be rollback. It deal with batch action with database. So I have to care about what functions will raise an exception when fail. Ex. <code>update</code> return a fail, and <code>update!</code> raise an exception.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week2]]></title>
-    <link href="http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2/"/>
-    <updated>2015-03-11T11:21:17+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2</id>
-    <content type="html"><![CDATA[<p>There are 3 kinds of test: <code>Unit</code>, <code>Functional</code>, <code>Integration</code>. In <a href="http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1/">week 1</a>, we test <strong>Model</strong>, this should belong to <code>Unit test</code> . And this week we test <strong>Controller</strong>, this should belong to <code>Functional test</code>. I guess it should be <code>Integration test</code> when we move into part of <strong>View</strong> test.</p>
-
-<p>I have to heavily rely on solution videos, there are two main reasons:</p>
-
-<ol>
-<li><p>I&rsquo;m not familiar with <code>what to test</code>, because I&rsquo;m a starter for TDD. It&rsquo;s a big conversion <strong>from test laster to test driven</strong>.</p></li>
-<li><p>I&rsquo;m not familiar with <code>RSpec</code>. There are some tricks for test controllers when using RSpec.</p></li>
-</ol>
-
-
-<p>For example, when we test `QueueItemsController#create&#8217;, there are 7 tests:</p>
-
-<ul>
-<li>it &lsquo;redirects to my queue page&rsquo;</li>
-<li>it &lsquo;creates a queue item&rsquo;</li>
-<li>it &lsquo;creates the queue item associated with video&rsquo;</li>
-<li>it &lsquo;creates the queue item associated with current user&rsquo;</li>
-<li>it &lsquo;puts the video as the last one in the queue&rsquo;</li>
-<li>it &lsquo;does not add the video in the queue if already existed in the queue&rsquo;</li>
-<li>it &lsquo;redirects to sign in page if unauthenticated&rsquo;</li>
-</ul>
-
-
-<p>A simple action needs to do such lots of tests!!</p>
-
-<p>Or here is for <strong>Model</strong> methods: <code>search_by_title</code>:</p>
-
-<ul>
-<li>it &lsquo;returns empty array if no match&rsquo;</li>
-<li>it &lsquo;returns an array if one video&rsquo;</li>
-<li>it &lsquo;returns an array if partial match&rsquo;</li>
-<li>it &lsquo;returns an array of all matches ordered by DESC&rsquo;</li>
-<li>it &lsquo;returns an empty array for search an empty string&rsquo;</li>
-</ul>
-
-
-<p>To test every possible situations is not an easy work.</p>
-
-<p>Brandon also metioned me that care about using <code>let</code> and <code>before</code>. Because of lots of tests in spec files, we may miss some pre-declare vars by using <code>let</code> or <code>before</code>. Sometimes, it may be better do not clean duplicated codes for code readability.</p>
-
-<p>Second, extract methods into <strong>Model</strong>. ex:</p>
-
-<pre><code class="ruby user.rb">  def queue_include?(video)
-    queue_items.map(&amp;:video).include?(video)
-  end
-</code></pre>
-
-<p>then, I can use this method everywhere in my app.</p>
-
-<h3>Conclusion</h3>
-
-<p>Still on the way to be more familiar to do TDD. :-)</p>
 ]]></content>
   </entry>
   

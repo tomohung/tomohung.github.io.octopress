@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Reflection to Tealeaf Course3 Week3 - The Life Alchemist</title>
+  <title>Reflection to Tealeaf Course3 Week6 (1/2) - The Life Alchemist</title>
   <meta name="author" content="Tomo">
 
   
@@ -14,15 +14,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.tomohung.com/blog/2015/03/17/reflection-to-tealeaf-course3-week3">
+  <link rel="canonical" href="http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week6">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="The Life Alchemist" type="application/atom+xml">
 
   <!-- http://opengraphprotocol.org/ -->
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://www.tomohung.com/blog/2015/03/17/reflection-to-tealeaf-course3-week3">
-  <meta property="og:title" content="Reflection to Tealeaf Course3 Week3 - The Life Alchemist">
+  <meta property="og:url" content="http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week6">
+  <meta property="og:title" content="Reflection to Tealeaf Course3 Week6 (1/2) - The Life Alchemist">
   
 
   <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
@@ -126,68 +126,66 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-17T09:41:26+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-03-17</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-06T08:57:30+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-06</time>
         
       </p>
     
     
     <h1 class="entry-title" itemprop="name headline">
-        Reflection to Tealeaf Course3 Week3
+        Reflection to Tealeaf Course3 Week6 (1/2)
         
     </h1>
     
   </header>
 
 
-<div class="entry-content clearfix" itemprop="articleBody description"><p><a href="http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2/">In week 2</a>, Tealeaf talked about how to test controller, and this week, I got a more comprehensive test consideration for controller and user interaction.</p>
+<div class="entry-content clearfix" itemprop="articleBody description"><p>These week we have two main part: <a href="https://github.com/carrierwaveuploader/carrierwave">CarrierWave</a> for uploading images as an admin, <a href="http://stripe.com">Stripe</a> for payments</p>
 
-<h3>For Controller Test</h3>
+<h1>CarrierWave for uploading images as an Admin</h1>
 
-<ul>
-<li>Everytime add a function feature, also need to add a test for it.</li>
-<li>Everytime find a bug, also add a test for it.</li>
-</ul>
+<h3>Admin</h3>
 
+<p>In order to controll user is a admin or not, the best practice is to build a admin its own self routes and controllers.</p>
 
-<h3>DRY</h3>
-
-<p>RSpec also offer two ways to DRY code.</p>
-
-<h4>- Macro</h4>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ mkdir spec/support
-</span><span class='line'>$ touch macros.rb</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And we can move repeatedly code into here, for example, we usually need to set a login user:</p>
+<p>In <code>routes.rb</code></p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>def set_current_user(user = nil)
-</span><span class='line'>  session[:user_id] = (user || Fabricate(:user)).id
+</pre></td><td class='code'><pre><code class=''><span class='line'>namespace :admin do
+</span><span class='line'>  resources :todos, only: [:index, :destroy]
 </span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
 
 
-<p>and find user</p>
+<p>Then <code>rake routes</code>, we got</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>admin_todos  admin/todos  admin/todos#index</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Build the controller file in the path: <code>/controllers/admin/todos_controller.rb</code></p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>def current_user
-</span><span class='line'>  User.find(session[:user_id])
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Admin::TodosController &lt; ApplicationController
 </span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
 
 
-<h4>- Shared Examples</h4>
+<blockquote><p>It&rsquo;s aother rails convention for the path <code>/controllers/admin/</code> and class name <code>Admin::</code>.</p></blockquote>
+
+<p>Then add <code>admin</code> column to migration</p>
+
+<p><code>$ rails g migration add_admin_to_users</code></p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ touch spec/support/share_examples.rb</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>add_column :users, :admin, :boolean</span></code></pre></td></tr></table></div></figure>
 
 
-<p>A test method may be called through different controllers:</p>
+<p>Rails will create a method for all boolean attributes: <code>admin?</code></p>
+
+<h3>Secure Access for different roles</h3>
+
+<p>Next, we can create a <code>AdminController</code> for all other controllers belongs to Admin.</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -195,55 +193,143 @@
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>shared_examples 'requre_sign_in' do
-</span><span class='line'>  it 'redirects to the root page'
-</span><span class='line'>    action
-</span><span class='line'>    expect(response).to redirect_to root_path
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class AdminController &lt; ApplicationController
+</span><span class='line'>  before_filter :ensure_admin
+</span><span class='line'>
+</span><span class='line'>  def ensure_admin
+</span><span class='line'>    if !current_user.admin?
+</span><span class='line'>      #do something
+</span><span class='line'>    end
 </span><span class='line'>  end
 </span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Be careful: <code>action</code> is a <strong>variable</strong>, then when using it:</p>
+<p>Then other controllers belong to Admin could be like this:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>it_behaves_like 'require_sign_in' do
-</span><span class='line'>  let(:action) { get :index }
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Admin::TodoController &lt; AdminController
+</span><span class='line'>  def index
+</span><span class='line'>    @todo = Todo.all
+</span><span class='line'>  end
 </span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
 
 
-<h3>Feature Specs</h3>
+<h3>CarrierWave upload images to AWS S3</h3>
 
-<p>There are two methods to test user interactions, one is <code>request spec</code> and this is deprecated by <strong>Capybara</strong>. The other one is <code>feature specs</code>, recommended by <strong>Capybara</strong>.</p>
+<p>Install gem</p>
 
-<p><strong>Capybara</strong> offer functions that we can click link/button, fill text field&hellip;etc, to interactive with UI.</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem 'carrierwave'
+</span><span class='line'>gem 'mini_magick'</span></code></pre></td></tr></table></div></figure>
 
-<h4>- Install Capybara gem</h4>
+
+<p>Add column to stored migration, for example: videos</p>
+
+<p><code>$rails migration add_large_cover_to_videos</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>add_column :videos, :large_cover, :string</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In <code>models/video.rb</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mount_uploader :large_cover, LargeCoverUploader</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Create <code>app/uploaders/large_cover_uploader.rb</code>, and use <code>mini_magick to resize image</code></p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>group :test
-</span><span class='line'>  gem 'capybara'
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class LargeCoverUploader &lt; CarrierWave::Uploader::Base
+</span><span class='line'>  include CarrierWave::MiniMagick
+</span><span class='line'>  process :resize_to_fill =&gt; [665, 375]
 </span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Also add this line to test helper file</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>requrire 'capybara/rails'</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And</p>
+<p>Finally, set CarrierWave for AWS S3, in <code>initializers/carrier_wave.rb</code></p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$mkdir spec/features
-</span><span class='line'>$touch user_signs_in_spec.rb</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>CarrierWave.configure do |config|
+</span><span class='line'>  config.fog_provider = 'fog/aws'                        # required
+</span><span class='line'>  config.fog_credentials = {
+</span><span class='line'>    provider:              'AWS',                        # required
+</span><span class='line'>    aws_access_key_id:     'xxx',                        # required
+</span><span class='line'>    aws_secret_access_key: 'yyy',                        # required
+</span><span class='line'>    region:                'eu-west-1',                  # optional, defaults to 'us-east-1'
+</span><span class='line'>    host:                  's3.example.com',             # optional, defaults to nil
+</span><span class='line'>    endpoint:              'https://s3.example.com:8080' # optional, defaults to nil
+</span><span class='line'>  }
+</span><span class='line'>  config.fog_directory  = 'name_of_directory'                          # required
+</span><span class='line'>  config.fog_public     = false                                        # optional, defaults to true
+</span><span class='line'>  config.fog_attributes = { 'Cache-Control' =&gt; "max-age=#{365.day.to_i}" } # optional, defaults to {}
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
 
 
-<h4>- A sample for user operation:</h4>
+<p>Unfortunately, my AWS account has been suspended, so I change the code to store at local</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>CarrierWave.configure do |config|
+</span><span class='line'>  if Rails.env.staging? || Rails.env.production?
+</span><span class='line'>    config.storage = :file
+</span><span class='line'>    config.enable_processing = true
+</span><span class='line'>  else
+</span><span class='line'>    config.storage = :file
+</span><span class='line'>    config.enable_processing = Rails.env.development?
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This code also show that if you want to deal with different environment for <code>product</code> or <code>development</code></p>
+
+<blockquote><p>Usually, only upload small size files direct through web page, we can use other AWS S3 client to upload big file.</p></blockquote>
+
+<p>Another tip here, don&rsquo;t forget to add new attributes to <code>params.require</code>, otherwise upload will be failed.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>params.require(:video).permit(:title, :description, :category_id, :large_cover, :small_cover, :video_url)</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>RSpec Feature Test</h3>
+
+<p>Key Points:</p>
+
+<ul>
+<li>attach_file</li>
+<li>have_selector</li>
+</ul>
+
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -269,136 +355,31 @@
 <span class='line-number'>22</span>
 <span class='line-number'>23</span>
 <span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>feature 'user interacts with the queue' do 
+</pre></td><td class='code'><pre><code class=''><span class='line'>feature 'Admin adds new video' do
+</span><span class='line'>  scenario 'Admin successfully adds a new video' do
+</span><span class='line'>    admin = Fabricate(:admin)
+</span><span class='line'>    dramas = Fabricate(:category, title: 'Dramas')
 </span><span class='line'>
-</span><span class='line'>  scenario 'user adds and reorder videos in the queue' do
-</span><span class='line'>    category    = Fabricate(:category)
-</span><span class='line'>    monk        = Fabricate(:video, title: 'monk', category: category)
-</span><span class='line'>    futurama    = Fabricate(:video, title: 'futurama', category: category)
-</span><span class='line'>    south_park  = Fabricate(:video, title: 'south park', category: category)
+</span><span class='line'>    sign_in(admin)
+</span><span class='line'>    visit new_admin_video_path
 </span><span class='line'>
+</span><span class='line'>    fill_in 'Title', with: 'Monk'
+</span><span class='line'>    select 'Dramas', from: 'Category'
+</span><span class='line'>    fill_in 'Description', with: 'SF detective'
+</span><span class='line'>    attach_file 'Large cover', 'spec/support/uploads/monk_large.jpg'
+</span><span class='line'>    attach_file 'Small cover', 'spec/support/uploads/monk.jpg'
+</span><span class='line'>    fill_in 'Video URL', with: 'http://www.example.com/video.mp4'
+</span><span class='line'>    click_button 'Add Video'
+</span><span class='line'>
+</span><span class='line'>    sign_out
 </span><span class='line'>    sign_in
-</span><span class='line'>    expect(page).to have_content 'You have signed in.'
 </span><span class='line'>
-</span><span class='line'>    add_video_to_queue(monk)
-</span><span class='line'>    expect(page).to have_content(monk.title)
-</span><span class='line'>
-</span><span class='line'>    visit video_path(monk)
-</span><span class='line'>    expect(page).not_to have_content('+ My Queue')
-</span><span class='line'>
-</span><span class='line'>    add_video_to_queue(futurama)
-</span><span class='line'>    add_video_to_queue(south_park)
-</span><span class='line'>
-</span><span class='line'>    set_video_order(monk, 3)
-</span><span class='line'>    set_video_order(futurama, 1)
-</span><span class='line'>    set_video_order(south_park, 2)
-</span><span class='line'>
-</span><span class='line'>    expect_video_order(monk, 3)
-</span><span class='line'>    expect_video_order(futurama, 1)
-</span><span class='line'>    expect_video_order(south_park, 2)
+</span><span class='line'>    visit video_path(Video.first)
+</span><span class='line'>    expect(page).to have_selector("img[src='/uploads/monk_large.jpg']")
+</span><span class='line'>    expect(page).to have_selector("a[href='http://www.example.com/video.mp4']")
 </span><span class='line'>  end
-</span><span class='line'>end
-</span><span class='line'>
-</span><span class='line'>def add_video_to_queue(video)
-</span><span class='line'>  visit home_path
-</span><span class='line'>  find("a[href='/videos/#{video.id}']").click
-</span><span class='line'>  expect(page).to have_content(video.title)
-</span><span class='line'>  click_link '+ My Queue'
-</span><span class='line'>end
-</span><span class='line'>
-</span><span class='line'>def set_video_order(video, order)
-</span><span class='line'>  within(:xpath, "//tr[contains(.,'#{video.title}')]") do
-</span><span class='line'>    fill_in 'queue_items[][position]', with: order
-</span><span class='line'>  end
-</span><span class='line'>end
-</span><span class='line'>
-</span><span class='line'>def expect_video_order(video, order)
-</span><span class='line'>  expect(find(:xpath, "//tr[contains(.,'#{video.title}')]//input[@type='text']").value).to eq(order.to_s)
-</span><span class='line'>end
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>here I choose to use <code>:xpath</code>.</p>
-
-<h4>- One level for scenario</h4>
-
-<p>In above sample, I extract methods <code>add_video_to_queue</code>, <code>set_video_order</code>, and <code>expect_video_order</code>. This is we want to keep a principle <code>Abstract one level for scenario</code>. Encapsulating logic code and keep main code readable on the same abstract level can help reader to review.</p>
-
-<h3>Rails Conventions</h3>
-
-<h4>- Merge Params</h4>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>= form_tag update_queue_path do
-</span><span class='line'>  ...
-</span><span class='line'>  %td= text_field_tag 'queue_items[][position]', queue_item.position
-</span><span class='line'>  =hidden_field_tag 'queue_items[][id]', queue_item.id
-</span><span class='line'>
-</span><span class='line'>  =submit_tag 'Update'</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then we will get a hash value <code>params[queue_items] = {position: xxx, id: xxx}</code></p>
-
-<h4>- select_tag</h4>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>%td= select_tag 'queue_items[][rating]', options_for_video_reviews(queue_item.rating), include_blank: true</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And <code>options_for_video_reviews</code>:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>def options_for_video_reviews(selected = nil)
-</span><span class='line'>  options_for_select((1..5).map { |num| [pluralize(num, 'Star'), num]}, selected)
 </span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
 
-
-<p>Be careful that <code>[pluralize(num, 'Star'), num]</code> is a pair value.</p>
-
-<h4>- ActiveRecord Transactions</h4>
-
-<p>A sample from Rails Tutorial</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ActiveRecord::Base.transaction do
-</span><span class='line'>  david.withdrawal(100)
-</span><span class='line'>  mary.deposit(100)
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If any one of <code>david.withdrawl</code> or <code>mary.deposit</code> raise an exception(<strong>Be careful: there must be a raising error to trigger transaction</strong>), all database record in this action will be rollback. It deal with batch action with database. So I have to care about what functions will raise an exception when fail. Ex. <code>update</code> return a fail, and <code>update!</code> raise an exception.</p>
 </div>
 
 
@@ -422,7 +403,7 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-17T09:41:26+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-03-17</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-06T08:57:30+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-06</time>
           
 
 <span class="glyphicon glyphicon-tags"></span>&nbsp;
@@ -437,7 +418,7 @@
         
           <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/03/17/reflection-to-tealeaf-course3-week3/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/03/17/reflection-to-tealeaf-course3-week3/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week6/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week6/" >Tweet</a>
   
   
   
@@ -449,10 +430,10 @@
         
           <ul class="meta text-muted pager">
             
-            <li class="previous"><a href="/blog/2015/03/11/reflection-to-tealeaf-course3-week2/" title="Previous Post: Reflection to Tealeaf Course3 Week2">&laquo; Reflection to Tealeaf Course3 Week2</a></li>
+            <li class="previous"><a href="/blog/2015/05/04/eloquent-ruby-7/" title="Previous Post: Eloquent Ruby -7">&laquo; Eloquent Ruby -7</a></li>
             
             
-            <li class="next"><a href="/blog/2015/04/07/reflection-to-tealeaf-course3-week4/" title="Next Post: Reflection to Tealeaf Course3 Week4">Reflection to Tealeaf Course3 Week4 &raquo;</a></li>
+            <li class="next"><a href="/blog/2015/05/06/reflection-to-tealeaf-course3-week6-2-slash-2/" title="Next Post: Reflection to Tealeaf Course3 Week6 (2/2)">Reflection to Tealeaf Course3 Week6 (2/2) &raquo;</a></li>
             
           </ul>
         
@@ -485,7 +466,7 @@
     
     <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week6-2-slash-2/">Reflection to Tealeaf Course3 Week6 (2/2)</a>
     
-    <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week6/">Reflection to Tealeaf Course3 Week6 (1/2)</a>
+    <a class="list-group-item active" href="/blog/2015/05/06/reflection-to-tealeaf-course3-week6/">Reflection to Tealeaf Course3 Week6 (1/2)</a>
     
     <a class="list-group-item " href="/blog/2015/05/04/eloquent-ruby-7/">Eloquent Ruby -7</a>
     
@@ -537,8 +518,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://www.tomohung.com/blog/2015/03/17/reflection-to-tealeaf-course3-week3/';
-        var disqus_url = 'http://www.tomohung.com/blog/2015/03/17/reflection-to-tealeaf-course3-week3/';
+        var disqus_identifier = 'http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week6/';
+        var disqus_url = 'http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week6/';
         var disqus_script = 'embed.js';
       
     (function () {
