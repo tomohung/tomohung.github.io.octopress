@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-05-06T20:04:39+08:00</updated>
+  <updated>2015-05-06T20:10:18+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -552,6 +552,8 @@ production:
   STRIPE_SECRET_KEY: sk_live_xxxxxx
   STRIPE_PUBLISHABLE_KEY: pk_live_xxxxxxxx
 </code></pre>
+
+<blockquote><p>If Stripe account doesn&rsquo;t activate, we only can use test key <code>sk_test_xxxxxxx</code> even ENV = production</p></blockquote>
 
 <p>I also add this file <code>config/initailizers/figaro.rb</code></p>
 
