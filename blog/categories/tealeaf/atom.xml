@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tealeaf | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/tealeaf/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-05-06T11:53:23+08:00</updated>
+  <updated>2015-05-06T20:01:42+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -12,6 +12,497 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week7 (3/3)]]></title>
+    <link href="http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week7-3-slash-3/"/>
+    <updated>2015-05-06T17:22:47+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week7-3-slash-3</id>
+    <content type="html"><![CDATA[<h1>Messsage Expectation</h1>
+
+<p>We has metioned <a href="http://tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week7">Test Double at post (1/3)</a>, and here is another kind of Test Double, called <code>Mock Objects</code>.</p>
+
+<blockquote><p>Assert communication, not response</p></blockquote>
+
+<p>In previous post, we have moved the code into <code>UserSignup</code> services obejct and test it. And here all we need to test is ensure that <code>:sign_up</code> method is called in <code>UsersController#create</code>.</p>
+
+<pre><code>describe UsersController do
+  describe 'POST create' do
+    context 'with valid input' do
+
+      it 'should logged_in if create user' do
+        result = double(:sign_up, successful?: true)
+        expect_any_instance_of(UserSignup).to receive(:sign_up).and_return(result)
+        expect_any_instance_of(User).to receive(:id).and_return(1)
+        post :create, user: Fabricate.attributes_for(:user)
+        expect(session[:user_id]).to eq(1)
+      end
+    end
+  end
+end
+</code></pre>
+
+<p><code>expect_any_instance_of(UserSignup).to receive(:sign_up).and_return(result)</code> is called <code>Message Expectation</code> in RSpec, a kind of <code>Mock Object</code>.</p>
+
+<p>Refer to RSpec, it defines</p>
+
+<blockquote><h3>Mock Objects and Test Stubs</h3>
+
+<p>The names Mock Object and Test Stub suggest specialized Test Doubles. i.e. a Test Stub is a Test Double that only supports method stubs, and a Mock Object is a Test Double that supports message expectations and method stubs.</p>
+
+<p>There is a lot of overlapping nomenclature here, and there are many variations of these patterns (fakes, spies, etc). Keep in mind that most of the time we&rsquo;re talking about method-level concepts that are variations of method stubs and message expectations, and we&rsquo;re applying to them to one generic kind of object: a Test Double.</p></blockquote>
+
+<h1>Test Minimalist</h1>
+
+<p>Here we got 3 resources of discussion test.</p>
+
+<ul>
+<li><a href="https://www.youtube.com/watch?v=R9FOchgTtLM">Why you don&rsquo;t get mock objects by Gregory</a></li>
+<li><a href="http://martinfowler.com/articles/mocksArentStubs.html">Mock Aren&rsquo;t Stub by Mark Folwer</a></li>
+<li><a href="https://www.youtube.com/watch?v=URSWYvyc42M">The Magic tricks of Testing by Sandi Mets</a></li>
+</ul>
+
+
+<p>Summary for these three resources.</p>
+
+<p>I use Sandi&rsquo;s picture for the start:</p>
+
+<p><img class="<a" src="href="http://jnoconor.github.io/images/unit-testing-chart-sandi-metz.png">http://jnoconor.github.io/images/unit-testing-chart-sandi-metz.png</a>&#8221;></p>
+
+<p>Use this week assignment, class <code>UserSignup</code> for example:</p>
+
+<ul>
+<li><p>Incoming Query: We test UserSignup method <code>sign_up</code>, and expect it returns an successful object with valid info. This spec is testing this object state.</p></li>
+<li><p>Incoming Command: We also test UserSignup method <code>sign_up</code>, and expect it should create an user with valid info. This is what Sandi said: side effects for outside.</p></li>
+</ul>
+
+
+<blockquote><p>Incoming Command and Incoming Query are all what Mark Folwer said State or Stub or Classical.</p></blockquote>
+
+<ul>
+<li><p>Sent to Self: According to Sandi&rsquo;s opinion, it&rsquo;s not necessary to test all private methods in class. Maybe for the complex method, we should think if we can abstract some logic into a new class, and give that class another tests if we need it.</p></li>
+<li><p>Outgoing Query: Sandi ignore this, I guess she means that once the object send a new query to the other object, all we need to do is make sure that the other object works fine. And this should be test on that object, so we don&rsquo;t need to test outgoing query.</p></li>
+<li><p>Outgoing Command: Once we let an object send a message to the other object do some side effects, all we need to do is make sure that this object do send a message. And this is method message expectation in RSpec, also Mark Folwer said behavior or Mockist or &lsquo;Mock&rsquo;.</p></li>
+</ul>
+
+
+<p>Gregory and Sandi all said that Mock Object can loose each objects association when testing. Once we are testing behavior( or maybe I can say testing interface), we don&rsquo;t need to bind the test and method with specific variable, but bind with an interface. It looks like apply OO concept on testing - try to loose connection with each objects, also loose each object&rsquo;s tests.</p>
+
+<p>Kevin also metions this:</p>
+
+<blockquote><p>a pure &ldquo;mockist&rdquo; way of doing test can be difficult in Rails apps, because in rails apps persistence is handled by the framework and for small apps most of object collaboration / message sending are about persistence. If you mock those interfaces, you end up mocking the guts of rails and that typically doesn&rsquo;t end up well.  this is also why we only touch this topic in the context of non rails objects like service objects.</p></blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week7 (2/3)]]></title>
+    <link href="http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week7-2/"/>
+    <updated>2015-05-06T15:42:37+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week7-2</id>
+    <content type="html"><![CDATA[<h1>Beyond MVC</h1>
+
+<p>Rails built on MVC (Model / View / Controller) structure. And something get complex if we got more code and logic. This is why we need design patterns.</p>
+
+<h2>Decorators</h2>
+
+<p>Some tips from gem <code>Draper</code>:</p>
+
+<blockquote><p>Without Draper, this functionality might have been tangled up in procedural helpers or adding bulk to your models. With Draper decorators, you can wrap your models with presentation-related logic to organise - and test - this layer of your app much more effectively.</p></blockquote>
+
+<p>Or</p>
+
+<blockquote><p>Decorators are the ideal place to:
+- format complex data for user display
+- define commonly-used representations of an object, like a <code>name</code> method that combine <code>first_name</code> and <code>last_name</code> attributes.
+- mark up attributes with a little semantic HTML, like turning a url fiedl into a hyperlink.</p></blockquote>
+
+<p>First, install gem</p>
+
+<pre><code>gem 'draper'
+</code></pre>
+
+<pre><code class="ruby app/decorator/video_decorator.rb">class VideoDecorator &lt; Draper::Decorator
+  delegate_all
+
+  def rating
+    "Rating: " + (object.rating.present? ? "#{object.rating}/5.0" : "NA")
+  end
+end
+</code></pre>
+
+<p>And use it in controller</p>
+
+<pre><code class="ruby videos_controller.rb">  def show
+    @video = VideoDecorator.decorate(Vidoe.find(params[:id]))
+  dne
+</code></pre>
+
+<p>In view, just a clear line code.</p>
+
+<pre><code class="ruby app/views/videos/show.html.haml">  = @video.rating
+</code></pre>
+
+<p>The key point here is that we have a model data (rating) associated with view, it&rsquo;s not suitable to put to <code>view helper</code> (some logic with model). That&rsquo;s why here using decorator to encapsulate presentation logic.</p>
+
+<h2>Policy Objects</h2>
+
+<p>Define what is premium user:</p>
+
+<pre><code class="ruby models/user_level_policy.rb">class UserLevelPolicy
+  attr_reader :user
+  def initialize(user)
+    @user = user
+  end
+
+  def premium?
+    user.created_at &lt; Date.new(2010,1,1) || user.plan.premium?
+  end
+end
+</code></pre>
+
+<p>In Controller</p>
+
+<pre><code class="ruby todo_controller.rb">###some code
+
+  if UserLevelPolicy.new(current_user).premium?
+    #do something
+  else
+    #do another thing
+  end
+</code></pre>
+
+<p>Different with Decorators, Policy Ojbects only concern judgement logic into one place, without presentation concerned.</p>
+
+<h2>Domain Objects</h2>
+
+<p>if <code>User</code> has an attribute <code>credit_balance</code>. Then merge those code relative to <code>credit</code> into Domain Object.</p>
+
+<pre><code class="ruby models/credit.rb">class Credit
+  attr_accessor :credit_balance, :user
+
+  def initialize(user)
+    @credit_balance = user.current_credit_balance
+    @user = user
+  end
+
+  def -(number)
+    credit_balance = credit_balance - number
+  end
+
+  def save
+    user.current_credit_balance = credit_balance
+    user.save
+  end
+
+  def depleted?
+    credit_balance &lt; 0
+  end
+
+  def low_balance?
+    credit_balance &lt; 10
+  end
+end
+</code></pre>
+
+<p>Thus <code>Credit.new(current_user)</code> can call methods about credit, and don&rsquo;t need to put these code in model <code>User</code>, or <code>UsersController</code>.</p>
+
+<h2>Service Objects</h2>
+
+<p>We abstract an action as <code>sign up</code> in <code>UsersController#create</code>.</p>
+
+<pre><code class="ruby">class UsersController &lt; ApplicationController
+  def create    
+    @user = User.new(user_params)
+    user_signup_service = UserSignup.new(@user)
+    result = user_signup_service.sign_up(params[:stripeToken], params[:token])
+
+    if result.successful?
+      session[:user_id] = @user.id
+      redirect_to home_path
+    else
+      flash.now[:danger] =  user_signup_service.error_message
+      render :new
+    end
+  end
+end
+</code></pre>
+
+<p>Then create an service object <code>UserSignup</code> to handle this.</p>
+
+<pre><code class="ruby app/service/user_signup.rb">class UserSignup
+
+  attr_reader :error_message
+
+  def initialize(user)
+    @user = user
+  end
+
+  def sign_up(stripe_token = nil, invitation_token = nil)
+    if @user.valid?      
+      charge = customer_charge_user_with_stripe(stripe_token)
+      if charge.success?
+        @user.customer_token = charge.customer_token
+        @user.save
+        set_invitation_following_relationship(invitation_token)
+        AppMailer.delay.send_welcome_email(@user)
+        @status = :success
+        self
+      else
+        @status = :failed
+        @error_message = charge.error_message
+        self
+      end
+    else
+      @status = :failed
+      @error_message = "User info is invalid."
+      self
+    end
+  end
+
+  def successful?
+    @status == :success
+  end
+end
+</code></pre>
+
+<p>There is an article from Code Climate <a href="http://blog.codeclimate.com/blog/2012/10/17/7-ways-to-decompose-fat-activerecord-models/">7 Patterns to Refactor Fat ActiveRecord Models</a></p>
+
+<p>As it metion when to use Service Object:</p>
+
+<ul>
+<li>The action is complex (e.g. closing the books at the end of an accounting period)</li>
+<li>The action reaches across multiple models (e.g. an e-commerce purchase using Order, CreditCard and Customer objects)</li>
+<li>The action interacts with an external service (e.g. posting to social networks)</li>
+<li>The action is not a core concern of the underlying model (e.g. sweeping up outdated data after a certain time period).</li>
+<li>There are multiple ways of performing the action (e.g. authenticating with an access token or password). This is the Gang of Four Strategy pattern.</li>
+</ul>
+
+
+<h2>Some Concept for Object Oriented Design</h2>
+
+<ul>
+<li><p><code>Fat model, skinny controllers</code> makes model uncontrollrable. That&rsquo;s why we need Object Oriented Design</p></li>
+<li><p>YAGNI</p></li>
+</ul>
+
+
+<p>YAGNI means <code>You Aren't Gonna Need It!</code></p>
+
+<p>Don&rsquo;t write the code you haven&rsquo;t need it.</p>
+
+<p>Here is aother post talking about <code>YAGNI</code>, <code>KISS</code>, <code>DRY</code>.
+<a href="http://www.itexico.com/blog/bid/99765/Software-Development-KISS-YAGNI-DRY-3-Principles-to-simplify-your-life">Software Development: KISS, YAGNI &amp; DRY. 3 Principles to simplify your life.</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week7 (1/3)]]></title>
+    <link href="http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week7-1/"/>
+    <updated>2015-05-06T14:20:15+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week7-1</id>
+    <content type="html"><![CDATA[<p>Last week, we use Stripe for charge in UsersController#create, it&rsquo;s a bit little hard code here. We need to wrap it.</p>
+
+<p>Why we need to wrap it into a class:</p>
+
+<ol>
+<li><p>Easy to maintain code, isolate controller&rsquo;s and business logic. Remember we knew that <code>fat models, thin controllers</code>, here is a step further concept, we encapsulate code into <code>models/stripe_wrapper.rb</code></p></li>
+<li><p>Easy to test, isolate test between different object is always a good idea.</p></li>
+</ol>
+
+
+<h1>How to Wrap</h1>
+
+<p>For <code>module StripeWrapper</code> is just a namespace. Then we sort the code in UsersController#create,</p>
+
+<pre><code>module StripeWrapper
+  class Charge
+    attr_reader :response, :status
+
+    def initialize(response, status)
+      @response = response
+      @status = status
+    end
+
+    def self.create(options = {})      
+      begin
+        response = Stripe::Charge.create(
+          amount: options[:amount], # amount in cents, again
+          currency: "usd",
+          source: options[:source],
+          description: options[:description]
+        )
+        new(response, :success)
+      rescue Stripe::CardError =&gt; e
+        new(e, :error)
+      end
+    end
+
+    def success?
+      status == :success
+    end
+
+    def error_message
+      response.message
+    end
+  end
+
+  def self.set_api_key
+    Stripe.api_key = ENV["STRIPE_SECRET_KEY"]
+  end
+end
+</code></pre>
+
+<p>Then we can call method <code>StripeWrapper::Charge(options)</code>.</p>
+
+<p><code>new(repose, :sucess)</code> and <code>new(e, :error)</code> return an <code>StripeWrapper::Charge</code> object result.</p>
+
+<h1>How to Test StripeWrapper</h1>
+
+<p>Test return object <code>charge</code>:</p>
+
+<pre><code>describe StripeWrapper do
+  describe StripeWrapper::Charge do
+    it 'makes successful charge' do
+      charge = StripeWrapper::Charge.create(amount: 100, source: valid_token)
+      expect(charge.response.amount).to eq(100)
+      expect(charge.response.currency).to eq('usd')
+      expect(charge).to be_success
+    end
+  end
+end
+</code></pre>
+
+<p>But there is a problem, everytime we test, it will send a request to Stripe server. We don&rsquo;t want to do this and want to reduce test consumer time, use gme <code>vcr</code>.</p>
+
+<pre><code>$ gem install vcr
+$ gem install webmock
+</code></pre>
+
+<p>Then add <code>vcr: true</code> to spec</p>
+
+<pre><code>it 'make successful charge', vcr: true do
+  #something
+end
+</code></pre>
+
+<p>vcr will record the reponse in <code>spec/cassettes</code>, when next time it find that test emit the same request again, it will not send the request outside to the server, instead of replaying saved response.</p>
+
+<p>Here is vcr setting:</p>
+
+<pre><code class="ruby spec_helper.rb">require 'vcr'
+
+VCR.configure do |c|
+  c.cassette_library_dir = 'spec/cassettes'
+  c.hook_into :webmock
+  c.configure_rspec_metadata!
+  c.ignore_localhost = true
+end
+</code></pre>
+
+<h1>How to test Controller#create</h1>
+
+<p>Since we have test StripeWrapper, we don&rsquo;t want to test it again in Controller, or hit the Stripe server again. Use <a href="http://en.wikipedia.org/wiki/Test_double">Test Double</a> <code>stub</code> here.</p>
+
+<p>For example, if we have a <code>PaymentController</code>:</p>
+
+<pre><code>describe PaymentController do
+  describe 'POST create' do
+    it 'sets the flash success message' do
+      charge = double("charge")
+      charge.stub(:successful?).and_return(true)
+      StripeWrapper::Charge.stub(:create).and_return(charge)
+      post :create, token: "fake_token"
+      expect(flash[:success]).to be_present
+    end
+  end
+end
+</code></pre>
+
+<ol>
+<li>Create a test stub <code>charge</code>, and stub a method <code>successful?</code> and return <code>true</code>.</li>
+<li>stub <code>:create</code> method to <code>StripeWrapper::Charge</code> and return <code>charge</code>.</li>
+</ol>
+
+
+<p>Now we strike <code>post :create</code>, in PaymentController#create when running to code StripeWrapper::Charge, it will return a result <code>charge</code> with <code>charge.successful?</code> is <code>true</code>.</p>
+
+<p>We do this is because make this controller#create test itself independently, and all we need to do is set StripeWrapper return successful.</p>
+
+<blockquote><p>StripeWrapper will make a HTTP request, we can use <code>vcr</code> to record this, but it&rsquo;s not necessary becuase this test is already done in stripe_wrapper_spec. So here we choose to use <code>stub</code>.</p></blockquote>
+
+<h1>How to do Feature Test with JavaScript</h1>
+
+<p>Since we use javascript in view form, we need to turn on <code>:js</code></p>
+
+<pre><code>feature 'visitor make payment' do
+  scenario 'with valid card number', js: true do
+    visit new_payment_path
+    fill_in "Credit Card Number", with "424242424242424242"
+    fill_in "Security Code", with "123"
+    select "3 - March", form: "date_month"
+    select "2015", from: "date_year"
+    click_button "Submit Payment"
+
+    expect(page).to have_content "Successful charge."
+  end
+end
+</code></pre>
+
+<p>Install gem</p>
+
+<pre><code>gem 'selenium-webdriver'
+gem 'capybara-webkit'
+</code></pre>
+
+<p>And set in <code>spec_helper.rb</code></p>
+
+<pre><code class="ruby">Capybara.javascript_driver = :webkit # For default javascript server
+Capybara.server_port = 52662 # For Selenium
+</code></pre>
+
+<p><code>webkit</code> is offered by <code>Qt</code> framework, it&rsquo;s faster than <code>Selenium</code> and invisible. <code>Selenium</code> process is visible, so it&rsquo;s suit for debug.</p>
+
+<p>Careful when test in Email Invitation, I need to use <code>Selenium</code> instead of <code>webkit</code>, otherwise the test will be failed.</p>
+
+<pre><code>scenario 'User successfully invites friend and invitation is accepted', {js: true, vcr: true, driver: :selenium} do
+</code></pre>
+
+<h2>Setting <a href="https://github.com/DatabaseCleaner/database_cleaner">database_cleaner</a></h2>
+
+<p>It will lead a problem when we run javascript test, refer from RSpec doc:</p>
+
+<blockquote><p>drivers which run the server in a different thread may not share the same transaction as your tests, causing data not to be shared between your test and test server.</p></blockquote>
+
+<p>The problem is when running javascript, activerecord may delete database before javascript test finish.</p>
+
+<p>We can use <code>database_cleaner</code> to do <code>truncation</code> instead of <code>transaction</code>. Manual create and destroy records.</p>
+
+<pre><code>RSpec.configure do |config|
+  config.use_transactional_fixtures = false
+
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before(:each, :js =&gt; true) do
+    DatabaseCleaner.strategy = :truncation
+  end
+
+  config.before(:each) do
+    DatabaseCleaner.start
+  end
+
+  config.after(:each) do
+    DatabaseCleaner.clean
+  end
+end
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week6 (2/2)]]></title>
@@ -106,6 +597,7 @@ Stripe.setPublishableKey("#{ENV['STRIPE_PUBLISHABLE_KEY']}");
 <p>Key Points:</p>
 
 <ul>
+<li>use <code>id: 'payment-form'</code> in form_form, this is corespond to <code>assets/javascripts/payment.js</code> content.</li>
 <li>use <code>for</code> and <code>id</code> to connect label and input</li>
 <li><code>data-stripe = "number"</code> and <code>data-stripe="cvc"</code></li>
 <li><code>data: { stripe: "exp-yaer"}</code> and <code>data: { stripe: "exp-month"}</code></li>
@@ -345,401 +837,6 @@ end
   end
 end
 </code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week5 (2/2)]]></title>
-    <link href="http://www.tomohung.com/blog/2015/04/09/reflection-to-tealeaf-course3-week5-2-slash-2/"/>
-    <updated>2015-04-09T15:58:27+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/04/09/reflection-to-tealeaf-course3-week5-2-slash-2</id>
-    <content type="html"><![CDATA[<h3>Continuous Integration(CI) and Continous Delivery(CD)</h3>
-
-<p>This part is super exciting so I decide to make it a individual post.</p>
-
-<p>Continuous Integration(CI) and Continous Delivery(CD) are two of most important part in automation development. There are plenty of innovation tools, but I think the work flow is the key to understand.</p>
-
-<ol>
-<li>Pull the latest code from GitHub.</li>
-<li>Create a new feature branch and develop.</li>
-<li>Finish development and put to a feature named branch on GitHub.</li>
-<li>Create a PR from this branch to <code>staging</code> branch.</li>
-<li>Wait CI test for staging branch.</li>
-<li>CI automatically deploy from staging branch to <code>staging server</code>.</li>
-<li>Manual test on staging server.</li>
-<li>Create PR from staging to <code>master</code> branch.</li>
-<li>trigger CI for master branch and automatically deploy to <code>production server</code>.</li>
-</ol>
-
-
-<h3>Setting CI and CD</h3>
-
-<p>Here we use <a href="https://circleci.com">Circle CI</a> for CI and CD. There is also well known service called <a href="https://travis-ci.org/">Travis CI</a>.</p>
-
-<ul>
-<li>Create a <code>staging</code> branch.</li>
-<li>Follow Circle CI project setting.</li>
-<li>You may need Heroku API key and SSH.</li>
-<li>[Key] Create a <code>circle.yml</code> in the root of project, adjust <code>production_app_name</code> and <code>staging_app_name</code>.</li>
-</ul>
-
-
-<pre><code>machine:
-  ruby:
-    version: 2.1.5
-deployment:
-  production:
-    branch: master
-    commands:
-      - heroku maintenance:on --app production_app_name
-      - heroku pg:backups capture --app production_app_name
-      - git push git@heroku.com:production_app_name.git $CIRCLE_SHA1:refs/heads/master
-      - heroku run rake db:migrate --app production_app_name
-      - heroku maintenance:off --app production_app_name
-  staging:
-    branch: staging
-    commands:
-      - heroku maintenance:on --app staging_app_name
-      - git push git@heroku.com:staging_app_name.git $CIRCLE_SHA1:refs/heads/master
-      - heroku run rake db:migrate --app staging_app_name
-      - heroku maintenance:off --app staging_app_name
-</code></pre>
-
-<p>I got an error when running Circle test: [counldn&rsquo;t find file &lsquo;bootstrap&rsquo;]</p>
-
-<p>Solution: Rename file <code>stylesheets/application.css</code> to <code>stylesheets/application.css.scss</code>. And add Line to the file:</p>
-
-<pre><code>@import 'bootstrap-sprockents'
-@import 'bootstrap'
-</code></pre>
-
-<p>and remove line <code>*= require bootstrap</code>.</p>
-
-<h3>Embeded Badget</h3>
-
-<p>I aslo try to use badget in my homepage.</p>
-
-<pre><code>%img(src="https://circleci.com/gh/tomohung/myflix.png?circle-token=a7c782deb0d0022335fa1f095e268bb44eb4cab8")
-</code></pre>
-
-<p>Then I can see this passing test badget.</p>
-
-<p><img class="<a" src="href="https://circleci.com/gh/tomohung/myflix.png?circle-token=a7c782deb0d0022335fa1f095e268bb44eb4cab8">https://circleci.com/gh/tomohung/myflix.png?circle-token=a7c782deb0d0022335fa1f095e268bb44eb4cab8</a>&#8221;></p>
-
-<h3>Slack ingegration with Github and Circle CI</h3>
-
-<p>I failed to use <a href="http://ccmenu.org/">CCMenu</a> to have a notification. But I use <a href="https://slack.com/">Slack</a> to integrate GitHub and Circle CI, and that&rsquo;s why I said it&rsquo;s exciting!!</p>
-
-<p>After setting done, the only thing I need to do is <code>git push origin staging</code> or <code>git push origin master</code>. I&rsquo;ll get notifications in Slack when Github got a push event, and Circle CI run the test and deployment in the same time. Surely I will also get a Circle CI result notification if test and deployment finished.</p>
-
-<p>This is what a programmer should do!! Don&rsquo;t Repeat Yourself!! Bravo!!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week5 (1/2)]]></title>
-    <link href="http://www.tomohung.com/blog/2015/04/09/reflection-to-tealeaf-course3-week5/"/>
-    <updated>2015-04-09T14:39:06+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/04/09/reflection-to-tealeaf-course3-week5</id>
-    <content type="html"><![CDATA[<h3>Feature test for sending email</h3>
-
-<p>Following by <a href="http://www.tomohung.com/blog/2015/04/07/reflection-to-tealeaf-course3-week4/">previous week</a>, this week we have a feature test for sending email.</p>
-
-<p>Install gem,</p>
-
-<pre><code>$ gem 'capybara-email'
-</code></pre>
-
-<p>And added this line to <code>spec_helper.rb</code></p>
-
-<pre><code>require 'capybara/email/rspec'
-</code></pre>
-
-<p>Then</p>
-
-<pre><code>require 'spec_helper'
-
-feature 'User resets password' do
-  scenario 'user successfully resets the password' do
-    clear_emails
-
-    user = Fabricate(:user)
-    visit sign_in_path
-    click_link 'Forgot Password?'
-
-    fill_in 'Email Address', with: user.email
-    click_button 'Send Email'
-
-    open_email(user.email)
-    current_email.click_link("Reset Password")
-
-    fill_in 'New Password', with: 'new_password'
-    click_button 'Reset Password'
-
-    fill_in 'Email Address', with: user.email
-    fill_in 'Password', with: 'new_password'
-    click_button 'Sign in'
-    expect(page).to have_content("Welcome, #{user.full_name}")
-  end
-end
-</code></pre>
-
-<p>Especially notice for <code>open_email</code>, <code>current_email</code> functions are offered by <code>capybara-email</code> gem.</p>
-
-<h3>Invite Friend and Registeration</h3>
-
-<p>We also have a work on inviting friends through email, the key point here is how to use a secure <code>token</code> to tracking data.</p>
-
-<ul>
-<li>create an invitations data, including inviter, recipient email, name, and <code>token</code>.</li>
-<li><p>when user get the email, following the link provided to server, page will direct to the register page with existing data stored with this token.</p>
-
-<p>And set the routes for path</p></li>
-</ul>
-
-
-<pre><code>get 'register/:token', to: 'users#new_with_invitation_token'
-</code></pre>
-
-<ul>
-<li>we can have a hidden data in the register form for new#users to use.</li>
-</ul>
-
-
-<pre><code>= hidden_field_tag :token, @invitation_token
-</code></pre>
-
-<p>we don&rsquo;t use form_for element, becuase this hidden attribute does not belong to backend modeled form.</p>
-
-<h3>Concerns</h3>
-
-<p>To Dry our code, we can use <code>concern</code> with <code>module</code>. Here is a <a href="https://signalvnoise.com/posts/3372-put-chubby-models-on-a-diet-with-concerns">post by DHH</a> why we should do this.</p>
-
-<p>We can merge the same function feature into concern file. For example: <code>Tokenable</code></p>
-
-<pre><code>#/lib/tokenable.rb
-module Tokenable
-  extend ActiveSupport::Concern
-  included do
-    before_create :generate_token
-  end
-
-  private
-  def generate_token
-    self.token = SecureRandom.urlsafe_base64
-  end
-end
-</code></pre>
-
-<p>Then add to model file</p>
-
-<pre><code>require 'tokenable'
-
-class User &lt; ActiveRecord::Base
-  include Tokenable
-  ...
-end
-</code></pre>
-
-<p>I prefer to specify require file name, or we can use <a href="http://stackoverflow.com/questions/19098663/auto-loading-lib-files-in-rails-4">auto loading library files</a>.</p>
-
-<h3>Email Service Providers</h3>
-
-<p>Since we have test email sending on ENV:development and EVN:test, now we have test it in the real world. That&rsquo;s why we need a real email service provider. Google has it but with many restriction, Tealeaf recommend <code>Mailgun</code> or <code>Postmark</code>. Here we have a taste for `Mailgun&#8217;.</p>
-
-<p>To setting <code>config/environments/production.rb</code>, add these lines:</p>
-
-<pre><code>config.action_mailer.default_url_options = { :host =&gt; "tomo-myflix.herokuapp.com" }
-  config.action_mailer.smtp_settings = {
-    :port           =&gt; ENV['MAILGUN_SMTP_PORT'],
-    :address        =&gt; ENV['MAILGUN_SMTP_SERVER'],
-    :user_name      =&gt; ENV['MAILGUN_SMTP_LOGIN'],
-    :password       =&gt; ENV['MAILGUN_SMTP_PASSWORD'],
-    :domain         =&gt; 'tomo-myflix.herokuapp.com',
-    :authentication =&gt; :plain,
-  }
-  config.action_mailer.delivery_method = :smtp
-</code></pre>
-
-<p><code>tomo-myflix.herokuapp.com</code> is my app name on Heroku. And ENV about Mailgun are maintained by Heroku.</p>
-
-<p>I aslo can use this command to check <code>Heroku configurations</code>.</p>
-
-<pre><code>$ heroku config
-</code></pre>
-
-<p>Then push it to heroku and test for a real email address, it works!!</p>
-
-<h3>Background Jobs</h3>
-
-<p>Sometimes, some actions do not need to be synchrous, like sending email, we don&rsquo;t need to wait email sending action completed. That&rsquo;s why we need to use a background job to do sending email to speed up the flow.</p>
-
-<p><code>Sidekiq</code> and <code>Resque</code> are some of this concept product. And Tealeaf recommend to use <a href="https://github.com/mperham/sidekiq/wiki">Sidekiq</a>.</p>
-
-<p>Install gem Sidekiq</p>
-
-<pre><code>gem 'sidekiq'
-</code></pre>
-
-<p>Only a tiny change for using it by delay method</p>
-
-<pre><code>AppMailer.delay.notify_on_new_todo(current_user, @todo) # new 
-AppMailer.notify_on_new_todo(current_user, @todo).deliver #older one
-</code></pre>
-
-<p>Add this line in <code>spec/spec_helper.rb</code></p>
-
-<pre><code>require 'sidekiq/testing/inline'
-</code></pre>
-
-<p>Here we setup sidekiq, but we still need start <code>Redis</code> server:</p>
-
-<pre><code>$ brew install redis
-$ redis-server /usr/local/etc/redis.conf
-</code></pre>
-
-<p>And this start sidekiq with another terminal:</p>
-
-<pre><code>$ bundle exec sidekiq
-</code></pre>
-
-<p>So far, this makes <code>local</code> works fine with <code>sidekiq</code> for background jobs. If we want to use background jobs in ENV:production, Heroku take charges if dyno is more than 1, or try <a href="https://coderwall.com/p/fprnhg/free-background-jobs-on-heroku">this way to simulate</a></p>
-
-<p>I have not implemented this yet, but I&rsquo;ll try it later.</p>
-
-<p>There is also <a href="https://devcenter.heroku.com/articles/procfile#deploying-to-heroku">an article talking about Procfile and Foreman</a>.</p>
-
-<p>If sidekiq version >= 3.0, you might also run this line
-<code>
-heroku config:set REDIS_PROVIDER=REDISTOGO_URL
-</code></p>
-
-<h3>Monitor Production Error</h3>
-
-<p>Here we have a try for <a href="https://getsentry.com/welcome/">Sentry</a>.</p>
-
-<p>Tracking errors is also a key for automation deployment.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week4]]></title>
-    <link href="http://www.tomohung.com/blog/2015/04/07/reflection-to-tealeaf-course3-week4/"/>
-    <updated>2015-04-07T13:11:30+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/04/07/reflection-to-tealeaf-course3-week4</id>
-    <content type="html"><![CDATA[<h3>Three kinds of BDD</h3>
-
-<p>In week 4 beginning, we got a brief intro for 3 kinds of BDD:</p>
-
-<ul>
-<li><p>meet in the middle</p>
-
-<p>I think this should be the popular one for modern development. The front-end engineer build the pages from mockups, then back-end developer connect UI with controllers and models.</p></li>
-<li><p>inside out</p>
-
-<p>It develops from models to controllers till views and integrations. It&rsquo;s hard to decide what models you really need in the beginning.</p></li>
-<li><p>outside in</p>
-
-<p>It devlops from integrations to controllers and models. It start from a big vision, and close to what user&rsquo;s need. But for developer, it&rsquo;s hard to code from this big vision, especially for integration test in the development beginning.</p></li>
-</ul>
-
-
-<h3>Self Referential Associations</h3>
-
-<p>We can use <strong>self referential association</strong> to let user track other users. For example:</p>
-
-<pre><code># t.integer :follower_id, :leader_id
-class Relationship &lt; ActiveRecord::Base
-  belongs_to :follower, class_name: 'User'
-  belongs_to :leader, class_name: 'User'
-end
-</code></pre>
-
-<p>Then, model <code>User</code> can have these virtual attributes:</p>
-
-<pre><code>  has_many :following_relationships, class_name: 'Relationship', foreign_key: :follower_id
-  has_many :leading_relationships, class_name: 'Relationship', foreign_key: :leader_id
-</code></pre>
-
-<h3>Sending Emails</h3>
-
-<p>Rails also offer <code>ActionMailer</code> for sending emails.</p>
-
-<ul>
-<li>create files in <code>app/mailers/app_mailer.rb</code></li>
-</ul>
-
-
-<pre><code>class AppMailer &lt; ActionMailer::Base
-
-  def send_welcome_email(user)
-    @user = user
-    mail to: user.email, from: 'info@myflix.com', subject: 'Welcome to Myflix'
-  end
-end
-</code></pre>
-
-<ul>
-<li><code>View</code> template in <code>app/views/app_mailers/send_welcome_email</code>:</li>
-</ul>
-
-
-<pre><code>%html(lang='en-US')
-  %body
-    %p Welcome to MyFlix, #{@user.full_name}
-</code></pre>
-
-<ul>
-<li>Config for <code>config/environments/development.rb</code></li>
-</ul>
-
-
-<pre><code>config.action_mailer.delivery_method = :letter_opener
-</code></pre>
-
-<p>And</p>
-
-<pre><code>group :development do
-  gem 'letter-opener'
-end
-</code></pre>
-
-<blockquote><p>This is only for <code>development</code> setting, we also need to set for <code>test</code> and <code>production</code> independent</p></blockquote>
-
-<h3>Handling Sensitive Account Info</h3>
-
-<p>It&rsquo;s dangerous to upload config setting file to github or other public storage, there is someone update AWS key to GitHub and got a unbelievable credit bill.</p>
-
-<p>Use <code>ENV</code> to protect secret data, we can use gem <code>Figaro</code>.
-<a href="https://github.com/laserlemon/figaro">Figara</a> is the simplest way to keep our key value safe.</p>
-
-<p>There are two posts talking about this topic:</p>
-
-<ol>
-<li><a href="http://railsapps.github.io/rails-environment-variables.html">Rails Environment Variables</a></li>
-<li><a href="https://devcenter.heroku.com/articles/config-vars">Configuration and config Vars</a></li>
-</ol>
-
-
-<blockquote><p>Update: Tealeaf also have a post about <a href="http://www.gotealeaf.com/blog/managing-environment-configuration-variables-in-rails">Managing Environment Configuration Variables in Rails</a></p></blockquote>
-
-<h3>Test Email sending</h3>
-
-<p>Remember to clear email deliveries before test:</p>
-
-<pre><code>before { ActionMailer::Base.deliveries.clear }
-</code></pre>
-
-<p>Then we can validate email in the test by this</p>
-
-<pre><code>post :create
-expect(ActionMailer::Base.deliveries.last.to).to eq([user_attributes["email"]])
-# expect(ActionMailer::Base.deliveries.last.body).to include(user_attributes["full_name"])
-</code></pre>
-
-<h3>Update database, use rake tasks</h3>
-
-<p>An advice from TA Tomtomecek, I update existing data in model User, and he suggest me to use <a href="http://guides.rubyonrails.org/command_line.html#custom-rake-tasks">custom rake tasks</a> to do that. I&rsquo;ve not taste that yet, just leave a memo here to remember.</p>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-05-06T11:53:23+08:00</updated>
+  <updated>2015-05-06T20:01:42+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -12,6 +12,741 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week7 (3/3)]]></title>
+    <link href="http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week7-3-slash-3/"/>
+    <updated>2015-05-06T17:22:47+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week7-3-slash-3</id>
+    <content type="html"><![CDATA[<h1>Messsage Expectation</h1>
+
+<p>We has metioned <a href="http://tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week7">Test Double at post (1/3)</a>, and here is another kind of Test Double, called <code>Mock Objects</code>.</p>
+
+<blockquote><p>Assert communication, not response</p></blockquote>
+
+<p>In previous post, we have moved the code into <code>UserSignup</code> services obejct and test it. And here all we need to test is ensure that <code>:sign_up</code> method is called in <code>UsersController#create</code>.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>describe UsersController do
+</span><span class='line'>  describe 'POST create' do
+</span><span class='line'>    context 'with valid input' do
+</span><span class='line'>
+</span><span class='line'>      it 'should logged_in if create user' do
+</span><span class='line'>        result = double(:sign_up, successful?: true)
+</span><span class='line'>        expect_any_instance_of(UserSignup).to receive(:sign_up).and_return(result)
+</span><span class='line'>        expect_any_instance_of(User).to receive(:id).and_return(1)
+</span><span class='line'>        post :create, user: Fabricate.attributes_for(:user)
+</span><span class='line'>        expect(session[:user_id]).to eq(1)
+</span><span class='line'>      end
+</span><span class='line'>    end
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>expect_any_instance_of(UserSignup).to receive(:sign_up).and_return(result)</code> is called <code>Message Expectation</code> in RSpec, a kind of <code>Mock Object</code>.</p>
+
+<p>Refer to RSpec, it defines</p>
+
+<blockquote><h3>Mock Objects and Test Stubs</h3>
+
+<p>The names Mock Object and Test Stub suggest specialized Test Doubles. i.e. a Test Stub is a Test Double that only supports method stubs, and a Mock Object is a Test Double that supports message expectations and method stubs.</p>
+
+<p>There is a lot of overlapping nomenclature here, and there are many variations of these patterns (fakes, spies, etc). Keep in mind that most of the time we&rsquo;re talking about method-level concepts that are variations of method stubs and message expectations, and we&rsquo;re applying to them to one generic kind of object: a Test Double.</p></blockquote>
+
+<h1>Test Minimalist</h1>
+
+<p>Here we got 3 resources of discussion test.</p>
+
+<ul>
+<li><a href="https://www.youtube.com/watch?v=R9FOchgTtLM">Why you don&rsquo;t get mock objects by Gregory</a></li>
+<li><a href="http://martinfowler.com/articles/mocksArentStubs.html">Mock Aren&rsquo;t Stub by Mark Folwer</a></li>
+<li><a href="https://www.youtube.com/watch?v=URSWYvyc42M">The Magic tricks of Testing by Sandi Mets</a></li>
+</ul>
+
+
+<p>Summary for these three resources.</p>
+
+<p>I use Sandi&rsquo;s picture for the start:</p>
+
+<p><img src="http://jnoconor.github.io/images/unit-testing-chart-sandi-metz.png"></p>
+
+<p>Use this week assignment, class <code>UserSignup</code> for example:</p>
+
+<ul>
+<li><p>Incoming Query: We test UserSignup method <code>sign_up</code>, and expect it returns an successful object with valid info. This spec is testing this object state.</p></li>
+<li><p>Incoming Command: We also test UserSignup method <code>sign_up</code>, and expect it should create an user with valid info. This is what Sandi said: side effects for outside.</p></li>
+</ul>
+
+
+<blockquote><p>Incoming Command and Incoming Query are all what Mark Folwer said State or Stub or Classical.</p></blockquote>
+
+<ul>
+<li><p>Sent to Self: According to Sandi&rsquo;s opinion, it&rsquo;s not necessary to test all private methods in class. Maybe for the complex method, we should think if we can abstract some logic into a new class, and give that class another tests if we need it.</p></li>
+<li><p>Outgoing Query: Sandi ignore this, I guess she means that once the object send a new query to the other object, all we need to do is make sure that the other object works fine. And this should be test on that object, so we don&rsquo;t need to test outgoing query.</p></li>
+<li><p>Outgoing Command: Once we let an object send a message to the other object do some side effects, all we need to do is make sure that this object do send a message. And this is method message expectation in RSpec, also Mark Folwer said behavior or Mockist or &lsquo;Mock&rsquo;.</p></li>
+</ul>
+
+
+<p>Gregory and Sandi all said that Mock Object can loose each objects association when testing. Once we are testing behavior( or maybe I can say testing interface), we don&rsquo;t need to bind the test and method with specific variable, but bind with an interface. It looks like apply OO concept on testing - try to loose connection with each objects, also loose each object&rsquo;s tests.</p>
+
+<p>Kevin also metions this:</p>
+
+<blockquote><p>a pure &ldquo;mockist&rdquo; way of doing test can be difficult in Rails apps, because in rails apps persistence is handled by the framework and for small apps most of object collaboration / message sending are about persistence. If you mock those interfaces, you end up mocking the guts of rails and that typically doesn&rsquo;t end up well.  this is also why we only touch this topic in the context of non rails objects like service objects.</p></blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week7 (2/3)]]></title>
+    <link href="http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week7-2/"/>
+    <updated>2015-05-06T15:42:37+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week7-2</id>
+    <content type="html"><![CDATA[<h1>Beyond MVC</h1>
+
+<p>Rails built on MVC (Model / View / Controller) structure. And something get complex if we got more code and logic. This is why we need design patterns.</p>
+
+<h2>Decorators</h2>
+
+<p>Some tips from gem <code>Draper</code>:</p>
+
+<blockquote><p>Without Draper, this functionality might have been tangled up in procedural helpers or adding bulk to your models. With Draper decorators, you can wrap your models with presentation-related logic to organise - and test - this layer of your app much more effectively.</p></blockquote>
+
+<p>Or</p>
+
+<blockquote><p>Decorators are the ideal place to:
+- format complex data for user display
+- define commonly-used representations of an object, like a <code>name</code> method that combine <code>first_name</code> and <code>last_name</code> attributes.
+- mark up attributes with a little semantic HTML, like turning a url fiedl into a hyperlink.</p></blockquote>
+
+<p>First, install gem</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem 'draper'</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>app/decorator/video_decorator.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">VideoDecorator</span> <span class="o">&lt;</span> <span class="no">Draper</span><span class="o">::</span><span class="no">Decorator</span>
+</span><span class='line'>  <span class="n">delegate_all</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">rating</span>
+</span><span class='line'>    <span class="s2">&quot;Rating: &quot;</span> <span class="o">+</span> <span class="p">(</span><span class="n">object</span><span class="o">.</span><span class="n">rating</span><span class="o">.</span><span class="n">present?</span> <span class="p">?</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">object</span><span class="o">.</span><span class="n">rating</span><span class="si">}</span><span class="s2">/5.0&quot;</span> <span class="p">:</span> <span class="s2">&quot;NA&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And use it in controller</p>
+
+<figure class='code'><figcaption><span>videos_controller.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">def</span> <span class="nf">show</span>
+</span><span class='line'>    <span class="vi">@video</span> <span class="o">=</span> <span class="no">VideoDecorator</span><span class="o">.</span><span class="n">decorate</span><span class="p">(</span><span class="no">Vidoe</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">))</span>
+</span><span class='line'>  <span class="n">dne</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In view, just a clear line code.</p>
+
+<figure class='code'><figcaption><span>app/views/videos/show.html.haml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="o">=</span> <span class="vi">@video</span><span class="o">.</span><span class="n">rating</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The key point here is that we have a model data (rating) associated with view, it&rsquo;s not suitable to put to <code>view helper</code> (some logic with model). That&rsquo;s why here using decorator to encapsulate presentation logic.</p>
+
+<h2>Policy Objects</h2>
+
+<p>Define what is premium user:</p>
+
+<figure class='code'><figcaption><span>models/user_level_policy.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">UserLevelPolicy</span>
+</span><span class='line'>  <span class="kp">attr_reader</span> <span class="ss">:user</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@user</span> <span class="o">=</span> <span class="n">user</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">premium?</span>
+</span><span class='line'>    <span class="n">user</span><span class="o">.</span><span class="n">created_at</span> <span class="o">&lt;</span> <span class="no">Date</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">2010</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">||</span> <span class="n">user</span><span class="o">.</span><span class="n">plan</span><span class="o">.</span><span class="n">premium?</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In Controller</p>
+
+<figure class='code'><figcaption><span>todo_controller.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">###some code</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="no">UserLevelPolicy</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">current_user</span><span class="p">)</span><span class="o">.</span><span class="n">premium?</span>
+</span><span class='line'>    <span class="c1">#do something</span>
+</span><span class='line'>  <span class="k">else</span>
+</span><span class='line'>    <span class="c1">#do another thing</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Different with Decorators, Policy Ojbects only concern judgement logic into one place, without presentation concerned.</p>
+
+<h2>Domain Objects</h2>
+
+<p>if <code>User</code> has an attribute <code>credit_balance</code>. Then merge those code relative to <code>credit</code> into Domain Object.</p>
+
+<figure class='code'><figcaption><span>models/credit.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Credit</span>
+</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:credit_balance</span><span class="p">,</span> <span class="ss">:user</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@credit_balance</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">current_credit_balance</span>
+</span><span class='line'>    <span class="vi">@user</span> <span class="o">=</span> <span class="n">user</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">-</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">credit_balance</span> <span class="o">=</span> <span class="n">credit_balance</span> <span class="o">-</span> <span class="n">number</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">save</span>
+</span><span class='line'>    <span class="n">user</span><span class="o">.</span><span class="n">current_credit_balance</span> <span class="o">=</span> <span class="n">credit_balance</span>
+</span><span class='line'>    <span class="n">user</span><span class="o">.</span><span class="n">save</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">depleted?</span>
+</span><span class='line'>    <span class="n">credit_balance</span> <span class="o">&lt;</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">low_balance?</span>
+</span><span class='line'>    <span class="n">credit_balance</span> <span class="o">&lt;</span> <span class="mi">10</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Thus <code>Credit.new(current_user)</code> can call methods about credit, and don&rsquo;t need to put these code in model <code>User</code>, or <code>UsersController</code>.</p>
+
+<h2>Service Objects</h2>
+
+<p>We abstract an action as <code>sign up</code> in <code>UsersController#create</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">create</span>
+</span><span class='line'>    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">user_params</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">user_signup_service</span> <span class="o">=</span> <span class="no">UserSignup</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vi">@user</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">result</span> <span class="o">=</span> <span class="n">user_signup_service</span><span class="o">.</span><span class="n">sign_up</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:stripeToken</span><span class="o">]</span><span class="p">,</span> <span class="n">params</span><span class="o">[</span><span class="ss">:token</span><span class="o">]</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">successful?</span>
+</span><span class='line'>      <span class="n">session</span><span class="o">[</span><span class="ss">:user_id</span><span class="o">]</span> <span class="o">=</span> <span class="vi">@user</span><span class="o">.</span><span class="n">id</span>
+</span><span class='line'>      <span class="n">redirect_to</span> <span class="n">home_path</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>      <span class="n">flash</span><span class="o">.</span><span class="n">now</span><span class="o">[</span><span class="ss">:danger</span><span class="o">]</span> <span class="o">=</span>  <span class="n">user_signup_service</span><span class="o">.</span><span class="n">error_message</span>
+</span><span class='line'>      <span class="n">render</span> <span class="ss">:new</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then create an service object <code>UserSignup</code> to handle this.</p>
+
+<figure class='code'><figcaption><span>app/service/user_signup.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">UserSignup</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kp">attr_reader</span> <span class="ss">:error_message</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+</span><span class='line'>    <span class="vi">@user</span> <span class="o">=</span> <span class="n">user</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">sign_up</span><span class="p">(</span><span class="n">stripe_token</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">,</span> <span class="n">invitation_token</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="vi">@user</span><span class="o">.</span><span class="n">valid?</span>
+</span><span class='line'>      <span class="n">charge</span> <span class="o">=</span> <span class="n">customer_charge_user_with_stripe</span><span class="p">(</span><span class="n">stripe_token</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">charge</span><span class="o">.</span><span class="n">success?</span>
+</span><span class='line'>        <span class="vi">@user</span><span class="o">.</span><span class="n">customer_token</span> <span class="o">=</span> <span class="n">charge</span><span class="o">.</span><span class="n">customer_token</span>
+</span><span class='line'>        <span class="vi">@user</span><span class="o">.</span><span class="n">save</span>
+</span><span class='line'>        <span class="n">set_invitation_following_relationship</span><span class="p">(</span><span class="n">invitation_token</span><span class="p">)</span>
+</span><span class='line'>        <span class="no">AppMailer</span><span class="o">.</span><span class="n">delay</span><span class="o">.</span><span class="n">send_welcome_email</span><span class="p">(</span><span class="vi">@user</span><span class="p">)</span>
+</span><span class='line'>        <span class="vi">@status</span> <span class="o">=</span> <span class="ss">:success</span>
+</span><span class='line'>        <span class="nb">self</span>
+</span><span class='line'>      <span class="k">else</span>
+</span><span class='line'>        <span class="vi">@status</span> <span class="o">=</span> <span class="ss">:failed</span>
+</span><span class='line'>        <span class="vi">@error_message</span> <span class="o">=</span> <span class="n">charge</span><span class="o">.</span><span class="n">error_message</span>
+</span><span class='line'>        <span class="nb">self</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>      <span class="vi">@status</span> <span class="o">=</span> <span class="ss">:failed</span>
+</span><span class='line'>      <span class="vi">@error_message</span> <span class="o">=</span> <span class="s2">&quot;User info is invalid.&quot;</span>
+</span><span class='line'>      <span class="nb">self</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">successful?</span>
+</span><span class='line'>    <span class="vi">@status</span> <span class="o">==</span> <span class="ss">:success</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There is an article from Code Climate <a href="http://blog.codeclimate.com/blog/2012/10/17/7-ways-to-decompose-fat-activerecord-models/">7 Patterns to Refactor Fat ActiveRecord Models</a></p>
+
+<p>As it metion when to use Service Object:</p>
+
+<ul>
+<li>The action is complex (e.g. closing the books at the end of an accounting period)</li>
+<li>The action reaches across multiple models (e.g. an e-commerce purchase using Order, CreditCard and Customer objects)</li>
+<li>The action interacts with an external service (e.g. posting to social networks)</li>
+<li>The action is not a core concern of the underlying model (e.g. sweeping up outdated data after a certain time period).</li>
+<li>There are multiple ways of performing the action (e.g. authenticating with an access token or password). This is the Gang of Four Strategy pattern.</li>
+</ul>
+
+
+<h2>Some Concept for Object Oriented Design</h2>
+
+<ul>
+<li><p><code>Fat model, skinny controllers</code> makes model uncontrollrable. That&rsquo;s why we need Object Oriented Design</p></li>
+<li><p>YAGNI</p></li>
+</ul>
+
+
+<p>YAGNI means <code>You Aren't Gonna Need It!</code></p>
+
+<p>Don&rsquo;t write the code you haven&rsquo;t need it.</p>
+
+<p>Here is aother post talking about <code>YAGNI</code>, <code>KISS</code>, <code>DRY</code>.
+<a href="http://www.itexico.com/blog/bid/99765/Software-Development-KISS-YAGNI-DRY-3-Principles-to-simplify-your-life">Software Development: KISS, YAGNI &amp; DRY. 3 Principles to simplify your life.</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week7 (1/3)]]></title>
+    <link href="http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week7-1/"/>
+    <updated>2015-05-06T14:20:15+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week7-1</id>
+    <content type="html"><![CDATA[<p>Last week, we use Stripe for charge in UsersController#create, it&rsquo;s a bit little hard code here. We need to wrap it.</p>
+
+<p>Why we need to wrap it into a class:</p>
+
+<ol>
+<li><p>Easy to maintain code, isolate controller&rsquo;s and business logic. Remember we knew that <code>fat models, thin controllers</code>, here is a step further concept, we encapsulate code into <code>models/stripe_wrapper.rb</code></p></li>
+<li><p>Easy to test, isolate test between different object is always a good idea.</p></li>
+</ol>
+
+
+<h1>How to Wrap</h1>
+
+<p>For <code>module StripeWrapper</code> is just a namespace. Then we sort the code in UsersController#create,</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>module StripeWrapper
+</span><span class='line'>  class Charge
+</span><span class='line'>    attr_reader :response, :status
+</span><span class='line'>    
+</span><span class='line'>    def initialize(response, status)
+</span><span class='line'>      @response = response
+</span><span class='line'>      @status = status
+</span><span class='line'>    end
+</span><span class='line'>
+</span><span class='line'>    def self.create(options = {})      
+</span><span class='line'>      begin
+</span><span class='line'>        response = Stripe::Charge.create(
+</span><span class='line'>          amount: options[:amount], # amount in cents, again
+</span><span class='line'>          currency: "usd",
+</span><span class='line'>          source: options[:source],
+</span><span class='line'>          description: options[:description]
+</span><span class='line'>        )
+</span><span class='line'>        new(response, :success)
+</span><span class='line'>      rescue Stripe::CardError =&gt; e
+</span><span class='line'>        new(e, :error)
+</span><span class='line'>      end
+</span><span class='line'>    end
+</span><span class='line'>
+</span><span class='line'>    def success?
+</span><span class='line'>      status == :success
+</span><span class='line'>    end
+</span><span class='line'>
+</span><span class='line'>    def error_message
+</span><span class='line'>      response.message
+</span><span class='line'>    end
+</span><span class='line'>  end
+</span><span class='line'>
+</span><span class='line'>  def self.set_api_key
+</span><span class='line'>    Stripe.api_key = ENV["STRIPE_SECRET_KEY"]
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then we can call method <code>StripeWrapper::Charge(options)</code>.</p>
+
+<p><code>new(repose, :sucess)</code> and <code>new(e, :error)</code> return an <code>StripeWrapper::Charge</code> object result.</p>
+
+<h1>How to Test StripeWrapper</h1>
+
+<p>Test return object <code>charge</code>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>describe StripeWrapper do
+</span><span class='line'>  describe StripeWrapper::Charge do
+</span><span class='line'>    it 'makes successful charge' do
+</span><span class='line'>      charge = StripeWrapper::Charge.create(amount: 100, source: valid_token)
+</span><span class='line'>      expect(charge.response.amount).to eq(100)
+</span><span class='line'>      expect(charge.response.currency).to eq('usd')
+</span><span class='line'>      expect(charge).to be_success
+</span><span class='line'>    end
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But there is a problem, everytime we test, it will send a request to Stripe server. We don&rsquo;t want to do this and want to reduce test consumer time, use gme <code>vcr</code>.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ gem install vcr
+</span><span class='line'>$ gem install webmock</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then add <code>vcr: true</code> to spec</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>it 'make successful charge', vcr: true do
+</span><span class='line'>  #something
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>vcr will record the reponse in <code>spec/cassettes</code>, when next time it find that test emit the same request again, it will not send the request outside to the server, instead of replaying saved response.</p>
+
+<p>Here is vcr setting:</p>
+
+<figure class='code'><figcaption><span>spec_helper.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="nb">require</span> <span class="s1">&#39;vcr&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="no">VCR</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">c</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">c</span><span class="o">.</span><span class="n">cassette_library_dir</span> <span class="o">=</span> <span class="s1">&#39;spec/cassettes&#39;</span>
+</span><span class='line'>  <span class="n">c</span><span class="o">.</span><span class="n">hook_into</span> <span class="ss">:webmock</span>
+</span><span class='line'>  <span class="n">c</span><span class="o">.</span><span class="n">configure_rspec_metadata!</span>
+</span><span class='line'>  <span class="n">c</span><span class="o">.</span><span class="n">ignore_localhost</span> <span class="o">=</span> <span class="kp">true</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>How to test Controller#create</h1>
+
+<p>Since we have test StripeWrapper, we don&rsquo;t want to test it again in Controller, or hit the Stripe server again. Use <a href="http://en.wikipedia.org/wiki/Test_double">Test Double</a> <code>stub</code> here.</p>
+
+<p>For example, if we have a <code>PaymentController</code>:</p>
+
+<figure class='code'><figcaption><span>spec_helper.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">describe</span> <span class="no">PaymentController</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">describe</span> <span class="s1">&#39;POST create&#39;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">it</span> <span class="s1">&#39;sets the flash success message&#39;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">charge</span> <span class="o">=</span> <span class="n">double</span><span class="p">(</span><span class="s2">&quot;charge&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">charge</span><span class="o">.</span><span class="n">stub</span><span class="p">(</span><span class="ss">:successful?</span><span class="p">)</span><span class="o">.</span><span class="n">and_return</span><span class="p">(</span><span class="kp">true</span><span class="p">)</span>
+</span><span class='line'>      <span class="no">StripeWrapper</span><span class="o">::</span><span class="no">Charge</span><span class="o">.</span><span class="n">stub</span><span class="p">(</span><span class="ss">:create</span><span class="p">)</span><span class="o">.</span><span class="n">and_return</span><span class="p">(</span><span class="n">charge</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">post</span> <span class="ss">:create</span><span class="p">,</span> <span class="ss">token</span><span class="p">:</span> <span class="s2">&quot;fake_token&quot;</span>
+</span><span class='line'>      <span class="n">expect</span><span class="p">(</span><span class="n">flash</span><span class="o">[</span><span class="ss">:success</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">be_present</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ol>
+<li>Create a test stub <code>charge</code>, and stub a method <code>successful?</code> and return <code>true</code>.</li>
+<li>stub <code>:create</code> method to <code>StripeWrapper::Charge</code> and return <code>charge</code>.</li>
+</ol>
+
+
+<p>Now we strike <code>post :create</code>, in PaymentController#create when running to code StripeWrapper::Charge, it will return a result <code>charge</code> with <code>charge.successful?</code> is <code>true</code>.</p>
+
+<p>We do this is because make this controller#create test itself independently, and all we need to do is set StripeWrapper return successful.</p>
+
+<blockquote><p>StripeWrapper will make a HTTP request, we can use <code>vcr</code> to record this, but it&rsquo;s not necessary becuase this test is already done in stripe_wrapper_spec. So here we choose to use <code>stub</code>.</p></blockquote>
+
+<h1>How to do Feature Test with JavaScript</h1>
+
+<p>Since we use javascript in view form, we need to turn on <code>:js</code></p>
+
+<figure class='code'><figcaption><span>spec_helper.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">feature</span> <span class="s1">&#39;visitor make payment&#39;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">scenario</span> <span class="s1">&#39;with valid card number&#39;</span><span class="p">,</span> <span class="ss">js</span><span class="p">:</span> <span class="kp">true</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">visit</span> <span class="n">new_payment_path</span>
+</span><span class='line'>    <span class="n">fill_in</span> <span class="s2">&quot;Credit Card Number&quot;</span><span class="p">,</span> <span class="n">with</span> <span class="s2">&quot;424242424242424242&quot;</span>
+</span><span class='line'>    <span class="n">fill_in</span> <span class="s2">&quot;Security Code&quot;</span><span class="p">,</span> <span class="n">with</span> <span class="s2">&quot;123&quot;</span>
+</span><span class='line'>    <span class="nb">select</span> <span class="s2">&quot;3 - March&quot;</span><span class="p">,</span> <span class="ss">form</span><span class="p">:</span> <span class="s2">&quot;date_month&quot;</span>
+</span><span class='line'>    <span class="nb">select</span> <span class="s2">&quot;2015&quot;</span><span class="p">,</span> <span class="ss">from</span><span class="p">:</span> <span class="s2">&quot;date_year&quot;</span>
+</span><span class='line'>    <span class="n">click_button</span> <span class="s2">&quot;Submit Payment&quot;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_content</span> <span class="s2">&quot;Successful charge.&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Install gem</p>
+
+<figure class='code'><figcaption><span>spec_helper.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="s1">&#39;selenium-webdriver&#39;</span>
+</span><span class='line'><span class="n">gem</span> <span class="s1">&#39;capybara-webkit&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And set in <code>spec_helper.rb</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">Capybara</span><span class="o">.</span><span class="n">javascript_driver</span> <span class="o">=</span> <span class="ss">:webkit</span> <span class="c1"># For default javascript server</span>
+</span><span class='line'><span class="no">Capybara</span><span class="o">.</span><span class="n">server_port</span> <span class="o">=</span> <span class="mi">52662</span> <span class="c1"># For Selenium</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>webkit</code> is offered by <code>Qt</code> framework, it&rsquo;s faster than <code>Selenium</code> and invisible. <code>Selenium</code> process is visible, so it&rsquo;s suit for debug.</p>
+
+<p>Careful when test in Email Invitation, I need to use <code>Selenium</code> instead of <code>webkit</code>, otherwise the test will be failed.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">scenario</span> <span class="s1">&#39;User successfully invites friend and invitation is accepted&#39;</span><span class="p">,</span> <span class="p">{</span><span class="ss">js</span><span class="p">:</span> <span class="kp">true</span><span class="p">,</span> <span class="ss">vcr</span><span class="p">:</span> <span class="kp">true</span><span class="p">,</span> <span class="ss">driver</span><span class="p">:</span> <span class="ss">:selenium</span><span class="p">}</span> <span class="k">do</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Setting <a href="https://github.com/DatabaseCleaner/database_cleaner">database_cleaner</a></h2>
+
+<p>It will lead a problem when we run javascript test, refer from RSpec doc:</p>
+
+<blockquote><p>drivers which run the server in a different thread may not share the same transaction as your tests, causing data not to be shared between your test and test server.</p></blockquote>
+
+<p>The problem is when running javascript, activerecord may delete database before javascript test finish.</p>
+
+<p>We can use <code>database_cleaner</code> to do <code>truncation</code> instead of <code>transaction</code>. Manual create and destroy records.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">RSpec</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">use_transactional_fixtures</span> <span class="o">=</span> <span class="kp">false</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">before</span><span class="p">(</span><span class="ss">:suite</span><span class="p">)</span> <span class="k">do</span>
+</span><span class='line'>    <span class="no">DatabaseCleaner</span><span class="o">.</span><span class="n">clean_with</span><span class="p">(</span><span class="ss">:truncation</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">before</span><span class="p">(</span><span class="ss">:each</span><span class="p">)</span> <span class="k">do</span>
+</span><span class='line'>    <span class="no">DatabaseCleaner</span><span class="o">.</span><span class="n">strategy</span> <span class="o">=</span> <span class="ss">:transaction</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">before</span><span class="p">(</span><span class="ss">:each</span><span class="p">,</span> <span class="ss">:js</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">)</span> <span class="k">do</span>
+</span><span class='line'>    <span class="no">DatabaseCleaner</span><span class="o">.</span><span class="n">strategy</span> <span class="o">=</span> <span class="ss">:truncation</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">before</span><span class="p">(</span><span class="ss">:each</span><span class="p">)</span> <span class="k">do</span>
+</span><span class='line'>    <span class="no">DatabaseCleaner</span><span class="o">.</span><span class="n">start</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">config</span><span class="o">.</span><span class="n">after</span><span class="p">(</span><span class="ss">:each</span><span class="p">)</span> <span class="k">do</span>
+</span><span class='line'>    <span class="no">DatabaseCleaner</span><span class="o">.</span><span class="n">clean</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week6 (2/2)]]></title>
@@ -125,6 +860,7 @@
 <p>Key Points:</p>
 
 <ul>
+<li>use <code>id: 'payment-form'</code> in form_form, this is corespond to <code>assets/javascripts/payment.js</code> content.</li>
 <li>use <code>for</code> and <code>id</code> to connect label and input</li>
 <li><code>data-stripe = "number"</code> and <code>data-stripe="cvc"</code></li>
 <li><code>data: { stripe: "exp-yaer"}</code> and <code>data: { stripe: "exp-month"}</code></li>
@@ -2856,580 +3592,6 @@ resources.
 <p>Finally, the last week is coming to the end. The final project <code>Postit</code> seems become into reality app we daily use. And rails pieces are making together and show me how to build a basic function app.</p>
 
 <p>After these two course, I think now I have confidence to read through other Rails introducion books I used to not understand.About Course 3, there is no reason I do NOT keep going since I decide to make a career change. Glad that I survived through the first two courses, and I think I&rsquo;m ready for the course 3 challenge.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Course2 Lesson3]]></title>
-    <link href="http://www.tomohung.com/blog/2015/02/16/reflection-to-tealeaf-course2-lesson3/"/>
-    <updated>2015-02-16T08:37:25+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/02/16/reflection-to-tealeaf-course2-lesson3</id>
-    <content type="html"><![CDATA[<p>In Course2(Rapid Prototyping with Ruby on Rails), <a href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/">first week</a> I learned about <code>Models and database</code>, <a href="http://www.tomohung.com/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/">second week</a> I learned about <code>Controllers and Views</code>. This week I learned to add some features into my app, and make it vivid!!</p>
-
-<!--more-->
-
-
-<h3>Authentication</h3>
-
-<p>Rails offer built-in function to help us add authentication. Here are steps:</p>
-
-<ul>
-<li>install gem &lsquo;Bcrypt&rsquo;.</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>gem 'bcrypt', '~&gt; 3.1.7' # use gem `bcrypt-ruby`, `=3.0.1` if any problem</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>run <code>bundle install</code> to install gem.</li>
-<li><p>add migration for attribute:<code>password_digest</code>, like:</p>
-
-<pre><code>class AddPasswordDigestToUsers &lt; ActiveRecord::Migration
-  def change
-    add_column :users, :password_digest, :string
-  end
-end
-</code></pre></li>
-<li>add method to <code>Use Model</code></li>
-</ul>
-
-
-<figure class='code'><figcaption><span>User.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-</span><span class='line'>  <span class="n">has_secure_password</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>has_secure_password</code> built-in some validations, if we want to customize validation, add parameter:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">has_secure_password</span> <span class="ss">validations</span><span class="p">:</span> <span class="kp">false</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>here are some test from Rails API:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;david&#39;</span><span class="p">,</span> <span class="ss">password</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="ss">password_confirmation</span><span class="p">:</span> <span class="s1">&#39;nomatch&#39;</span><span class="p">)</span>
-</span><span class='line'><span class="n">user</span><span class="o">.</span><span class="n">save</span>                                                       <span class="c1"># =&gt; false, password required</span>
-</span><span class='line'><span class="n">user</span><span class="o">.</span><span class="n">password</span> <span class="o">=</span> <span class="s1">&#39;mUc3m00RsqyRe&#39;</span>
-</span><span class='line'><span class="n">user</span><span class="o">.</span><span class="n">save</span>                                                       <span class="c1"># =&gt; false, confirmation doesn&#39;t match</span>
-</span><span class='line'><span class="n">user</span><span class="o">.</span><span class="n">password_confirmation</span> <span class="o">=</span> <span class="s1">&#39;mUc3m00RsqyRe&#39;</span>
-</span><span class='line'><span class="n">user</span><span class="o">.</span><span class="n">save</span>                                                       <span class="c1"># =&gt; true</span>
-</span><span class='line'><span class="n">user</span><span class="o">.</span><span class="n">authenticate</span><span class="p">(</span><span class="s1">&#39;notright&#39;</span><span class="p">)</span>                                   <span class="c1"># =&gt; false</span>
-</span><span class='line'><span class="n">user</span><span class="o">.</span><span class="n">authenticate</span><span class="p">(</span><span class="s1">&#39;mUc3m00RsqyRe&#39;</span><span class="p">)</span>                              <span class="c1"># =&gt; user</span>
-</span><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">find_by</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;david&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">try</span><span class="p">(</span><span class="ss">:authenticate</span><span class="p">,</span> <span class="s1">&#39;notright&#39;</span><span class="p">)</span>      <span class="c1"># =&gt; false</span>
-</span><span class='line'><span class="no">User</span><span class="o">.</span><span class="n">find_by</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;david&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">try</span><span class="p">(</span><span class="ss">:authenticate</span><span class="p">,</span> <span class="s1">&#39;mUc3m00RsqyRe&#39;</span><span class="p">)</span> <span class="c1"># =&gt; user</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Login / Logout</h3>
-
-<p>We can use <code>session</code> to store our login information. First add routes</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="n">get</span> <span class="s1">&#39;/register&#39;</span><span class="p">,</span> <span class="ss">to</span><span class="p">:</span> <span class="s1">&#39;users#new&#39;</span>
-</span><span class='line'>  <span class="n">get</span> <span class="s1">&#39;/login&#39;</span><span class="p">,</span> <span class="ss">to</span><span class="p">:</span> <span class="s1">&#39;sessions#new&#39;</span>
-</span><span class='line'>  <span class="n">post</span> <span class="s1">&#39;/login&#39;</span><span class="p">,</span> <span class="ss">to</span><span class="p">:</span> <span class="s1">&#39;sessions#create&#39;</span>
-</span><span class='line'>  <span class="n">delete</span> <span class="s1">&#39;/logout&#39;</span><span class="p">,</span> <span class="ss">to</span><span class="p">:</span> <span class="s1">&#39;sessions#destroy&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And <code>SessionsController</code>:</p>
-
-<figure class='code'><figcaption><span>SessionController.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">SessionsController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">new</span>
-</span><span class='line'>    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">create</span>
-</span><span class='line'>    <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">find_by</span> <span class="ss">username</span><span class="p">:</span> <span class="n">params</span><span class="o">[</span><span class="ss">:username</span><span class="o">]</span>
-</span><span class='line'>    <span class="k">if</span> <span class="n">user</span> <span class="o">&amp;&amp;</span> <span class="n">user</span><span class="o">.</span><span class="n">authenticate</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:password</span><span class="o">]</span><span class="p">)</span>
-</span><span class='line'>      <span class="n">flash</span><span class="o">[</span><span class="ss">:notice</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;Login Success.&#39;</span>
-</span><span class='line'>      <span class="n">session</span><span class="o">[</span><span class="ss">:user_id</span><span class="o">]</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">id</span>
-</span><span class='line'>      <span class="n">redirect_to</span> <span class="n">root_path</span>
-</span><span class='line'>    <span class="k">else</span>
-</span><span class='line'>      <span class="n">flash</span><span class="o">[</span><span class="ss">:error</span><span class="o">]</span> <span class="o">=</span> <span class="s2">&quot;Username or Password may not correct. Try again.&quot;</span>
-</span><span class='line'>      <span class="n">render</span> <span class="ss">:new</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">destroy</span>
-</span><span class='line'>    <span class="n">session</span><span class="o">[</span><span class="ss">:user_id</span><span class="o">]</span> <span class="o">=</span> <span class="kp">nil</span>
-</span><span class='line'>    <span class="n">flash</span><span class="o">[</span><span class="ss">:notice</span><span class="o">]</span> <span class="o">=</span> <span class="s1">&#39;Log out&#39;</span>
-</span><span class='line'>    <span class="n">redirect_to</span> <span class="n">root_path</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Polymorphic table</h3>
-
-<p>Sometimes many tables have relationship with the same one table, like <code>User</code> has many gravatar images, and <code>Post</code> has many images. So <code>User</code> and <code>Post</code> are using the same table <code>Picture</code>. We can do <code>Polymorpic table</code> association like this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Picture</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:imageable</span><span class="p">,</span> <span class="ss">polymorphic</span><span class="p">:</span> <span class="kp">true</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:pictures</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="ss">:imageable</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:pictures</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="ss">:imageable</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then Rails will automatically assign two virtual attribute for us:<code>imageable_type</code> and <code>imageable_id</code></p>
-
-<p><code>type</code> is stored which object type use this Picture, and <code>id</code> is for that object&rsquo;s table id.</p>
-
-<p>Then, we can save data like this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="vi">@picture</span> <span class="o">=</span> <span class="no">Picture</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">imageable</span><span class="p">:</span> <span class="n">post</span><span class="p">,</span> <span class="ss">user_id</span><span class="p">:</span> <span class="n">current_user_id</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Deploy to Heroku</h3>
-
-<p>Last step, deploy to heroku makes this app engage with people!!</p>
-
-<p>The only thing I&rsquo;ll record here is <code>make sure to run **heroku run rake db:migrate**</code>. Otherwise heroku will not generate a database for us.</p>
-
-<h3>Conclusion</h3>
-
-<p>Seems that my app becomes more and more closer to real world app we used everyday. There&rsquo;re still a lot of things to combine them together for improvement, like <code>tab control</code>, <code>Ajax</code>, <code>friendly routes path name</code>, etc.</p>
-
-<p>Security is one of the most imporatant thing when we using internet, it&rsquo;s absolutely not safe if we store our password by plain text. Use a <code>one way has/ password digest</code> to instead of plain text password. There is one more thing, <code>MD5</code> has been broken too.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Tealeaf Course2 Lesson3 Quiz]]></title>
-    <link href="http://www.tomohung.com/blog/2015/02/15/tealeaf-course2-lesson3-quiz/"/>
-    <updated>2015-02-15T08:22:00+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/02/15/tealeaf-course2-lesson3-quiz</id>
-    <content type="html"><![CDATA[<blockquote><h4>1. What&rsquo;s the difference between rendering and redirecting? What&rsquo;s the impact with regards to instance variables, view templates?</h4></blockquote>
-
-<ul>
-<li>rendering: render a template HTML code, like <code>partial</code>.</li>
-<li>redirecting: make a new request to controller.</li>
-</ul>
-
-
-<!--more-->
-
-
-<p>Regards to instance variables for showing view templates, instance variables only survive at the same request, so if we need some information like errors store in instance variables, we need to use <code>render</code> for this condition.</p>
-
-<blockquote><h4>2. If I need to display a message on the view template, and I&rsquo;m redirecting, what&rsquo;s the easiest way to accomplish this?</h4></blockquote>
-
-<p>Use <code>flash</code> to store error message. This is the easiest way to store <code>one message</code>.</p>
-
-<blockquote><h4>3. If I need to display a message on the view template, and I&rsquo;m rendering, what&rsquo;s the easiest way to accomplish this?</h4></blockquote>
-
-<p>Use <code>instance variable</code> to store errors, then <code>render</code>.</p>
-
-<p>* or use <code>flash.now</code> and render it.</p>
-
-<blockquote><h4>4. Explain how we should save passwords to the database.</h4></blockquote>
-
-<p>Use <code>one way hash</code>. Since we can&rsquo;t promise that data in database never be stolen, the way to protect our password is using a <code>one way hash</code> to store the digest. If someone get this digest, it&rsquo;s hard for him to decyphor this digest to a plain text password.</p>
-
-<blockquote><h4>5. What should we do if we have a method that is used in both controllers and views?</h4></blockquote>
-
-<p>Put the methods into controllers, and make them become helpers. Like:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>helper_method :current_user</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now, method <code>current_user</code> can be used in both controllers and views.</p>
-
-<blockquote><h4>6. What is memoization? How is it a performance optimization?</h4></blockquote>
-
-<p>Some repeatedly query action for database will reduce our app performance, using <code>memoization</code> to overcome this.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>@comment ||= User.find(session[:user_id]) if session[:user_id]</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Syntax <code>||=</code> do a <code>OR</code> combined action, if <code>@comment</code> is <code>nil</code>, then <code>User.find</code> invokes; if <code>@comment</code> exist, just return @comment without invoke <code>User.find</code>. This prevent to invoke database query again.</p>
-
-<blockquote><h4>7. If we want to prevent unauthenticated users from creating a new comment on a post, what should we do?</h4></blockquote>
-
-<p>Add a helper method <code>required_login</code> in <code>before_action</code> for actions <code>create</code> and &lsquo;&rsquo;. Since this method is used in both <code>post</code> and <code>comment</code>, we can put this method into <code>ApplicationController.rb</code>.</p>
-
-<blockquote><h4>8. Suppose we have the following table for tracking &ldquo;likes&rdquo; in our application. How can we make this table polymorphic? Note that the &ldquo;user_id&rdquo; foreign key is tracking who created the like.</h4></blockquote>
-
-<table>
-<thead>
-<tr>
-<th style="text-align:right;"> id </th>
-<th></th>
-<th style="text-align:right;"> user_id </th>
-<th></th>
-<th style="text-align:right;"> photo_id  </th>
-<th></th>
-<th style="text-align:right;"> video_id  </th>
-<th></th>
-<th style="text-align:right;"> post_id</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:right;">1 </td>
-<td></td>
-<td style="text-align:right;">4 </td>
-<td></td>
-<td style="text-align:right;"> </td>
-<td></td>
-<td style="text-align:right;"> 12 </td>
-<td></td>
-<td style="text-align:right;"> </td>
-</tr>
-<tr>
-<td style="text-align:right;">2 </td>
-<td></td>
-<td style="text-align:right;">7 </td>
-<td></td>
-<td style="text-align:right;">  </td>
-<td></td>
-<td style="text-align:right;">  </td>
-<td></td>
-<td style="text-align:right;">3 </td>
-</tr>
-<tr>
-<td style="text-align:right;">3 </td>
-<td></td>
-<td style="text-align:right;">2 </td>
-<td></td>
-<td style="text-align:right;">6 </td>
-<td></td>
-<td style="text-align:right;">  </td>
-<td></td>
-<td style="text-align:right;"> </td>
-</tr>
-</tbody>
-</table>
-
-
-<p>According to this table, there should be 5 tables in database:</p>
-
-<ul>
-<li>User</li>
-<li>Photo</li>
-<li>Video</li>
-<li>Post</li>
-<li>Like</li>
-</ul>
-
-
-<p>And here are they might be in models:</p>
-
-<figure class='code'><figcaption><span>User.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:likes</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="n">likeable</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>Photo.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Photo</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:likes</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="n">likeable</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>Video.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Video</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:likes</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="n">likeable</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>Post.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Post</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:likes</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="n">likeable</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>Like.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Like</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:user_id</span>
-</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:likeable</span><span class="p">,</span> <span class="ss">polymorphic</span><span class="p">:</span> <span class="kp">true</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<blockquote><h4>9. How do we set up polymorphic associations at the model layer? Give example for the polymorphic model (eg, Vote) as well as an example parent model (the model on the 1 side, eg, Post).</h4></blockquote>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Vote</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:voteable</span><span class="p">,</span> <span class="ss">polymorphic</span><span class="p">:</span> <span class="kp">true</span>
-</span><span class='line'><span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">Post</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:votes</span><span class="p">,</span> <span class="ss">as</span><span class="p">:</span> <span class="n">voteable</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<blockquote><h4>10. What is an ERD diagram, and why do we need it?</h4></blockquote>
-
-<p>Entity Relationship Dirgram(ERD) stands for tables in database relationship between each others. It&rsquo;s a convinient way to communicate with others what the tables relationship, even for ourselves under developming.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Course2 Lesson2]]></title>
-    <link href="http://www.tomohung.com/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/"/>
-    <updated>2015-02-10T16:39:30+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2</id>
-    <content type="html"><![CDATA[<p><a href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/">Last week</a>, I know Models and Database side of Rails.</p>
-
-<p>This week Tealeaf reveals the <code>Controller</code> and <code>View</code> part of MVC, I would like to summarize this lesson into two parts: <code>Don't Repeat Yourself</code> and <code>Conventions over Configuration</code>.</p>
-
-<!--more-->
-
-
-<h3>Don&rsquo;t Repeat Yourself</h3>
-
-<ul>
-<li><p>before_action</p>
-
-<p>Like Sinatra, before_action works at Controller, help us to remove repeatedly codes, like</p>
-
-<pre><code>  before_action: :set_post, only: [:show, :edit, :update]
-</code></pre>
-
-<pre><code>  def set_post
-    @post = Post.find(param[:id])
-  end
-</code></pre>
-
-<p>then, method <code>set_post</code> works at three actions : show, edit, update by once.</p></li>
-<li><p>form partial</p>
-
-<p>Rails offer <code>form partial</code> to help us eliminate repeatedly <code>HTML codes</code>, by Rails convention, if there is a file called <code>/app/views/posts/_post.erb</code>, I can just write code:</p>
-
-<pre><code>  &lt;%= render @post %&gt;
-</code></pre>
-
-<p>if @post is a class Post&rsquo;s instance, then Rails will automatically match to the file <code>_post.erb</code>, then render this file.</p>
-
-<p>There is another amazing way to show collection of instances. If I have a collection instance <code>@posts</code> by class Post, then I have write</p>
-
-<pre><code>  &lt;%= render @posts %&gt;
-</code></pre>
-
-<p>Rails will also automatically match the file <code>_post.erb</code> to iterate to render <code>@posts</code>. What a clean way to write such codes!</p></li>
-<li><p>Helpers for view: fix url and datetime</p>
-
-<p>We also can put some logic in Views into <code>/helpers</code>, like <code>application_helper.rb</code>. Put a lot of logic in Views is a dirty way when reviewing, and Rails have helpers to make us a clean way to do this. <code>Form Helper</code> is another good implement to help us. I&rsquo;ll metion later.</p></li>
-<li><p>validations</p>
-
-<p>Rails offer a simple to validate data in Model, like this</p>
-
-<pre><code class="ruby post.rb">validates :title, presence: true, length: {minimum: 5}
-</code></pre></li>
-</ul>
-
-
-<h3>Conventions over Configuration</h3>
-
-<ul>
-<li><p>CRUD
-For most popular actions on web, there are 4 actions: Create, Retrieve, Update, Delete.
-Rails offer a RESTful setting to make implemention these actions much simple.</p>
-
-<p>For example, in <code>routes.rb</code>:</p>
-
-<pre><code>  resources :posts
-</code></pre>
-
-<p>help us to build 7 actions corespond with VERBs and URIs.</p>
-
-<pre><code>get '/posts/', to: "posts#index", as: "posts"
-get '/posts/:id', to: "posts#show", as: "post"
-get '/posts/new', to: "posts#new", as: "new_post"
-post '/posts/', to: "posts#create",
-get '/posts/:id', to: "posts#edit", as: "edit_post"
-patch '/posts/:id', to: "posts#update"
-delete '/posts/:id', to: "posts#destroy"
-</code></pre>
-
-<p>I also can use key word <code>except:</code> or <code>only:</code> to assign which routes will be created:</p>
-
-<pre><code>  resources :posts, except: [:destory]
-  resources :comments, only: [:create]
-</code></pre></li>
-<li><p>nested routes
-Rails also offer a way to create nested path like <code>/posts/:id/comments</code></p>
-
-<pre><code>  resources :posts, except: [:destory] do
-    resources :comments, only: [:create]
-  end
-</code></pre>
-
-<p>And this will create route for <code>comments#create</code> by nested route</p>
-
-<pre><code>  post '/posts/:post_id/comments', to: "comments#create", as: "post_comments"
-</code></pre></li>
-<li><p>model backed form</p>
-
-<p>Using <code>Model backed form</code> can associated with instance, then Rails do a lot of task behind the form.</p>
-
-<pre><code>&lt;%= form_for [@post, @comment] do |f| %&gt;  
-  &lt;%= render 'shared/error_messages', instance: @comment %&gt;
-  &lt;%= f.label :body, 'Leave a Comment:'%&gt;
-  &lt;%= f.text_area :body , rows: 5, class: 'span4'%&gt;
-  &lt;br&gt;
-  &lt;%= f.submit class: 'btn btn-defualt'%&gt;
-&lt;% end %&gt;
-</code></pre>
-
-<p><code>[@post, @comment]</code> is a Rails convention for creating matching routes for <code>posts/coments</code>. And this form help us to create HTML element depends on what current action is. There are different actions in <strong>edit</strong> and <strong>new</strong> actions. <code>label</code> will update information if it&rsquo;s at edit action, and form action will generate a hidden attribute to store info that current actions VERB. This are all Rails conventions.</p></li>
-<li><p>category_ids for checkboxes</p>
-
-<p>Rails offer a helper to create checkboxes, like this</p>
-
-<pre><code>&lt;%= form_for @post do |f| %&gt;
-  &lt;%= f.collection_check_boxes :category_ids, Category.all, :id, :name do |cb| %&gt;
-    &lt;%= cb.label(class: 'checkbox inline') {cb.check_box(class: 'checkbox') + cb.text}%&gt;
-  &lt;% end %&gt;
-&lt;% end %&gt;
-</code></pre>
-
-<p>And there is a virtual attribute for <code>category_ids</code>, it&rsquo;s generated because we set posts and categories&rsquo;s associations in Post Models:</p>
-
-<pre><code>class Post &lt; ActiveRecord::Base
-  belongs_to :creator, foreign_key: :user_id, class_name: "User"
-  has_many :comments
-  has_many :post_categories
-  has_many :categories, through: :post_categories
-end
-</code></pre>
-
-<p>and <code>category_ids</code> store multiple values to match <code>collection_check_boxes</code>. Rails another magic show.</p></li>
-<li><p>auto association by mass-assignment</p>
-
-<p>We can write</p>
-
-<pre><code>  @comment = @post.comments.new(param.require(:comment).permit!)
-</code></pre>
-
-<p>Rails will auto assign post_id to @comment.</p></li>
-</ul>
-
-
-<h3>Others</h3>
-
-<ul>
-<li><p>Strong parameters</p>
-
-<p>After Rails 4, Rails lock params by default, we need to get params by this way</p>
-
-<pre><code>params.require(:post).permit(:title, :url, :description, category_ids:[])
-</code></pre>
-
-<p>If we have to get a collection values, remember to add <code>[]</code></p></li>
-<li><p>render vs redirect_to</p>
-
-<p><code>render</code> is for render HTML, and <code>redirect_to</code> is for make a new request. Although we see the page is changed, but it&rsquo;s totally different behind these two ways.</p></li>
-</ul>
-
-
-<h3>Conclusion</h3>
-
-<p>  I can&rsquo;t imagine how can I figure out such mass Rails knowledge by myself in two weeks. Here is my learning processes: <code>watch video -&gt; 'I knew it!' -&gt; do assignment -&gt; 'What? How to do that?' -&gt; watch solution -&gt; 'Ah! I got it!' -&gt; complete assignment</code>. And these things happen again and again.</p>
-
-<p>  Watching option videos and reviewing disscusions also help me to dig out what I missed.</p>
-
-<p>  I should do the official guide again, and I think this time will be a totally different feeling compared with two weeks ago.</p>
 ]]></content>
   </entry>
   

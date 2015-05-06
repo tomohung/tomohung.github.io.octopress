@@ -130,6 +130,383 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-24T15:37:46+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-24</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/04/24/eloquent-ruby-2/" itemprop="url">Eloquent Ruby -2</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><h1>Chapter 2 - Choose the Right Control Structure</h1>
+
+<p>說是Control Structure，我比較習慣說Control Flow，簡單就是說幾乎所有程式語言都有的流程控制語法，像是if, while, case等。</p>
+
+<ul>
+<li>Ruby比較特別的是有unless, until反向詞語，一開始用不大習慣，但後來寫著寫著，心裡慢慢習慣照著口語的語法說，現在反而比較喜歡這樣寫了，總之照Ruby的理念就是這些反向詞語的目的就是為了要減少在閱讀程式碼時，心裡還需要做轉換的浪費。</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>if not @read_only</span></code></pre></td></tr></table></div></figure>
+
+
+<p>看到not心裡還要先把@read_only的值反向</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>unless @read_only</span></code></pre></td></tr></table></div></figure>
+
+
+<p>讀起來比較順口</p>
+
+<ul>
+<li>另一個蠻特別的點是，條件式可以放在最後面，也是為了配合口語語法</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@title = new_title unless @read_only</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>Ruby也有for迴圈，不過直接被捨棄不用（那當初幹嘛創造=___=），都用<code>each</code>。而且<code>for</code>也是用each實踐的，所以直接用each就好了。註：for語法不包含block，所以內中的變數scope是和for同一個，和each只存在於block中不一樣，each和for還是有些不同。</p></li>
+<li><p>case, 要注意的是在case中比較是用<code>===</code>，另外條件式也可以用regex來比較</p></li>
+</ul>
+
+
+<p>這邊惡補一下幾個我不熟的operator</p>
+
+<p><code>&lt;=&gt;</code>
+Combined comparison operator. Returns 0 if first operand equals second, 1 if first operand is greater than the second and -1 if first operand is less than the second.</p>
+
+<p><code>(a &lt;=&gt; b) returns -1.</code></p>
+
+<p><code>===</code>
+Used to test equality within a when clause of a case statement.</p>
+
+<p><code>(1...10) === 5 returns true.</code></p>
+
+<p><code>.eql?</code>
+True if the receiver and argument have both the same type and equal values.</p>
+
+<p><code>1 == 1.0 returns true, but 1.eql?(1.0) is false.</code></p>
+
+<p><code>equal?</code>
+True if the receiver and argument have the same object id.</p>
+
+<p><code>if aObj is duplicate of bObj then aObj == bObj is true, a.equal?bObj is false but a.equal?aObj is true.</code></p>
+
+<ul>
+<li><p>只有false和nil被測試時才會回傳false，<code>0</code>不是！還特別highlight以前寫C的人（哈哈），因為在C裡面<code>0</code>值被測試也是算false</p></li>
+<li><p>延續上，因為false和nil被測試都是回傳false，所以要特別注意條件式中會不會false和nil混在一起</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>while next_object = get_next_object
+</span><span class='line'>  # Do something with the object
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上面的迴圈是假設next_object最後會變成nil，而nil測試後回傳false。但萬一今天next_object本身的值就是false呢。改成下面的碼會比較好</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>until (next_object = get_next_object).nil?
+</span><span class='line'>  # Do something with the object
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>明確指定出next_object是nil才會跳離迴圈</p>
+
+<ul>
+<li>Ternery operator</li>
+</ul>
+
+
+<p>這個以前在C++我就蠻愛用的，可以很漂亮的縮短一些簡單的if-else</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>result = (face == :beauty) ? "handsome" : "ugly" # 同等於下式
+</span><span class='line'>
+</span><span class='line'>if face == :beauty
+</span><span class='line'> result = "handsome"
+</span><span class='line'>else
+</span><span class='line'> result = "ugly"
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>另一個是常用的變數初始化技巧</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@first_name ||= ''</span></code></pre></td></tr></table></div></figure>
+
+
+<p>@first_name如果還沒初始化，會被賦值&#8217;&lsquo;，如果已經有值，那就回傳本身。不過不要拿來對boolean type的變數這樣做，因為它也是倚賴 || operator機制。</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-24T14:15:45+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-24</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/04/24/eloquent-ruby-1/" itemprop="url">Eloquent Ruby -1</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><h1>Eloquent Ruby</h1>
+
+<p><code>Eloquent Ruby</code> by Russ Olsen 是一本在Tealeaf推薦的書，但它是所謂的『第二本Ruby的書』，而不是第一本，因為這本書裡面已經假設你對Ruby有基礎的觀念了。如果真的完全是初學者，Tealeaf推薦<a href="https://pine.fm/LearnToProgram/">Learn to Program by Chris Pine</a>，或者是<a href="http://learnrubythehardway.org/book/">Learn Ruby The Hard Way</a>，我覺得也不錯，還可以一邊練習打字。</p>
+
+<p>目前我把Part I：Basics看完了，共九章，覺得自己有學到些東西，所以就把它給紀錄下來，並參雜一些個人的想法。</p>
+
+<h1>Charpter 1 - Write Code That Looks Like Ruby</h1>
+
+<p>其實這章指的就是Code Style。更多的Ruby Code Style可以參考<a href="https://github.com/bbatsov/ruby-style-guide">這裡</a>。</p>
+
+<ul>
+<li><p>Indent code with two spaces，以前在寫C++時就一直覺得縮排其實2個空白就夠了（雖然我還是用預設4個），轉成Ruby後倒是蠻習慣的，尤其是不用再寫分號跟括號。</p></li>
+<li><p>什麼時候寫註解，告訴人家要怎麼用這個method，最好還帶範例。其它的像是最好用良好的命名去定義名稱，省去閱讀時的猜測，documenting itself.</p></li>
+<li><p>如果是寫const value，最好用Uppercase with underline，像UPPERCASE_WITH_UNDERLINE。</p></li>
+<li><p>因為括號是可以省略的，所以⋯⋯我常被搞混=___=，書用建議def method時後面帶參數時要用括號，但如果是一些接近口語的句子時可以考慮拿掉，如</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>puts 'hello world'。</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>如果code block只有一行時最好縮成一排，反過來說如果是多行的話就用block</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>apples.each { |apple| apple.to_eat } # prefer if only single code statement
+</span><span class='line'>
+</span><span class='line'>apples.each do |apple|
+</span><span class='line'>  apple.to_eat
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>如果method name結尾帶一個問號?，通常表示這個方法回傳true or false，如<code>array.nil?</code>；又如果是驚嘆號!，通常表示可能有點危險（所謂的危險通常是把丟進來的參數被改變mutate了，如<code>array.map!</code>。但是不管是問號還是驚嘆號，都只是Ruby習慣的命名而已，不是強制性。</p></li>
+<li><p>有慣例就會有例外，像是</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> pi = Float('3.14159')</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Float開頭是大寫而不是小寫。為什麼我也不知道@_@</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-09T15:58:27+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-09</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/04/09/reflection-to-tealeaf-course3-week5-2-slash-2/" itemprop="url">Reflection to Tealeaf Course3 Week5 (2/2)</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><h3>Continuous Integration(CI) and Continous Delivery(CD)</h3>
+
+<p>This part is super exciting so I decide to make it a individual post.</p>
+
+<p>Continuous Integration(CI) and Continous Delivery(CD) are two of most important part in automation development. There are plenty of innovation tools, but I think the work flow is the key to understand.</p>
+
+<ol>
+<li>Pull the latest code from GitHub.</li>
+<li>Create a new feature branch and develop.</li>
+<li>Finish development and put to a feature named branch on GitHub.</li>
+<li>Create a PR from this branch to <code>staging</code> branch.</li>
+<li>Wait CI test for staging branch.</li>
+<li>CI automatically deploy from staging branch to <code>staging server</code>.</li>
+<li>Manual test on staging server.</li>
+<li>Create PR from staging to <code>master</code> branch.</li>
+<li>trigger CI for master branch and automatically deploy to <code>production server</code>.</li>
+</ol>
+
+
+<h3>Setting CI and CD</h3>
+
+<p>Here we use <a href="https://circleci.com">Circle CI</a> for CI and CD. There is also well known service called <a href="https://travis-ci.org/">Travis CI</a>.</p>
+
+<ul>
+<li>Create a <code>staging</code> branch.</li>
+<li>Follow Circle CI project setting.</li>
+<li>You may need Heroku API key and SSH.</li>
+<li>[Key] Create a <code>circle.yml</code> in the root of project, adjust <code>production_app_name</code> and <code>staging_app_name</code>.</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>machine:
+</span><span class='line'>  ruby:
+</span><span class='line'>    version: 2.1.5
+</span><span class='line'>deployment:
+</span><span class='line'>  production:
+</span><span class='line'>    branch: master
+</span><span class='line'>    commands:
+</span><span class='line'>      - heroku maintenance:on --app production_app_name
+</span><span class='line'>      - heroku pg:backups capture --app production_app_name
+</span><span class='line'>      - git push git@heroku.com:production_app_name.git $CIRCLE_SHA1:refs/heads/master
+</span><span class='line'>      - heroku run rake db:migrate --app production_app_name
+</span><span class='line'>      - heroku maintenance:off --app production_app_name
+</span><span class='line'>  staging:
+</span><span class='line'>    branch: staging
+</span><span class='line'>    commands:
+</span><span class='line'>      - heroku maintenance:on --app staging_app_name
+</span><span class='line'>      - git push git@heroku.com:staging_app_name.git $CIRCLE_SHA1:refs/heads/master
+</span><span class='line'>      - heroku run rake db:migrate --app staging_app_name
+</span><span class='line'>      - heroku maintenance:off --app staging_app_name</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I got an error when running Circle test: [counldn&rsquo;t find file &lsquo;bootstrap&rsquo;]</p>
+
+<p>Solution: Rename file <code>stylesheets/application.css</code> to <code>stylesheets/application.css.scss</code>. And add Line to the file:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@import 'bootstrap-sprockents'
+</span><span class='line'>@import 'bootstrap'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and remove line <code>*= require bootstrap</code>.</p>
+
+<h3>Embeded Badget</h3>
+
+<p>I aslo try to use badget in my homepage.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>%img(src="https://circleci.com/gh/tomohung/myflix.png?circle-token=a7c782deb0d0022335fa1f095e268bb44eb4cab8")</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then I can see this passing test badget.</p>
+
+<p><img src="https://circleci.com/gh/tomohung/myflix.png?circle-token=a7c782deb0d0022335fa1f095e268bb44eb4cab8"></p>
+
+<h3>Slack ingegration with Github and Circle CI</h3>
+
+<p>I failed to use <a href="http://ccmenu.org/">CCMenu</a> to have a notification. But I use <a href="https://slack.com/">Slack</a> to integrate GitHub and Circle CI, and that&rsquo;s why I said it&rsquo;s exciting!!</p>
+
+<p>After setting done, the only thing I need to do is <code>git push origin staging</code> or <code>git push origin master</code>. I&rsquo;ll get notifications in Slack when Github got a push event, and Circle CI run the test and deployment in the same time. Surely I will also get a Circle CI result notification if test and deployment finished.</p>
+
+<p>This is what a programmer should do!! Don&rsquo;t Repeat Yourself!! Bravo!!</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-09T14:39:06+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-09</time>
         
       </p>
@@ -1103,140 +1480,6 @@
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-02-16T08:37:25+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-02-16</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/02/16/reflection-to-tealeaf-course2-lesson3/" itemprop="url">Reflection to Tealeaf Course2 Lesson3</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>In Course2(Rapid Prototyping with Ruby on Rails), <a href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/">first week</a> I learned about <code>Models and database</code>, <a href="http://www.tomohung.com/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/">second week</a> I learned about <code>Controllers and Views</code>. This week I learned to add some features into my app, and make it vivid!!</p>
-
-</div>
-  
-  
-    <footer>
-      <a class="btn btn-default" href="/blog/2015/02/16/reflection-to-tealeaf-course2-lesson3/">繼續閱讀 Read on &rarr;</a>
-    </footer>
-  
-
-
-        </article>
-      
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-02-15T08:22:00+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-02-15</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/02/15/tealeaf-course2-lesson3-quiz/" itemprop="url">Tealeaf Course2 Lesson3 Quiz</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><blockquote><h4>1. What&rsquo;s the difference between rendering and redirecting? What&rsquo;s the impact with regards to instance variables, view templates?</h4></blockquote>
-
-<ul>
-<li>rendering: render a template HTML code, like <code>partial</code>.</li>
-<li>redirecting: make a new request to controller.</li>
-</ul>
-
-
-</div>
-  
-  
-    <footer>
-      <a class="btn btn-default" href="/blog/2015/02/15/tealeaf-course2-lesson3-quiz/">繼續閱讀 Read on &rarr;</a>
-    </footer>
-  
-
-
-        </article>
-      
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-02-10T16:39:30+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-02-10</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/" itemprop="url">Reflection to Tealeaf Course2 Lesson2</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p><a href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/">Last week</a>, I know Models and Database side of Rails.</p>
-
-<p>This week Tealeaf reveals the <code>Controller</code> and <code>View</code> part of MVC, I would like to summarize this lesson into two parts: <code>Don't Repeat Yourself</code> and <code>Conventions over Configuration</code>.</p>
-
-</div>
-  
-  
-    <footer>
-      <a class="btn btn-default" href="/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/">繼續閱讀 Read on &rarr;</a>
-    </footer>
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -1266,6 +1509,12 @@
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week7-3-slash-3/">Reflection to Tealeaf Course3 Week7 (3/3)</a>
+    
+    <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week7-2/">Reflection to Tealeaf Course3 Week7 (2/3)</a>
+    
+    <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week7-1/">Reflection to Tealeaf Course3 Week7 (1/3)</a>
+    
     <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week6-2-slash-2/">Reflection to Tealeaf Course3 Week6 (2/2)</a>
     
     <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week6/">Reflection to Tealeaf Course3 Week6 (1/2)</a>
@@ -1279,12 +1528,6 @@
     <a class="list-group-item " href="/blog/2015/04/26/eloquent-ruby-4/">Eloquent Ruby -4</a>
     
     <a class="list-group-item " href="/blog/2015/04/24/eloquent-ruby-3/">Eloquent Ruby -3</a>
-    
-    <a class="list-group-item " href="/blog/2015/04/24/eloquent-ruby-2/">Eloquent Ruby -2</a>
-    
-    <a class="list-group-item " href="/blog/2015/04/24/eloquent-ruby-1/">Eloquent Ruby -1</a>
-    
-    <a class="list-group-item " href="/blog/2015/04/09/reflection-to-tealeaf-course3-week5-2-slash-2/">Reflection to Tealeaf Course3 Week5 (2/2)</a>
     
   </div>
 </section>
