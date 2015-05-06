@@ -8,7 +8,7 @@ categories: [rails, tealeaf]
 
 #Messsage Expectation
 
-We has metioned [Test Double at post (1/3)](http://tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week7), and here is another kind of Test Double, called `Mock Objects`.
+We has metioned [Test Double at post (1/3)](http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week7-1/), and here is another kind of Test Double, called `Mock Objects`.
 
 > Assert communication, not response
 
