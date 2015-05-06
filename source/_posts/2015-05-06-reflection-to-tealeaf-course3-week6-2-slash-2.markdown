@@ -89,6 +89,7 @@ Rails.application.config.assets.precompile += ['payment.js']
 
 Key Points:
 
+- use `id: 'payment-form'` in form_form, this is corespond to `assets/javascripts/payment.js` content.
 - use `for` and `id` to connect label and input
 - `data-stripe = "number"` and `data-stripe="cvc"`
 - `data: { stripe: "exp-yaer"}` and `data: { stripe: "exp-month"}`
