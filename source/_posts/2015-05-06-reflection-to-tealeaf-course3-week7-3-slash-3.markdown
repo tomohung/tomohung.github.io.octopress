@@ -45,9 +45,9 @@ Refer to RSpec, it defines
 
 Here we got 3 resources of discussion test.
 
-- [Why you don't get mock objects by Gregory](https://www.youtube.com/watch?v=R9FOchgTtLM)
-- [Mock Aren't Stub by Mark Folwer](http://martinfowler.com/articles/mocksArentStubs.html)
-- [The Magic tricks of Testing by Sandi Mets](https://www.youtube.com/watch?v=URSWYvyc42M)
+- [Why you don't get mock objects](https://www.youtube.com/watch?v=R9FOchgTtLM) by Gregory
+- [Mock Aren't Stub](http://martinfowler.com/articles/mocksArentStubs.html) by Mark Folwer
+- [The Magic tricks of Testing](https://www.youtube.com/watch?v=URSWYvyc42M) by Sandi Mets
 
 Summary for these three resources.
 
