@@ -51,6 +51,8 @@ production:
 
 ```
 
+> If Stripe account doesn't activate, we only can use test key `sk_test_xxxxxxx` even ENV = production
+
 I also add this file `config/initailizers/figaro.rb`
 
 ```
