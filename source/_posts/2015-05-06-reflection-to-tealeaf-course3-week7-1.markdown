@@ -6,7 +6,7 @@ comments: true
 categories: [rails, tealeaf]
 ---
 
-Last week, we use Stripe for charge in UsersController#create, it's a bit little hard code here. We need to wrap it.
+Last week, we use Stripe for charge in UsersController#create, it's a bit little complex code here. We need to wrap it.
 
 Why we need to wrap it into a class:
 
