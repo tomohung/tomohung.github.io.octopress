@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Reflection to Tealeaf Course3 Week8 -2"
+title: "Reflection to Tealeaf Course3 Week8 (2/2)"
 date: 2015-05-07 15:43:10 +0800
 comments: true
 categories: [rails, tealeaf]
