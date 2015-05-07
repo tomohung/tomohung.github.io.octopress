@@ -4,7 +4,7 @@
   <title><![CDATA[The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-05-07T16:55:39+08:00</updated>
+  <updated>2015-05-07T21:59:00+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -35,7 +35,7 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
 
 <p>We may produce failed webhook event by Stripe Dashboard.</p>
 
-<p>Open <code>Payments</code> on dashboard and click <code>Create Payment</code>, input the above Card Number info and click Done. Then we can find a failure charge in <code>Events &amp; Webhooks</code>.</p>
+<p>Open <code>Payments</code> on dashboard and click <code>Create Payment</code>, input the above invalid Card Number info and click Done. Then we can find a failure charge in <code>Events &amp; Webhooks</code>.</p>
 
 <p>As the previous post, we can get failed data as <code>:event_data</code> for test:</p>
 
@@ -185,9 +185,9 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
     <id>http://www.tomohung.com/blog/2015/05/07/reflection-to-tealeaf-course3-week8-1</id>
     <content type="html"><![CDATA[<h1>Subscription</h1>
 
-<p>This week it&rsquo;s still about Stripe. We use Stripe to charge once last week, and Stripe also offer us to charge every month. This is call <code>Subscription</code>.</p>
+<p>This week it&rsquo;s still about Stripe. Last week, we use Stripe to charge once, and Stripe also offer us to charge  monthly. This is called <code>Subscription</code>.</p>
 
-<p>Following the <a href="https://stripe.com/docs/subscriptions">instruction here</a> to set Plan.</p>
+<p>First following the <a href="https://stripe.com/docs/subscriptions">instruction here</a> to set Plan.</p>
 
 <p>Then write the test for <code>customer charge</code></p>
 
@@ -248,7 +248,7 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p><code>StripeWrapper::Cahrge.customer</code> is writen like this:</p>
+<p><code>StripeWrapper::Charge.customer</code> is written like this:</p>
 
 <figure class='code'><figcaption><span>models/stripe_wrapper.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -289,7 +289,7 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Here is a tip, in Week7, since we merge code into <code>UserSignup</code> service object, although we change behavior from <code>charge</code> to <code>customer</code>, it&rsquo;s irrelavent to <code>UsersControler#create</code> code.</p>
+<p>Here is a tip, in Week7, since we merge code into <code>UserSignup</code> service object, although we change behavior from <code>charge</code> to <code>customer</code>, it&rsquo;s unrelated to <code>UsersControler#create</code> code.</p>
 
 <figure class='code'><figcaption><span>users_controller.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -345,9 +345,9 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
 
 <h1>Stripe Webhooks</h1>
 
-<p>We can review Stripe payments on Stripe&rsquo;s dashborad, but what if we want to track and save these records in our website?</p>
+<p>We can review Stripe payments on Stripe&rsquo;s dashboard, but what if we want to track and save these records in our website?</p>
 
-<p>Here instroduce <a href="https://stripe.com/docs/webhooks">Webhook</a></p>
+<p>Here we instroduce <a href="https://stripe.com/docs/webhooks">Webhook</a></p>
 
 <p>We need Stripe to trigger an event for our server, then we can hold response from Stripe into our database.</p>
 
@@ -359,7 +359,7 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
 </ol>
 
 
-<p>For developemtn, we use <a href="http://requestb.in/">RequestBin</a> here to inspect HTTP requests.</p>
+<p>For developement, we use <a href="http://requestb.in/">RequestBin</a> here to inspect HTTP requests.</p>
 
 <p>Create a RequestBin Url for Stripe endpoint, from the link above, and input the url to Step 2. Click <code>Send test webhook</code> and go back refresh RequestBin page, you will see the response.</p>
 
@@ -478,7 +478,7 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>As the data, the event type is <code>charge.succeeded</code>.</p>
+<p>According to the data, the event type is <code>charge.succeeded</code>.</p>
 
 <p>In order to receive Stripe Webhook event, we need the gem <code>stripe_event</code></p>
 
@@ -536,7 +536,7 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
 
 <p><code>customer_token</code> and <code>amount</code> can get from response <code>event.data.object</code>.</p>
 
-<p>If you develop follow the TDD process, here should code the test first like this</p>
+<p>If your development follow the TDD process, here should code the test first like this</p>
 
 <figure class='code'><figcaption><span>spec/requests/create_payment_on_successful_charge_spec.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -584,7 +584,7 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
 
 <p>Just a memo here, becuase I can&rsquo;t use ngrok on my Mac(looks like security problem). but it&rsquo;s ok because I test successful on Heroku.</p>
 
-<p>The most important here is that set the app stirpe events URL in Stripe, for example my end point is:</p>
+<p>The most important here is to set the app stirpe events URL in Stripe, for example my end point is:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">https</span><span class="p">:</span><span class="sr">//</span><span class="n">tomo</span><span class="o">-</span><span class="n">myflix</span><span class="o">.</span><span class="n">herokuapp</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">stripe_events</span>
@@ -593,7 +593,7 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
 
 <h1>ATDD for payment view</h1>
 
-<p>The process for <code>admin views payment</code> is not very complex, so we can just write the spec outside-in, some also called this <code>ATDD</code>.</p>
+<p>The process for <code>admin views payment</code> is not very complex, so we can just write the spec outside-in, some also call this <code>ATDD</code>.</p>
 
 <p>Here is a post talking about the <a href="http://gaboesquivel.com/blog/2014/differences-between-tdd-atdd-and-bdd/">differences between TDD, ATDD, BDD</a>.</p>
 
