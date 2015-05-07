@@ -4,7 +4,7 @@
   <title><![CDATA[The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-05-07T16:53:55+08:00</updated>
+  <updated>2015-05-07T16:55:39+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -158,7 +158,7 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
 
 <p>We need to add column <code>active</code> for <code>User</code> to store the status.</p>
 
-<figure class='code'><figcaption><span>spec/requests/deactivate_user_with_payment_failure</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">add_column</span> <span class="ss">:users</span><span class="p">,</span> <span class="ss">:active</span><span class="p">,</span> <span class="ss">:boolean</span><span class="p">,</span> <span class="ss">default</span><span class="p">:</span> <span class="kp">true</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -169,11 +169,12 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
 
 <p>We cover Stripe for last three weeks.</p>
 
-<p>In week 6, we introduce Stripe for charge. How to build a custom form to charge. And test by using <code>vcr</code> for replay response.</p>
+<ul>
+<li><p>In week 6, we introduce Stripe for charge. How to build a custom form to charge. And test by using <code>vcr</code> for replay response.</p></li>
+<li><p>In week 7, we refactor code into <code>UserSignup</code>, as an <code>Service Object</code> of OOP concept. And we need to use javascript driver <code>webkit</code> and <code>selenium</code> in RSpec because of Stripe api.</p></li>
+<li><p>In week 8, we use <code>Subscription</code> to charge monthly instead of charge once. And we handle events by <code>Webhook</code>, to deal with <code>charge.succeeded</code> and <code>charge.failed</code> events.</p></li>
+</ul>
 
-<p>In week 7, we refactor code into <code>UserSignup</code>, as an <code>Service Object</code> of OOP concept. And we need to use javascript driver <code>webkit</code> and <code>selenium</code> in RSpec because of Stripe api.</p>
-
-<p>In week 8, we use <code>Subscription</code> to charge monthly instead of charge once. And we handle events by <code>Webhook</code>, to deal with <code>charge.succeeded</code> and <code>charge.failed</code> events.</p>
 ]]></content>
   </entry>
   

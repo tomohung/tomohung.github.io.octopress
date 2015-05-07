@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-05-07T16:53:55+08:00</updated>
+  <updated>2015-05-07T16:55:39+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -105,7 +105,7 @@ end
 
 <p>We need to add column <code>active</code> for <code>User</code> to store the status.</p>
 
-<pre><code>add_column :users, :active, :boolean, default: true
+<pre><code class="ruby">add_column :users, :active, :boolean, default: true
 </code></pre>
 
 <p>Make the <code>active</code> column default is true, otherwise Rails will set <code>false</code> for default value.</p>
@@ -114,11 +114,12 @@ end
 
 <p>We cover Stripe for last three weeks.</p>
 
-<p>In week 6, we introduce Stripe for charge. How to build a custom form to charge. And test by using <code>vcr</code> for replay response.</p>
+<ul>
+<li><p>In week 6, we introduce Stripe for charge. How to build a custom form to charge. And test by using <code>vcr</code> for replay response.</p></li>
+<li><p>In week 7, we refactor code into <code>UserSignup</code>, as an <code>Service Object</code> of OOP concept. And we need to use javascript driver <code>webkit</code> and <code>selenium</code> in RSpec because of Stripe api.</p></li>
+<li><p>In week 8, we use <code>Subscription</code> to charge monthly instead of charge once. And we handle events by <code>Webhook</code>, to deal with <code>charge.succeeded</code> and <code>charge.failed</code> events.</p></li>
+</ul>
 
-<p>In week 7, we refactor code into <code>UserSignup</code>, as an <code>Service Object</code> of OOP concept. And we need to use javascript driver <code>webkit</code> and <code>selenium</code> in RSpec because of Stripe api.</p>
-
-<p>In week 8, we use <code>Subscription</code> to charge monthly instead of charge once. And we handle events by <code>Webhook</code>, to deal with <code>charge.succeeded</code> and <code>charge.failed</code> events.</p>
 ]]></content>
   </entry>
   
