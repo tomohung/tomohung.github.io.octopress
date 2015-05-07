@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tealeaf | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/tealeaf/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-05-07T16:50:26+08:00</updated>
+  <updated>2015-05-07T16:53:55+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -361,7 +361,7 @@ end
 
 <p>Download <a href="https://ngrok.com/">ngrok</a> and install.</p>
 
-<pre><code>$ngrok 3000
+<pre><code class="ruby">$ngrok 3000
 </code></pre>
 
 <p>Get an URL from ngrok, and set this url to Stripe Webhook endpoint. Run the rails server, and operate app by manual to check if payment record be saved.</p>
@@ -379,7 +379,7 @@ end
 
 <p>Here is a post talking about the <a href="http://gaboesquivel.com/blog/2014/differences-between-tdd-atdd-and-bdd/">differences between TDD, ATDD, BDD</a>.</p>
 
-<pre><code>feature 'Admin sees payments' do
+<pre><code class="ruby">feature 'Admin sees payments' do
   scenario 'admin can see payments' do
     user = Fabricate(:user)
     payment = Payment.create(user: user, reference_id: 'fake_reference_id', amount: 99)
