@@ -249,7 +249,7 @@ When we run the server on localhost, there is no way to let Stripe directly emit
 
 Download [ngrok](https://ngrok.com/) and install.
 
-```
+```ruby
 $ngrok 3000
 ```
 
@@ -270,7 +270,7 @@ The process for `admin views payment` is not very complex, so we can just write 
 
 Here is a post talking about the [differences between TDD, ATDD, BDD](http://gaboesquivel.com/blog/2014/differences-between-tdd-atdd-and-bdd/).
 
-```
+```ruby
 feature 'Admin sees payments' do
   scenario 'admin can see payments' do
     user = Fabricate(:user)
