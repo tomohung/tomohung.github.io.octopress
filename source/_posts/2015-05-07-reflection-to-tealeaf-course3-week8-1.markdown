@@ -8,9 +8,9 @@ categories: [rails, tealeaf]
 
 #Subscription
 
-This week it's still about Stripe. We use Stripe to charge once last week, and Stripe also offer us to charge every month. This is call `Subscription`.
+This week it's still about Stripe. Last week, we use Stripe to charge once, and Stripe also offer us to charge  monthly. This is called `Subscription`.
 
-Following the [instruction here](https://stripe.com/docs/subscriptions) to set Plan.
+First following the [instruction here](https://stripe.com/docs/subscriptions) to set Plan.
 
 Then write the test for `customer charge`
 
@@ -44,7 +44,7 @@ describe StripeWrapper, vcr: true do
 end
 ```
 
-`StripeWrapper::Cahrge.customer` is writen like this:
+`StripeWrapper::Charge.customer` is written like this:
 
 ```ruby models/stripe_wrapper.rb
 module StripeWrapper
@@ -67,7 +67,7 @@ module StripeWrapper
 end
 ```
 
-Here is a tip, in Week7, since we merge code into `UserSignup` service object, although we change behavior from `charge` to `customer`, it's irrelavent to `UsersControler#create` code. 
+Here is a tip, in Week7, since we merge code into `UserSignup` service object, although we change behavior from `charge` to `customer`, it's unrelated to `UsersControler#create` code. 
 
 ```ruby users_controller.rb
   #some code...
@@ -101,9 +101,9 @@ We only need to modified code in `UserSignup.sign_up`.
 
 #Stripe Webhooks
 
-We can review Stripe payments on Stripe's dashborad, but what if we want to track and save these records in our website?
+We can review Stripe payments on Stripe's dashboard, but what if we want to track and save these records in our website?
 
-Here instroduce [Webhook](https://stripe.com/docs/webhooks)
+Here we instroduce [Webhook](https://stripe.com/docs/webhooks)
 
 We need Stripe to trigger an event for our server, then we can hold response from Stripe into our database.
 
@@ -112,7 +112,7 @@ We need Stripe to trigger an event for our server, then we can hold response fro
 3. Select test mode, and press Done
 4. Click `Send test webhook`
 
-For developemtn, we use [RequestBin](http://requestb.in/) here to inspect HTTP requests.
+For developement, we use [RequestBin](http://requestb.in/) here to inspect HTTP requests.
 
 Create a RequestBin Url for Stripe endpoint, from the link above, and input the url to Step 2. Click `Send test webhook` and go back refresh RequestBin page, you will see the response.
 
@@ -178,7 +178,7 @@ describe "Create payment on successful charge" do
 end
 ```
 
-As the data, the event type is `charge.succeeded`.
+According to the data, the event type is `charge.succeeded`.
 
 In order to receive Stripe Webhook event, we need the gem `stripe_event`
 
@@ -222,7 +222,7 @@ end
 `customer_token` and `amount` can get from response `event.data.object`.
 
 
-If you develop follow the TDD process, here should code the test first like this
+If your development follow the TDD process, here should code the test first like this
 
 ```ruby spec/requests/create_payment_on_successful_charge_spec.rb
 describe "Create payment on successful charge" do
@@ -257,7 +257,7 @@ Get an URL from ngrok, and set this url to Stripe Webhook endpoint. Run the rail
 
 Just a memo here, becuase I can't use ngrok on my Mac(looks like security problem). but it's ok because I test successful on Heroku.
 
-The most important here is that set the app stirpe events URL in Stripe, for example my end point is:
+The most important here is to set the app stirpe events URL in Stripe, for example my end point is:
 
 ```
 https://tomo-myflix.herokuapp.com/stripe_events
@@ -266,7 +266,7 @@ https://tomo-myflix.herokuapp.com/stripe_events
 
 #ATDD for payment view
 
-The process for `admin views payment` is not very complex, so we can just write the spec outside-in, some also called this `ATDD`.
+The process for `admin views payment` is not very complex, so we can just write the spec outside-in, some also call this `ATDD`.
 
 Here is a post talking about the [differences between TDD, ATDD, BDD](http://gaboesquivel.com/blog/2014/differences-between-tdd-atdd-and-bdd/).
 

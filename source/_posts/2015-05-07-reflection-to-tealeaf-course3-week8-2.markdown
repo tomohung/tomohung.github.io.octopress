@@ -23,7 +23,7 @@ This special card number will create a customer but charge will fail.
 
 We may produce failed webhook event by Stripe Dashboard.
 
-Open `Payments` on dashboard and click `Create Payment`, input the above Card Number info and click Done. Then we can find a failure charge in `Events & Webhooks`.
+Open `Payments` on dashboard and click `Create Payment`, input the above invalid Card Number info and click Done. Then we can find a failure charge in `Events & Webhooks`.
 
 As the previous post, we can get failed data as `:event_data` for test:
 
