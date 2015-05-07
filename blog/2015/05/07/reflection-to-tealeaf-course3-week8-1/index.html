@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Reflection to Tealeaf Course3 Week8 - The Life Alchemist</title>
+  <meta name="author" content="Tomo">
+
+  
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://www.tomohung.com/blog/2015/05/07/reflection-to-tealeaf-course3-week8-1">
+  <link href="/favicon.png" type="image/png" rel="icon">
+  <link href="/atom.xml" rel="alternate" title="The Life Alchemist" type="application/atom+xml">
+
+  <!-- http://opengraphprotocol.org/ -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="http://www.tomohung.com/blog/2015/05/07/reflection-to-tealeaf-course3-week8-1">
+  <meta property="og:title" content="Reflection to Tealeaf Course3 Week8 - The Life Alchemist">
+  
+
+  <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
+
+<link href="/assets/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="/assets/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
+
+
+  
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+
+  
+   <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-12830335-2', 'auto');
+    ga('send', 'pageview');
+
+  </script>
+
+
+</head>
+
+  <body   >
+    <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
+    <div id="wrap">
+      <header role="banner">
+        <nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">The Life Alchemist</a>
+        </div>
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a rel="index" href="/">Blog</a>
+                </li>
+                <li >
+                    <a href="/blog/archives">Archives</a>
+                </li>
+                <li >
+                    <a href="/about">About</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                
+                    <li>
+                        <form class="search navbar-form navbar-right" action="https://www.google.com/search" method="GET">
+                            <input type="hidden" name="q" value="site:www.tomohung.com">
+                            <div class="form-group">
+                                <input class="form-control" type="text" name="q" placeholder="Search">
+                            </div>
+                        </form>
+                    </li>
+                
+                <li>
+                    <a class="subscribe-rss" href="/atom.xml" title="subscribe via RSS">
+                        <span class="visible-xs">RSS</span>
+                        <img class="hidden-xs" src="/images/rss.png" alt="RSS">
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+      </header>
+      <div id="main" role="main" class="container">
+        <div id="content">
+          <div class="row">
+  <div class="page-content col-md-9" itemscope itemtype="http://schema.org/Blog">
+    <meta itemprop="name" content="The Life Alchemist" />
+    
+    <meta itemprop="url" content="http://www.tomohung.com" />
+    <article class="hentry" role="article" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+      
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-07T10:40:17+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-07</time>
+        
+      </p>
+    
+    
+    <h1 class="entry-title" itemprop="name headline">
+        Reflection to Tealeaf Course3 Week8
+        
+    </h1>
+    
+  </header>
+
+
+<div class="entry-content clearfix" itemprop="articleBody description"><h1>Subscription</h1>
+
+<p>This week it&rsquo;s still about Stripe. We use Stripe to charge once last week, and Stripe also offer us to charge every month. This is call <code>Subscription</code>.</p>
+
+<p>Following the <a href="https://stripe.com/docs/subscriptions">instruction here</a> to set Plan.</p>
+
+<p>Then write the test for <code>customer charge</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">describe</span> <span class="no">StripeWrapper</span><span class="p">,</span> <span class="ss">vcr</span><span class="p">:</span> <span class="kp">true</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">describe</span> <span class="s2">&quot;StripeWrapper::customer&quot;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">it</span> <span class="s1">&#39;create a customer with valid card&#39;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">user</span> <span class="o">=</span> <span class="no">Fabricate</span><span class="p">(</span><span class="ss">:user</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">charge</span> <span class="o">=</span> <span class="no">StripeWrapper</span><span class="o">::</span><span class="no">Charge</span><span class="o">.</span><span class="n">customer</span><span class="p">(</span><span class="ss">source</span><span class="p">:</span> <span class="n">valid_token</span><span class="p">,</span> <span class="ss">email</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">expect</span><span class="p">(</span><span class="n">charge</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">be_success</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">it</span> <span class="s1">&#39;does not create a customer with declined card&#39;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">user</span> <span class="o">=</span> <span class="no">Fabricate</span><span class="p">(</span><span class="ss">:user</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">charge</span> <span class="o">=</span> <span class="no">StripeWrapper</span><span class="o">::</span><span class="no">Charge</span><span class="o">.</span><span class="n">customer</span><span class="p">(</span><span class="ss">source</span><span class="p">:</span> <span class="n">invalid_token</span><span class="p">,</span> <span class="ss">email</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">expect</span><span class="p">(</span><span class="n">charge</span><span class="p">)</span><span class="o">.</span><span class="n">not_to</span> <span class="n">be_success</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">it</span> <span class="s1">&#39;return error message with declined card&#39;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">user</span> <span class="o">=</span> <span class="no">Fabricate</span><span class="p">(</span><span class="ss">:user</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">charge</span> <span class="o">=</span> <span class="no">StripeWrapper</span><span class="o">::</span><span class="no">Charge</span><span class="o">.</span><span class="n">customer</span><span class="p">(</span><span class="ss">source</span><span class="p">:</span> <span class="n">invalid_token</span><span class="p">,</span> <span class="ss">email</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">expect</span><span class="p">(</span><span class="n">charge</span><span class="o">.</span><span class="n">error_message</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">be_present</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">it</span> <span class="s1">&#39;returns the customer token for a valid card&#39;</span> <span class="k">do</span>
+</span><span class='line'>      <span class="n">user</span> <span class="o">=</span> <span class="no">Fabricate</span><span class="p">(</span><span class="ss">:user</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">charge</span> <span class="o">=</span> <span class="no">StripeWrapper</span><span class="o">::</span><span class="no">Charge</span><span class="o">.</span><span class="n">customer</span><span class="p">(</span><span class="ss">source</span><span class="p">:</span> <span class="n">valid_token</span><span class="p">,</span> <span class="ss">email</span><span class="p">:</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">expect</span><span class="p">(</span><span class="n">charge</span><span class="o">.</span><span class="n">customer_token</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">be_present</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>StripeWrapper::Cahrge.customer</code> is writen like this:</p>
+
+<figure class='code'><figcaption><span>models/stripe_wrapper.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">module</span> <span class="nn">StripeWrapper</span>
+</span><span class='line'>  <span class="k">class</span> <span class="nc">Charge</span>
+</span><span class='line'>    <span class="kp">attr_reader</span> <span class="ss">:response</span><span class="p">,</span> <span class="ss">:status</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">def</span> <span class="nc">self</span><span class="o">.</span><span class="nf">customer</span><span class="p">(</span><span class="n">options</span> <span class="o">=</span> <span class="p">{})</span>
+</span><span class='line'>      <span class="k">begin</span>
+</span><span class='line'>        <span class="n">response</span> <span class="o">=</span> <span class="no">Stripe</span><span class="o">::</span><span class="no">Customer</span><span class="o">.</span><span class="n">create</span><span class="p">(</span>
+</span><span class='line'>          <span class="ss">source</span><span class="p">:</span> <span class="n">options</span><span class="o">[</span><span class="ss">:source</span><span class="o">]</span><span class="p">,</span>
+</span><span class='line'>          <span class="ss">plan</span><span class="p">:</span> <span class="s2">&quot;BASE&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="ss">email</span><span class="p">:</span> <span class="n">options</span><span class="o">[</span><span class="ss">:email</span><span class="o">]</span>
+</span><span class='line'>        <span class="p">)</span>
+</span><span class='line'>        <span class="kp">new</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="ss">:success</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">rescue</span> <span class="no">Stripe</span><span class="o">::</span><span class="no">CardError</span> <span class="o">=&gt;</span> <span class="n">e</span>
+</span><span class='line'>        <span class="kp">new</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="ss">:error</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here is a tip, in Week7, since we merge code into <code>UserSignup</code> service object, although we change behavior from <code>charge</code> to <code>customer</code>, it&rsquo;s irrelavent to <code>UsersControler#create</code> code.</p>
+
+<figure class='code'><figcaption><span>users_controller.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="c1">#some code...</span>
+</span><span class='line'>  <span class="n">user_signup_service</span> <span class="o">=</span> <span class="no">UserSignup</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vi">@user</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">result</span> <span class="o">=</span> <span class="n">user_signup_service</span><span class="o">.</span><span class="n">sign_up</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:stripeToken</span><span class="o">]</span><span class="p">,</span> <span class="n">params</span><span class="o">[</span><span class="ss">:token</span><span class="o">]</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>We only need to modified code in <code>UserSignup.sign_up</code>.</p>
+
+<figure class='code'><figcaption><span>services/user_signup.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">def</span> <span class="nf">sign_up</span><span class="p">(</span><span class="n">stripe_token</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">,</span> <span class="n">invitation_token</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="vi">@user</span><span class="o">.</span><span class="n">valid?</span>
+</span><span class='line'>      <span class="n">charge</span> <span class="o">=</span> <span class="n">customer_charge_user_with_stripe</span><span class="p">(</span><span class="n">stripe_token</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">charge</span><span class="o">.</span><span class="n">success?</span>
+</span><span class='line'>        <span class="c1">#do something...</span>
+</span><span class='line'>      <span class="k">else</span>
+</span><span class='line'>        <span class="c1">#do something...</span>
+</span><span class='line'>      <span class="k">end</span>
+</span><span class='line'>    <span class="k">else</span>
+</span><span class='line'>      <span class="c1">#do something...</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">customer_charge_user_with_stripe</span><span class="p">(</span><span class="n">token</span><span class="p">)</span>
+</span><span class='line'>    <span class="no">StripeWrapper</span><span class="o">::</span><span class="no">Charge</span><span class="o">.</span><span class="n">customer</span><span class="p">(</span>
+</span><span class='line'>      <span class="ss">source</span><span class="p">:</span> <span class="n">token</span><span class="p">,</span>
+</span><span class='line'>      <span class="ss">email</span><span class="p">:</span> <span class="vi">@user</span><span class="o">.</span><span class="n">email</span>
+</span><span class='line'>    <span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>Stripe Webhooks</h1>
+
+<p>We can review Stripe payments on Stripe&rsquo;s dashborad, but what if we want to track and save these records in our website?</p>
+
+<p>Here instroduce <a href="https://stripe.com/docs/webhooks">Webhook</a></p>
+
+<p>We need Stripe to trigger an event for our server, then we can hold response from Stripe into our database.</p>
+
+<ol>
+<li>Go <code>Account setting</code>-><code>Webhooks</code>-><code>Add endpoint...</code></li>
+<li>Input your website url. &lt;- explain it later</li>
+<li>Select test mode, and press Done</li>
+<li>Click <code>Send test webhook</code></li>
+</ol>
+
+
+<p>For developemtn, we use <a href="http://requestb.in/">RequestBin</a> here to inspect HTTP requests.</p>
+
+<p>Create a RequestBin Url for Stripe endpoint, from the link above, and input the url to Step 2. Click <code>Send test webhook</code> and go back refresh RequestBin page, you will see the response.</p>
+
+<p>Instead of this, we also can review the response from Stripe <code>dashboard</code>-><code>Events &amp; Webhooks</code>, select one of record and check the <code>Webhook Details</code>.</p>
+
+<p>Why we want to check response here? It&rsquo;s just prepared for test data.</p>
+
+<p>For example, create a RSpec file for <code>succeeded payment</code>, and convert response to a fake data <code>:event_data</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">describe</span> <span class="s2">&quot;Create payment on successful charge&quot;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">let</span><span class="p">(</span><span class="ss">:event_data</span><span class="p">)</span> <span class="k">do</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>      <span class="s2">&quot;id&quot;</span><span class="o">=&gt;</span> <span class="s2">&quot;evt_15yYzgLCTUylKIRln74HkdCq&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;created&quot;</span><span class="o">=&gt;</span> <span class="mi">1430705260</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;livemode&quot;</span><span class="o">=&gt;</span> <span class="kp">false</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;type&quot;</span><span class="o">=&gt;</span> <span class="s2">&quot;charge.succeeded&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;data&quot;</span><span class="o">=&gt;</span> <span class="p">{</span>
+</span><span class='line'>        <span class="s2">&quot;object&quot;</span><span class="o">=&gt;</span> <span class="p">{</span>
+</span><span class='line'>          <span class="s2">&quot;id&quot;</span><span class="o">=&gt;</span> <span class="s2">&quot;ch_15yYzgLCTUylKIRlP66CKpX5&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="s2">&quot;object&quot;</span><span class="o">=&gt;</span> <span class="s2">&quot;charge&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="s2">&quot;created&quot;</span><span class="o">=&gt;</span> <span class="mi">1430705260</span><span class="p">,</span>
+</span><span class='line'>          <span class="s2">&quot;livemode&quot;</span><span class="o">=&gt;</span> <span class="kp">false</span><span class="p">,</span>
+</span><span class='line'>          <span class="s2">&quot;paid&quot;</span><span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span>
+</span><span class='line'>          <span class="s2">&quot;status&quot;</span><span class="o">=&gt;</span> <span class="s2">&quot;succeeded&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="s2">&quot;amount&quot;</span><span class="o">=&gt;</span> <span class="mi">99</span><span class="p">,</span>
+</span><span class='line'>          <span class="s2">&quot;currency&quot;</span><span class="o">=&gt;</span> <span class="s2">&quot;usd&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="s2">&quot;refunded&quot;</span><span class="o">=&gt;</span> <span class="kp">false</span><span class="p">,</span>
+</span><span class='line'>          <span class="s2">&quot;source&quot;</span><span class="o">=&gt;</span> <span class="p">{</span>
+</span><span class='line'>            <span class="s2">&quot;id&quot;</span><span class="o">=&gt;</span> <span class="s2">&quot;card_15yYzeLCTUylKIRll7zhkfMs&quot;</span><span class="p">,</span>
+</span><span class='line'>            <span class="s2">&quot;object&quot;</span><span class="o">=&gt;</span> <span class="s2">&quot;card&quot;</span><span class="p">,</span>
+</span><span class='line'>            <span class="c1">#.........</span>
+</span><span class='line'>            <span class="s2">&quot;dynamic_last4&quot;</span><span class="o">=&gt;</span> <span class="kp">nil</span><span class="p">,</span>
+</span><span class='line'>            <span class="s2">&quot;metadata&quot;</span><span class="o">=&gt;</span> <span class="p">{},</span>
+</span><span class='line'>            <span class="s2">&quot;customer&quot;</span><span class="o">=&gt;</span> <span class="s2">&quot;cus_6Aupm1THLvHTnO&quot;</span>
+</span><span class='line'>          <span class="p">},</span>
+</span><span class='line'>          <span class="s2">&quot;captured&quot;</span><span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span>
+</span><span class='line'>          <span class="s2">&quot;balance_transaction&quot;</span><span class="o">=&gt;</span> <span class="s2">&quot;txn_15yYzgLCTUylKIRluBT7Obmz&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="s2">&quot;failure_message&quot;</span><span class="o">=&gt;</span> <span class="kp">nil</span><span class="p">,</span>
+</span><span class='line'>          <span class="s2">&quot;failure_code&quot;</span><span class="o">=&gt;</span> <span class="kp">nil</span><span class="p">,</span>
+</span><span class='line'>          <span class="s2">&quot;amount_refunded&quot;</span><span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>          <span class="s2">&quot;customer&quot;</span><span class="o">=&gt;</span> <span class="s2">&quot;cus_6Aupm1THLvHTnO&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="s2">&quot;invoice&quot;</span><span class="o">=&gt;</span> <span class="s2">&quot;in_15yYzgLCTUylKIRlcnjWhIBb&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="s2">&quot;application_fee&quot;</span><span class="o">=&gt;</span> <span class="kp">nil</span><span class="p">,</span>
+</span><span class='line'>          <span class="c1">#..............</span>
+</span><span class='line'>          <span class="s2">&quot;refunds&quot;</span><span class="o">=&gt;</span> <span class="p">{</span>
+</span><span class='line'>            <span class="s2">&quot;object&quot;</span><span class="o">=&gt;</span> <span class="s2">&quot;list&quot;</span><span class="p">,</span>
+</span><span class='line'>            <span class="s2">&quot;total_count&quot;</span><span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
+</span><span class='line'>            <span class="s2">&quot;has_more&quot;</span><span class="o">=&gt;</span> <span class="kp">false</span><span class="p">,</span>
+</span><span class='line'>            <span class="s2">&quot;url&quot;</span><span class="o">=&gt;</span> <span class="s2">&quot;/v1/charges/ch_15yYzgLCTUylKIRlP66CKpX5/refunds&quot;</span><span class="p">,</span>
+</span><span class='line'>            <span class="s2">&quot;data&quot;</span><span class="o">=&gt;</span> <span class="o">[]</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>      <span class="p">},</span>
+</span><span class='line'>      <span class="s2">&quot;object&quot;</span><span class="o">=&gt;</span> <span class="s2">&quot;event&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;pending_webhooks&quot;</span><span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;request&quot;</span><span class="o">=&gt;</span> <span class="s2">&quot;iar_6AupyN8zrE6fF4&quot;</span><span class="p">,</span>
+</span><span class='line'>      <span class="s2">&quot;api_version&quot;</span><span class="o">=&gt;</span> <span class="s2">&quot;2015-04-07&quot;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">#some spec here...</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As the data, the event type is <code>charge.succeeded</code>.</p>
+
+<p>In order to receive Stripe Webhook event, we need the gem <code>stripe_event</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">gem</span> <span class="s1">&#39;stripe_event&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In config/routes.rb</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">mount</span> <span class="no">StripeEvent</span><span class="o">::</span><span class="no">Engine</span><span class="p">,</span> <span class="ss">at</span><span class="p">:</span> <span class="s1">&#39;/stripe_events&#39;</span> <span class="c1"># provide a custom path</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Get mark here for the path <code>/stripe_events</code>, because it&rsquo;s the endpoint for setting webhook in Stripe&rsquo;s account setting. Create a webhook on Stripe, for example, my website is <code>https://tomo-myflix.herokuapp.com</code>, then endpoint url is <code>https://tomo-myflix.herokuapp.com/stripe_events</code></p>
+
+<p>Then Stripe_Event help us to deal with stripe events here:</p>
+
+<figure class='code'><figcaption><span>config/initializers/stripe.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="no">StripeEvent</span><span class="o">.</span><span class="n">configure</span> <span class="k">do</span> <span class="o">|</span><span class="n">events</span><span class="o">|</span>
+</span><span class='line'>  <span class="n">events</span><span class="o">.</span><span class="n">subscribe</span> <span class="s1">&#39;charge.succeeded&#39;</span> <span class="k">do</span> <span class="o">|</span><span class="n">event</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">find_by</span><span class="p">(</span><span class="ss">customer_token</span><span class="p">:</span> <span class="n">event</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">customer</span><span class="p">)</span>
+</span><span class='line'>    <span class="no">Payment</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">user</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span> <span class="ss">amount</span><span class="p">:</span> <span class="n">event</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">amount</span><span class="p">,</span> <span class="ss">reference_id</span><span class="p">:</span> <span class="n">event</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">id</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>customer_token</code> is created when creating <code>User</code>. Add this column in <code>User</code> to track Stripe record. And code this in service object <code>UserSignup.sign_up</code>:</p>
+
+<figure class='code'><figcaption><span>models/user_signup.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">#....</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">sign_up</span><span class="p">(</span><span class="n">stripe_token</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">,</span> <span class="n">invitation_token</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">)</span>
+</span><span class='line'>    <span class="k">if</span> <span class="vi">@user</span><span class="o">.</span><span class="n">valid?</span>
+</span><span class='line'>      <span class="n">charge</span> <span class="o">=</span> <span class="n">customer_charge_user_with_stripe</span><span class="p">(</span><span class="n">stripe_token</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">if</span> <span class="n">charge</span><span class="o">.</span><span class="n">success?</span>
+</span><span class='line'>        <span class="vi">@user</span><span class="o">.</span><span class="n">customer_token</span> <span class="o">=</span> <span class="n">charge</span><span class="o">.</span><span class="n">customer_token</span>
+</span><span class='line'>        <span class="vi">@user</span><span class="o">.</span><span class="n">save</span>
+</span><span class='line'><span class="c1"># ....</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>customer_token</code> and <code>amount</code> can get from response <code>event.data.object</code>.</p>
+
+<p>If you develop follow the TDD process, here should code the test first like this</p>
+
+<figure class='code'><figcaption><span>spec/requests/create_payment_on_successful_charge_spec.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">describe</span> <span class="s2">&quot;Create payment on successful charge&quot;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">let</span><span class="p">(</span><span class="ss">:event_data</span><span class="p">)</span> <span class="k">do</span>
+</span><span class='line'>    <span class="c1"># setting in above, ignore here.</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">it</span> <span class="s1">&#39;creates a payment with webhood from stripe for charge succeed&#39;</span><span class="p">,</span> <span class="ss">vcr</span><span class="p">:</span> <span class="kp">true</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">post</span> <span class="s1">&#39;/stripe_events&#39;</span><span class="p">,</span> <span class="n">event_data</span>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="no">Payment</span><span class="o">.</span><span class="n">count</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">eq</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1"># other tests....</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Notice that we use <code>post '/stripe_events', event_data</code> to simulate Stripe emit a post to our server. So this is only for test to trigger StripeEvent in <code>initializers/stripe.rb</code>.</p>
+
+<p>So far, we can create <code>Payment</code> by Stripe Webhook.</p>
+
+<h1>ngrok for local test</h1>
+
+<p>When we run the server on localhost, there is no way to let Stripe directly emit the post to our local machine. And we can use <code>ngrok</code> to do the response transfer.</p>
+
+<p>Download <a href="https://ngrok.com/">ngrok</a> and install.</p>
+
+<figure class='code'><figcaption><span>spec/requests/create_payment_on_successful_charge_spec.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="vg">$ngrok</span> <span class="mi">3000</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Get an URL from ngrok, and set this url to Stripe Webhook endpoint. Run the rails server, and operate app by manual to check if payment record be saved.</p>
+
+<p>Just a memo here, becuase I can&rsquo;t use ngrok on my Mac(looks like security problem). but it&rsquo;s ok because I test successful on Heroku.</p>
+
+<p>The most important here is that set the app stirpe events URL in Stripe, for example my end point is:</p>
+
+<figure class='code'><figcaption><span>spec/requests/create_payment_on_successful_charge_spec.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="ss">https</span><span class="p">:</span><span class="sr">//</span><span class="n">tomo</span><span class="o">-</span><span class="n">myflix</span><span class="o">.</span><span class="n">herokuapp</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">stripe_events</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h1>ATDD for payment view</h1>
+
+<p>The process for <code>admin views payment</code> is not very complex, so we can just write the spec outside-in, some also called this <code>ATDD</code>.</p>
+
+<p>Here is a post talking about the <a href="http://gaboesquivel.com/blog/2014/differences-between-tdd-atdd-and-bdd/">differences between TDD, ATDD, BDD</a>.</p>
+
+<figure class='code'><figcaption><span>spec/requests/create_payment_on_successful_charge_spec.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">feature</span> <span class="s1">&#39;Admin sees payments&#39;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">scenario</span> <span class="s1">&#39;admin can see payments&#39;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">user</span> <span class="o">=</span> <span class="no">Fabricate</span><span class="p">(</span><span class="ss">:user</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">payment</span> <span class="o">=</span> <span class="no">Payment</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">user</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span> <span class="ss">reference_id</span><span class="p">:</span> <span class="s1">&#39;fake_reference_id&#39;</span><span class="p">,</span> <span class="ss">amount</span><span class="p">:</span> <span class="mi">99</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">sign_in</span><span class="p">(</span><span class="no">Fabricate</span><span class="p">(</span><span class="ss">:admin</span><span class="p">))</span>
+</span><span class='line'>    <span class="n">visit</span> <span class="n">admin_payments_path</span>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_content</span><span class="p">(</span><span class="s2">&quot;$0.99&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_content</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_content</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">full_name</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_content</span><span class="p">(</span><span class="s1">&#39;fake_reference_id&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">scenario</span> <span class="s1">&#39;user cannot see payments&#39;</span> <span class="k">do</span>
+</span><span class='line'>    <span class="n">sign_in</span><span class="p">(</span><span class="no">Fabricate</span><span class="p">(</span><span class="ss">:user</span><span class="p">))</span>
+</span><span class='line'>    <span class="n">visit</span> <span class="n">admin_payments_path</span>
+</span><span class='line'>    <span class="n">expect</span><span class="p">(</span><span class="n">page</span><span class="p">)</span><span class="o">.</span><span class="n">to</span> <span class="n">have_content</span><span class="p">(</span><span class="s2">&quot;You do not have access right.&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+      <footer>
+        <p class="meta text-muted">
+          
+  
+
+<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard" itemprop="author" itemscope itemtype="http://schema.org/Person">Posted by <span class="fn" itemprop="name">Tomo</span></span>
+
+          
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-07T10:40:17+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-07</time>
+          
+
+<span class="glyphicon glyphicon-tags"></span>&nbsp;
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/rails/'>rails</a>, <a class='category' href='/blog/categories/tealeaf/'>tealeaf</a>
+  
+</span>
+
+
+        </p>
+        
+          <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/05/07/reflection-to-tealeaf-course3-week8-1/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/05/07/reflection-to-tealeaf-course3-week8-1/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+        
+        
+          <ul class="meta text-muted pager">
+            
+            <li class="previous"><a href="/blog/2015/05/06/reflection-to-tealeaf-course3-week7-3-slash-3/" title="Previous Post: Reflection to Tealeaf Course3 Week7 (3/3)">&laquo; Reflection to Tealeaf Course3 Week7 (3/3)</a></li>
+            
+            
+            <li class="next"><a href="/blog/2015/05/07/reflection-to-tealeaf-course3-week8-2/" title="Next Post: Reflection to Tealeaf Course3 Week8 -2">Reflection to Tealeaf Course3 Week8 -2 &raquo;</a></li>
+            
+          </ul>
+        
+      </footer>
+    </article>
+    
+      <section>
+        <h2>Comments</h2>
+        <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+      </section>
+    
+  </div>
+
+  
+  <aside class="sidebar col-md-3">
+    
+      
+<section>
+	<span>
+		<img src="http://www.gravatar.com/avatar/8708c05d2568e10fb402516eeb954ef2" alt="Gravatar of Tomo " title="Gravatar of Tomo" />
+	</span>
+</section>
+<section class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Recent Posts</h3>
+  </div>
+  
+  <div id="recent_posts" class="list-group">
+    
+    <a class="list-group-item " href="/blog/2015/05/07/reflection-to-tealeaf-course3-week8-2/">Reflection to Tealeaf Course3 Week8 -2</a>
+    
+    <a class="list-group-item active" href="/blog/2015/05/07/reflection-to-tealeaf-course3-week8-1/">Reflection to Tealeaf Course3 Week8</a>
+    
+    <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week7-3-slash-3/">Reflection to Tealeaf Course3 Week7 (3/3)</a>
+    
+    <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week7-2/">Reflection to Tealeaf Course3 Week7 (2/3)</a>
+    
+    <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week7-1/">Reflection to Tealeaf Course3 Week7 (1/3)</a>
+    
+    <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week6-2-slash-2/">Reflection to Tealeaf Course3 Week6 (2/2)</a>
+    
+    <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week6/">Reflection to Tealeaf Course3 Week6 (1/2)</a>
+    
+    <a class="list-group-item " href="/blog/2015/05/04/eloquent-ruby-7/">Eloquent Ruby -7</a>
+    
+    <a class="list-group-item " href="/blog/2015/05/03/eloquent-ruby-6/">Eloquent Ruby -6</a>
+    
+    <a class="list-group-item " href="/blog/2015/05/03/eloquent-ruby-5/">Eloquent Ruby -5</a>
+    
+  </div>
+</section>
+
+
+
+
+
+
+    
+  </aside>
+  
+</div>
+
+        </div>
+      </div>
+    </div>
+    <footer role="contentinfo"><div class="container">
+    <p class="text-muted credits">
+  Copyright &copy; 2015 - Tomo<br>
+  <small>
+      <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>,
+      <span class="credit">customized with <a href="https://github.com/kAworu/octostrap3">octostrap3</a></span>.
+  </small>
+</p>
+
+</div>
+</footer>
+    
+
+<script type="text/javascript">
+      var disqus_shortname = 'tomohung';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.tomohung.com/blog/2015/05/07/reflection-to-tealeaf-course3-week8-1/';
+        var disqus_url = 'http://www.tomohung.com/blog/2015/05/07/reflection-to-tealeaf-course3-week8-1/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+<script src="/assets/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="/javascripts/modernizr-2.0.js"></script>
+
+
+  </body>
+</html>

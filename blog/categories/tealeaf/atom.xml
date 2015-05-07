@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tealeaf | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/tealeaf/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-05-07T07:05:09+08:00</updated>
+  <updated>2015-05-07T16:48:41+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -12,6 +12,394 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week8 -2]]></title>
+    <link href="http://www.tomohung.com/blog/2015/05/07/reflection-to-tealeaf-course3-week8-2/"/>
+    <updated>2015-05-07T15:43:10+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/05/07/reflection-to-tealeaf-course3-week8-2</id>
+    <content type="html"><![CDATA[<h1>Handle Payments Failures</h1>
+
+<p>Here we review what Jason Fried said in <a href="https://signalvnoise.com/posts/753-ask-37signals-how-do-you-process-credit-cards">How Do You Process Credit Card</a>:</p>
+
+<blockquote><p>The one thing we’re often surprised by is how many accounts have charge issues so it’s important to really think about the error handling and customer experience issues related to declined cards.</p></blockquote>
+
+<p>So there are thousands of reasons a credit card may become declined after user register our website. It&rsquo;s important to handle these payment failures.</p>
+
+<p>Stripe also provide the test situation for us.</p>
+
+<blockquote><p>Card Number: <code>4000000000000341</code><br/>
+Description: <code>Attaching this card to a Customer object will succeed, but attempts to charge the customer will fail.</code></p></blockquote>
+
+<p>This special card number will create a customer but charge will fail.</p>
+
+<p>We may produce failed webhook event by Stripe Dashboard.</p>
+
+<p>Open <code>Payments</code> on dashboard and click <code>Create Payment</code>, input the above Card Number info and click Done. Then we can find a failure charge in <code>Events &amp; Webhooks</code>.</p>
+
+<p>As the previous post, we can get failed data as <code>:event_data</code> for test:</p>
+
+<pre><code class="ruby spec/requests/deactivate_user_with_payment_failure">describe 'customer on failed charge' do
+  let(:event_data) do
+    {
+      "id" =&gt; "evt_15ycOeLCTUylKIRlJom1jayI",
+      "created" =&gt; 1430718340,
+      "livemode" =&gt; false,
+      "type" =&gt; "charge.failed",
+      "data" =&gt; {
+        "object" =&gt; {
+          "id" =&gt; "ch_15ycOdLCTUylKIRlq8G764Gc",
+          "object" =&gt; "charge",
+          "created" =&gt; 1430718339,
+          "livemode" =&gt; false,
+          "paid" =&gt; false,
+          "status" =&gt; "failed",
+          # .......
+          "application_fee" =&gt; nil,
+          "refunds" =&gt; {
+            "object" =&gt; "list",
+            "total_count" =&gt; 0,
+            "has_more" =&gt; false,
+            "url" =&gt; "/v1/charges/ch_15ycOdLCTUylKIRlq8G764Gc/refunds",
+            "data" =&gt; []
+          }
+        }
+      },
+      "object" =&gt; "event",
+      "pending_webhooks" =&gt; 1,
+      "request" =&gt; "iar_6AyLkbPGvZltpn",
+      "api_version" =&gt; "2015-04-07"
+    }
+  end
+end
+</code></pre>
+
+<p>Notice that <code>:event_data</code> type is <code>charge.failed</code>.</p>
+
+<p>Then we add event <code>charge.failed</code> in <code>strip.rb</code></p>
+
+<pre><code class="ruby config/initializers/stripe.rb">StripeEvent.configure do |events|
+  events.subscribe 'charge.failed' do |event|
+    user = User.find_by(customer_token: event.data.object.customer)
+    user.deactivate!
+  end
+end
+</code></pre>
+
+<p>We simplpy deactivate user here, usually, it should send a warning mail to the user.</p>
+
+<p>Here is the request test:</p>
+
+<pre><code class="ruby spec/requests/deactivate_user_with_payment_failure">describe 'customer on failed charge' do
+  let(:event_data) do
+    #...
+  end
+
+  it 'deactivates a user with the webhook data from stripe for charge failed', vcr: true do
+    user = Fabricate(:user, customer_token: "cus_6Awy7ItkTK5HCv", active: true)
+    post '/stripe_events', event_data
+    expect(user.reload).not_to be_active
+  end
+end
+</code></pre>
+
+<p>We need to add column <code>active</code> for <code>User</code> to store the status.</p>
+
+<pre><code>add_column :users, :active, :boolean, default: true
+</code></pre>
+
+<p>Make the <code>active</code> column default is true, otherwise Rails will set <code>false</code> for default value.</p>
+
+<h1>A Short Conclusion for Stripe</h1>
+
+<p>We cover Stripe for last three weeks.</p>
+
+<p>In week 6, we introduce Stripe for charge. How to build a custom form to charge. And test by using <code>vcr</code> for replay response.</p>
+
+<p>In week 7, we refactor code into <code>UserSignup</code>, as an <code>Service Object</code> of OOP concept. And we need to use javascript driver <code>webkit</code> and <code>selenium</code> in RSpec because of Stripe api.</p>
+
+<p>In week 8, we use <code>Subscription</code> to charge monthly instead of charge once. And we handle events by <code>Webhook</code>, to deal with <code>charge.succeeded</code> and <code>charge.failed</code> events.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week8]]></title>
+    <link href="http://www.tomohung.com/blog/2015/05/07/reflection-to-tealeaf-course3-week8-1/"/>
+    <updated>2015-05-07T10:40:17+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/05/07/reflection-to-tealeaf-course3-week8-1</id>
+    <content type="html"><![CDATA[<h1>Subscription</h1>
+
+<p>This week it&rsquo;s still about Stripe. We use Stripe to charge once last week, and Stripe also offer us to charge every month. This is call <code>Subscription</code>.</p>
+
+<p>Following the <a href="https://stripe.com/docs/subscriptions">instruction here</a> to set Plan.</p>
+
+<p>Then write the test for <code>customer charge</code></p>
+
+<pre><code class="ruby">describe StripeWrapper, vcr: true do
+  describe "StripeWrapper::customer" do
+    it 'create a customer with valid card' do
+      user = Fabricate(:user)
+      charge = StripeWrapper::Charge.customer(source: valid_token, email: user.email)
+      expect(charge).to be_success
+    end
+
+    it 'does not create a customer with declined card' do
+      user = Fabricate(:user)
+      charge = StripeWrapper::Charge.customer(source: invalid_token, email: user.email)
+      expect(charge).not_to be_success
+    end
+
+    it 'return error message with declined card' do
+      user = Fabricate(:user)
+      charge = StripeWrapper::Charge.customer(source: invalid_token, email: user.email)
+      expect(charge.error_message).to be_present
+    end
+
+    it 'returns the customer token for a valid card' do
+      user = Fabricate(:user)
+      charge = StripeWrapper::Charge.customer(source: valid_token, email: user.email)
+      expect(charge.customer_token).to be_present
+    end
+  end
+end
+</code></pre>
+
+<p><code>StripeWrapper::Cahrge.customer</code> is writen like this:</p>
+
+<pre><code class="ruby models/stripe_wrapper.rb">module StripeWrapper
+  class Charge
+    attr_reader :response, :status
+
+    def self.customer(options = {})    
+      begin
+        response = Stripe::Customer.create(
+          source: options[:source],
+          plan: "BASE",
+          email: options[:email]
+        )
+        new(response, :success)
+      rescue Stripe::CardError =&gt; e
+        new(e, :error)
+      end
+    end
+  end
+end
+</code></pre>
+
+<p>Here is a tip, in Week7, since we merge code into <code>UserSignup</code> service object, although we change behavior from <code>charge</code> to <code>customer</code>, it&rsquo;s irrelavent to <code>UsersControler#create</code> code.</p>
+
+<pre><code class="ruby users_controller.rb">  #some code...
+  user_signup_service = UserSignup.new(@user)
+  result = user_signup_service.sign_up(params[:stripeToken], params[:token])
+</code></pre>
+
+<p>We only need to modified code in <code>UserSignup.sign_up</code>.</p>
+
+<pre><code class="ruby services/user_signup.rb">  def sign_up(stripe_token = nil, invitation_token = nil)
+    if @user.valid?      
+      charge = customer_charge_user_with_stripe(stripe_token)
+      if charge.success?
+        #do something...
+      else
+        #do something...
+      end
+    else
+      #do something...
+    end
+  end
+
+  def customer_charge_user_with_stripe(token)
+    StripeWrapper::Charge.customer(
+      source: token,
+      email: @user.email
+    )
+  end
+</code></pre>
+
+<h1>Stripe Webhooks</h1>
+
+<p>We can review Stripe payments on Stripe&rsquo;s dashborad, but what if we want to track and save these records in our website?</p>
+
+<p>Here instroduce <a href="https://stripe.com/docs/webhooks">Webhook</a></p>
+
+<p>We need Stripe to trigger an event for our server, then we can hold response from Stripe into our database.</p>
+
+<ol>
+<li>Go <code>Account setting</code>-><code>Webhooks</code>-><code>Add endpoint...</code></li>
+<li>Input your website url. &lt;- explain it later</li>
+<li>Select test mode, and press Done</li>
+<li>Click <code>Send test webhook</code></li>
+</ol>
+
+
+<p>For developemtn, we use <a href="http://requestb.in/">RequestBin</a> here to inspect HTTP requests.</p>
+
+<p>Create a RequestBin Url for Stripe endpoint, from the link above, and input the url to Step 2. Click <code>Send test webhook</code> and go back refresh RequestBin page, you will see the response.</p>
+
+<p>Instead of this, we also can review the response from Stripe <code>dashboard</code>-><code>Events &amp; Webhooks</code>, select one of record and check the <code>Webhook Details</code>.</p>
+
+<p>Why we want to check response here? It&rsquo;s just prepared for test data.</p>
+
+<p>For example, create a RSpec file for <code>succeeded payment</code>, and convert response to a fake data <code>:event_data</code></p>
+
+<pre><code class="ruby ">describe "Create payment on successful charge" do
+  let(:event_data) do
+    {
+      "id"=&gt; "evt_15yYzgLCTUylKIRln74HkdCq",
+      "created"=&gt; 1430705260,
+      "livemode"=&gt; false,
+      "type"=&gt; "charge.succeeded",
+      "data"=&gt; {
+        "object"=&gt; {
+          "id"=&gt; "ch_15yYzgLCTUylKIRlP66CKpX5",
+          "object"=&gt; "charge",
+          "created"=&gt; 1430705260,
+          "livemode"=&gt; false,
+          "paid"=&gt; true,
+          "status"=&gt; "succeeded",
+          "amount"=&gt; 99,
+          "currency"=&gt; "usd",
+          "refunded"=&gt; false,
+          "source"=&gt; {
+            "id"=&gt; "card_15yYzeLCTUylKIRll7zhkfMs",
+            "object"=&gt; "card",
+            #.........
+            "dynamic_last4"=&gt; nil,
+            "metadata"=&gt; {},
+            "customer"=&gt; "cus_6Aupm1THLvHTnO"
+          },
+          "captured"=&gt; true,
+          "balance_transaction"=&gt; "txn_15yYzgLCTUylKIRluBT7Obmz",
+          "failure_message"=&gt; nil,
+          "failure_code"=&gt; nil,
+          "amount_refunded"=&gt; 0,
+          "customer"=&gt; "cus_6Aupm1THLvHTnO",
+          "invoice"=&gt; "in_15yYzgLCTUylKIRlcnjWhIBb",
+          "application_fee"=&gt; nil,
+          #..............
+          "refunds"=&gt; {
+            "object"=&gt; "list",
+            "total_count"=&gt; 0,
+            "has_more"=&gt; false,
+            "url"=&gt; "/v1/charges/ch_15yYzgLCTUylKIRlP66CKpX5/refunds",
+            "data"=&gt; []
+          }
+        }
+      },
+      "object"=&gt; "event",
+      "pending_webhooks"=&gt; 1,
+      "request"=&gt; "iar_6AupyN8zrE6fF4",
+      "api_version"=&gt; "2015-04-07"
+    }    
+  end
+
+  #some spec here...
+end
+</code></pre>
+
+<p>As the data, the event type is <code>charge.succeeded</code>.</p>
+
+<p>In order to receive Stripe Webhook event, we need the gem <code>stripe_event</code></p>
+
+<pre><code>gem 'stripe_event'
+</code></pre>
+
+<p>In config/routes.rb</p>
+
+<pre><code>mount StripeEvent::Engine, at: '/stripe_events' # provide a custom path
+</code></pre>
+
+<p>Get mark here for the path <code>/stripe_events</code>, because it&rsquo;s the endpoint for setting webhook in Stripe&rsquo;s account setting. Create a webhook on Stripe, for example, my website is <code>https://tomo-myflix.herokuapp.com</code>, then endpoint url is <code>https://tomo-myflix.herokuapp.com/stripe_events</code></p>
+
+<p>Then Stripe_Event help us to deal with stripe events here:</p>
+
+<pre><code class="ruby config/initializers/stripe.rb">StripeEvent.configure do |events|
+  events.subscribe 'charge.succeeded' do |event|
+    user = User.find_by(customer_token: event.data.object.customer)
+    Payment.create(user: user, amount: event.data.object.amount, reference_id: event.data.object.id)
+  end
+end
+</code></pre>
+
+<p><code>customer_token</code> is created when creating <code>User</code>. Add this column in <code>User</code> to track Stripe record. And code this in service object <code>UserSignup.sign_up</code>:</p>
+
+<pre><code class="ruby models/user_signup.rb">#....
+  def sign_up(stripe_token = nil, invitation_token = nil)
+    if @user.valid?      
+      charge = customer_charge_user_with_stripe(stripe_token)
+      if charge.success?
+        @user.customer_token = charge.customer_token
+        @user.save
+# ....
+</code></pre>
+
+<p><code>customer_token</code> and <code>amount</code> can get from response <code>event.data.object</code>.</p>
+
+<p>If you develop follow the TDD process, here should code the test first like this</p>
+
+<pre><code class="ruby spec/requests/create_payment_on_successful_charge_spec.rb">describe "Create payment on successful charge" do
+  let(:event_data) do 
+    # setting in above, ignore here.
+  end
+
+  it 'creates a payment with webhood from stripe for charge succeed', vcr: true do
+    post '/stripe_events', event_data
+    expect(Payment.count).to eq(1)
+  end
+
+  # other tests....
+end  
+</code></pre>
+
+<p>Notice that we use <code>post '/stripe_events', event_data</code> to simulate Stripe emit a post to our server. So this is only for test to trigger StripeEvent in <code>initializers/stripe.rb</code>.</p>
+
+<p>So far, we can create <code>Payment</code> by Stripe Webhook.</p>
+
+<h1>ngrok for local test</h1>
+
+<p>When we run the server on localhost, there is no way to let Stripe directly emit the post to our local machine. And we can use <code>ngrok</code> to do the response transfer.</p>
+
+<p>Download <a href="https://ngrok.com/">ngrok</a> and install.</p>
+
+<pre><code>$ngrok 3000
+</code></pre>
+
+<p>Get an URL from ngrok, and set this url to Stripe Webhook endpoint. Run the rails server, and operate app by manual to check if payment record be saved.</p>
+
+<p>Just a memo here, becuase I can&rsquo;t use ngrok on my Mac(looks like security problem). but it&rsquo;s ok because I test successful on Heroku.</p>
+
+<p>The most important here is that set the app stirpe events URL in Stripe, for example my end point is:</p>
+
+<pre><code>https://tomo-myflix.herokuapp.com/stripe_events
+</code></pre>
+
+<h1>ATDD for payment view</h1>
+
+<p>The process for <code>admin views payment</code> is not very complex, so we can just write the spec outside-in, some also called this <code>ATDD</code>.</p>
+
+<p>Here is a post talking about the <a href="http://gaboesquivel.com/blog/2014/differences-between-tdd-atdd-and-bdd/">differences between TDD, ATDD, BDD</a>.</p>
+
+<pre><code>feature 'Admin sees payments' do
+  scenario 'admin can see payments' do
+    user = Fabricate(:user)
+    payment = Payment.create(user: user, reference_id: 'fake_reference_id', amount: 99)
+    sign_in(Fabricate(:admin))
+    visit admin_payments_path
+    expect(page).to have_content("$0.99")
+    expect(page).to have_content(user.email)
+    expect(page).to have_content(user.full_name)
+    expect(page).to have_content('fake_reference_id')
+  end
+
+  scenario 'user cannot see payments' do
+    sign_in(Fabricate(:user))
+    visit admin_payments_path
+    expect(page).to have_content("You do not have access right.")
+  end
+end
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week7 (3/3)]]></title>
@@ -502,344 +890,6 @@ Capybara.server_port = 52662 # For Selenium
 
   config.after(:each) do
     DatabaseCleaner.clean
-  end
-end
-</code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week6 (2/2)]]></title>
-    <link href="http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week6-2-slash-2/"/>
-    <updated>2015-05-06T09:50:50+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week6-2-slash-2</id>
-    <content type="html"><![CDATA[<p>These week we have two main part: <a href="https://github.com/carrierwaveuploader/carrierwave">CarrierWave</a> for uploading images as an admin, <a href="http://stripe.com">Stripe</a> for payments</p>
-
-<p>The first part about CarrierWave for uploading images as an Admin is <a href="http://tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week6/">here</a>.</p>
-
-<h1>Stripe for Payments</h1>
-
-<p>Two articles about payments:</p>
-
-<ul>
-<li><a href="https://signalvnoise.com/posts/753-ask-37signals-how-do-you-process-credit-cards">How Do You Process Credit Card</a> by Jason Fried</li>
-</ul>
-
-
-<blockquote><p>The one thing we’re often surprised by is how many accounts have charge issues so it’s important to really think about the error handling and customer experience issues related to declined cards.</p></blockquote>
-
-<ul>
-<li><a href="http://en.wikipedia.org/wiki/Payment_Card_Industry_Data_Security_Standard">Payment Card Industry Data Security Standard by wiki</a></li>
-</ul>
-
-
-<h3>Stripe &amp; Figaro</h3>
-
-<pre><code>gem 'stripe'
-gem 'figaro'
-</code></pre>
-
-<p><code>$ figaro install</code></p>
-
-<p>Use Figaro to set Environment variables, Do Not hard code it!!</p>
-
-<pre><code>#config/application.yaml
-test:
-  STRIPE_SECRET_KEY: sk_test_xxxxxxxxx
-  STRIPE_PUBLISHABLE_KEY: pk_test_xxxxxxxxxx
-
-development:
-  STRIPE_SECRET_KEY: sk_test_xxxxxxx
-  STRIPE_PUBLISHABLE_KEY: pk_test_xxxxxxx
-
-production:
-  STRIPE_SECRET_KEY: sk_live_xxxxxx
-  STRIPE_PUBLISHABLE_KEY: pk_live_xxxxxxxx
-</code></pre>
-
-<blockquote><p>If Stripe account doesn&rsquo;t activate, we only can use test key <code>sk_test_xxxxxxx</code> even ENV = production</p></blockquote>
-
-<p>I also add this file <code>config/initailizers/figaro.rb</code></p>
-
-<pre><code>Figaro.require_keys("STRIPE_SECRET_KEY", "STRIPE_PUBLISHABLE_KEY")
-</code></pre>
-
-<p>It&rsquo;s convenient to check if you forget to set Environment variables on deploy machine(ex. Circle CI or Heroku).</p>
-
-<p>Figaro also provide a way to set Heroku ENV.</p>
-
-<p><code>$ figaro heroku:set -e production</code></p>
-
-<h3>Stripe Custom Form</h3>
-
-<ol>
-<li>Setting form view</li>
-</ol>
-
-
-<p>&#8220;`</p>
-
-<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
-
-
-
-
-<script type="text/javascript">
-Stripe.setPublishableKey("#{ENV['STRIPE_PUBLISHABLE_KEY']}");
-</script>
-
-
-<p>= javascript_include_tag &lsquo;payment&rsquo;</p>
-
-<pre><code>
-&gt; When deploy to Heroku, I got this error `Failed to load resource: the server responded with a status of 404 (Not Found)`
-
-&gt; This is becuase assets pipeline, add this to the file
-</code></pre>
-
-<p>Rails.application.config.assets.precompile += [&lsquo;payment.js&rsquo;]
-&#8220;`</p>
-
-<p>Key Points:</p>
-
-<ul>
-<li>use <code>id: 'payment-form'</code> in form_form, this is corespond to <code>assets/javascripts/payment.js</code> content.</li>
-<li>use <code>for</code> and <code>id</code> to connect label and input</li>
-<li><code>data-stripe = "number"</code> and <code>data-stripe="cvc"</code></li>
-<li><code>data: { stripe: "exp-yaer"}</code> and <code>data: { stripe: "exp-month"}</code></li>
-</ul>
-
-
-<p>Attributes of <code>data-stripe</code> is for Stripe to know credit infomation.</p>
-
-<p>Then in our custom form:</p>
-
-<pre><code class="haml">%section.register.container
-  .row
-    .col-sm-10.col-sm-offset-1
-      = bootstrap_form_for @user, layout: :horizontal, html: {id: 'payment-form'} do |f|
-        %header
-          %h1 Register
-        %fieldset
-          = f.email_field :email, label: "Email Address"
-          = f.password_field :password
-          = f.text_field :full_name, label: 'Full Name'
-          = hidden_field_tag :token, @invitation_token
-        %fieldset.credit_card
-          %span.payment-errors
-          .form-group
-            %label.control-label.col-sm-2(for="credit_card_number") Credit Card Number
-            .col-sm-6
-              %input.form-control(type="text" data-stripe="number" id="credit_card_number")
-          .form-group
-            %label.control-label.col-sm-2(for="security_code") Security Code
-            .col-sm-6
-              %input.form-control(type="text" data-stripe="cvc" id="security_code")
-          .form-group
-            %label.control-label.col-sm-2 Expiration
-            .col-sm-3
-              = select_month(Date.today, {add_month_numbers: true},  class: 'form-control', data: { stripe: "exp-month"})
-            .col-sm-2
-              = select_year(Date.today.year, {start_year: Date.today.year, end_year: Date.today.year + 4}, class: 'form-control', data: { stripe: "exp-year"} )
-        %fieldset.actions.control-group.col-sm-offset-2
-          .controls
-            %input(type="submit" value="Sign Up" class="btn btn-default")
-</code></pre>
-
-<h3>Setting in Controller Action</h3>
-
-<pre><code># Set your secret key: remember to change this to your live secret key in production
-# See your keys here https://dashboard.stripe.com/account/apikeys
-Stripe.api_key = "sk_test_yNosIrCvrAuVttjO60dxy7zy"
-
-# Get the credit card details submitted by the form
-token = params[:stripeToken]
-
-# Create the charge on Stripe's servers - this will charge the user's card
-begin
-  charge = Stripe::Charge.create(
-    :amount =&gt; 1000, # amount in cents, again
-    :currency =&gt; "usd",
-    :source =&gt; token,
-    :description =&gt; "Example charge"
-  )
-rescue Stripe::CardError =&gt; e
-  # The card has been declined
-end
-</code></pre>
-
-<p>Now we click submit button, charge will be deliever to Stripe.</p>
-
-<blockquote><p>Notice again, don&rsquo;t foget to set ENV on Circle CI or Heroku if you deploy code to there.</p></blockquote>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week6 (1/2)]]></title>
-    <link href="http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week6/"/>
-    <updated>2015-05-06T08:57:30+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week6</id>
-    <content type="html"><![CDATA[<p>These week we have two main part: <a href="https://github.com/carrierwaveuploader/carrierwave">CarrierWave</a> for uploading images as an admin, <a href="http://stripe.com">Stripe</a> for payments</p>
-
-<h1>CarrierWave for uploading images as an Admin</h1>
-
-<h3>Admin</h3>
-
-<p>In order to controll user is a admin or not, the best practice is to build a admin its own self routes and controllers.</p>
-
-<p>In <code>routes.rb</code></p>
-
-<pre><code>namespace :admin do
-  resources :todos, only: [:index, :destroy]
-end
-</code></pre>
-
-<p>Then <code>rake routes</code>, we got</p>
-
-<pre><code>admin_todos  admin/todos  admin/todos#index
-</code></pre>
-
-<p>Build the controller file in the path: <code>/controllers/admin/todos_controller.rb</code></p>
-
-<pre><code>class Admin::TodosController &lt; ApplicationController
-end
-</code></pre>
-
-<blockquote><p>It&rsquo;s aother rails convention for the path <code>/controllers/admin/</code> and class name <code>Admin::</code>.</p></blockquote>
-
-<p>Then add <code>admin</code> column to migration</p>
-
-<p><code>$ rails g migration add_admin_to_users</code></p>
-
-<pre><code>add_column :users, :admin, :boolean
-</code></pre>
-
-<p>Rails will create a method for all boolean attributes: <code>admin?</code></p>
-
-<h3>Secure Access for different roles</h3>
-
-<p>Next, we can create a <code>AdminController</code> for all other controllers belongs to Admin.</p>
-
-<pre><code>class AdminController &lt; ApplicationController
-  before_filter :ensure_admin
-
-  def ensure_admin
-    if !current_user.admin?
-      #do something
-    end
-  end
-end
-</code></pre>
-
-<p>Then other controllers belong to Admin could be like this:</p>
-
-<pre><code>class Admin::TodoController &lt; AdminController
-  def index
-    @todo = Todo.all
-  end
-end
-</code></pre>
-
-<h3>CarrierWave upload images to AWS S3</h3>
-
-<p>Install gem</p>
-
-<pre><code>gem 'carrierwave'
-gem 'mini_magick'
-</code></pre>
-
-<p>Add column to stored migration, for example: videos</p>
-
-<p><code>$rails migration add_large_cover_to_videos</code></p>
-
-<pre><code>add_column :videos, :large_cover, :string
-</code></pre>
-
-<p>In <code>models/video.rb</code></p>
-
-<pre><code>mount_uploader :large_cover, LargeCoverUploader
-</code></pre>
-
-<p>Create <code>app/uploaders/large_cover_uploader.rb</code>, and use <code>mini_magick to resize image</code></p>
-
-<pre><code>class LargeCoverUploader &lt; CarrierWave::Uploader::Base
-  include CarrierWave::MiniMagick
-  process :resize_to_fill =&gt; [665, 375]
-end
-</code></pre>
-
-<p>Finally, set CarrierWave for AWS S3, in <code>initializers/carrier_wave.rb</code></p>
-
-<pre><code>CarrierWave.configure do |config|
-  config.fog_provider = 'fog/aws'                        # required
-  config.fog_credentials = {
-    provider:              'AWS',                        # required
-    aws_access_key_id:     'xxx',                        # required
-    aws_secret_access_key: 'yyy',                        # required
-    region:                'eu-west-1',                  # optional, defaults to 'us-east-1'
-    host:                  's3.example.com',             # optional, defaults to nil
-    endpoint:              'https://s3.example.com:8080' # optional, defaults to nil
-  }
-  config.fog_directory  = 'name_of_directory'                          # required
-  config.fog_public     = false                                        # optional, defaults to true
-  config.fog_attributes = { 'Cache-Control' =&gt; "max-age=#{365.day.to_i}" } # optional, defaults to {}
-end
-</code></pre>
-
-<p>Unfortunately, my AWS account has been suspended, so I change the code to store at local</p>
-
-<pre><code>CarrierWave.configure do |config|
-  if Rails.env.staging? || Rails.env.production?
-    config.storage = :file
-    config.enable_processing = true
-  else
-    config.storage = :file
-    config.enable_processing = Rails.env.development?
-  end
-end
-</code></pre>
-
-<p>This code also show that if you want to deal with different environment for <code>product</code> or <code>development</code></p>
-
-<blockquote><p>Usually, only upload small size files direct through web page, we can use other AWS S3 client to upload big file.</p></blockquote>
-
-<p>Another tip here, don&rsquo;t forget to add new attributes to <code>params.require</code>, otherwise upload will be failed.</p>
-
-<pre><code>params.require(:video).permit(:title, :description, :category_id, :large_cover, :small_cover, :video_url)
-</code></pre>
-
-<h3>RSpec Feature Test</h3>
-
-<p>Key Points:</p>
-
-<ul>
-<li>attach_file</li>
-<li>have_selector</li>
-</ul>
-
-
-<pre><code>feature 'Admin adds new video' do
-  scenario 'Admin successfully adds a new video' do
-    admin = Fabricate(:admin)
-    dramas = Fabricate(:category, title: 'Dramas')
-
-    sign_in(admin)
-    visit new_admin_video_path
-
-    fill_in 'Title', with: 'Monk'
-    select 'Dramas', from: 'Category'
-    fill_in 'Description', with: 'SF detective'
-    attach_file 'Large cover', 'spec/support/uploads/monk_large.jpg'
-    attach_file 'Small cover', 'spec/support/uploads/monk.jpg'
-    fill_in 'Video URL', with: 'http://www.example.com/video.mp4'
-    click_button 'Add Video'
-
-    sign_out
-    sign_in
-
-    visit video_path(Video.first)
-    expect(page).to have_selector("img[src='/uploads/monk_large.jpg']")
-    expect(page).to have_selector("a[href='http://www.example.com/video.mp4']")
   end
 end
 </code></pre>

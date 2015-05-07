@@ -130,6 +130,368 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-26T21:25:50+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-26</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/04/26/eloquent-ruby-4/" itemprop="url">Eloquent Ruby -4</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><h1>Chapter 4 - Take Advantage of Ruby’s Smart Strings</h1>
+
+<p>string也和array, hash一樣有豐富的函式庫</p>
+
+<p><a href="http://ruby-doc.org/core-2.2.2/String.html">http://ruby-doc.org/core-2.2.2/String.html</a></p>
+
+<p>本章的結論就有Ruby提供的string非常好用，但壞處就是你要熟讀它。</p>
+
+<hr />
+
+<ul>
+<li>double quoted string <code>"</code>, 比<code>'</code>還多了點用途</li>
+</ul>
+
+
+<p>像是在字串中加入變數時<code>#{}</code>，我常忘了用<code>'</code>就沒有這個效果。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"Hi, #{user.name}."</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>遇到很煩的字串含有一堆單引號雙引號，可以用</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>%q{"Oh No", "I can't tell what's the difference between 's' and "s"."}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>像上面的小寫q，也有對應用大寫Q的，效果就是像要加入變數時用：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>%Q{ "Hi, I'm #{user.name}."}</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>可以隨意斷行</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>multi_line_string = '你抓
+</span><span class='line'>不到我
+</span><span class='line'>'
+</span><span class='line'>
+</span><span class='line'>another_multi_line_string = %q{ 你抓
+</span><span class='line'>不到我 }
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果不想有new line，可以用back slash</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>multi_line_with_no_new_line = '你抓\
+</span><span class='line'>不到我'</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>超長文字可以這樣寫</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>really_long_string = &lt;&lt;EOF
+</span><span class='line'>這是開頭
+</span><span class='line'>...
+</span><span class='line'>這是結尾
+</span><span class='line'>EOF</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>chop &amp; chomp</li>
+</ul>
+
+
+<p>長的很像的兩個函數，用法天差地遠</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"a string with new line\n".chomp</span></code></pre></td></tr></table></div></figure>
+
+
+<p>會回傳 <code>a string with new line</code>，尾巴的new line會截掉。注意如果結尾含有多個new line，它只會截掉一個。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"a string".chop</span></code></pre></td></tr></table></div></figure>
+
+
+<p>會回傳&#8221;a strin&#8221;，回傳截掉最後一個字的結果。</p>
+
+<ul>
+<li>sub &amp; gsub</li>
+</ul>
+
+
+<p>替換字串內容</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>puts 'good good'.sub( 'good', 'bad' )
+</span><span class='line'>puts 'good good'.gsub( 'good', 'bad' )</span></code></pre></td></tr></table></div></figure>
+
+
+<p>得到的結果是</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>'bad good'
+</span><span class='line'>'bad bad'</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>split 分割字串</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"one two three four five".split</span></code></pre></td></tr></table></div></figure>
+
+
+<p>回傳一個矩陣</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>["one", "two", "three", "four", "five"]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>或是分割參數</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"one;two;three;four;five".split(";")</span></code></pre></td></tr></table></div></figure>
+
+
+<p>回傳結果同上</p>
+
+<ul>
+<li>index 搜尋字串位置</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"actions speak louder than words".index("speak") # return 8</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>each_char, each_byte, each_line</li>
+</ul>
+
+
+<p>分別用迴圈回傳字元，位元數，每一行</p>
+
+<ul>
+<li>Ruby string is mutable</li>
+</ul>
+
+
+<p>mutable雖然翻譯是可變異，但我覺得它的意義和指標有點類似</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>street_name = 'taiwan street'
+</span><span class='line'>road_name = street_name
+</span><span class='line'>street_name.upcase!</span></code></pre></td></tr></table></div></figure>
+
+
+<p>結果road_name = ?</p>
+
+<p>注意像帶有!的函數常會有mutate的作用，所以上述結果road_name = &lsquo;TAIWAN STREET&rsquo;</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-24T16:33:18+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-24</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/04/24/eloquent-ruby-3/" itemprop="url">Eloquent Ruby -3</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><h1>Chapter 3 - Take Advantage of Ruby’s Smart Collections</h1>
+
+<p>直接結論，Ruby的Array跟Hash提供很多方便的函數可用，可以參考</p>
+
+<p><a href="http://ruby-doc.org/core-2.2.0/Array.html">Array</a>
+<a href="http://ruby-doc.org/core-2.2.0/Hash.html">Hash</a></p>
+
+<p>以下才是正文開始</p>
+
+<hr />
+
+<ul>
+<li>如果是要初始化一個給值的陣列，如</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>love_words = ["Nancy", "I", "love", "you"]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>也可以這樣產生</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>love_words = %w{ Nancy I love you }</span></code></pre></td></tr></table></div></figure>
+
+
+<p>－ Ruby沒有指標，但是也有個類似指標的用法</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def echo_all( *args )
+</span><span class='line'>  args.each { |arg| puts arg }
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>*暗示arg其實是個陣列值，可以遞進來做陣列處理。</p>
+
+<ul>
+<li>對於hash，可以這樣用</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>run( {speed: :fast, tools: :train} )</span></code></pre></td></tr></table></div></figure>
+
+
+<p>也可以不要大括號，這樣寫</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>run( speed: :fast, tools: :train )</span></code></pre></td></tr></table></div></figure>
+
+
+<p>甚至</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>run speed: :fast, tools: :train</span></code></pre></td></tr></table></div></figure>
+
+
+<p>不過在參數只傳遞一個hash時，這樣寫蠻清爽的，如果是像form_for中要傳html_options時還這樣寫，簡直是個閱讀災難，我被誤導了好久。</p>
+
+<p>－ 雖然array和hash都有提供each這個method，不過hash在使用上有些不一樣的地方</p>
+
+<p>只給定一個參數的話</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>hash_value = { one: 1, two: 2, three: 3 }
+</span><span class='line'>
+</span><span class='line'>hash_value.each do |value|
+</span><span class='line'>  #something for value
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>value其實是個矩陣，如[:one, 1], [:two, 2], [:three, 3]。</p>
+
+<p>也可以給2個參數</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>hash_value.each do |key, value|
+</span><span class='line'>  #something for value
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>key和value就分別對應到hash值上，這就不用多說了。</p>
+
+<ul>
+<li>另外有個<code>inject</code> method可以幫助加總所有元素</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def average_word_length
+</span><span class='line'>  total = words.inject(0.0){ |result, word| word.size + result}
+</span><span class='line'>  total / word_count
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>－ 不要再each裡面操作delete的動作，如果需要的話可以用<code>array.delete_if</code> method。</p>
+
+<p>－ 如果只是要檢查某個元素有沒有已經存在陣列中，可以考慮改用<code>Set</code>這個class，而不是用Array。
+<a href="http://ruby-doc.org/stdlib-2.2.2/libdoc/set/rdoc/Set.html">http://ruby-doc.org/stdlib-2.2.2/libdoc/set/rdoc/Set.html</a></p>
+
+<p>它在檢查效率上比較好。</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-24T15:37:46+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-24</time>
         
       </p>
@@ -1382,104 +1744,6 @@ True if the receiver and argument have the same object id.</p>
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-03T09:11:10+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-03-03</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/03/03/titans-tic-tac-toe/" itemprop="url">Titan&#8217;s Tic Tac Toe</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p><img src="http://i.minus.com/i2XJ0y9E48CHg.png"></p>
-
-<h3>Prelude</h3>
-
-<p>This is a blog entry for record my first personal project for Rails, and focus on what&rsquo;s are first time if starting a new project <code>From Zero To One</code>.</p>
-
-<p><code>Titan's Tic Tac Toe</code> is my first personal app for Rails.</p>
-
-<p>Website: <a href="https://tomo-tictactoe.herokuapp.com/">https://tomo-tictactoe.herokuapp.com/</a></p>
-
-<p>GitHub repo: <a href="https://github.com/tomohung/tictactoe-rails">https://github.com/tomohung/tictactoe-rails</a></p>
-
-<p>This project is activated by Tealeaf Course 2(Rapid Prototyping with Ruby on Rails), we are asked to do a personal project by ourself. In course 1(Introduction to Ruby and Web Development), we have an optional assignment to build a game <code>Tic Tac Toe</code> engine by Object-Oriented, that is, to give this game AI. I spent a lot of time to design logic, and I believe I have a good job for this. This is why I choose this subject for my personal project. And reuse my code is also a kind of <code>DRY</code> way.</p>
-
-</div>
-  
-  
-    <footer>
-      <a class="btn btn-default" href="/blog/2015/03/03/titans-tic-tac-toe/">繼續閱讀 Read on &rarr;</a>
-    </footer>
-  
-
-
-        </article>
-      
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-02-22T21:22:10+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-02-22</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/02/22/reflection-to-tealeaf-course2-lesson4/" itemprop="url">Reflection to Tealeaf Course2 Lesson4</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>In Course2(Rapid Prototyping with Ruby on Rails), <a href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/">first week</a> I learned about <code>Models and database</code>, <a href="http://www.tomohung.com/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/">second week</a> I learned about <code>Controllers and Views</code>. The <a href="http://www.tomohung.com/blog/2015/02/16/reflection-to-tealeaf-course2-lesson3/">third week</a> I learned to add <code>Authentication</code> and <code>Polymorphic table</code>.</p>
-
-<p>And this week, also the last week, I completed all basic functions I need to know. Including Ajax for voting, extract methods into gem, build and publish gem, display time info considering user&rsquo;s timezone.</p>
-
-</div>
-  
-  
-    <footer>
-      <a class="btn btn-default" href="/blog/2015/02/22/reflection-to-tealeaf-course2-lesson4/">繼續閱讀 Read on &rarr;</a>
-    </footer>
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -1509,6 +1773,10 @@ True if the receiver and argument have the same object id.</p>
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2015/05/07/reflection-to-tealeaf-course3-week8-2/">Reflection to Tealeaf Course3 Week8 -2</a>
+    
+    <a class="list-group-item " href="/blog/2015/05/07/reflection-to-tealeaf-course3-week8-1/">Reflection to Tealeaf Course3 Week8</a>
+    
     <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week7-3-slash-3/">Reflection to Tealeaf Course3 Week7 (3/3)</a>
     
     <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week7-2/">Reflection to Tealeaf Course3 Week7 (2/3)</a>
@@ -1524,10 +1792,6 @@ True if the receiver and argument have the same object id.</p>
     <a class="list-group-item " href="/blog/2015/05/03/eloquent-ruby-6/">Eloquent Ruby -6</a>
     
     <a class="list-group-item " href="/blog/2015/05/03/eloquent-ruby-5/">Eloquent Ruby -5</a>
-    
-    <a class="list-group-item " href="/blog/2015/04/26/eloquent-ruby-4/">Eloquent Ruby -4</a>
-    
-    <a class="list-group-item " href="/blog/2015/04/24/eloquent-ruby-3/">Eloquent Ruby -3</a>
     
   </div>
 </section>
