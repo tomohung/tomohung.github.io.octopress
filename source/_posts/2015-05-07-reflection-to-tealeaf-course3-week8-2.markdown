@@ -96,7 +96,7 @@ end
 
 We need to add column `active` for `User` to store the status.
 
-```
+```ruby
 add_column :users, :active, :boolean, default: true
 ```
 
@@ -106,8 +106,8 @@ Make the `active` column default is true, otherwise Rails will set `false` for d
 
 We cover Stripe for last three weeks.
 
-In week 6, we introduce Stripe for charge. How to build a custom form to charge. And test by using `vcr` for replay response.
+- In week 6, we introduce Stripe for charge. How to build a custom form to charge. And test by using `vcr` for replay response.
 
-In week 7, we refactor code into `UserSignup`, as an `Service Object` of OOP concept. And we need to use javascript driver `webkit` and `selenium` in RSpec because of Stripe api.
+- In week 7, we refactor code into `UserSignup`, as an `Service Object` of OOP concept. And we need to use javascript driver `webkit` and `selenium` in RSpec because of Stripe api.
 
-In week 8, we use `Subscription` to charge monthly instead of charge once. And we handle events by `Webhook`, to deal with `charge.succeeded` and `charge.failed` events.
+- In week 8, we use `Subscription` to charge monthly instead of charge once. And we handle events by `Webhook`, to deal with `charge.succeeded` and `charge.failed` events.
