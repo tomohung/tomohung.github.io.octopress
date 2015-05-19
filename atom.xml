@@ -4,7 +4,7 @@
   <title><![CDATA[The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-05-07T21:59:00+08:00</updated>
+  <updated>2015-05-19T09:30:24+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -12,6 +12,87 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Eloquent Ruby -9 [Write Specs!]]]></title>
+    <link href="http://www.tomohung.com/blog/2015/05/19/eloquent-ruby-9/"/>
+    <updated>2015-05-19T09:11:44+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/05/19/eloquent-ruby-9</id>
+    <content type="html"><![CDATA[<h1>Chapter 9 - Write Specs!</h1>
+
+<h2>Don&rsquo;t test it, Spec it!</h2>
+
+<p>雖然內建MiniTest，但實際上寫測試的思維可以像是在定義規格，這也是<code>RSpec</code>的出發點。</p>
+
+<p>在描述上更接近口語的方式：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>doc.words.include?('blog') == true
+</span><span class='line'>
+</span><span class='line'>#==&gt; RSpec
+</span><span class='line'>doc.words should include('blog')</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Easy Stubs</h2>
+
+<p>理想上最好測試一次只測一個類別，但實際上很困難，所以可以利用stub來隔開同時間操作不同的類別。
+概念上就是如果需要呼叫外部其它的類別時，賦值給其呼叫的函數</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>stub_outputer = stub :available? =&gt; true, :render =&gt; nil</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如此當stub_outputer.availabe? 回傳true, stub_outputer.render回傳nil。</p>
+
+<h2>Easy Mocks</h2>
+
+<p>不同於Stubs，我們希望在測試的函數中，有呼叫到另一個函數，在這裡不用考慮這個函數是否運作正常（這個動作應該在該類別中測試），所以我們期望在這個函數中有呼叫即可</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">it</span> <span class="s1">&#39;should know how to output&#39;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">mock_outputer</span> <span class="o">=</span> <span class="n">mock</span><span class="p">(</span><span class="s1">&#39;Printer&#39;</span><span class="p">)</span> <span class="c1"># &lt;== mock objects</span>
+</span><span class='line'>  <span class="n">mock_outputer</span><span class="o">.</span><span class="n">should_receive</span><span class="p">(</span><span class="ss">:available?</span><span class="p">)</span><span class="o">.</span><span class="n">and_return</span><span class="p">(</span><span class="kp">true</span><span class="p">)</span>  <span class="c1"># &lt;== expectation call</span>
+</span><span class='line'>  <span class="vi">@doc</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">mock_outputer</span><span class="p">)</span><span class="o">.</span><span class="n">should</span> <span class="o">==</span> <span class="s1">&#39;Done&#39;</span> <span class="c1"># &lt;== :avaliable? should be called in output method.</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Eloquent Ruby -8 [Embrance Dynamic Typing]]]></title>
+    <link href="http://www.tomohung.com/blog/2015/05/19/eloquent-ruby-8/"/>
+    <updated>2015-05-19T08:56:30+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/05/19/eloquent-ruby-8</id>
+    <content type="html"><![CDATA[<h1>Chapter 8 - Embrance Dynamic Typing</h1>
+
+<h2>不需要抽象類別</h2>
+
+<p>在C++中，通常會先定義一個抽象類別讓其它類別來繼承並實現其中的Virtual Function，但是在Ruby中這個動作是多餘的。只要類別中有同名的method即可。</p>
+
+<p>例如有二個類別<code>Document</code>, <code>LazyDocument</code>，其中<code>Document</code>的method <code>title</code>是回傳宣告時的值，而<code>LazyDocument</code>是回傳宣告時讀入檔案的值。我們不需要另外定義一個<code>BaseDocument</code>，其中還定義了<code>title</code>這個virtual method，這是一個多餘的動作。</p>
+
+<p>所以有人說對Ruby來說，只要這個類別會像鴨子一樣呱呱叫（譬如就是有<code>make_sound</code>這個method），就可以把它當作鴨子。缺點就是如果沒注意的話，很容易在runtime時期遇到<code>undefined method</code>的問題。</p>
+
+<h2>總結</h2>
+
+<p>這章大部份都是舉例，總結最後</p>
+
+<ul>
+<li>只實作你需要的方法</li>
+<li>利用命名來documentation</li>
+<li>記得要寫test</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week8 (2/2)]]></title>
@@ -1862,7 +1943,7 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Eloquent Ruby -7]]></title>
+    <title type="html"><![CDATA[Eloquent Ruby -7 [Treat Everything Like an Object—Because Everything Is]]]></title>
     <link href="http://www.tomohung.com/blog/2015/05/04/eloquent-ruby-7/"/>
     <updated>2015-05-04T06:19:26+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/05/04/eloquent-ruby-7</id>
@@ -2038,7 +2119,7 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Eloquent Ruby -6]]></title>
+    <title type="html"><![CDATA[Eloquent Ruby -6 [Use Symbols to Stand for Something]]]></title>
     <link href="http://www.tomohung.com/blog/2015/05/03/eloquent-ruby-6/"/>
     <updated>2015-05-03T22:06:44+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/05/03/eloquent-ruby-6</id>
@@ -2080,7 +2161,7 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Eloquent Ruby -5]]></title>
+    <title type="html"><![CDATA[Eloquent Ruby -5 [Find the Right String With Regular Expressions]]]></title>
     <link href="http://www.tomohung.com/blog/2015/05/03/eloquent-ruby-5/"/>
     <updated>2015-05-03T20:38:53+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/05/03/eloquent-ruby-5</id>
@@ -2190,7 +2271,7 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Eloquent Ruby -4]]></title>
+    <title type="html"><![CDATA[Eloquent Ruby -4 [Take Advantage of Ruby’s Smart Strings]]]></title>
     <link href="http://www.tomohung.com/blog/2015/04/26/eloquent-ruby-4/"/>
     <updated>2015-04-26T21:25:50+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/04/26/eloquent-ruby-4</id>
@@ -2376,7 +2457,7 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Eloquent Ruby -3]]></title>
+    <title type="html"><![CDATA[Eloquent Ruby -3 [Take Advantage of Ruby’s Smart Collections]]]></title>
     <link href="http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-3/"/>
     <updated>2015-04-24T16:33:18+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-3</id>
@@ -2496,7 +2577,7 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Eloquent Ruby -2]]></title>
+    <title type="html"><![CDATA[Eloquent Ruby -2 [Choose the Right Control Structure]]]></title>
     <link href="http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-2/"/>
     <updated>2015-04-24T15:37:46+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-2</id>
@@ -2621,7 +2702,7 @@ True if the receiver and argument have the same object id.</p>
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Eloquent Ruby -1]]></title>
+    <title type="html"><![CDATA[Eloquent Ruby -1 [Write Code That Looks Like Ruby]]]></title>
     <link href="http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-1/"/>
     <updated>2015-04-24T14:15:45+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-1</id>
@@ -3453,92 +3534,6 @@ True if the receiver and argument have the same object id.</p>
 
 
 <p>If any one of <code>david.withdrawl</code> or <code>mary.deposit</code> raise an exception(<strong>Be careful: there must be a raising error to trigger transaction</strong>), all database record in this action will be rollback. It deal with batch action with database. So I have to care about what functions will raise an exception when fail. Ex. <code>update</code> return a fail, and <code>update!</code> raise an exception.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week2]]></title>
-    <link href="http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2/"/>
-    <updated>2015-03-11T11:21:17+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2</id>
-    <content type="html"><![CDATA[<p>There are 3 kinds of test: <code>Unit</code>, <code>Functional</code>, <code>Integration</code>. In <a href="http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1/">week 1</a>, we test <strong>Model</strong>, this should belong to <code>Unit test</code> . And this week we test <strong>Controller</strong>, this should belong to <code>Functional test</code>. I guess it should be <code>Integration test</code> when we move into part of <strong>View</strong> test.</p>
-
-<p>I have to heavily rely on solution videos, there are two main reasons:</p>
-
-<ol>
-<li><p>I&rsquo;m not familiar with <code>what to test</code>, because I&rsquo;m a starter for TDD. It&rsquo;s a big conversion <strong>from test laster to test driven</strong>.</p></li>
-<li><p>I&rsquo;m not familiar with <code>RSpec</code>. There are some tricks for test controllers when using RSpec.</p></li>
-</ol>
-
-
-<p>For example, when we test `QueueItemsController#create&#8217;, there are 7 tests:</p>
-
-<ul>
-<li>it &lsquo;redirects to my queue page&rsquo;</li>
-<li>it &lsquo;creates a queue item&rsquo;</li>
-<li>it &lsquo;creates the queue item associated with video&rsquo;</li>
-<li>it &lsquo;creates the queue item associated with current user&rsquo;</li>
-<li>it &lsquo;puts the video as the last one in the queue&rsquo;</li>
-<li>it &lsquo;does not add the video in the queue if already existed in the queue&rsquo;</li>
-<li>it &lsquo;redirects to sign in page if unauthenticated&rsquo;</li>
-</ul>
-
-
-<p>A simple action needs to do such lots of tests!!</p>
-
-<p>Or here is for <strong>Model</strong> methods: <code>search_by_title</code>:</p>
-
-<ul>
-<li>it &lsquo;returns empty array if no match&rsquo;</li>
-<li>it &lsquo;returns an array if one video&rsquo;</li>
-<li>it &lsquo;returns an array if partial match&rsquo;</li>
-<li>it &lsquo;returns an array of all matches ordered by DESC&rsquo;</li>
-<li>it &lsquo;returns an empty array for search an empty string&rsquo;</li>
-</ul>
-
-
-<p>To test every possible situations is not an easy work.</p>
-
-<p>Brandon also metioned me that care about using <code>let</code> and <code>before</code>. Because of lots of tests in spec files, we may miss some pre-declare vars by using <code>let</code> or <code>before</code>. Sometimes, it may be better do not clean duplicated codes for code readability.</p>
-
-<p>Second, extract methods into <strong>Model</strong>. ex:</p>
-
-<figure class='code'><figcaption><span>user.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">def</span> <span class="nf">queue_include?</span><span class="p">(</span><span class="n">video</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">queue_items</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:video</span><span class="p">)</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="n">video</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>then, I can use this method everywhere in my app.</p>
-
-<h3>Conclusion</h3>
-
-<p>Still on the way to be more familiar to do TDD. :-)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week1]]></title>
-    <link href="http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1/"/>
-    <updated>2015-03-06T08:40:32+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1</id>
-    <content type="html"><![CDATA[<p>In Course3 week1, Kevin give me a schema of what should developper do from beginning.</p>
-
-<p>There are so many subjects I&rsquo;ve heard but not ever practicing in action, like: TDD, git flow(github flow), why test&hellip;etc.</p>
-
-<p>I like the concept Red-Green-Refactor, it forced developper thinking about what you should do first. This may be argued by some experienced engineer, because they can do these works naturally.</p>
-
-<p>But followed by Red-Green-Refactor, seeing green light really makes me feel comfortable. I can&rsquo;t stop thinking about how it&rsquo;d become easier if I could use this method when developping AI for TicTacToe. Testing game logic in TicTacToe manually costs me lots of time.</p>
-
-<p>Git flow/ GitHub flow is also my first time to taste. I think this should be fun to start communicate with other programmers through pull request. Glad that Tealeaf built an environment to let us feel like we are really in work.</p>
-
-<p>Matthew also metioned about this I should care about: <a href="http://stackoverflow.com/questions/729692/why-should-files-end-with-a-newline">Why should files end with a newline</a>.
-<br/></p>
-
-<p>I also find a blog post talking about <a href="http://www.jamesshore.com/Blog/Red-Green-Refactor.html">Red-Green-Refactor</a>, the author split the process into 5 steps: <strong>Think, Red, Green, Refactor, Repeat</strong>, and called this <code>code design process</code>. :-)</p>
 ]]></content>
   </entry>
   

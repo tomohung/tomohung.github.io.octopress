@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Book | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/book/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-05-07T21:59:00+08:00</updated>
+  <updated>2015-05-19T09:30:24+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -14,7 +14,210 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Eloquent Ruby -6]]></title>
+    <title type="html"><![CDATA[Eloquent Ruby -9 [Write Specs!]]]></title>
+    <link href="http://www.tomohung.com/blog/2015/05/19/eloquent-ruby-9/"/>
+    <updated>2015-05-19T09:11:44+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/05/19/eloquent-ruby-9</id>
+    <content type="html"><![CDATA[<h1>Chapter 9 - Write Specs!</h1>
+
+<h2>Don&rsquo;t test it, Spec it!</h2>
+
+<p>雖然內建MiniTest，但實際上寫測試的思維可以像是在定義規格，這也是<code>RSpec</code>的出發點。</p>
+
+<p>在描述上更接近口語的方式：</p>
+
+<pre><code>doc.words.include?('blog') == true
+
+#==&gt; RSpec
+doc.words should include('blog')
+</code></pre>
+
+<h2>Easy Stubs</h2>
+
+<p>理想上最好測試一次只測一個類別，但實際上很困難，所以可以利用stub來隔開同時間操作不同的類別。
+概念上就是如果需要呼叫外部其它的類別時，賦值給其呼叫的函數</p>
+
+<pre><code>stub_outputer = stub :available? =&gt; true, :render =&gt; nil
+</code></pre>
+
+<p>如此當stub_outputer.availabe? 回傳true, stub_outputer.render回傳nil。</p>
+
+<h2>Easy Mocks</h2>
+
+<p>不同於Stubs，我們希望在測試的函數中，有呼叫到另一個函數，在這裡不用考慮這個函數是否運作正常（這個動作應該在該類別中測試），所以我們期望在這個函數中有呼叫即可</p>
+
+<pre><code class="ruby">it 'should know how to output' do
+  mock_outputer = mock('Printer') # &lt;== mock objects
+  mock_outputer.should_receive(:available?).and_return(true)  # &lt;== expectation call
+  @doc.output(mock_outputer).should == 'Done' # &lt;== :avaliable? should be called in output method.
+end
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Eloquent Ruby -8 [Embrance Dynamic Typing]]]></title>
+    <link href="http://www.tomohung.com/blog/2015/05/19/eloquent-ruby-8/"/>
+    <updated>2015-05-19T08:56:30+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/05/19/eloquent-ruby-8</id>
+    <content type="html"><![CDATA[<h1>Chapter 8 - Embrance Dynamic Typing</h1>
+
+<h2>不需要抽象類別</h2>
+
+<p>在C++中，通常會先定義一個抽象類別讓其它類別來繼承並實現其中的Virtual Function，但是在Ruby中這個動作是多餘的。只要類別中有同名的method即可。</p>
+
+<p>例如有二個類別<code>Document</code>, <code>LazyDocument</code>，其中<code>Document</code>的method <code>title</code>是回傳宣告時的值，而<code>LazyDocument</code>是回傳宣告時讀入檔案的值。我們不需要另外定義一個<code>BaseDocument</code>，其中還定義了<code>title</code>這個virtual method，這是一個多餘的動作。</p>
+
+<p>所以有人說對Ruby來說，只要這個類別會像鴨子一樣呱呱叫（譬如就是有<code>make_sound</code>這個method），就可以把它當作鴨子。缺點就是如果沒注意的話，很容易在runtime時期遇到<code>undefined method</code>的問題。</p>
+
+<h2>總結</h2>
+
+<p>這章大部份都是舉例，總結最後</p>
+
+<ul>
+<li>只實作你需要的方法</li>
+<li>利用命名來documentation</li>
+<li>記得要寫test</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Eloquent Ruby -7 [Treat Everything Like an Object—Because Everything Is]]]></title>
+    <link href="http://www.tomohung.com/blog/2015/05/04/eloquent-ruby-7/"/>
+    <updated>2015-05-04T06:19:26+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/05/04/eloquent-ruby-7</id>
+    <content type="html"><![CDATA[<h1>Chapter 7 - Treat Everything Like an Object—Because Everything Is</h1>
+
+<h2>Classes, Instances, Methods</h2>
+
+<ul>
+<li><p>Class就像是容器，可以裝很多Method。Class也像是工廠，製造出很多副本Instances</p></li>
+<li><p>如果沒有指定superclass時，<code>Object</code>為預設繼承的類別。<code>Object</code>也是繼承了<code>BasicObject</code></p></li>
+</ul>
+
+
+<h2>Objects</h2>
+
+<ul>
+<li>反正什麼東西在Ruby裡面都是Object，可以測試這些</li>
+</ul>
+
+
+<pre><code>-1.class
+true.class
+nil.class
+/regex/.class
+</code></pre>
+
+<ul>
+<li>如果puts出來，預設會用<code>to_s</code>轉換</li>
+</ul>
+
+
+<h2>eval</h2>
+
+<pre><code>cmd = 'gets'
+puts eval(cmd)
+</code></pre>
+
+<p><code>eval</code>可以像irb執行字串所代表的程式，這也是由Object繼承而來的函數</p>
+
+<h2>public, private, protected</h2>
+
+<p>三種屬性來控制method的曝露性</p>
+
+<pre><code>class Method
+  def public_method
+    #預設為public，所有public method都可以呼叫
+  end
+
+  private # 在此之後方法都是private，只有在該instance內可以呼叫
+  def private_method
+  end
+end
+</code></pre>
+
+<p>也可以這樣寫，不過我還沒看過實際有人這樣寫</p>
+
+<pre><code>class Method
+  def private_method
+  end
+
+  private :prviate_method #在這指定private_method屬性是private
+</code></pre>
+
+<ul>
+<li><p>private內的方法繼承到subclass後，<strong>同樣可以呼叫</strong>，這跟在C++中不一樣</p></li>
+<li><p>protected有夠難理解，原文是這樣的</p></li>
+</ul>
+
+
+<blockquote><p>Any instance of a class can call a protected method on any other instance of the class</p></blockquote>
+
+<p>我是參考高見龍<a href="http://blog.eddie.com.tw/2011/07/26/public-protected-and-private-method-in-ruby/">這篇文章</a>才比較理解為什麼</p>
+
+<p>可以在irb這樣測試</p>
+
+<pre><code>class Base
+  private 
+  def private_show
+    puts self.class
+  end
+
+  protected
+  def protected_show
+    puts self.class
+  end
+end
+</code></pre>
+
+<p>然後</p>
+
+<pre><code>class SubBase &lt; Base
+  def use_private
+    private_show # 如果寫成self.private_show，會產生錯誤
+  end
+
+  def use_protected
+    self.protected_show # 可以指定在self這個instance上
+  end
+end
+</code></pre>
+
+<ul>
+<li><p>原生Ruby source code中，20萬行的程式碼，大約有1000個private methods, protected methods只有50幾個。意思就是用到的機會也不多啦。</p></li>
+<li><p>另外Ruby也有個設計，如果你實在想突破限制使用class內的方法，可以用<code>send</code></p></li>
+</ul>
+
+
+<pre><code>sub_base.send(:private_show)
+</code></pre>
+
+<p>不過一般的作法大概都是另外寫一個public method把private method包起來給外部呼叫。</p>
+
+<ul>
+<li>public, private, protected並不是什麼特別的Ruby Magic，其實他們都是methods，呼叫後面帶參數</li>
+</ul>
+
+
+<p>相同的還有<code>require</code>載入檔案</p>
+
+<pre><code>require 'rails_spec'
+</code></pre>
+
+<p>或者是<code>attr_accessor</code></p>
+
+<pre><code>attr_accessor :name
+</code></pre>
+
+<p>然後我們就可以有<code>name</code>的getter和setter方法</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Eloquent Ruby -6 [Use Symbols to Stand for Something]]]></title>
     <link href="http://www.tomohung.com/blog/2015/05/03/eloquent-ruby-6/"/>
     <updated>2015-05-03T22:06:44+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/05/03/eloquent-ruby-6</id>
@@ -51,7 +254,7 @@ b = "sym"
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Eloquent Ruby -5]]></title>
+    <title type="html"><![CDATA[Eloquent Ruby -5 [Find the Right String With Regular Expressions]]]></title>
     <link href="http://www.tomohung.com/blog/2015/05/03/eloquent-ruby-5/"/>
     <updated>2015-05-03T20:38:53+08:00</updated>
     <id>http://www.tomohung.com/blog/2015/05/03/eloquent-ruby-5</id>
@@ -153,373 +356,6 @@ b = "sym"
 <li><code>?</code>的作用和<code>*</code>類似</li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Eloquent Ruby -4]]></title>
-    <link href="http://www.tomohung.com/blog/2015/04/26/eloquent-ruby-4/"/>
-    <updated>2015-04-26T21:25:50+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/04/26/eloquent-ruby-4</id>
-    <content type="html"><![CDATA[<h1>Chapter 4 - Take Advantage of Ruby’s Smart Strings</h1>
-
-<p>string也和array, hash一樣有豐富的函式庫</p>
-
-<p><a href="http://ruby-doc.org/core-2.2.2/String.html">http://ruby-doc.org/core-2.2.2/String.html</a></p>
-
-<p>本章的結論就有Ruby提供的string非常好用，但壞處就是你要熟讀它。</p>
-
-<hr />
-
-<ul>
-<li>double quoted string <code>"</code>, 比<code>'</code>還多了點用途</li>
-</ul>
-
-
-<p>像是在字串中加入變數時<code>#{}</code>，我常忘了用<code>'</code>就沒有這個效果。</p>
-
-<pre><code>"Hi, #{user.name}."
-</code></pre>
-
-<ul>
-<li>遇到很煩的字串含有一堆單引號雙引號，可以用</li>
-</ul>
-
-
-<pre><code>%q{"Oh No", "I can't tell what's the difference between 's' and "s"."}
-</code></pre>
-
-<p>像上面的小寫q，也有對應用大寫Q的，效果就是像要加入變數時用：</p>
-
-<pre><code>%Q{ "Hi, I'm #{user.name}."}
-</code></pre>
-
-<ul>
-<li>可以隨意斷行</li>
-</ul>
-
-
-<pre><code>multi_line_string = '你抓
-不到我
-'
-
-another_multi_line_string = %q{ 你抓
-不到我 }
-</code></pre>
-
-<p>如果不想有new line，可以用back slash</p>
-
-<pre><code>multi_line_with_no_new_line = '你抓\
-不到我'
-</code></pre>
-
-<ul>
-<li>超長文字可以這樣寫</li>
-</ul>
-
-
-<pre><code>really_long_string = &lt;&lt;EOF
-這是開頭
-...
-這是結尾
-EOF
-</code></pre>
-
-<ul>
-<li>chop &amp; chomp</li>
-</ul>
-
-
-<p>長的很像的兩個函數，用法天差地遠</p>
-
-<pre><code>"a string with new line\n".chomp
-</code></pre>
-
-<p>會回傳 <code>a string with new line</code>，尾巴的new line會截掉。注意如果結尾含有多個new line，它只會截掉一個。</p>
-
-<pre><code>"a string".chop
-</code></pre>
-
-<p>會回傳&#8221;a strin&#8221;，回傳截掉最後一個字的結果。</p>
-
-<ul>
-<li>sub &amp; gsub</li>
-</ul>
-
-
-<p>替換字串內容</p>
-
-<pre><code>puts 'good good'.sub( 'good', 'bad' )
-puts 'good good'.gsub( 'good', 'bad' )
-</code></pre>
-
-<p>得到的結果是</p>
-
-<pre><code>'bad good'
-'bad bad'
-</code></pre>
-
-<ul>
-<li>split 分割字串</li>
-</ul>
-
-
-<pre><code>"one two three four five".split
-</code></pre>
-
-<p>回傳一個矩陣</p>
-
-<pre><code>["one", "two", "three", "four", "five"]
-</code></pre>
-
-<p>或是分割參數</p>
-
-<pre><code>"one;two;three;four;five".split(";")
-</code></pre>
-
-<p>回傳結果同上</p>
-
-<ul>
-<li>index 搜尋字串位置</li>
-</ul>
-
-
-<pre><code>"actions speak louder than words".index("speak") # return 8
-</code></pre>
-
-<ul>
-<li>each_char, each_byte, each_line</li>
-</ul>
-
-
-<p>分別用迴圈回傳字元，位元數，每一行</p>
-
-<ul>
-<li>Ruby string is mutable</li>
-</ul>
-
-
-<p>mutable雖然翻譯是可變異，但我覺得它的意義和指標有點類似</p>
-
-<pre><code>street_name = 'taiwan street'
-road_name = street_name
-street_name.upcase!
-</code></pre>
-
-<p>結果road_name = ?</p>
-
-<p>注意像帶有!的函數常會有mutate的作用，所以上述結果road_name = &lsquo;TAIWAN STREET&rsquo;</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Eloquent Ruby -3]]></title>
-    <link href="http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-3/"/>
-    <updated>2015-04-24T16:33:18+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-3</id>
-    <content type="html"><![CDATA[<h1>Chapter 3 - Take Advantage of Ruby’s Smart Collections</h1>
-
-<p>直接結論，Ruby的Array跟Hash提供很多方便的函數可用，可以參考</p>
-
-<p><a href="http://ruby-doc.org/core-2.2.0/Array.html">Array</a>
-<a href="http://ruby-doc.org/core-2.2.0/Hash.html">Hash</a></p>
-
-<p>以下才是正文開始</p>
-
-<hr />
-
-<ul>
-<li>如果是要初始化一個給值的陣列，如</li>
-</ul>
-
-
-<pre><code>love_words = ["Nancy", "I", "love", "you"]
-</code></pre>
-
-<p>也可以這樣產生
-<code>
-love_words = %w{ Nancy I love you }
-</code></p>
-
-<p>－ Ruby沒有指標，但是也有個類似指標的用法</p>
-
-<pre><code>def echo_all( *args )
-  args.each { |arg| puts arg }
-end
-</code></pre>
-
-<p>*暗示arg其實是個陣列值，可以遞進來做陣列處理。</p>
-
-<ul>
-<li>對於hash，可以這樣用</li>
-</ul>
-
-
-<pre><code>run( {speed: :fast, tools: :train} )
-</code></pre>
-
-<p>也可以不要大括號，這樣寫</p>
-
-<pre><code>run( speed: :fast, tools: :train )
-</code></pre>
-
-<p>甚至</p>
-
-<pre><code>run speed: :fast, tools: :train
-</code></pre>
-
-<p>不過在參數只傳遞一個hash時，這樣寫蠻清爽的，如果是像form_for中要傳html_options時還這樣寫，簡直是個閱讀災難，我被誤導了好久。</p>
-
-<p>－ 雖然array和hash都有提供each這個method，不過hash在使用上有些不一樣的地方</p>
-
-<p>只給定一個參數的話
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>hash_value = { one: 1, two: 2, three: 3 }&lt;/p&gt;
-</span><span class='line'>
-</span><span class='line'>&lt;p&gt;hash_value.each do |value|
-</span><span class='line'>  #something for value
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure></p>
-
-<p>value其實是個矩陣，如[:one, 1], [:two, 2], [:three, 3]。</p>
-
-<p>也可以給2個參數</p>
-
-<pre><code>hash_value.each do |key, value|
-  #something for value
-end
-</code></pre>
-
-<p>key和value就分別對應到hash值上，這就不用多說了。</p>
-
-<ul>
-<li>另外有個<code>inject</code> method可以幫助加總所有元素</li>
-</ul>
-
-
-<pre><code>def average_word_length
-  total = words.inject(0.0){ |result, word| word.size + result}
-  total / word_count
-end
-</code></pre>
-
-<p>－ 不要再each裡面操作delete的動作，如果需要的話可以用<code>array.delete_if</code> method。</p>
-
-<p>－ 如果只是要檢查某個元素有沒有已經存在陣列中，可以考慮改用<code>Set</code>這個class，而不是用Array。
-<a href="http://ruby-doc.org/stdlib-2.2.2/libdoc/set/rdoc/Set.html">http://ruby-doc.org/stdlib-2.2.2/libdoc/set/rdoc/Set.html</a></p>
-
-<p>它在檢查效率上比較好。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Eloquent Ruby -2]]></title>
-    <link href="http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-2/"/>
-    <updated>2015-04-24T15:37:46+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-2</id>
-    <content type="html"><![CDATA[<h1>Chapter 2 - Choose the Right Control Structure</h1>
-
-<p>說是Control Structure，我比較習慣說Control Flow，簡單就是說幾乎所有程式語言都有的流程控制語法，像是if, while, case等。</p>
-
-<ul>
-<li>Ruby比較特別的是有unless, until反向詞語，一開始用不大習慣，但後來寫著寫著，心裡慢慢習慣照著口語的語法說，現在反而比較喜歡這樣寫了，總之照Ruby的理念就是這些反向詞語的目的就是為了要減少在閱讀程式碼時，心裡還需要做轉換的浪費。</li>
-</ul>
-
-
-<pre><code>if not @read_only
-</code></pre>
-
-<p>看到not心裡還要先把@read_only的值反向</p>
-
-<pre><code>unless @read_only
-</code></pre>
-
-<p>讀起來比較順口</p>
-
-<ul>
-<li>另一個蠻特別的點是，條件式可以放在最後面，也是為了配合口語語法</li>
-</ul>
-
-
-<pre><code>@title = new_title unless @read_only
-</code></pre>
-
-<ul>
-<li><p>Ruby也有for迴圈，不過直接被捨棄不用（那當初幹嘛創造=___=），都用<code>each</code>。而且<code>for</code>也是用each實踐的，所以直接用each就好了。註：for語法不包含block，所以內中的變數scope是和for同一個，和each只存在於block中不一樣，each和for還是有些不同。</p></li>
-<li><p>case, 要注意的是在case中比較是用<code>===</code>，另外條件式也可以用regex來比較</p></li>
-</ul>
-
-
-<p>這邊惡補一下幾個我不熟的operator</p>
-
-<p><code>&lt;=&gt;</code>
-Combined comparison operator. Returns 0 if first operand equals second, 1 if first operand is greater than the second and -1 if first operand is less than the second.</p>
-
-<p><code>(a &lt;=&gt; b) returns -1.</code></p>
-
-<p><code>===</code>
-Used to test equality within a when clause of a case statement.</p>
-
-<p><code>(1...10) === 5 returns true.</code></p>
-
-<p><code>.eql?</code>
-True if the receiver and argument have both the same type and equal values.</p>
-
-<p><code>1 == 1.0 returns true, but 1.eql?(1.0) is false.</code></p>
-
-<p><code>equal?</code>
-True if the receiver and argument have the same object id.</p>
-
-<p><code>if aObj is duplicate of bObj then aObj == bObj is true, a.equal?bObj is false but a.equal?aObj is true.</code></p>
-
-<ul>
-<li><p>只有false和nil被測試時才會回傳false，<code>0</code>不是！還特別highlight以前寫C的人（哈哈），因為在C裡面<code>0</code>值被測試也是算false</p></li>
-<li><p>延續上，因為false和nil被測試都是回傳false，所以要特別注意條件式中會不會false和nil混在一起</p></li>
-</ul>
-
-
-<pre><code>while next_object = get_next_object
-  # Do something with the object
-end
-</code></pre>
-
-<p>上面的迴圈是假設next_object最後會變成nil，而nil測試後回傳false。但萬一今天next_object本身的值就是false呢。改成下面的碼會比較好</p>
-
-<pre><code>until (next_object = get_next_object).nil?
-  # Do something with the object
-end
-</code></pre>
-
-<p>明確指定出next_object是nil才會跳離迴圈</p>
-
-<ul>
-<li>Ternery operator</li>
-</ul>
-
-
-<p>這個以前在C++我就蠻愛用的，可以很漂亮的縮短一些簡單的if-else</p>
-
-<pre><code>result = (face == :beauty) ? "handsome" : "ugly" # 同等於下式
-
-if face == :beauty
- result = "handsome"
-else
- result = "ugly"
-end
-</code></pre>
-
-<ul>
-<li>另一個是常用的變數初始化技巧</li>
-</ul>
-
-
-<pre><code>@first_name ||= ''
-</code></pre>
-
-<p>@first_name如果還沒初始化，會被賦值&#8217;&lsquo;，如果已經有值，那就回傳本身。不過不要拿來對boolean type的變數這樣做，因為它也是倚賴 || operator機制。</p>
 ]]></content>
   </entry>
   

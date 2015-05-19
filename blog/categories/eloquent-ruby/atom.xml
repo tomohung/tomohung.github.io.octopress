@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Ruby | The Life Alchemist]]></title>
-  <link href="http://www.tomohung.com/blog/categories/ruby/atom.xml" rel="self"/>
+  <title><![CDATA[Category: Eloquent Ruby | The Life Alchemist]]></title>
+  <link href="http://www.tomohung.com/blog/categories/eloquent-ruby/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
   <updated>2015-05-19T09:30:24+08:00</updated>
   <id>http://www.tomohung.com/</id>

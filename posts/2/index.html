@@ -130,12 +130,220 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-03T22:06:44+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-03</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/05/03/eloquent-ruby-6/" itemprop="url">Eloquent Ruby -6 [Use Symbols to Stand for Something]</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><h1>Chapter 6 - Use Symbols to Stand for Something</h1>
+
+<p>String和Symbol很類似，都可以用來代表程式中的某個事物，但字串還多了可以被用來處理得到額外資訊，如果我們單純只是想要用來代表程式中的某個事物，用Symbol就可以了。</p>
+
+<p>－ 同一個symbol永遠指著同一個物件，如</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>a = :sym 
+</span><span class='line'>b= a
+</span><span class='line'>c = :sym</span></code></pre></td></tr></table></div></figure>
+
+
+<p>a, b, c都是相同的物件</p>
+
+<p>但如果是string</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>a = "sym"
+</span><span class='line'>b = "sym"</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>a.equal? b</code> 會回傳false</p>
+
+<ul>
+<li>所有Ruby的物件都有一個<code>public_methods</code>的函數，會回傳一個Array of symbols</li>
+</ul>
+
+
+<hr />
+
+<p>簡單總結這章，Symbol因為有著unique, immutable這兩個特性，在用來當作代表性詞時就很實用，尤其是在應用hash時。</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-03T20:38:53+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-03</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/05/03/eloquent-ruby-5/" itemprop="url">Eloquent Ruby -5 [Find the Right String With Regular Expressions]</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><h1>Chapter 5 - Find the Right String with Regular Expressions</h1>
+
+<h2>Match One Character</h2>
+
+<ul>
+<li><p><code>.</code>可以match任何單一字元(except new line)</p></li>
+<li><p>如果想match <code>.</code>本身，可以用<code>\</code>，如<code>3\.14</code></p></li>
+<li><p>再譬如<code>.r\.</code>，可以match <code>Mr.</code> or <code>Dr.</code></p></li>
+</ul>
+
+
+<h2>Sets, Range, Alternatives</h2>
+
+<h3>Sets</h3>
+
+<ul>
+<li><p>例如<code>[0123456789]</code>可以match任何一個數字字元</p></li>
+<li><p><code>[pPaA][Mm]</code>可以match <code>Am</code> or <code>pm</code>.</p></li>
+</ul>
+
+
+<h3>Range</h3>
+
+<ul>
+<li><p><code>[0-9a-f]</code>可以match任何一個16進位的字元</p></li>
+<li><p><code>\d</code>可以match任何一個數字字元，<code>\d\d</code>可以match 連續2個數字字元</p></li>
+<li><p><code>\w</code>可以match任何一個字元，包含數字、底線等</p></li>
+<li><p><code>\s</code>可以match任何一個空白字元，包含space, tab, new line.</p></li>
+</ul>
+
+
+<h3>Alternatives</h3>
+
+<ul>
+<li><p><code>|</code>是替換符號</p></li>
+<li><p><code>A\.M\.|AM|P\.M\.|PM</code> 可以match <code>A.M.</code> or <code>AM</code>, or <code>P.M.</code> or <code>PM</code></p></li>
+<li><p>處理時間格式可以用 <code>\d\d:\d\d (AM|PM)</code></p></li>
+</ul>
+
+
+<h2>Asterist <code>*</code></h2>
+
+<ul>
+<li><p>*星號可以表示在星號前的字元有任意個，包含零個。</p></li>
+<li><p><code>AB*</code>，可以match <code>AB</code>, <code>A</code>, or <code>ABBBB</code></p></li>
+<li><p>所以可以用 <code>[0–9]*</code>，match任何長度的數字</p></li>
+</ul>
+
+
+<h2>Regular Expression in Ruby</h2>
+
+<ul>
+<li><p>Format regex by slash: <code>/\d\d:\d\d (AM|PM)/</code></p></li>
+<li><p>use operator <code>=~</code></p></li>
+<li><p>所以在irb中跑這段</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/\d\d:\d\d (AM|PM)/ =~ '10:24 PM'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>回傳<code>0</code>，這表示字串有符合，從index = 0的位置開始。</p>
+
+<ul>
+<li><p>如果沒有符合，回傳<code>nil</code></p></li>
+<li><p>可以變成case insensitive，加上i，如：<code>/AM/i =~ 'am'</code></p></li>
+<li><p>也可以當參數傳入gsub來用</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>time_string.gsub!( /\d\d:\d\d (AM|PM)/, '**:** **' )</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Beginning and Ending</h2>
+
+<ul>
+<li><p>如果想要match字串的開頭用指定的文字，可以加入<code>\A</code>，如<code>\AIn the Beginning</code>，可以match字串前面為<code>In the Beginning</code></p></li>
+<li><p>反過來如果想要match字串結尾用指定的文字，可以在尾巴加入<code>\z</code></p></li>
+<li><p>如果想要match字串中<code>任何一行的開頭</code>有滿足，可以在條件字串前面加上<code>^</code></p></li>
+<li><p>如果想要match字串中<code>任何一行的結尾</code>有滿足，可以在條件字串尾巴加上<code>$</code></p></li>
+<li><p>如果想要進階同時match開頭跟結尾</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/^Once upon a time.*happily ever after\.$/</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這樣會失敗，因為<code>.</code>配合<code>*</code>雖然可以取代中間的任意數量的字元，但<code>.</code>不包含new line</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/^Once upon a time.*happily ever after\.$/m</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在結尾加上<code>m</code>可以關閉<code>.</code>這個特性。</p>
+
+<ul>
+<li><code>?</code>的作用和<code>*</code>類似</li>
+</ul>
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-26T21:25:50+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-26</time>
         
       </p>
     
     
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/04/26/eloquent-ruby-4/" itemprop="url">Eloquent Ruby -4</a></h2>
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/04/26/eloquent-ruby-4/" itemprop="url">Eloquent Ruby -4 [Take Advantage of Ruby’s Smart Strings]</a></h2>
     
   </header>
 
@@ -349,7 +557,7 @@
       </p>
     
     
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/04/24/eloquent-ruby-3/" itemprop="url">Eloquent Ruby -3</a></h2>
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/04/24/eloquent-ruby-3/" itemprop="url">Eloquent Ruby -3 [Take Advantage of Ruby’s Smart Collections]</a></h2>
     
   </header>
 
@@ -497,7 +705,7 @@
       </p>
     
     
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/04/24/eloquent-ruby-2/" itemprop="url">Eloquent Ruby -2</a></h2>
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/04/24/eloquent-ruby-2/" itemprop="url">Eloquent Ruby -2 [Choose the Right Control Structure]</a></h2>
     
   </header>
 
@@ -650,7 +858,7 @@ True if the receiver and argument have the same object id.</p>
       </p>
     
     
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/04/24/eloquent-ruby-1/" itemprop="url">Eloquent Ruby -1</a></h2>
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/04/24/eloquent-ruby-1/" itemprop="url">Eloquent Ruby -1 [Write Code That Looks Like Ruby]</a></h2>
     
   </header>
 
@@ -1602,148 +1810,6 @@ True if the receiver and argument have the same object id.</p>
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-11T11:21:17+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-03-11</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/03/11/reflection-to-tealeaf-course3-week2/" itemprop="url">Reflection to Tealeaf Course3 Week2</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>There are 3 kinds of test: <code>Unit</code>, <code>Functional</code>, <code>Integration</code>. In <a href="http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1/">week 1</a>, we test <strong>Model</strong>, this should belong to <code>Unit test</code> . And this week we test <strong>Controller</strong>, this should belong to <code>Functional test</code>. I guess it should be <code>Integration test</code> when we move into part of <strong>View</strong> test.</p>
-
-<p>I have to heavily rely on solution videos, there are two main reasons:</p>
-
-<ol>
-<li><p>I&rsquo;m not familiar with <code>what to test</code>, because I&rsquo;m a starter for TDD. It&rsquo;s a big conversion <strong>from test laster to test driven</strong>.</p></li>
-<li><p>I&rsquo;m not familiar with <code>RSpec</code>. There are some tricks for test controllers when using RSpec.</p></li>
-</ol>
-
-
-<p>For example, when we test `QueueItemsController#create&#8217;, there are 7 tests:</p>
-
-<ul>
-<li>it &lsquo;redirects to my queue page&rsquo;</li>
-<li>it &lsquo;creates a queue item&rsquo;</li>
-<li>it &lsquo;creates the queue item associated with video&rsquo;</li>
-<li>it &lsquo;creates the queue item associated with current user&rsquo;</li>
-<li>it &lsquo;puts the video as the last one in the queue&rsquo;</li>
-<li>it &lsquo;does not add the video in the queue if already existed in the queue&rsquo;</li>
-<li>it &lsquo;redirects to sign in page if unauthenticated&rsquo;</li>
-</ul>
-
-
-<p>A simple action needs to do such lots of tests!!</p>
-
-<p>Or here is for <strong>Model</strong> methods: <code>search_by_title</code>:</p>
-
-<ul>
-<li>it &lsquo;returns empty array if no match&rsquo;</li>
-<li>it &lsquo;returns an array if one video&rsquo;</li>
-<li>it &lsquo;returns an array if partial match&rsquo;</li>
-<li>it &lsquo;returns an array of all matches ordered by DESC&rsquo;</li>
-<li>it &lsquo;returns an empty array for search an empty string&rsquo;</li>
-</ul>
-
-
-<p>To test every possible situations is not an easy work.</p>
-
-<p>Brandon also metioned me that care about using <code>let</code> and <code>before</code>. Because of lots of tests in spec files, we may miss some pre-declare vars by using <code>let</code> or <code>before</code>. Sometimes, it may be better do not clean duplicated codes for code readability.</p>
-
-<p>Second, extract methods into <strong>Model</strong>. ex:</p>
-
-<figure class='code'><figcaption><span>user.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">def</span> <span class="nf">queue_include?</span><span class="p">(</span><span class="n">video</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">queue_items</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:video</span><span class="p">)</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="n">video</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>then, I can use this method everywhere in my app.</p>
-
-<h3>Conclusion</h3>
-
-<p>Still on the way to be more familiar to do TDD. :-)</p>
-</div>
-  
-  
-
-
-        </article>
-      
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-06T08:40:32+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-03-06</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/03/06/reflection-to-tealeaf-course3-week1/" itemprop="url">Reflection to Tealeaf Course3 Week1</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>In Course3 week1, Kevin give me a schema of what should developper do from beginning.</p>
-
-<p>There are so many subjects I&rsquo;ve heard but not ever practicing in action, like: TDD, git flow(github flow), why test&hellip;etc.</p>
-
-<p>I like the concept Red-Green-Refactor, it forced developper thinking about what you should do first. This may be argued by some experienced engineer, because they can do these works naturally.</p>
-
-<p>But followed by Red-Green-Refactor, seeing green light really makes me feel comfortable. I can&rsquo;t stop thinking about how it&rsquo;d become easier if I could use this method when developping AI for TicTacToe. Testing game logic in TicTacToe manually costs me lots of time.</p>
-
-<p>Git flow/ GitHub flow is also my first time to taste. I think this should be fun to start communicate with other programmers through pull request. Glad that Tealeaf built an environment to let us feel like we are really in work.</p>
-
-<p>Matthew also metioned about this I should care about: <a href="http://stackoverflow.com/questions/729692/why-should-files-end-with-a-newline">Why should files end with a newline</a>.
-<br/></p>
-
-<p>I also find a blog post talking about <a href="http://www.jamesshore.com/Blog/Red-Green-Refactor.html">Red-Green-Refactor</a>, the author split the process into 5 steps: <strong>Think, Red, Green, Refactor, Repeat</strong>, and called this <code>code design process</code>. :-)</p>
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -1773,6 +1839,10 @@ True if the receiver and argument have the same object id.</p>
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2015/05/19/eloquent-ruby-9/">Eloquent Ruby -9 [Write Specs!]</a>
+    
+    <a class="list-group-item " href="/blog/2015/05/19/eloquent-ruby-8/">Eloquent Ruby -8 [Embrance Dynamic Typing]</a>
+    
     <a class="list-group-item " href="/blog/2015/05/07/reflection-to-tealeaf-course3-week8-2/">Reflection to Tealeaf Course3 Week8 (2/2)</a>
     
     <a class="list-group-item " href="/blog/2015/05/07/reflection-to-tealeaf-course3-week8-1/">Reflection to Tealeaf Course3 Week8 (1/2)</a>
@@ -1787,11 +1857,7 @@ True if the receiver and argument have the same object id.</p>
     
     <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week6/">Reflection to Tealeaf Course3 Week6 (1/2)</a>
     
-    <a class="list-group-item " href="/blog/2015/05/04/eloquent-ruby-7/">Eloquent Ruby -7</a>
-    
-    <a class="list-group-item " href="/blog/2015/05/03/eloquent-ruby-6/">Eloquent Ruby -6</a>
-    
-    <a class="list-group-item " href="/blog/2015/05/03/eloquent-ruby-5/">Eloquent Ruby -5</a>
+    <a class="list-group-item " href="/blog/2015/05/04/eloquent-ruby-7/">Eloquent Ruby -7 [Treat Everything Like an Object—Because Everything Is]</a>
     
   </div>
 </section>

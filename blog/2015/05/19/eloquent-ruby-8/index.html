@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Reflection of Tealeaf Week 2 - The Life Alchemist</title>
+  <title>Eloquent Ruby -8 [Embrance Dynamic Typing] - The Life Alchemist</title>
   <meta name="author" content="Tomo">
 
   
@@ -14,15 +14,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2">
+  <link rel="canonical" href="http://www.tomohung.com/blog/2015/05/19/eloquent-ruby-8">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="The Life Alchemist" type="application/atom+xml">
 
   <!-- http://opengraphprotocol.org/ -->
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2">
-  <meta property="og:title" content="Reflection of Tealeaf Week 2 - The Life Alchemist">
+  <meta property="og:url" content="http://www.tomohung.com/blog/2015/05/19/eloquent-ruby-8">
+  <meta property="og:title" content="Eloquent Ruby -8 [Embrance Dynamic Typing] - The Life Alchemist">
   
 
   <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
@@ -126,42 +126,39 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-07T08:15:13+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-07</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-19T08:56:30+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-19</time>
         
       </p>
     
     
     <h1 class="entry-title" itemprop="name headline">
-        Reflection of Tealeaf Week 2
+        Eloquent Ruby -8 [Embrance Dynamic Typing]
         
     </h1>
     
   </header>
 
 
-<div class="entry-content clearfix" itemprop="articleBody description"><p><img class="right" src="http://i.minus.com/ibnRw2O1pxsQam.png" width="320"></p>
+<div class="entry-content clearfix" itemprop="articleBody description"><h1>Chapter 8 - Embrance Dynamic Typing</h1>
 
-<p>Although I have some option video not done yet, I want to share some of my reflection.</p>
+<h2>不需要抽象類別</h2>
 
-<p>When I came to lesson 2, first I found that discussion is less than lesson 1 obviously. I think this imply the lesson OOP is harder than before. Thank god I finished three assignments in a week, how I can do this is because:</p>
+<p>在C++中，通常會先定義一個抽象類別讓其它類別來繼承並實現其中的Virtual Function，但是在Ruby中這個動作是多餘的。只要類別中有同名的method即可。</p>
 
-<ol>
-<li><p>As a C++ programmer, OOP concept is also the same in Ruby, like inheritance, polymorphism, composition&hellip;etc. Since I have some experience to OOP, familiar with Ruby&rsquo;s style is not a hard work for me.</p></li>
-<li><p><a href="http://www.gotealeaf.com/books/oo_ruby"><code>Object Oriented Program book</code></a> is fantastic!! I spent one night to read it, then next day I can just start to implement my idea without too much struggles. It clearly explain the relationship between <code>is-a</code> and <code>has-a</code> corresponding to inheritance and mixin.</p></li>
-</ol>
+<p>例如有二個類別<code>Document</code>, <code>LazyDocument</code>，其中<code>Document</code>的method <code>title</code>是回傳宣告時的值，而<code>LazyDocument</code>是回傳宣告時讀入檔案的值。我們不需要另外定義一個<code>BaseDocument</code>，其中還定義了<code>title</code>這個virtual method，這是一個多餘的動作。</p>
 
+<p>所以有人說對Ruby來說，只要這個類別會像鴨子一樣呱呱叫（譬如就是有<code>make_sound</code>這個method），就可以把它當作鴨子。缺點就是如果沒注意的話，很容易在runtime時期遇到<code>undefined method</code>的問題。</p>
 
-<p>And I do fall in love with Ruby, <code>convention</code> is over configuration becomes nature. In lesson 1, it&rsquo;s weird for me to pass a variable into method, but modified or not depends on what actions in the method. Now I start to think it&rsquo;s convenient to decide modified the variable in the method.
-<code>attr_accessor</code> is another kind of example, default getter and setter helps a lot to reduce typing time.</p>
+<h2>總結</h2>
 
-<p>Using polymorphism, I don&rsquo;t need to care about how using virtual function, just inheritance class then use it.
-Especially for method <code>super</code>, the best way to reduce redundant code.
-One suggestion, If subclass&rsquo;s initialize method doesn&rsquo;t use super, then you might think the superclass and subclass relationship is <code>has-a</code>, not <code>is-a</code>.</p>
+<p>這章大部份都是舉例，總結最後</p>
 
-<p>I do love my <a href="https://github.com/tomohung/tealeaf/blob/master/Lesson2/oo_tic_tac_toe.rb">Tic-Tac-Toe</a> and <a href="https://github.com/tomohung/tealeaf/blob/master/Lesson2/oo_blackjack.rb">Black Jack</a> implemented by OO. In Tic-Tac-Toe, I use polymorphism to implement single player and double players mode. In Black Jack, I add feature that player can play with others NPC together, not just with dealer. This make the game likely in the real world. Without OO concept, these features are hard to implement.</p>
+<ul>
+<li>只實作你需要的方法</li>
+<li>利用命名來documentation</li>
+<li>記得要寫test</li>
+</ul>
 
-<p>Next lesson is absolutely my challenge, because I&rsquo;m totally new for web development.
-But I do look forward to it.</p>
 </div>
 
 
@@ -185,13 +182,13 @@ But I do look forward to it.</p>
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-01-07T08:15:13+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-01-07</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-19T08:56:30+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-19</time>
           
 
 <span class="glyphicon glyphicon-tags"></span>&nbsp;
 <span class="categories">
   
-    <a class='category' href='/blog/categories/ruby/'>ruby</a>, <a class='category' href='/blog/categories/tealeaf/'>tealeaf</a>
+    <a class='category' href='/blog/categories/book/'>book</a>, <a class='category' href='/blog/categories/eloquent-ruby/'>eloquent ruby</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>
   
 </span>
 
@@ -200,7 +197,7 @@ But I do look forward to it.</p>
         
           <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/05/19/eloquent-ruby-8/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/05/19/eloquent-ruby-8/" >Tweet</a>
   
   
   
@@ -212,10 +209,10 @@ But I do look forward to it.</p>
         
           <ul class="meta text-muted pager">
             
-            <li class="previous"><a href="/blog/2015/01/01/reflection-to-tealeaf-lesson-1/" title="Previous Post: Reflection to Tealeaf week 1">&laquo; Reflection to Tealeaf week 1</a></li>
+            <li class="previous"><a href="/blog/2015/05/07/reflection-to-tealeaf-course3-week8-2/" title="Previous Post: Reflection to Tealeaf Course3 Week8 (2/2)">&laquo; Reflection to Tealeaf Course3 Week8 (2/2)</a></li>
             
             
-            <li class="next"><a href="/blog/2015/01/11/nitroukai-fa-huan-jing/" title="Next Post: nitrous.io 開發環境">nitrous.io 開發環境 &raquo;</a></li>
+            <li class="next"><a href="/blog/2015/05/19/eloquent-ruby-9/" title="Next Post: Eloquent Ruby -9 [Write Specs!]">Eloquent Ruby -9 [Write Specs!] &raquo;</a></li>
             
           </ul>
         
@@ -248,7 +245,7 @@ But I do look forward to it.</p>
     
     <a class="list-group-item " href="/blog/2015/05/19/eloquent-ruby-9/">Eloquent Ruby -9 [Write Specs!]</a>
     
-    <a class="list-group-item " href="/blog/2015/05/19/eloquent-ruby-8/">Eloquent Ruby -8 [Embrance Dynamic Typing]</a>
+    <a class="list-group-item active" href="/blog/2015/05/19/eloquent-ruby-8/">Eloquent Ruby -8 [Embrance Dynamic Typing]</a>
     
     <a class="list-group-item " href="/blog/2015/05/07/reflection-to-tealeaf-course3-week8-2/">Reflection to Tealeaf Course3 Week8 (2/2)</a>
     
@@ -300,8 +297,8 @@ But I do look forward to it.</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2/';
-        var disqus_url = 'http://www.tomohung.com/blog/2015/01/07/reflection-to-tealeaf-lesson-2/';
+        var disqus_identifier = 'http://www.tomohung.com/blog/2015/05/19/eloquent-ruby-8/';
+        var disqus_url = 'http://www.tomohung.com/blog/2015/05/19/eloquent-ruby-8/';
         var disqus_script = 'embed.js';
       
     (function () {

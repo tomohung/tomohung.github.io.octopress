@@ -130,6 +130,143 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-19T09:11:44+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-19</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/05/19/eloquent-ruby-9/" itemprop="url">Eloquent Ruby -9 [Write Specs!]</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><h1>Chapter 9 - Write Specs!</h1>
+
+<h2>Don&rsquo;t test it, Spec it!</h2>
+
+<p>雖然內建MiniTest，但實際上寫測試的思維可以像是在定義規格，這也是<code>RSpec</code>的出發點。</p>
+
+<p>在描述上更接近口語的方式：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>doc.words.include?('blog') == true
+</span><span class='line'>
+</span><span class='line'>#==&gt; RSpec
+</span><span class='line'>doc.words should include('blog')</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Easy Stubs</h2>
+
+<p>理想上最好測試一次只測一個類別，但實際上很困難，所以可以利用stub來隔開同時間操作不同的類別。
+概念上就是如果需要呼叫外部其它的類別時，賦值給其呼叫的函數</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>stub_outputer = stub :available? =&gt; true, :render =&gt; nil</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如此當stub_outputer.availabe? 回傳true, stub_outputer.render回傳nil。</p>
+
+<h2>Easy Mocks</h2>
+
+<p>不同於Stubs，我們希望在測試的函數中，有呼叫到另一個函數，在這裡不用考慮這個函數是否運作正常（這個動作應該在該類別中測試），所以我們期望在這個函數中有呼叫即可</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">it</span> <span class="s1">&#39;should know how to output&#39;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">mock_outputer</span> <span class="o">=</span> <span class="n">mock</span><span class="p">(</span><span class="s1">&#39;Printer&#39;</span><span class="p">)</span> <span class="c1"># &lt;== mock objects</span>
+</span><span class='line'>  <span class="n">mock_outputer</span><span class="o">.</span><span class="n">should_receive</span><span class="p">(</span><span class="ss">:available?</span><span class="p">)</span><span class="o">.</span><span class="n">and_return</span><span class="p">(</span><span class="kp">true</span><span class="p">)</span>  <span class="c1"># &lt;== expectation call</span>
+</span><span class='line'>  <span class="vi">@doc</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">mock_outputer</span><span class="p">)</span><span class="o">.</span><span class="n">should</span> <span class="o">==</span> <span class="s1">&#39;Done&#39;</span> <span class="c1"># &lt;== :avaliable? should be called in output method.</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-19T08:56:30+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-19</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/05/19/eloquent-ruby-8/" itemprop="url">Eloquent Ruby -8 [Embrance Dynamic Typing]</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><h1>Chapter 8 - Embrance Dynamic Typing</h1>
+
+<h2>不需要抽象類別</h2>
+
+<p>在C++中，通常會先定義一個抽象類別讓其它類別來繼承並實現其中的Virtual Function，但是在Ruby中這個動作是多餘的。只要類別中有同名的method即可。</p>
+
+<p>例如有二個類別<code>Document</code>, <code>LazyDocument</code>，其中<code>Document</code>的method <code>title</code>是回傳宣告時的值，而<code>LazyDocument</code>是回傳宣告時讀入檔案的值。我們不需要另外定義一個<code>BaseDocument</code>，其中還定義了<code>title</code>這個virtual method，這是一個多餘的動作。</p>
+
+<p>所以有人說對Ruby來說，只要這個類別會像鴨子一樣呱呱叫（譬如就是有<code>make_sound</code>這個method），就可以把它當作鴨子。缺點就是如果沒注意的話，很容易在runtime時期遇到<code>undefined method</code>的問題。</p>
+
+<h2>總結</h2>
+
+<p>這章大部份都是舉例，總結最後</p>
+
+<ul>
+<li>只實作你需要的方法</li>
+<li>利用命名來documentation</li>
+<li>記得要寫test</li>
+</ul>
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-07T15:43:10+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-07</time>
         
       </p>
@@ -2179,7 +2316,7 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
       </p>
     
     
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/05/04/eloquent-ruby-7/" itemprop="url">Eloquent Ruby -7</a></h2>
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/05/04/eloquent-ruby-7/" itemprop="url">Eloquent Ruby -7 [Treat Everything Like an Object—Because Everything Is]</a></h2>
     
   </header>
 
@@ -2359,214 +2496,6 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-03T22:06:44+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-03</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/05/03/eloquent-ruby-6/" itemprop="url">Eloquent Ruby -6</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><h1>Chapter 6 - Use Symbols to Stand for Something</h1>
-
-<p>String和Symbol很類似，都可以用來代表程式中的某個事物，但字串還多了可以被用來處理得到額外資訊，如果我們單純只是想要用來代表程式中的某個事物，用Symbol就可以了。</p>
-
-<p>－ 同一個symbol永遠指著同一個物件，如</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>a = :sym 
-</span><span class='line'>b= a
-</span><span class='line'>c = :sym</span></code></pre></td></tr></table></div></figure>
-
-
-<p>a, b, c都是相同的物件</p>
-
-<p>但如果是string</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>a = "sym"
-</span><span class='line'>b = "sym"</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>a.equal? b</code> 會回傳false</p>
-
-<ul>
-<li>所有Ruby的物件都有一個<code>public_methods</code>的函數，會回傳一個Array of symbols</li>
-</ul>
-
-
-<hr />
-
-<p>簡單總結這章，Symbol因為有著unique, immutable這兩個特性，在用來當作代表性詞時就很實用，尤其是在應用hash時。</p>
-</div>
-  
-  
-
-
-        </article>
-      
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-03T20:38:53+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-03</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/05/03/eloquent-ruby-5/" itemprop="url">Eloquent Ruby -5</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><h1>Chapter 5 - Find the Right String with Regular Expressions</h1>
-
-<h2>Match One Character</h2>
-
-<ul>
-<li><p><code>.</code>可以match任何單一字元(except new line)</p></li>
-<li><p>如果想match <code>.</code>本身，可以用<code>\</code>，如<code>3\.14</code></p></li>
-<li><p>再譬如<code>.r\.</code>，可以match <code>Mr.</code> or <code>Dr.</code></p></li>
-</ul>
-
-
-<h2>Sets, Range, Alternatives</h2>
-
-<h3>Sets</h3>
-
-<ul>
-<li><p>例如<code>[0123456789]</code>可以match任何一個數字字元</p></li>
-<li><p><code>[pPaA][Mm]</code>可以match <code>Am</code> or <code>pm</code>.</p></li>
-</ul>
-
-
-<h3>Range</h3>
-
-<ul>
-<li><p><code>[0-9a-f]</code>可以match任何一個16進位的字元</p></li>
-<li><p><code>\d</code>可以match任何一個數字字元，<code>\d\d</code>可以match 連續2個數字字元</p></li>
-<li><p><code>\w</code>可以match任何一個字元，包含數字、底線等</p></li>
-<li><p><code>\s</code>可以match任何一個空白字元，包含space, tab, new line.</p></li>
-</ul>
-
-
-<h3>Alternatives</h3>
-
-<ul>
-<li><p><code>|</code>是替換符號</p></li>
-<li><p><code>A\.M\.|AM|P\.M\.|PM</code> 可以match <code>A.M.</code> or <code>AM</code>, or <code>P.M.</code> or <code>PM</code></p></li>
-<li><p>處理時間格式可以用 <code>\d\d:\d\d (AM|PM)</code></p></li>
-</ul>
-
-
-<h2>Asterist <code>*</code></h2>
-
-<ul>
-<li><p>*星號可以表示在星號前的字元有任意個，包含零個。</p></li>
-<li><p><code>AB*</code>，可以match <code>AB</code>, <code>A</code>, or <code>ABBBB</code></p></li>
-<li><p>所以可以用 <code>[0–9]*</code>，match任何長度的數字</p></li>
-</ul>
-
-
-<h2>Regular Expression in Ruby</h2>
-
-<ul>
-<li><p>Format regex by slash: <code>/\d\d:\d\d (AM|PM)/</code></p></li>
-<li><p>use operator <code>=~</code></p></li>
-<li><p>所以在irb中跑這段</p></li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>/\d\d:\d\d (AM|PM)/ =~ '10:24 PM'</span></code></pre></td></tr></table></div></figure>
-
-
-<p>回傳<code>0</code>，這表示字串有符合，從index = 0的位置開始。</p>
-
-<ul>
-<li><p>如果沒有符合，回傳<code>nil</code></p></li>
-<li><p>可以變成case insensitive，加上i，如：<code>/AM/i =~ 'am'</code></p></li>
-<li><p>也可以當參數傳入gsub來用</p></li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>time_string.gsub!( /\d\d:\d\d (AM|PM)/, '**:** **' )</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Beginning and Ending</h2>
-
-<ul>
-<li><p>如果想要match字串的開頭用指定的文字，可以加入<code>\A</code>，如<code>\AIn the Beginning</code>，可以match字串前面為<code>In the Beginning</code></p></li>
-<li><p>反過來如果想要match字串結尾用指定的文字，可以在尾巴加入<code>\z</code></p></li>
-<li><p>如果想要match字串中<code>任何一行的開頭</code>有滿足，可以在條件字串前面加上<code>^</code></p></li>
-<li><p>如果想要match字串中<code>任何一行的結尾</code>有滿足，可以在條件字串尾巴加上<code>$</code></p></li>
-<li><p>如果想要進階同時match開頭跟結尾</p></li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>/^Once upon a time.*happily ever after\.$/</span></code></pre></td></tr></table></div></figure>
-
-
-<p>這樣會失敗，因為<code>.</code>配合<code>*</code>雖然可以取代中間的任意數量的字元，但<code>.</code>不包含new line</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>/^Once upon a time.*happily ever after\.$/m</span></code></pre></td></tr></table></div></figure>
-
-
-<p>在結尾加上<code>m</code>可以關閉<code>.</code>這個特性。</p>
-
-<ul>
-<li><code>?</code>的作用和<code>*</code>類似</li>
-</ul>
-
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -2596,6 +2525,10 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2015/05/19/eloquent-ruby-9/">Eloquent Ruby -9 [Write Specs!]</a>
+    
+    <a class="list-group-item " href="/blog/2015/05/19/eloquent-ruby-8/">Eloquent Ruby -8 [Embrance Dynamic Typing]</a>
+    
     <a class="list-group-item " href="/blog/2015/05/07/reflection-to-tealeaf-course3-week8-2/">Reflection to Tealeaf Course3 Week8 (2/2)</a>
     
     <a class="list-group-item " href="/blog/2015/05/07/reflection-to-tealeaf-course3-week8-1/">Reflection to Tealeaf Course3 Week8 (1/2)</a>
@@ -2610,11 +2543,7 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
     
     <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week6/">Reflection to Tealeaf Course3 Week6 (1/2)</a>
     
-    <a class="list-group-item " href="/blog/2015/05/04/eloquent-ruby-7/">Eloquent Ruby -7</a>
-    
-    <a class="list-group-item " href="/blog/2015/05/03/eloquent-ruby-6/">Eloquent Ruby -6</a>
-    
-    <a class="list-group-item " href="/blog/2015/05/03/eloquent-ruby-5/">Eloquent Ruby -5</a>
+    <a class="list-group-item " href="/blog/2015/05/04/eloquent-ruby-7/">Eloquent Ruby -7 [Treat Everything Like an Object—Because Everything Is]</a>
     
   </div>
 </section>
