@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Eloquent Ruby -5"
+title: "Eloquent Ruby -5 [Find the Right String with Regular Expressions]"
 date: 2015-05-03 20:38:53 +0800
 comments: true
-categories: [ruby, book]
+categories: [Eloquent Ruby, ruby, book]
 ---
 
 #Chapter 5 - Find the Right String with Regular Expressions

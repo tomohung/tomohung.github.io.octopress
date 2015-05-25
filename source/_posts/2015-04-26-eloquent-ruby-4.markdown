@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Eloquent Ruby -4"
+title: "Eloquent Ruby -4 [Take Advantage of Ruby’s Smart Strings]"
 date: 2015-04-26 21:25:50 +0800
 comments: true
-categories: [book, ruby]
+categories: [Eloquent Ruby, book, ruby]
 ---
 
 #Chapter 4 - Take Advantage of Ruby’s Smart Strings

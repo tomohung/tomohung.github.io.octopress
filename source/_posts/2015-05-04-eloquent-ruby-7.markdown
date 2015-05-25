@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Eloquent Ruby -7"
+title: "Eloquent Ruby -7 [Treat Everything Like an Object—Because Everything Is]"
 date: 2015-05-04 06:19:26 +0800
 comments: true
-categories: 
+categories: [Eloquent Ruby, ruby, book]
 ---
 
 #Chapter 7 - Treat Everything Like an Object—Because Everything Is

@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Eloquent Ruby -6"
+title: "Eloquent Ruby -6 [Use Symbols to Stand for Something]"
 date: 2015-05-03 22:06:44 +0800
 comments: true
-categories: [ruby, book]
+categories: [Eloquent Ruby, ruby, book]
 ---
 
 #Chapter 6 - Use Symbols to Stand for Something

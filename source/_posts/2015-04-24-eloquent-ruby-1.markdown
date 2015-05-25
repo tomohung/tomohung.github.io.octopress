@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Eloquent Ruby -1"
+title: "Eloquent Ruby -1 [Write Code That Looks Like Ruby]"
 date: 2015-04-24 14:15:45 +0800
 comments: true
-categories: [book, ruby]
+categories: [Eloquent Ruby, book, ruby]
 ---
 
 #Eloquent Ruby

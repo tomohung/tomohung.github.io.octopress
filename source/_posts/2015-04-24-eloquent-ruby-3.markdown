@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Eloquent Ruby -3"
+title: "Eloquent Ruby -3 [Take Advantage of Ruby’s Smart Collections]"
 date: 2015-04-24 16:33:18 +0800
 comments: true
-categories: [book, ruby]
+categories: [Eloquent Ruby, book, ruby]
 ---
 
 #Chapter 3 - Take Advantage of Ruby’s Smart Collections

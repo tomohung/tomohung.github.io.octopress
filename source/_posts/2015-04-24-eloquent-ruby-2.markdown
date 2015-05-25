@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Eloquent Ruby -2"
+title: "Eloquent Ruby -2 [Choose the Right Control Structure]"
 date: 2015-04-24 15:37:46 +0800
 comments: true
-categories: [book, ruby]
+categories: [Eloquent Ruby, book, ruby]
 ---
 
 #Chapter 2 - Choose the Right Control Structure
