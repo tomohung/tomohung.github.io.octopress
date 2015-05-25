@@ -6,9 +6,10 @@ comments: true
 categories: [rails]
 ---
 
-今天被問了一個問題當場答不出來，記錄起來
+今天被問了一個問題當場答不出來，記錄起來，回家後試著實作看看
 
 建立滿足以下關係的Table Associations
+
 1. User can create a tag for a book.
 2. According to a given tag, return book list.
 3. According to a given book, return tag list.
