@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-05-19T09:30:24+08:00</updated>
+  <updated>2015-05-25T22:04:12+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -12,6 +12,129 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Many to Many Association With Two Join Tables]]></title>
+    <link href="http://www.tomohung.com/blog/2015/05/25/many-to-many-association-with-two-join-tables/"/>
+    <updated>2015-05-25T21:37:28+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/05/25/many-to-many-association-with-two-join-tables</id>
+    <content type="html"><![CDATA[<p>今天被問了一個問題當場答不出來，記錄起來</p>
+
+<p>建立滿足以下關係的Table Associations
+1. User can create a tag for a book.
+2. According to a given tag, return book list.
+3. According to a given book, return tag list.</p>
+
+<p>提示：需要用到2個Join Table</p>
+
+<p>以下作法不確定是否正確，閱讀時請斟酌</p>
+
+<p>需要建立5個Table</p>
+
+<pre><code class="ruby Users">class CreateUsers &lt; ActiveRecord::Migration
+  def change
+    create_table :users do |t|
+      t.string :name
+      t.timestamp
+    end
+  end
+end
+</code></pre>
+
+<pre><code class="ruby Books">class CreateBooks &lt; ActiveRecord::Migration
+  def change
+    create_table :books do |t|
+      t.string :title
+      t.timestamps
+    end
+  end
+end
+</code></pre>
+
+<pre><code class="ruby Tags">class CreateTags &lt; ActiveRecord::Migration
+  def change
+    create_table :tags do |t|
+      t.text :label
+      t.timestamps
+    end
+  end
+end
+</code></pre>
+
+<pre><code class="ruby UserTags">class CreateUserTags &lt; ActiveRecord::Migration
+  def change
+    create_table :user_tags do |t|
+      t.integer :user_id
+      t.integer :tag_id
+    end
+  end
+end
+</code></pre>
+
+<pre><code class="ruby BookTags">class CreateBookTags &lt; ActiveRecord::Migration
+  def change
+    create_table :book_tags do |t|
+      t.integer :book_id
+      t.integer :tag_id
+    end
+  end
+end
+</code></pre>
+
+<p>接著是Model設定</p>
+
+<pre><code class="ruby User">class User &lt; ActiveRecord::Base
+  has_many :user_tags
+  has_many :tags, through: :user_tags
+end
+</code></pre>
+
+<pre><code class="ruby Book">class Book &lt; ActiveRecord::Base
+  has_many :book_tags
+  has_many :tags, through: :book_tags
+end
+</code></pre>
+
+<pre><code class="ruby Tag">class Tag &lt; ActiveRecord::Base
+  has_many :user_tags
+  has_many :users, through: :user_tags
+
+  has_many :book_tags
+  has_many :books, through: :book_tags
+end
+</code></pre>
+
+<pre><code class="ruby UserTag">class UserTag &lt; ActiveRecord::Base
+  belongs_to :user
+  belongs_to :tag
+end
+</code></pre>
+
+<pre><code class="ruby BookTag">class BookTag &lt; ActiveRecord::Base
+  belongs_to :book
+  belongs_to :tag
+end
+</code></pre>
+
+<p>然後在Rails Console下測試</p>
+
+<pre><code class="ruby"># Create data
+&gt; User.create(name: "Tomo")
+&gt; Book.create(title: "Ruby")
+&gt; Tag.create(label: "good book")
+&gt; User.first.tags &lt;&lt; Tag.first
+&gt; Book.first.tags &lt;&lt; Tag.first
+
+# Test associations
+&gt; User.first.tags # return tags belong to user
+&gt; Book.first.tags # return tags belong to book
+&gt; Tag.first.users # return tag's users
+&gt; Tag.first.books # return tag's books
+</code></pre>
+
+<p>看起來都有正常連結，這個作法的缺點應該是在user_tags和book_tags都有記錄tag_id這個橍位，在空間上的利用效率較差。不過目前我也沒想到其它的方法就是了。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week8 (2/2)]]></title>
@@ -685,215 +808,6 @@ end
 
 <p>Here is aother post talking about <code>YAGNI</code>, <code>KISS</code>, <code>DRY</code>.
 <a href="http://www.itexico.com/blog/bid/99765/Software-Development-KISS-YAGNI-DRY-3-Principles-to-simplify-your-life">Software Development: KISS, YAGNI &amp; DRY. 3 Principles to simplify your life.</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week7 (1/3)]]></title>
-    <link href="http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week7-1/"/>
-    <updated>2015-05-06T14:20:15+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week7-1</id>
-    <content type="html"><![CDATA[<p>Last week, we use Stripe for charge in UsersController#create, it&rsquo;s a bit little complex code here. We need to wrap it.</p>
-
-<p>Why we need to wrap it into a class:</p>
-
-<ol>
-<li><p>Easy to maintain code, isolate controller&rsquo;s and business logic. Remember we knew that <code>fat models, thin controllers</code>, here is a step further concept, we encapsulate code into <code>models/stripe_wrapper.rb</code></p></li>
-<li><p>Easy to test, isolate test between different object is always a good idea.</p></li>
-</ol>
-
-
-<h1>How to Wrap</h1>
-
-<p>For <code>module StripeWrapper</code> is just a namespace. Then we sort the code in UsersController#create,</p>
-
-<pre><code>module StripeWrapper
-  class Charge
-    attr_reader :response, :status
-
-    def initialize(response, status)
-      @response = response
-      @status = status
-    end
-
-    def self.create(options = {})      
-      begin
-        response = Stripe::Charge.create(
-          amount: options[:amount], # amount in cents, again
-          currency: "usd",
-          source: options[:source],
-          description: options[:description]
-        )
-        new(response, :success)
-      rescue Stripe::CardError =&gt; e
-        new(e, :error)
-      end
-    end
-
-    def success?
-      status == :success
-    end
-
-    def error_message
-      response.message
-    end
-  end
-
-  def self.set_api_key
-    Stripe.api_key = ENV["STRIPE_SECRET_KEY"]
-  end
-end
-</code></pre>
-
-<p>Then we can call method <code>StripeWrapper::Charge(options)</code>.</p>
-
-<p><code>new(repose, :sucess)</code> and <code>new(e, :error)</code> return an <code>StripeWrapper::Charge</code> object result.</p>
-
-<h1>How to Test StripeWrapper</h1>
-
-<p>Test return object <code>charge</code>:</p>
-
-<pre><code>describe StripeWrapper do
-  describe StripeWrapper::Charge do
-    it 'makes successful charge' do
-      charge = StripeWrapper::Charge.create(amount: 100, source: valid_token)
-      expect(charge.response.amount).to eq(100)
-      expect(charge.response.currency).to eq('usd')
-      expect(charge).to be_success
-    end
-  end
-end
-</code></pre>
-
-<p>But there is a problem, everytime we test, it will send a request to Stripe server. We don&rsquo;t want to do this and want to reduce test consumer time, use gem <code>vcr</code>.</p>
-
-<pre><code>$ gem install vcr
-$ gem install webmock
-</code></pre>
-
-<p>Then add <code>vcr: true</code> to spec</p>
-
-<pre><code>it 'make successful charge', vcr: true do
-  #something
-end
-</code></pre>
-
-<p>vcr will record the reponse in <code>spec/cassettes</code>, when next time it find that test emit the same request again, it will not send the request outside to the server, but replaying saved response.</p>
-
-<p>Here is vcr setting:</p>
-
-<pre><code class="ruby spec_helper.rb">require 'vcr'
-
-VCR.configure do |c|
-  c.cassette_library_dir = 'spec/cassettes'
-  c.hook_into :webmock
-  c.configure_rspec_metadata!
-  c.ignore_localhost = true
-end
-</code></pre>
-
-<h1>How to test Controller#create</h1>
-
-<p>Since we have test StripeWrapper, we don&rsquo;t want to test it again in Controller, or hit the Stripe server again. Use <a href="http://en.wikipedia.org/wiki/Test_double">Test Double</a> <code>stub</code> here.</p>
-
-<p>For example, if we have a <code>PaymentController</code>:</p>
-
-<pre><code>describe PaymentController do
-  describe 'POST create' do
-    it 'sets the flash success message' do
-      charge = double("charge")
-      charge.stub(:successful?).and_return(true)
-      StripeWrapper::Charge.stub(:create).and_return(charge)
-      post :create, token: "fake_token"
-      expect(flash[:success]).to be_present
-    end
-  end
-end
-</code></pre>
-
-<ol>
-<li>Create a test stub <code>charge</code>, and stub a method <code>successful?</code> and return <code>true</code>.</li>
-<li>stub <code>:create</code> method to <code>StripeWrapper::Charge</code> and return <code>charge</code>.</li>
-</ol>
-
-
-<p>Now we strike <code>post :create</code>, in PaymentController#create when running to code StripeWrapper::Charge, it will return a result <code>charge</code> with <code>charge.successful?</code> is <code>true</code>.</p>
-
-<p>We do this is because make this controller#create test itself independently, and all we need to do is set StripeWrapper return successful.</p>
-
-<blockquote><p>StripeWrapper will make a HTTP request, we can use <code>vcr</code> to record this, but it&rsquo;s not necessary becuase this test is already done in stripe_wrapper_spec. So here we choose to use <code>stub</code>.</p></blockquote>
-
-<h1>How to do Feature Test with JavaScript</h1>
-
-<p>Since we use javascript in view form, we need to turn on <code>:js</code></p>
-
-<pre><code>feature 'visitor make payment' do
-  scenario 'with valid card number', js: true do
-    visit new_payment_path
-    fill_in "Credit Card Number", with "424242424242424242"
-    fill_in "Security Code", with "123"
-    select "3 - March", form: "date_month"
-    select "2015", from: "date_year"
-    click_button "Submit Payment"
-
-    expect(page).to have_content "Successful charge."
-  end
-end
-</code></pre>
-
-<p>Install gem</p>
-
-<pre><code>gem 'selenium-webdriver'
-gem 'capybara-webkit'
-</code></pre>
-
-<p>And set in <code>spec_helper.rb</code></p>
-
-<pre><code class="ruby">Capybara.javascript_driver = :webkit # For default javascript server
-Capybara.server_port = 52662 # For Selenium
-</code></pre>
-
-<p><code>webkit</code> is offered by <code>Qt</code> framework, it&rsquo;s faster than <code>Selenium</code> and invisible. <code>Selenium</code> process is visible, so it&rsquo;s suit for debug.</p>
-
-<p>Careful when test in Email Invitation, I need to use <code>Selenium</code> instead of <code>webkit</code>, otherwise the test will be failed.</p>
-
-<pre><code>scenario 'User successfully invites friend and invitation is accepted', {js: true, vcr: true, driver: :selenium} do
-</code></pre>
-
-<h2>Setting <a href="https://github.com/DatabaseCleaner/database_cleaner">database_cleaner</a></h2>
-
-<p>It will lead a problem when we run javascript test, refer from RSpec doc:</p>
-
-<blockquote><p>drivers which run the server in a different thread may not share the same transaction as your tests, causing data not to be shared between your test and test server.</p></blockquote>
-
-<p>The problem is when running javascript, activerecord may delete database before javascript test finish.</p>
-
-<p>We can use <code>database_cleaner</code> to do <code>truncation</code> instead of <code>transaction</code>. Manual create and destroy records.</p>
-
-<pre><code>RSpec.configure do |config|
-  config.use_transactional_fixtures = false
-
-  config.before(:suite) do
-    DatabaseCleaner.clean_with(:truncation)
-  end
-
-  config.before(:each) do
-    DatabaseCleaner.strategy = :transaction
-  end
-
-  config.before(:each, :js =&gt; true) do
-    DatabaseCleaner.strategy = :truncation
-  end
-
-  config.before(:each) do
-    DatabaseCleaner.start
-  end
-
-  config.after(:each) do
-    DatabaseCleaner.clean
-  end
-end
-</code></pre>
 ]]></content>
   </entry>
   

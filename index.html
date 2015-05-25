@@ -130,6 +130,259 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-25T21:37:28+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-25</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/05/25/many-to-many-association-with-two-join-tables/" itemprop="url">Many to Many Association With Two Join Tables</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>今天被問了一個問題當場答不出來，記錄起來</p>
+
+<p>建立滿足以下關係的Table Associations
+1. User can create a tag for a book.
+2. According to a given tag, return book list.
+3. According to a given book, return tag list.</p>
+
+<p>提示：需要用到2個Join Table</p>
+
+<p>以下作法不確定是否正確，閱讀時請斟酌</p>
+
+<p>需要建立5個Table</p>
+
+<figure class='code'><figcaption><span>Users</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CreateUsers</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">change</span>
+</span><span class='line'>    <span class="n">create_table</span> <span class="ss">:users</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">string</span> <span class="ss">:name</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">timestamp</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Books</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CreateBooks</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">change</span>
+</span><span class='line'>    <span class="n">create_table</span> <span class="ss">:books</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">string</span> <span class="ss">:title</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">timestamps</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Tags</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CreateTags</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">change</span>
+</span><span class='line'>    <span class="n">create_table</span> <span class="ss">:tags</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">text</span> <span class="ss">:label</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">timestamps</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>UserTags</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CreateUserTags</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">change</span>
+</span><span class='line'>    <span class="n">create_table</span> <span class="ss">:user_tags</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">integer</span> <span class="ss">:user_id</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">integer</span> <span class="ss">:tag_id</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>BookTags</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CreateBookTags</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">change</span>
+</span><span class='line'>    <span class="n">create_table</span> <span class="ss">:book_tags</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">integer</span> <span class="ss">:book_id</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">integer</span> <span class="ss">:tag_id</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>接著是Model設定</p>
+
+<figure class='code'><figcaption><span>User</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:user_tags</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:tags</span><span class="p">,</span> <span class="ss">through</span><span class="p">:</span> <span class="ss">:user_tags</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Book</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Book</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:book_tags</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:tags</span><span class="p">,</span> <span class="ss">through</span><span class="p">:</span> <span class="ss">:book_tags</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Tag</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Tag</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:user_tags</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:users</span><span class="p">,</span> <span class="ss">through</span><span class="p">:</span> <span class="ss">:user_tags</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:book_tags</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:books</span><span class="p">,</span> <span class="ss">through</span><span class="p">:</span> <span class="ss">:book_tags</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>UserTag</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">UserTag</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:user</span>
+</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:tag</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>BookTag</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">BookTag</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:book</span>
+</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:tag</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然後在Rails Console下測試</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Create data</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">User</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Tomo&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">Book</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">title</span><span class="p">:</span> <span class="s2">&quot;Ruby&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">Tag</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">label</span><span class="p">:</span> <span class="s2">&quot;good book&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">User</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">tags</span> <span class="o">&lt;&lt;</span> <span class="no">Tag</span><span class="o">.</span><span class="n">first</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">Book</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">tags</span> <span class="o">&lt;&lt;</span> <span class="no">Tag</span><span class="o">.</span><span class="n">first</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Test associations</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">User</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">tags</span> <span class="c1"># return tags belong to user</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">Book</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">tags</span> <span class="c1"># return tags belong to book</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">Tag</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">users</span> <span class="c1"># return tag&#39;s users</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">Tag</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">books</span> <span class="c1"># return tag&#39;s books</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>看起來都有正常連結，這個作法的缺點應該是在user_tags和book_tags都有記錄tag_id這個橍位，在空間上的利用效率較差。不過目前我也沒想到其它的方法就是了。</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-19T09:11:44+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-19</time>
         
       </p>
@@ -2292,210 +2545,6 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-04T06:19:26+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-04</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/05/04/eloquent-ruby-7/" itemprop="url">Eloquent Ruby -7 [Treat Everything Like an Object—Because Everything Is]</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><h1>Chapter 7 - Treat Everything Like an Object—Because Everything Is</h1>
-
-<h2>Classes, Instances, Methods</h2>
-
-<ul>
-<li><p>Class就像是容器，可以裝很多Method。Class也像是工廠，製造出很多副本Instances</p></li>
-<li><p>如果沒有指定superclass時，<code>Object</code>為預設繼承的類別。<code>Object</code>也是繼承了<code>BasicObject</code></p></li>
-</ul>
-
-
-<h2>Objects</h2>
-
-<ul>
-<li>反正什麼東西在Ruby裡面都是Object，可以測試這些</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>-1.class
-</span><span class='line'>true.class
-</span><span class='line'>nil.class
-</span><span class='line'>/regex/.class</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>如果puts出來，預設會用<code>to_s</code>轉換</li>
-</ul>
-
-
-<h2>eval</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cmd = 'gets'
-</span><span class='line'>puts eval(cmd)</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>eval</code>可以像irb執行字串所代表的程式，這也是由Object繼承而來的函數</p>
-
-<h2>public, private, protected</h2>
-
-<p>三種屬性來控制method的曝露性</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>class Method
-</span><span class='line'>  def public_method
-</span><span class='line'>    #預設為public，所有public method都可以呼叫
-</span><span class='line'>  end
-</span><span class='line'>
-</span><span class='line'>  private # 在此之後方法都是private，只有在該instance內可以呼叫
-</span><span class='line'>  def private_method
-</span><span class='line'>  end
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>也可以這樣寫，不過我還沒看過實際有人這樣寫</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>class Method
-</span><span class='line'>  def private_method
-</span><span class='line'>  end
-</span><span class='line'>
-</span><span class='line'>  private :prviate_method #在這指定private_method屬性是private</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><p>private內的方法繼承到subclass後，<strong>同樣可以呼叫</strong>，這跟在C++中不一樣</p></li>
-<li><p>protected有夠難理解，原文是這樣的</p></li>
-</ul>
-
-
-<blockquote><p>Any instance of a class can call a protected method on any other instance of the class</p></blockquote>
-
-<p>我是參考高見龍<a href="http://blog.eddie.com.tw/2011/07/26/public-protected-and-private-method-in-ruby/">這篇文章</a>才比較理解為什麼</p>
-
-<p>可以在irb這樣測試</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>class Base
-</span><span class='line'>  private 
-</span><span class='line'>  def private_show
-</span><span class='line'>    puts self.class
-</span><span class='line'>  end
-</span><span class='line'>
-</span><span class='line'>  protected
-</span><span class='line'>  def protected_show
-</span><span class='line'>    puts self.class
-</span><span class='line'>  end
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>然後</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>class SubBase &lt; Base
-</span><span class='line'>  def use_private
-</span><span class='line'>    private_show # 如果寫成self.private_show，會產生錯誤
-</span><span class='line'>  end
-</span><span class='line'>
-</span><span class='line'>  def use_protected
-</span><span class='line'>    self.protected_show # 可以指定在self這個instance上
-</span><span class='line'>  end
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><p>原生Ruby source code中，20萬行的程式碼，大約有1000個private methods, protected methods只有50幾個。意思就是用到的機會也不多啦。</p></li>
-<li><p>另外Ruby也有個設計，如果你實在想突破限制使用class內的方法，可以用<code>send</code></p></li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sub_base.send(:private_show)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>不過一般的作法大概都是另外寫一個public method把private method包起來給外部呼叫。</p>
-
-<ul>
-<li>public, private, protected並不是什麼特別的Ruby Magic，其實他們都是methods，呼叫後面帶參數</li>
-</ul>
-
-
-<p>相同的還有<code>require</code>載入檔案</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>require 'rails_spec'</span></code></pre></td></tr></table></div></figure>
-
-
-<p>或者是<code>attr_accessor</code></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>attr_accessor :name</span></code></pre></td></tr></table></div></figure>
-
-
-<p>然後我們就可以有<code>name</code>的getter和setter方法</p>
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -2525,6 +2574,8 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2015/05/25/many-to-many-association-with-two-join-tables/">Many to Many Association With Two Join Tables</a>
+    
     <a class="list-group-item " href="/blog/2015/05/19/eloquent-ruby-9/">Eloquent Ruby -9 [Write Specs!]</a>
     
     <a class="list-group-item " href="/blog/2015/05/19/eloquent-ruby-8/">Eloquent Ruby -8 [Embrance Dynamic Typing]</a>
@@ -2542,8 +2593,6 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
     <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week6-2-slash-2/">Reflection to Tealeaf Course3 Week6 (2/2)</a>
     
     <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week6/">Reflection to Tealeaf Course3 Week6 (1/2)</a>
-    
-    <a class="list-group-item " href="/blog/2015/05/04/eloquent-ruby-7/">Eloquent Ruby -7 [Treat Everything Like an Object—Because Everything Is]</a>
     
   </div>
 </section>
