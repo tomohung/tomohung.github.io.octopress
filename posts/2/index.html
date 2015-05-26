@@ -130,6 +130,283 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-06T08:57:30+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-06</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/05/06/reflection-to-tealeaf-course3-week6/" itemprop="url">Reflection to Tealeaf Course3 Week6 (1/2)</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>These week we have two main part: <a href="https://github.com/carrierwaveuploader/carrierwave">CarrierWave</a> for uploading images as an admin, <a href="http://stripe.com">Stripe</a> for payments</p>
+
+<h1>CarrierWave for uploading images as an Admin</h1>
+
+<h3>Admin</h3>
+
+<p>In order to controll user is a admin or not, the best practice is to build a admin its own self routes and controllers.</p>
+
+<p>In <code>routes.rb</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>namespace :admin do
+</span><span class='line'>  resources :todos, only: [:index, :destroy]
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then <code>rake routes</code>, we got</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>admin_todos  admin/todos  admin/todos#index</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Build the controller file in the path: <code>/controllers/admin/todos_controller.rb</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Admin::TodosController &lt; ApplicationController
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<blockquote><p>It&rsquo;s aother rails convention for the path <code>/controllers/admin/</code> and class name <code>Admin::</code>.</p></blockquote>
+
+<p>Then add <code>admin</code> column to migration</p>
+
+<p><code>$ rails g migration add_admin_to_users</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>add_column :users, :admin, :boolean</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Rails will create a method for all boolean attributes: <code>admin?</code></p>
+
+<h3>Secure Access for different roles</h3>
+
+<p>Next, we can create a <code>AdminController</code> for all other controllers belongs to Admin.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class AdminController &lt; ApplicationController
+</span><span class='line'>  before_filter :ensure_admin
+</span><span class='line'>
+</span><span class='line'>  def ensure_admin
+</span><span class='line'>    if !current_user.admin?
+</span><span class='line'>      #do something
+</span><span class='line'>    end
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then other controllers belong to Admin could be like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Admin::TodoController &lt; AdminController
+</span><span class='line'>  def index
+</span><span class='line'>    @todo = Todo.all
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>CarrierWave upload images to AWS S3</h3>
+
+<p>Install gem</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem 'carrierwave'
+</span><span class='line'>gem 'mini_magick'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Add column to stored migration, for example: videos</p>
+
+<p><code>$rails migration add_large_cover_to_videos</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>add_column :videos, :large_cover, :string</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In <code>models/video.rb</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>mount_uploader :large_cover, LargeCoverUploader</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Create <code>app/uploaders/large_cover_uploader.rb</code>, and use <code>mini_magick to resize image</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class LargeCoverUploader &lt; CarrierWave::Uploader::Base
+</span><span class='line'>  include CarrierWave::MiniMagick
+</span><span class='line'>  process :resize_to_fill =&gt; [665, 375]
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, set CarrierWave for AWS S3, in <code>initializers/carrier_wave.rb</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>CarrierWave.configure do |config|
+</span><span class='line'>  config.fog_provider = 'fog/aws'                        # required
+</span><span class='line'>  config.fog_credentials = {
+</span><span class='line'>    provider:              'AWS',                        # required
+</span><span class='line'>    aws_access_key_id:     'xxx',                        # required
+</span><span class='line'>    aws_secret_access_key: 'yyy',                        # required
+</span><span class='line'>    region:                'eu-west-1',                  # optional, defaults to 'us-east-1'
+</span><span class='line'>    host:                  's3.example.com',             # optional, defaults to nil
+</span><span class='line'>    endpoint:              'https://s3.example.com:8080' # optional, defaults to nil
+</span><span class='line'>  }
+</span><span class='line'>  config.fog_directory  = 'name_of_directory'                          # required
+</span><span class='line'>  config.fog_public     = false                                        # optional, defaults to true
+</span><span class='line'>  config.fog_attributes = { 'Cache-Control' =&gt; "max-age=#{365.day.to_i}" } # optional, defaults to {}
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Unfortunately, my AWS account has been suspended, so I change the code to store at local</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>CarrierWave.configure do |config|
+</span><span class='line'>  if Rails.env.staging? || Rails.env.production?
+</span><span class='line'>    config.storage = :file
+</span><span class='line'>    config.enable_processing = true
+</span><span class='line'>  else
+</span><span class='line'>    config.storage = :file
+</span><span class='line'>    config.enable_processing = Rails.env.development?
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This code also show that if you want to deal with different environment for <code>product</code> or <code>development</code></p>
+
+<blockquote><p>Usually, only upload small size files direct through web page, we can use other AWS S3 client to upload big file.</p></blockquote>
+
+<p>Another tip here, don&rsquo;t forget to add new attributes to <code>params.require</code>, otherwise upload will be failed.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>params.require(:video).permit(:title, :description, :category_id, :large_cover, :small_cover, :video_url)</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>RSpec Feature Test</h3>
+
+<p>Key Points:</p>
+
+<ul>
+<li>attach_file</li>
+<li>have_selector</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>feature 'Admin adds new video' do
+</span><span class='line'>  scenario 'Admin successfully adds a new video' do
+</span><span class='line'>    admin = Fabricate(:admin)
+</span><span class='line'>    dramas = Fabricate(:category, title: 'Dramas')
+</span><span class='line'>
+</span><span class='line'>    sign_in(admin)
+</span><span class='line'>    visit new_admin_video_path
+</span><span class='line'>
+</span><span class='line'>    fill_in 'Title', with: 'Monk'
+</span><span class='line'>    select 'Dramas', from: 'Category'
+</span><span class='line'>    fill_in 'Description', with: 'SF detective'
+</span><span class='line'>    attach_file 'Large cover', 'spec/support/uploads/monk_large.jpg'
+</span><span class='line'>    attach_file 'Small cover', 'spec/support/uploads/monk.jpg'
+</span><span class='line'>    fill_in 'Video URL', with: 'http://www.example.com/video.mp4'
+</span><span class='line'>    click_button 'Add Video'
+</span><span class='line'>
+</span><span class='line'>    sign_out
+</span><span class='line'>    sign_in
+</span><span class='line'>
+</span><span class='line'>    visit video_path(Video.first)
+</span><span class='line'>    expect(page).to have_selector("img[src='/uploads/monk_large.jpg']")
+</span><span class='line'>    expect(page).to have_selector("a[href='http://www.example.com/video.mp4']")
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-04T06:19:26+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-04</time>
         
       </p>
@@ -1543,181 +1820,6 @@ True if the receiver and argument have the same object id.</p>
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-07T13:11:30+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-07</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/04/07/reflection-to-tealeaf-course3-week4/" itemprop="url">Reflection to Tealeaf Course3 Week4</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><h3>Three kinds of BDD</h3>
-
-<p>In week 4 beginning, we got a brief intro for 3 kinds of BDD:</p>
-
-<ul>
-<li><p>meet in the middle</p>
-
-<p>I think this should be the popular one for modern development. The front-end engineer build the pages from mockups, then back-end developer connect UI with controllers and models.</p></li>
-<li><p>inside out</p>
-
-<p>It develops from models to controllers till views and integrations. It&rsquo;s hard to decide what models you really need in the beginning.</p></li>
-<li><p>outside in</p>
-
-<p>It devlops from integrations to controllers and models. It start from a big vision, and close to what user&rsquo;s need. But for developer, it&rsquo;s hard to code from this big vision, especially for integration test in the development beginning.</p></li>
-</ul>
-
-
-<h3>Self Referential Associations</h3>
-
-<p>We can use <strong>self referential association</strong> to let user track other users. For example:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># t.integer :follower_id, :leader_id
-</span><span class='line'>class Relationship &lt; ActiveRecord::Base
-</span><span class='line'>  belongs_to :follower, class_name: 'User'
-</span><span class='line'>  belongs_to :leader, class_name: 'User'
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then, model <code>User</code> can have these virtual attributes:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  has_many :following_relationships, class_name: 'Relationship', foreign_key: :follower_id
-</span><span class='line'>  has_many :leading_relationships, class_name: 'Relationship', foreign_key: :leader_id</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Sending Emails</h3>
-
-<p>Rails also offer <code>ActionMailer</code> for sending emails.</p>
-
-<ul>
-<li>create files in <code>app/mailers/app_mailer.rb</code></li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>class AppMailer &lt; ActionMailer::Base
-</span><span class='line'>
-</span><span class='line'>  def send_welcome_email(user)
-</span><span class='line'>    @user = user
-</span><span class='line'>    mail to: user.email, from: 'info@myflix.com', subject: 'Welcome to Myflix'
-</span><span class='line'>  end
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><code>View</code> template in <code>app/views/app_mailers/send_welcome_email</code>:</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>%html(lang='en-US')
-</span><span class='line'>  %body
-</span><span class='line'>    %p Welcome to MyFlix, #{@user.full_name}</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Config for <code>config/environments/development.rb</code></li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>config.action_mailer.delivery_method = :letter_opener</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>group :development do
-</span><span class='line'>  gem 'letter-opener'
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<blockquote><p>This is only for <code>development</code> setting, we also need to set for <code>test</code> and <code>production</code> independent</p></blockquote>
-
-<h3>Handling Sensitive Account Info</h3>
-
-<p>It&rsquo;s dangerous to upload config setting file to github or other public storage, there is someone update AWS key to GitHub and got a unbelievable credit bill.</p>
-
-<p>Use <code>ENV</code> to protect secret data, we can use gem <code>Figaro</code>.
-<a href="https://github.com/laserlemon/figaro">Figara</a> is the simplest way to keep our key value safe.</p>
-
-<p>There are two posts talking about this topic:</p>
-
-<ol>
-<li><a href="http://railsapps.github.io/rails-environment-variables.html">Rails Environment Variables</a></li>
-<li><a href="https://devcenter.heroku.com/articles/config-vars">Configuration and config Vars</a></li>
-</ol>
-
-
-<blockquote><p>Update: Tealeaf also have a post about <a href="http://www.gotealeaf.com/blog/managing-environment-configuration-variables-in-rails">Managing Environment Configuration Variables in Rails</a></p></blockquote>
-
-<h3>Test Email sending</h3>
-
-<p>Remember to clear email deliveries before test:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>before { ActionMailer::Base.deliveries.clear }
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then we can validate email in the test by this</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>post :create
-</span><span class='line'>expect(ActionMailer::Base.deliveries.last.to).to eq([user_attributes["email"]])
-</span><span class='line'># expect(ActionMailer::Base.deliveries.last.body).to include(user_attributes["full_name"])</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Update database, use rake tasks</h3>
-
-<p>An advice from TA Tomtomecek, I update existing data in model User, and he suggest me to use <a href="http://guides.rubyonrails.org/command_line.html#custom-rake-tasks">custom rake tasks</a> to do that. I&rsquo;ve not taste that yet, just leave a memo here to remember.</p>
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -1747,6 +1849,8 @@ True if the receiver and argument have the same object id.</p>
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2015/05/26/many-to-many-association-by-one-join-tabel-wiwith-3-foreign-keys/">Many to Many Association by One Join Tabel With 3 Foreign Keys</a>
+    
     <a class="list-group-item " href="/blog/2015/05/25/many-to-many-association-with-two-join-tables/">Many to Many Association With Two Join Tables</a>
     
     <a class="list-group-item " href="/blog/2015/05/19/eloquent-ruby-9/">Eloquent Ruby -9 [Write Specs!]</a>
@@ -1764,8 +1868,6 @@ True if the receiver and argument have the same object id.</p>
     <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week7-1/">Reflection to Tealeaf Course3 Week7 (1/3)</a>
     
     <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week6-2-slash-2/">Reflection to Tealeaf Course3 Week6 (2/2)</a>
-    
-    <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week6/">Reflection to Tealeaf Course3 Week6 (1/2)</a>
     
   </div>
 </section>

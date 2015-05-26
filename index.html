@@ -130,6 +130,184 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-26T14:35:28+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-26</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/05/26/many-to-many-association-by-one-join-tabel-wiwith-3-foreign-keys/" itemprop="url">Many to Many Association by One Join Tabel With 3 Foreign Keys</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><p>延續<a href="http://www.tomohung.com/blog/2015/05/25/many-to-many-association-with-two-join-tables/">上一篇問題</a></p>
+
+<p>建立滿足以下關係的Table Associations</p>
+
+<ol>
+<li>User can create a tag for a book.</li>
+<li>According to a given tag, return book list.</li>
+<li>According to a given book, return tag list.</li>
+</ol>
+
+
+<hr />
+
+<p>這次只用一個Join Table但包含了3個FK來實作</p>
+
+<p>建立4個Table</p>
+
+<figure class='code'><figcaption><span>schema</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="n">create_table</span> <span class="s2">&quot;books&quot;</span><span class="p">,</span> <span class="ss">force</span><span class="p">:</span> <span class="ss">:cascade</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">t</span><span class="o">.</span><span class="n">string</span> <span class="s2">&quot;title&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">create_table</span> <span class="s2">&quot;tags&quot;</span><span class="p">,</span> <span class="ss">force</span><span class="p">:</span> <span class="ss">:cascade</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">t</span><span class="o">.</span><span class="n">text</span> <span class="s2">&quot;label&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">create_table</span> <span class="s2">&quot;user_book_tags&quot;</span><span class="p">,</span> <span class="ss">force</span><span class="p">:</span> <span class="ss">:cascade</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">t</span><span class="o">.</span><span class="n">integer</span> <span class="s2">&quot;user_id&quot;</span>
+</span><span class='line'>    <span class="n">t</span><span class="o">.</span><span class="n">integer</span> <span class="s2">&quot;book_id&quot;</span>
+</span><span class='line'>    <span class="n">t</span><span class="o">.</span><span class="n">integer</span> <span class="s2">&quot;tag_id&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">create_table</span> <span class="s2">&quot;users&quot;</span><span class="p">,</span> <span class="ss">force</span><span class="p">:</span> <span class="ss">:cascade</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">t</span><span class="o">.</span><span class="n">string</span> <span class="s2">&quot;name&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其中user_book_tags包含了<code>user_id</code>, <code>book_id</code>, <code>tag_id</code>，3個Foreign key</p>
+
+<p>設定Model Associations</p>
+
+<figure class='code'><figcaption><span>User</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:user_book_tags</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:tags</span><span class="p">,</span> <span class="ss">through</span><span class="p">:</span> <span class="ss">:user_book_tags</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Book</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Book</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:user_book_tags</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:tags</span><span class="p">,</span> <span class="ss">through</span><span class="p">:</span> <span class="ss">:user_book_tags</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Tag</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Tag</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:user_book_tags</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:users</span><span class="p">,</span> <span class="ss">through</span><span class="p">:</span> <span class="ss">:user_book_tags</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:books</span><span class="p">,</span> <span class="ss">through</span><span class="p">:</span> <span class="ss">:user_book_tags</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>UserBookTag</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">UserBookTag</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:user</span>
+</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:book</span>
+</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:tag</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>再來是在Rails Console裡測試</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># create data</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">User</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Tomo&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">Book</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">title</span><span class="p">:</span> <span class="s2">&quot;Ruby&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">Tag</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">label</span><span class="p">:</span> <span class="s2">&quot;good book&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">UserBookTag</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">user</span><span class="p">:</span> <span class="no">User</span><span class="o">.</span><span class="n">first</span><span class="p">,</span> <span class="ss">book</span><span class="p">:</span> <span class="no">Book</span><span class="o">.</span><span class="n">first</span><span class="p">,</span> <span class="ss">tag</span><span class="p">:</span> <span class="no">Tag</span><span class="o">.</span><span class="n">first</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># test associations</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">User</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">tags</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">Book</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">tags</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">Tag</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">users</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">Tag</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">books</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>與<a href="http://www.tomohung.com/blog/2015/05/25/many-to-many-association-with-two-join-tables/">上一次的方法</a>相比，少建立一個Table。</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-25T21:37:28+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-25</time>
         
       </p>
@@ -2272,283 +2450,6 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-05-06T08:57:30+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-05-06</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/05/06/reflection-to-tealeaf-course3-week6/" itemprop="url">Reflection to Tealeaf Course3 Week6 (1/2)</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>These week we have two main part: <a href="https://github.com/carrierwaveuploader/carrierwave">CarrierWave</a> for uploading images as an admin, <a href="http://stripe.com">Stripe</a> for payments</p>
-
-<h1>CarrierWave for uploading images as an Admin</h1>
-
-<h3>Admin</h3>
-
-<p>In order to controll user is a admin or not, the best practice is to build a admin its own self routes and controllers.</p>
-
-<p>In <code>routes.rb</code></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>namespace :admin do
-</span><span class='line'>  resources :todos, only: [:index, :destroy]
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then <code>rake routes</code>, we got</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>admin_todos  admin/todos  admin/todos#index</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Build the controller file in the path: <code>/controllers/admin/todos_controller.rb</code></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>class Admin::TodosController &lt; ApplicationController
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<blockquote><p>It&rsquo;s aother rails convention for the path <code>/controllers/admin/</code> and class name <code>Admin::</code>.</p></blockquote>
-
-<p>Then add <code>admin</code> column to migration</p>
-
-<p><code>$ rails g migration add_admin_to_users</code></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>add_column :users, :admin, :boolean</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Rails will create a method for all boolean attributes: <code>admin?</code></p>
-
-<h3>Secure Access for different roles</h3>
-
-<p>Next, we can create a <code>AdminController</code> for all other controllers belongs to Admin.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>class AdminController &lt; ApplicationController
-</span><span class='line'>  before_filter :ensure_admin
-</span><span class='line'>
-</span><span class='line'>  def ensure_admin
-</span><span class='line'>    if !current_user.admin?
-</span><span class='line'>      #do something
-</span><span class='line'>    end
-</span><span class='line'>  end
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then other controllers belong to Admin could be like this:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>class Admin::TodoController &lt; AdminController
-</span><span class='line'>  def index
-</span><span class='line'>    @todo = Todo.all
-</span><span class='line'>  end
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>CarrierWave upload images to AWS S3</h3>
-
-<p>Install gem</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>gem 'carrierwave'
-</span><span class='line'>gem 'mini_magick'</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Add column to stored migration, for example: videos</p>
-
-<p><code>$rails migration add_large_cover_to_videos</code></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>add_column :videos, :large_cover, :string</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In <code>models/video.rb</code></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>mount_uploader :large_cover, LargeCoverUploader</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Create <code>app/uploaders/large_cover_uploader.rb</code>, and use <code>mini_magick to resize image</code></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>class LargeCoverUploader &lt; CarrierWave::Uploader::Base
-</span><span class='line'>  include CarrierWave::MiniMagick
-</span><span class='line'>  process :resize_to_fill =&gt; [665, 375]
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Finally, set CarrierWave for AWS S3, in <code>initializers/carrier_wave.rb</code></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>CarrierWave.configure do |config|
-</span><span class='line'>  config.fog_provider = 'fog/aws'                        # required
-</span><span class='line'>  config.fog_credentials = {
-</span><span class='line'>    provider:              'AWS',                        # required
-</span><span class='line'>    aws_access_key_id:     'xxx',                        # required
-</span><span class='line'>    aws_secret_access_key: 'yyy',                        # required
-</span><span class='line'>    region:                'eu-west-1',                  # optional, defaults to 'us-east-1'
-</span><span class='line'>    host:                  's3.example.com',             # optional, defaults to nil
-</span><span class='line'>    endpoint:              'https://s3.example.com:8080' # optional, defaults to nil
-</span><span class='line'>  }
-</span><span class='line'>  config.fog_directory  = 'name_of_directory'                          # required
-</span><span class='line'>  config.fog_public     = false                                        # optional, defaults to true
-</span><span class='line'>  config.fog_attributes = { 'Cache-Control' =&gt; "max-age=#{365.day.to_i}" } # optional, defaults to {}
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Unfortunately, my AWS account has been suspended, so I change the code to store at local</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>CarrierWave.configure do |config|
-</span><span class='line'>  if Rails.env.staging? || Rails.env.production?
-</span><span class='line'>    config.storage = :file
-</span><span class='line'>    config.enable_processing = true
-</span><span class='line'>  else
-</span><span class='line'>    config.storage = :file
-</span><span class='line'>    config.enable_processing = Rails.env.development?
-</span><span class='line'>  end
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This code also show that if you want to deal with different environment for <code>product</code> or <code>development</code></p>
-
-<blockquote><p>Usually, only upload small size files direct through web page, we can use other AWS S3 client to upload big file.</p></blockquote>
-
-<p>Another tip here, don&rsquo;t forget to add new attributes to <code>params.require</code>, otherwise upload will be failed.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>params.require(:video).permit(:title, :description, :category_id, :large_cover, :small_cover, :video_url)</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>RSpec Feature Test</h3>
-
-<p>Key Points:</p>
-
-<ul>
-<li>attach_file</li>
-<li>have_selector</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>feature 'Admin adds new video' do
-</span><span class='line'>  scenario 'Admin successfully adds a new video' do
-</span><span class='line'>    admin = Fabricate(:admin)
-</span><span class='line'>    dramas = Fabricate(:category, title: 'Dramas')
-</span><span class='line'>
-</span><span class='line'>    sign_in(admin)
-</span><span class='line'>    visit new_admin_video_path
-</span><span class='line'>
-</span><span class='line'>    fill_in 'Title', with: 'Monk'
-</span><span class='line'>    select 'Dramas', from: 'Category'
-</span><span class='line'>    fill_in 'Description', with: 'SF detective'
-</span><span class='line'>    attach_file 'Large cover', 'spec/support/uploads/monk_large.jpg'
-</span><span class='line'>    attach_file 'Small cover', 'spec/support/uploads/monk.jpg'
-</span><span class='line'>    fill_in 'Video URL', with: 'http://www.example.com/video.mp4'
-</span><span class='line'>    click_button 'Add Video'
-</span><span class='line'>
-</span><span class='line'>    sign_out
-</span><span class='line'>    sign_in
-</span><span class='line'>
-</span><span class='line'>    visit video_path(Video.first)
-</span><span class='line'>    expect(page).to have_selector("img[src='/uploads/monk_large.jpg']")
-</span><span class='line'>    expect(page).to have_selector("a[href='http://www.example.com/video.mp4']")
-</span><span class='line'>  end
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-</div>
-  
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -2578,6 +2479,8 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2015/05/26/many-to-many-association-by-one-join-tabel-wiwith-3-foreign-keys/">Many to Many Association by One Join Tabel With 3 Foreign Keys</a>
+    
     <a class="list-group-item " href="/blog/2015/05/25/many-to-many-association-with-two-join-tables/">Many to Many Association With Two Join Tables</a>
     
     <a class="list-group-item " href="/blog/2015/05/19/eloquent-ruby-9/">Eloquent Ruby -9 [Write Specs!]</a>
@@ -2595,8 +2498,6 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
     <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week7-1/">Reflection to Tealeaf Course3 Week7 (1/3)</a>
     
     <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week6-2-slash-2/">Reflection to Tealeaf Course3 Week6 (2/2)</a>
-    
-    <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week6/">Reflection to Tealeaf Course3 Week6 (1/2)</a>
     
   </div>
 </section>

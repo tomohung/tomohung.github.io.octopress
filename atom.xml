@@ -4,7 +4,7 @@
   <title><![CDATA[The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-05-25T22:11:58+08:00</updated>
+  <updated>2015-05-26T15:06:30+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -12,6 +12,156 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Many to Many Association by One Join Tabel With 3 Foreign Keys]]></title>
+    <link href="http://www.tomohung.com/blog/2015/05/26/many-to-many-association-by-one-join-tabel-wiwith-3-foreign-keys/"/>
+    <updated>2015-05-26T14:35:28+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/05/26/many-to-many-association-by-one-join-tabel-wiwith-3-foreign-keys</id>
+    <content type="html"><![CDATA[<p>延續<a href="http://www.tomohung.com/blog/2015/05/25/many-to-many-association-with-two-join-tables/">上一篇問題</a></p>
+
+<p>建立滿足以下關係的Table Associations</p>
+
+<ol>
+<li>User can create a tag for a book.</li>
+<li>According to a given tag, return book list.</li>
+<li>According to a given book, return tag list.</li>
+</ol>
+
+
+<hr />
+
+<p>這次只用一個Join Table但包含了3個FK來實作</p>
+
+<p>建立4個Table</p>
+
+<figure class='code'><figcaption><span>schema</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="n">create_table</span> <span class="s2">&quot;books&quot;</span><span class="p">,</span> <span class="ss">force</span><span class="p">:</span> <span class="ss">:cascade</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">t</span><span class="o">.</span><span class="n">string</span> <span class="s2">&quot;title&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">create_table</span> <span class="s2">&quot;tags&quot;</span><span class="p">,</span> <span class="ss">force</span><span class="p">:</span> <span class="ss">:cascade</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">t</span><span class="o">.</span><span class="n">text</span> <span class="s2">&quot;label&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">create_table</span> <span class="s2">&quot;user_book_tags&quot;</span><span class="p">,</span> <span class="ss">force</span><span class="p">:</span> <span class="ss">:cascade</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">t</span><span class="o">.</span><span class="n">integer</span> <span class="s2">&quot;user_id&quot;</span>
+</span><span class='line'>    <span class="n">t</span><span class="o">.</span><span class="n">integer</span> <span class="s2">&quot;book_id&quot;</span>
+</span><span class='line'>    <span class="n">t</span><span class="o">.</span><span class="n">integer</span> <span class="s2">&quot;tag_id&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">create_table</span> <span class="s2">&quot;users&quot;</span><span class="p">,</span> <span class="ss">force</span><span class="p">:</span> <span class="ss">:cascade</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+</span><span class='line'>    <span class="n">t</span><span class="o">.</span><span class="n">string</span> <span class="s2">&quot;name&quot;</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>其中user_book_tags包含了<code>user_id</code>, <code>book_id</code>, <code>tag_id</code>，3個Foreign key</p>
+
+<p>設定Model Associations</p>
+
+<figure class='code'><figcaption><span>User</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:user_book_tags</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:tags</span><span class="p">,</span> <span class="ss">through</span><span class="p">:</span> <span class="ss">:user_book_tags</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Book</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Book</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:user_book_tags</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:tags</span><span class="p">,</span> <span class="ss">through</span><span class="p">:</span> <span class="ss">:user_book_tags</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Tag</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Tag</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:user_book_tags</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:users</span><span class="p">,</span> <span class="ss">through</span><span class="p">:</span> <span class="ss">:user_book_tags</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:books</span><span class="p">,</span> <span class="ss">through</span><span class="p">:</span> <span class="ss">:user_book_tags</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>UserBookTag</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">UserBookTag</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:user</span>
+</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:book</span>
+</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:tag</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>再來是在Rails Console裡測試</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># create data</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">User</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Tomo&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">Book</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">title</span><span class="p">:</span> <span class="s2">&quot;Ruby&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">Tag</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">label</span><span class="p">:</span> <span class="s2">&quot;good book&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">UserBookTag</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">user</span><span class="p">:</span> <span class="no">User</span><span class="o">.</span><span class="n">first</span><span class="p">,</span> <span class="ss">book</span><span class="p">:</span> <span class="no">Book</span><span class="o">.</span><span class="n">first</span><span class="p">,</span> <span class="ss">tag</span><span class="p">:</span> <span class="no">Tag</span><span class="o">.</span><span class="n">first</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># test associations</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">User</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">tags</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">Book</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">tags</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">Tag</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">users</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">Tag</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">books</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>與<a href="http://www.tomohung.com/blog/2015/05/25/many-to-many-association-with-two-join-tables/">上一次的方法</a>相比，少建立一個Table。</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Many to Many Association With Two Join Tables]]></title>
@@ -3348,153 +3498,6 @@ True if the receiver and argument have the same object id.</p>
 <p>Here we have a try for <a href="https://getsentry.com/welcome/">Sentry</a>.</p>
 
 <p>Tracking errors is also a key for automation deployment.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week4]]></title>
-    <link href="http://www.tomohung.com/blog/2015/04/07/reflection-to-tealeaf-course3-week4/"/>
-    <updated>2015-04-07T13:11:30+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/04/07/reflection-to-tealeaf-course3-week4</id>
-    <content type="html"><![CDATA[<h3>Three kinds of BDD</h3>
-
-<p>In week 4 beginning, we got a brief intro for 3 kinds of BDD:</p>
-
-<ul>
-<li><p>meet in the middle</p>
-
-<p>I think this should be the popular one for modern development. The front-end engineer build the pages from mockups, then back-end developer connect UI with controllers and models.</p></li>
-<li><p>inside out</p>
-
-<p>It develops from models to controllers till views and integrations. It&rsquo;s hard to decide what models you really need in the beginning.</p></li>
-<li><p>outside in</p>
-
-<p>It devlops from integrations to controllers and models. It start from a big vision, and close to what user&rsquo;s need. But for developer, it&rsquo;s hard to code from this big vision, especially for integration test in the development beginning.</p></li>
-</ul>
-
-
-<h3>Self Referential Associations</h3>
-
-<p>We can use <strong>self referential association</strong> to let user track other users. For example:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># t.integer :follower_id, :leader_id
-</span><span class='line'>class Relationship &lt; ActiveRecord::Base
-</span><span class='line'>  belongs_to :follower, class_name: 'User'
-</span><span class='line'>  belongs_to :leader, class_name: 'User'
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then, model <code>User</code> can have these virtual attributes:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  has_many :following_relationships, class_name: 'Relationship', foreign_key: :follower_id
-</span><span class='line'>  has_many :leading_relationships, class_name: 'Relationship', foreign_key: :leader_id</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Sending Emails</h3>
-
-<p>Rails also offer <code>ActionMailer</code> for sending emails.</p>
-
-<ul>
-<li>create files in <code>app/mailers/app_mailer.rb</code></li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>class AppMailer &lt; ActionMailer::Base
-</span><span class='line'>
-</span><span class='line'>  def send_welcome_email(user)
-</span><span class='line'>    @user = user
-</span><span class='line'>    mail to: user.email, from: 'info@myflix.com', subject: 'Welcome to Myflix'
-</span><span class='line'>  end
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><code>View</code> template in <code>app/views/app_mailers/send_welcome_email</code>:</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>%html(lang='en-US')
-</span><span class='line'>  %body
-</span><span class='line'>    %p Welcome to MyFlix, #{@user.full_name}</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Config for <code>config/environments/development.rb</code></li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>config.action_mailer.delivery_method = :letter_opener</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>group :development do
-</span><span class='line'>  gem 'letter-opener'
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<blockquote><p>This is only for <code>development</code> setting, we also need to set for <code>test</code> and <code>production</code> independent</p></blockquote>
-
-<h3>Handling Sensitive Account Info</h3>
-
-<p>It&rsquo;s dangerous to upload config setting file to github or other public storage, there is someone update AWS key to GitHub and got a unbelievable credit bill.</p>
-
-<p>Use <code>ENV</code> to protect secret data, we can use gem <code>Figaro</code>.
-<a href="https://github.com/laserlemon/figaro">Figara</a> is the simplest way to keep our key value safe.</p>
-
-<p>There are two posts talking about this topic:</p>
-
-<ol>
-<li><a href="http://railsapps.github.io/rails-environment-variables.html">Rails Environment Variables</a></li>
-<li><a href="https://devcenter.heroku.com/articles/config-vars">Configuration and config Vars</a></li>
-</ol>
-
-
-<blockquote><p>Update: Tealeaf also have a post about <a href="http://www.gotealeaf.com/blog/managing-environment-configuration-variables-in-rails">Managing Environment Configuration Variables in Rails</a></p></blockquote>
-
-<h3>Test Email sending</h3>
-
-<p>Remember to clear email deliveries before test:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>before { ActionMailer::Base.deliveries.clear }
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then we can validate email in the test by this</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>post :create
-</span><span class='line'>expect(ActionMailer::Base.deliveries.last.to).to eq([user_attributes["email"]])
-</span><span class='line'># expect(ActionMailer::Base.deliveries.last.body).to include(user_attributes["full_name"])</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Update database, use rake tasks</h3>
-
-<p>An advice from TA Tomtomecek, I update existing data in model User, and he suggest me to use <a href="http://guides.rubyonrails.org/command_line.html#custom-rake-tasks">custom rake tasks</a> to do that. I&rsquo;ve not taste that yet, just leave a memo here to remember.</p>
 ]]></content>
   </entry>
   

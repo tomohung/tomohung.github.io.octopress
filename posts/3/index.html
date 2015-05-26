@@ -130,6 +130,181 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-07T13:11:30+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-07</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/04/07/reflection-to-tealeaf-course3-week4/" itemprop="url">Reflection to Tealeaf Course3 Week4</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><h3>Three kinds of BDD</h3>
+
+<p>In week 4 beginning, we got a brief intro for 3 kinds of BDD:</p>
+
+<ul>
+<li><p>meet in the middle</p>
+
+<p>I think this should be the popular one for modern development. The front-end engineer build the pages from mockups, then back-end developer connect UI with controllers and models.</p></li>
+<li><p>inside out</p>
+
+<p>It develops from models to controllers till views and integrations. It&rsquo;s hard to decide what models you really need in the beginning.</p></li>
+<li><p>outside in</p>
+
+<p>It devlops from integrations to controllers and models. It start from a big vision, and close to what user&rsquo;s need. But for developer, it&rsquo;s hard to code from this big vision, especially for integration test in the development beginning.</p></li>
+</ul>
+
+
+<h3>Self Referential Associations</h3>
+
+<p>We can use <strong>self referential association</strong> to let user track other users. For example:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># t.integer :follower_id, :leader_id
+</span><span class='line'>class Relationship &lt; ActiveRecord::Base
+</span><span class='line'>  belongs_to :follower, class_name: 'User'
+</span><span class='line'>  belongs_to :leader, class_name: 'User'
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then, model <code>User</code> can have these virtual attributes:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  has_many :following_relationships, class_name: 'Relationship', foreign_key: :follower_id
+</span><span class='line'>  has_many :leading_relationships, class_name: 'Relationship', foreign_key: :leader_id</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Sending Emails</h3>
+
+<p>Rails also offer <code>ActionMailer</code> for sending emails.</p>
+
+<ul>
+<li>create files in <code>app/mailers/app_mailer.rb</code></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class AppMailer &lt; ActionMailer::Base
+</span><span class='line'>
+</span><span class='line'>  def send_welcome_email(user)
+</span><span class='line'>    @user = user
+</span><span class='line'>    mail to: user.email, from: 'info@myflix.com', subject: 'Welcome to Myflix'
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><code>View</code> template in <code>app/views/app_mailers/send_welcome_email</code>:</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>%html(lang='en-US')
+</span><span class='line'>  %body
+</span><span class='line'>    %p Welcome to MyFlix, #{@user.full_name}</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Config for <code>config/environments/development.rb</code></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>config.action_mailer.delivery_method = :letter_opener</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>group :development do
+</span><span class='line'>  gem 'letter-opener'
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<blockquote><p>This is only for <code>development</code> setting, we also need to set for <code>test</code> and <code>production</code> independent</p></blockquote>
+
+<h3>Handling Sensitive Account Info</h3>
+
+<p>It&rsquo;s dangerous to upload config setting file to github or other public storage, there is someone update AWS key to GitHub and got a unbelievable credit bill.</p>
+
+<p>Use <code>ENV</code> to protect secret data, we can use gem <code>Figaro</code>.
+<a href="https://github.com/laserlemon/figaro">Figara</a> is the simplest way to keep our key value safe.</p>
+
+<p>There are two posts talking about this topic:</p>
+
+<ol>
+<li><a href="http://railsapps.github.io/rails-environment-variables.html">Rails Environment Variables</a></li>
+<li><a href="https://devcenter.heroku.com/articles/config-vars">Configuration and config Vars</a></li>
+</ol>
+
+
+<blockquote><p>Update: Tealeaf also have a post about <a href="http://www.gotealeaf.com/blog/managing-environment-configuration-variables-in-rails">Managing Environment Configuration Variables in Rails</a></p></blockquote>
+
+<h3>Test Email sending</h3>
+
+<p>Remember to clear email deliveries before test:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>before { ActionMailer::Base.deliveries.clear }
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then we can validate email in the test by this</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>post :create
+</span><span class='line'>expect(ActionMailer::Base.deliveries.last.to).to eq([user_attributes["email"]])
+</span><span class='line'># expect(ActionMailer::Base.deliveries.last.body).to include(user_attributes["full_name"])</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Update database, use rake tasks</h3>
+
+<p>An advice from TA Tomtomecek, I update existing data in model User, and he suggest me to use <a href="http://guides.rubyonrails.org/command_line.html#custom-rake-tasks">custom rake tasks</a> to do that. I&rsquo;ve not taste that yet, just leave a memo here to remember.</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-17T09:41:26+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-03-17</time>
         
       </p>
@@ -881,72 +1056,6 @@
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-02-02T21:46:35+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-02-02</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/02/02/newbie-for-rails-migration/" itemprop="url">Newbie for Rails Migration</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>As a newbie for Rails, It&rsquo;s normal to do something stupid.</p>
-
-<h2>Modified migration files after <code>rake db:migrate</code></h2>
-
-<p>It&rsquo;s useless!! Be carful that every migration filename including a timestamp, after running <code>rake db:migrate</code> will re-generate schema.rb. Data in schema.rb will show that the lastest timestamp, if there is no any new migration files newer than this timestamp, <code>rake db:migrate</code> will do nothing. Yes! it&rsquo;s nothing!!</p>
-
-<figure class='code'><figcaption><span>normally you should see</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='text'><span class='line'>==  CreateArticles: migrating ==================================================
-</span><span class='line'>-- create_table(:articles)
-</span><span class='line'>   -&gt; 0.0019s
-</span><span class='line'>==  CreateArticles: migrated (0.0020s) =========================================
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>schema.rb has been updated, rake db:migrate do nothing</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='text'><span class='line'>$ rake db:migrate
-</span><span class='line'>$ rake db:migrate
-</span></code></pre></td></tr></table></div></figure>
-
-
-</div>
-  
-  
-    <footer>
-      <a class="btn btn-default" href="/blog/2015/02/02/newbie-for-rails-migration/">繼續閱讀 Read on &rarr;</a>
-    </footer>
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -976,6 +1085,8 @@
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2015/05/26/many-to-many-association-by-one-join-tabel-wiwith-3-foreign-keys/">Many to Many Association by One Join Tabel With 3 Foreign Keys</a>
+    
     <a class="list-group-item " href="/blog/2015/05/25/many-to-many-association-with-two-join-tables/">Many to Many Association With Two Join Tables</a>
     
     <a class="list-group-item " href="/blog/2015/05/19/eloquent-ruby-9/">Eloquent Ruby -9 [Write Specs!]</a>
@@ -993,8 +1104,6 @@
     <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week7-1/">Reflection to Tealeaf Course3 Week7 (1/3)</a>
     
     <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week6-2-slash-2/">Reflection to Tealeaf Course3 Week6 (2/2)</a>
-    
-    <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week6/">Reflection to Tealeaf Course3 Week6 (1/2)</a>
     
   </div>
 </section>
