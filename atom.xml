@@ -4,7 +4,7 @@
   <title><![CDATA[The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-05-26T15:06:30+08:00</updated>
+  <updated>2015-06-28T10:58:41+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -12,6 +12,50 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[生產效率]]></title>
+    <link href="http://www.tomohung.com/blog/2015/06/28/sheng-chan-xiao-lu/"/>
+    <updated>2015-06-28T10:01:38+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/06/28/sheng-chan-xiao-lu</id>
+    <content type="html"><![CDATA[<p>新公司到職也快一個月了，這禮拜看到同事們排排坐在辦公室裡認真的coding，心裡突然有個莫名的聯想</p>
+
+<hr />
+
+<p>在亞當史密斯的『國富論』中，有一段是在描述人類工業化後，分工所產生的效率革命：</p>
+
+<blockquote><p>「……一個沒有受過專業訓練的工人，也不曉得如何運用機器……即使盡最大的努力，一天也未必能做得出一根針來。……」但是，經由分工的辦法，將整個製造程序「分別為十八他階段。每一個階段都雇用技藝熟練的好手……我曾看到一家很小的工廠中，一共祇雇了十個工人，但每天可以生產四萬八千根針。」他指出，「這是由於正確的分工和將他們困難的作業適當編組起來的結果。」</p></blockquote>
+
+<p>於是乎，分工所造成的效率革命對於原本人類的生活造成了重大的影響，人們可以用更便宜的價格享受到更好的生活物質。</p>
+
+<p>這是以製造業來說，那軟體業呢？</p>
+
+<p>這些年來，重心也慢慢從程式的執行效率，一部份轉移到程式的開發效率上。所以有更高層的語言被發明出來，像是Python, Ruby等。更多的framework為了解決特定目的，像是Qt, Ruby on Rails。物件導向Object Oriented也是，把抽象化的性質和方法包裝起來，其它的使用者在大部份情況下，只要知道interface如何使用就可以了，大幅減化實作和維護的時間。</p>
+
+<p>然後從單純程式的開發效率上轉移到行為的自動化上，所以又有了自動化測試，自動化部署。</p>
+
+<hr />
+
+<p>所以一個軟體專案的分工流程大概可以分成這樣：</p>
+
+<ul>
+<li>業務接洽：決定專案目的和目標</li>
+<li>技術評估：決定技術架構</li>
+<li>專案管理：功能開發時間安排</li>
+<li>開發團隊：實現功能細節</li>
+<li>測試，佈署</li>
+</ul>
+
+
+<p>一層又一層的抽象和分工，讓每個環節的人都能專注的自己的分工上面，這是不是也很像在製造業的工廠分工呢？</p>
+
+<p>再深一層想，所以這個專案能不能成功，其實在前面兩個環節就已經幾乎確定了，後面的工作只要有一個運轉良好的團隊，就能順利產出。這也是為什麼總是聽到無數的管理者強調人的重要性。</p>
+
+<hr />
+
+<p>回到文章一開頭，看到同事們排排坐在辦公室裡認真的coding，彷彿聽到機器的運轉聲軋軋作響</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Many to Many Association by One Join Tabel With 3 Foreign Keys]]></title>
@@ -3245,259 +3289,6 @@ True if the receiver and argument have the same object id.</p>
 <p>After setting done, the only thing I need to do is <code>git push origin staging</code> or <code>git push origin master</code>. I&rsquo;ll get notifications in Slack when Github got a push event, and Circle CI run the test and deployment in the same time. Surely I will also get a Circle CI result notification if test and deployment finished.</p>
 
 <p>This is what a programmer should do!! Don&rsquo;t Repeat Yourself!! Bravo!!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week5 (1/2)]]></title>
-    <link href="http://www.tomohung.com/blog/2015/04/09/reflection-to-tealeaf-course3-week5/"/>
-    <updated>2015-04-09T14:39:06+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/04/09/reflection-to-tealeaf-course3-week5</id>
-    <content type="html"><![CDATA[<h3>Feature test for sending email</h3>
-
-<p>Following by <a href="http://www.tomohung.com/blog/2015/04/07/reflection-to-tealeaf-course3-week4/">previous week</a>, this week we have a feature test for sending email.</p>
-
-<p>Install gem,</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ gem 'capybara-email'</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And added this line to <code>spec_helper.rb</code></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>require 'capybara/email/rspec'</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>require 'spec_helper'
-</span><span class='line'>
-</span><span class='line'>feature 'User resets password' do
-</span><span class='line'>  scenario 'user successfully resets the password' do
-</span><span class='line'>    clear_emails
-</span><span class='line'>
-</span><span class='line'>    user = Fabricate(:user)
-</span><span class='line'>    visit sign_in_path
-</span><span class='line'>    click_link 'Forgot Password?'
-</span><span class='line'>
-</span><span class='line'>    fill_in 'Email Address', with: user.email
-</span><span class='line'>    click_button 'Send Email'
-</span><span class='line'>
-</span><span class='line'>    open_email(user.email)
-</span><span class='line'>    current_email.click_link("Reset Password")
-</span><span class='line'>
-</span><span class='line'>    fill_in 'New Password', with: 'new_password'
-</span><span class='line'>    click_button 'Reset Password'
-</span><span class='line'>
-</span><span class='line'>    fill_in 'Email Address', with: user.email
-</span><span class='line'>    fill_in 'Password', with: 'new_password'
-</span><span class='line'>    click_button 'Sign in'
-</span><span class='line'>    expect(page).to have_content("Welcome, #{user.full_name}")
-</span><span class='line'>  end
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Especially notice for <code>open_email</code>, <code>current_email</code> functions are offered by <code>capybara-email</code> gem.</p>
-
-<h3>Invite Friend and Registeration</h3>
-
-<p>We also have a work on inviting friends through email, the key point here is how to use a secure <code>token</code> to tracking data.</p>
-
-<ul>
-<li>create an invitations data, including inviter, recipient email, name, and <code>token</code>.</li>
-<li><p>when user get the email, following the link provided to server, page will direct to the register page with existing data stored with this token.</p>
-
-<p>And set the routes for path</p></li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>get 'register/:token', to: 'users#new_with_invitation_token'</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>we can have a hidden data in the register form for new#users to use.</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>= hidden_field_tag :token, @invitation_token</span></code></pre></td></tr></table></div></figure>
-
-
-<p>we don&rsquo;t use form_for element, becuase this hidden attribute does not belong to backend modeled form.</p>
-
-<h3>Concerns</h3>
-
-<p>To Dry our code, we can use <code>concern</code> with <code>module</code>. Here is a <a href="https://signalvnoise.com/posts/3372-put-chubby-models-on-a-diet-with-concerns">post by DHH</a> why we should do this.</p>
-
-<p>We can merge the same function feature into concern file. For example: <code>Tokenable</code></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#/lib/tokenable.rb
-</span><span class='line'>module Tokenable
-</span><span class='line'>  extend ActiveSupport::Concern
-</span><span class='line'>  included do
-</span><span class='line'>    before_create :generate_token
-</span><span class='line'>  end
-</span><span class='line'>
-</span><span class='line'>  private
-</span><span class='line'>  def generate_token
-</span><span class='line'>    self.token = SecureRandom.urlsafe_base64
-</span><span class='line'>  end
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then add to model file</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>require 'tokenable'
-</span><span class='line'>
-</span><span class='line'>class User &lt; ActiveRecord::Base
-</span><span class='line'>  include Tokenable
-</span><span class='line'>  ...
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I prefer to specify require file name, or we can use <a href="http://stackoverflow.com/questions/19098663/auto-loading-lib-files-in-rails-4">auto loading library files</a>.</p>
-
-<h3>Email Service Providers</h3>
-
-<p>Since we have test email sending on ENV:development and EVN:test, now we have test it in the real world. That&rsquo;s why we need a real email service provider. Google has it but with many restriction, Tealeaf recommend <code>Mailgun</code> or <code>Postmark</code>. Here we have a taste for `Mailgun&#8217;.</p>
-
-<p>To setting <code>config/environments/production.rb</code>, add these lines:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>config.action_mailer.default_url_options = { :host =&gt; "tomo-myflix.herokuapp.com" }
-</span><span class='line'>  config.action_mailer.smtp_settings = {
-</span><span class='line'>    :port           =&gt; ENV['MAILGUN_SMTP_PORT'],
-</span><span class='line'>    :address        =&gt; ENV['MAILGUN_SMTP_SERVER'],
-</span><span class='line'>    :user_name      =&gt; ENV['MAILGUN_SMTP_LOGIN'],
-</span><span class='line'>    :password       =&gt; ENV['MAILGUN_SMTP_PASSWORD'],
-</span><span class='line'>    :domain         =&gt; 'tomo-myflix.herokuapp.com',
-</span><span class='line'>    :authentication =&gt; :plain,
-</span><span class='line'>  }
-</span><span class='line'>  config.action_mailer.delivery_method = :smtp</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>tomo-myflix.herokuapp.com</code> is my app name on Heroku. And ENV about Mailgun are maintained by Heroku.</p>
-
-<p>I aslo can use this command to check <code>Heroku configurations</code>.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ heroku config</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then push it to heroku and test for a real email address, it works!!</p>
-
-<h3>Background Jobs</h3>
-
-<p>Sometimes, some actions do not need to be synchrous, like sending email, we don&rsquo;t need to wait email sending action completed. That&rsquo;s why we need to use a background job to do sending email to speed up the flow.</p>
-
-<p><code>Sidekiq</code> and <code>Resque</code> are some of this concept product. And Tealeaf recommend to use <a href="https://github.com/mperham/sidekiq/wiki">Sidekiq</a>.</p>
-
-<p>Install gem Sidekiq</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>gem 'sidekiq'</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Only a tiny change for using it by delay method</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>AppMailer.delay.notify_on_new_todo(current_user, @todo) # new 
-</span><span class='line'>AppMailer.notify_on_new_todo(current_user, @todo).deliver #older one
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Add this line in <code>spec/spec_helper.rb</code></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>require 'sidekiq/testing/inline'</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Here we setup sidekiq, but we still need start <code>Redis</code> server:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ brew install redis
-</span><span class='line'>$ redis-server /usr/local/etc/redis.conf</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And this start sidekiq with another terminal:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ bundle exec sidekiq</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So far, this makes <code>local</code> works fine with <code>sidekiq</code> for background jobs. If we want to use background jobs in ENV:production, Heroku take charges if dyno is more than 1, or try <a href="https://coderwall.com/p/fprnhg/free-background-jobs-on-heroku">this way to simulate</a></p>
-
-<p>I have not implemented this yet, but I&rsquo;ll try it later.</p>
-
-<p>There is also <a href="https://devcenter.heroku.com/articles/procfile#deploying-to-heroku">an article talking about Procfile and Foreman</a>.</p>
-
-<p>If sidekiq version >= 3.0, you might also run this line</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>heroku config:set REDIS_PROVIDER=REDISTOGO_URL</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Monitor Production Error</h3>
-
-<p>Here we have a try for <a href="https://getsentry.com/welcome/">Sentry</a>.</p>
-
-<p>Tracking errors is also a key for automation deployment.</p>
 ]]></content>
   </entry>
   

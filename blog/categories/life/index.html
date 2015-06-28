@@ -2,10 +2,10 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Reflection to Tealeaf Course3 Week2 - The Life Alchemist</title>
+  <title>Category: Life - The Life Alchemist</title>
   <meta name="author" content="Tomo">
 
-  
+  <meta name="description" content="Category: life">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -14,16 +14,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2">
+  <link rel="canonical" href="http://www.tomohung.com/blog/categories/life">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="The Life Alchemist" type="application/atom+xml">
 
   <!-- http://opengraphprotocol.org/ -->
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2">
-  <meta property="og:title" content="Reflection to Tealeaf Course3 Week2 - The Life Alchemist">
-  
+  <meta property="og:url" content="http://www.tomohung.com/blog/categories/life">
+  <meta property="og:title" content="Category: Life - The Life Alchemist">
+  <meta property="og:description" content="Category: life">
 
   <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
 
@@ -66,10 +66,10 @@
 
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active">
+                <li >
                     <a rel="index" href="/">Blog</a>
                 </li>
-                <li >
+                <li class="active">
                     <a href="/blog/archives">Archives</a>
                 </li>
                 <li >
@@ -104,108 +104,36 @@
       <div id="main" role="main" class="container">
         <div id="content">
           <div class="row">
-  <div class="page-content col-md-9" itemscope itemtype="http://schema.org/Blog">
-    <meta itemprop="name" content="The Life Alchemist" />
-    
-    <meta itemprop="url" content="http://www.tomohung.com" />
-    <article class="hentry" role="article" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+  <div class="page-content col-md-9">
+    <article role="article">
       
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-11T11:21:17+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-03-11</time>
-        
-      </p>
-    
-    
-    <h1 class="entry-title" itemprop="name headline">
-        Reflection to Tealeaf Course3 Week2
-        
-    </h1>
-    
-  </header>
-
-
-<div class="entry-content clearfix" itemprop="articleBody description"><p>There are 3 kinds of test: <code>Unit</code>, <code>Functional</code>, <code>Integration</code>. In <a href="http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1/">week 1</a>, we test <strong>Model</strong>, this should belong to <code>Unit test</code> . And this week we test <strong>Controller</strong>, this should belong to <code>Functional test</code>. I guess it should be <code>Integration test</code> when we move into part of <strong>View</strong> test.</p>
-
-<p>I have to heavily rely on solution videos, there are two main reasons:</p>
-
-<ol>
-<li><p>I&rsquo;m not familiar with <code>what to test</code>, because I&rsquo;m a starter for TDD. It&rsquo;s a big conversion <strong>from test laster to test driven</strong>.</p></li>
-<li><p>I&rsquo;m not familiar with <code>RSpec</code>. There are some tricks for test controllers when using RSpec.</p></li>
-</ol>
-
-
-<p>For example, when we test `QueueItemsController#create&#8217;, there are 7 tests:</p>
-
-<ul>
-<li>it &lsquo;redirects to my queue page&rsquo;</li>
-<li>it &lsquo;creates a queue item&rsquo;</li>
-<li>it &lsquo;creates the queue item associated with video&rsquo;</li>
-<li>it &lsquo;creates the queue item associated with current user&rsquo;</li>
-<li>it &lsquo;puts the video as the last one in the queue&rsquo;</li>
-<li>it &lsquo;does not add the video in the queue if already existed in the queue&rsquo;</li>
-<li>it &lsquo;redirects to sign in page if unauthenticated&rsquo;</li>
-</ul>
-
-
-<p>A simple action needs to do such lots of tests!!</p>
-
-<p>Or here is for <strong>Model</strong> methods: <code>search_by_title</code>:</p>
-
-<ul>
-<li>it &lsquo;returns empty array if no match&rsquo;</li>
-<li>it &lsquo;returns an array if one video&rsquo;</li>
-<li>it &lsquo;returns an array if partial match&rsquo;</li>
-<li>it &lsquo;returns an array of all matches ordered by DESC&rsquo;</li>
-<li>it &lsquo;returns an empty array for search an empty string&rsquo;</li>
-</ul>
-
-
-<p>To test every possible situations is not an easy work.</p>
-
-<p>Brandon also metioned me that care about using <code>let</code> and <code>before</code>. Because of lots of tests in spec files, we may miss some pre-declare vars by using <code>let</code> or <code>before</code>. Sometimes, it may be better do not clean duplicated codes for code readability.</p>
-
-<p>Second, extract methods into <strong>Model</strong>. ex:</p>
-
-<figure class='code'><figcaption><span>user.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">def</span> <span class="nf">queue_include?</span><span class="p">(</span><span class="n">video</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">queue_items</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:video</span><span class="p">)</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="n">video</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>then, I can use this method everywhere in my app.</p>
-
-<h3>Conclusion</h3>
-
-<p>Still on the way to be more familiar to do TDD. :-)</p>
-</div>
-
-
-      <footer>
-        <p class="meta text-muted">
+        <header class="page-header">
           
+          
+            <h1 class="entry-title">
+              Category: Life
+              
+            </h1>
+          
+        </header>
+      
+      <div class="entry-content">
+        <div id="blog-archives" class="category" itemscope itemtype="http://schema.org/Blog">
+<meta itemprop="name" content="The Life Alchemist" />
+
+<meta itemprop="url" content="http://www.tomohung.com" />
+
+
+
+  
+  <h2 class="year">2015</h2>
+
+<article class="page-header" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+  
+<h2 class="post-title" itemprop="name headline"><a href="/blog/2015/06/28/sheng-chan-xiao-lu/" itemprop="url">生產效率</a></h2>
+<p class="meta text-muted">
   
 
-<span class="glyphicon glyphicon-user"></span> <span class="byline author vcard" itemprop="author" itemscope itemtype="http://schema.org/Person">Posted by <span class="fn" itemprop="name">Tomo</span></span>
-
-          
 
 
 
@@ -217,56 +145,33 @@
 
 
 
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-11T11:21:17+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-03-11</time>
-          
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-06-28T10:01:38+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-06-28</time>
+  
 
 <span class="glyphicon glyphicon-tags"></span>&nbsp;
 <span class="categories">
   
-    <a class='category' href='/blog/categories/rails/'>rails</a>, <a class='category' href='/blog/categories/tealeaf/'>tealeaf</a>
+    <a class='category' href='/blog/categories/life/'>life</a>
   
 </span>
 
 
-        </p>
-        
-          <div class="sharing">
-  
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2/" >Tweet</a>
-  
-  
-  
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-  
+</p>
+
+</article>
+
 </div>
 
-        
-        
-          <ul class="meta text-muted pager">
-            
-            <li class="previous"><a href="/blog/2015/03/06/reflection-to-tealeaf-course3-week1/" title="Previous Post: Reflection to Tealeaf Course3 week1">&laquo; Reflection to Tealeaf Course3 week1</a></li>
-            
-            
-            <li class="next"><a href="/blog/2015/03/17/reflection-to-tealeaf-course3-week3/" title="Next Post: Reflection to Tealeaf Course3 Week3">Reflection to Tealeaf Course3 Week3 &raquo;</a></li>
-            
-          </ul>
-        
-      </footer>
+      </div>
+      
     </article>
-    
-      <section>
-        <h2>Comments</h2>
-        <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-</div>
-      </section>
     
   </div>
 
   
-  <aside class="sidebar col-md-3">
-    
+    <aside class="sidebar col-md-3">
       
+        
 <section>
 	<span>
 		<img src="http://www.gravatar.com/avatar/8708c05d2568e10fb402516eeb954ef2" alt="Gravatar of Tomo " title="Gravatar of Tomo" />
@@ -307,8 +212,8 @@
 
 
 
-    
-  </aside>
+      
+    </aside>
   
 </div>
 
@@ -332,10 +237,7 @@
       var disqus_shortname = 'tomohung';
       
         
-        // var disqus_developer = 1;
-        var disqus_identifier = 'http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2/';
-        var disqus_url = 'http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2/';
-        var disqus_script = 'embed.js';
+        var disqus_script = 'count.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

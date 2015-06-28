@@ -2,7 +2,7 @@
 <html class="no-js" lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Reflection to Tealeaf Course3 Week2 - The Life Alchemist</title>
+  <title>生產效率 - The Life Alchemist</title>
   <meta name="author" content="Tomo">
 
   
@@ -14,15 +14,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2">
+  <link rel="canonical" href="http://www.tomohung.com/blog/2015/06/28/sheng-chan-xiao-lu">
   <link href="/favicon.png" type="image/png" rel="icon">
   <link href="/atom.xml" rel="alternate" title="The Life Alchemist" type="application/atom+xml">
 
   <!-- http://opengraphprotocol.org/ -->
   <meta name="twitter:card" content="summary_large_image">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2">
-  <meta property="og:title" content="Reflection to Tealeaf Course3 Week2 - The Life Alchemist">
+  <meta property="og:url" content="http://www.tomohung.com/blog/2015/06/28/sheng-chan-xiao-lu">
+  <meta property="og:title" content="生產效率 - The Life Alchemist">
   
 
   <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
@@ -126,75 +126,55 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-11T11:21:17+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-03-11</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-06-28T10:01:38+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-06-28</time>
         
       </p>
     
     
     <h1 class="entry-title" itemprop="name headline">
-        Reflection to Tealeaf Course3 Week2
+        生產效率
         
     </h1>
     
   </header>
 
 
-<div class="entry-content clearfix" itemprop="articleBody description"><p>There are 3 kinds of test: <code>Unit</code>, <code>Functional</code>, <code>Integration</code>. In <a href="http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1/">week 1</a>, we test <strong>Model</strong>, this should belong to <code>Unit test</code> . And this week we test <strong>Controller</strong>, this should belong to <code>Functional test</code>. I guess it should be <code>Integration test</code> when we move into part of <strong>View</strong> test.</p>
+<div class="entry-content clearfix" itemprop="articleBody description"><p>新公司到職也快一個月了，這禮拜看到同事們排排坐在辦公室裡認真的coding，心裡突然有個莫名的聯想</p>
 
-<p>I have to heavily rely on solution videos, there are two main reasons:</p>
+<hr />
 
-<ol>
-<li><p>I&rsquo;m not familiar with <code>what to test</code>, because I&rsquo;m a starter for TDD. It&rsquo;s a big conversion <strong>from test laster to test driven</strong>.</p></li>
-<li><p>I&rsquo;m not familiar with <code>RSpec</code>. There are some tricks for test controllers when using RSpec.</p></li>
-</ol>
+<p>在亞當史密斯的『國富論』中，有一段是在描述人類工業化後，分工所產生的效率革命：</p>
 
+<blockquote><p>「……一個沒有受過專業訓練的工人，也不曉得如何運用機器……即使盡最大的努力，一天也未必能做得出一根針來。……」但是，經由分工的辦法，將整個製造程序「分別為十八他階段。每一個階段都雇用技藝熟練的好手……我曾看到一家很小的工廠中，一共祇雇了十個工人，但每天可以生產四萬八千根針。」他指出，「這是由於正確的分工和將他們困難的作業適當編組起來的結果。」</p></blockquote>
 
-<p>For example, when we test `QueueItemsController#create&#8217;, there are 7 tests:</p>
+<p>於是乎，分工所造成的效率革命對於原本人類的生活造成了重大的影響，人們可以用更便宜的價格享受到更好的生活物質。</p>
+
+<p>這是以製造業來說，那軟體業呢？</p>
+
+<p>這些年來，重心也慢慢從程式的執行效率，一部份轉移到程式的開發效率上。所以有更高層的語言被發明出來，像是Python, Ruby等。更多的framework為了解決特定目的，像是Qt, Ruby on Rails。物件導向Object Oriented也是，把抽象化的性質和方法包裝起來，其它的使用者在大部份情況下，只要知道interface如何使用就可以了，大幅減化實作和維護的時間。</p>
+
+<p>然後從單純程式的開發效率上轉移到行為的自動化上，所以又有了自動化測試，自動化部署。</p>
+
+<hr />
+
+<p>所以一個軟體專案的分工流程大概可以分成這樣：</p>
 
 <ul>
-<li>it &lsquo;redirects to my queue page&rsquo;</li>
-<li>it &lsquo;creates a queue item&rsquo;</li>
-<li>it &lsquo;creates the queue item associated with video&rsquo;</li>
-<li>it &lsquo;creates the queue item associated with current user&rsquo;</li>
-<li>it &lsquo;puts the video as the last one in the queue&rsquo;</li>
-<li>it &lsquo;does not add the video in the queue if already existed in the queue&rsquo;</li>
-<li>it &lsquo;redirects to sign in page if unauthenticated&rsquo;</li>
+<li>業務接洽：決定專案目的和目標</li>
+<li>技術評估：決定技術架構</li>
+<li>專案管理：功能開發時間安排</li>
+<li>開發團隊：實現功能細節</li>
+<li>測試，佈署</li>
 </ul>
 
 
-<p>A simple action needs to do such lots of tests!!</p>
+<p>一層又一層的抽象和分工，讓每個環節的人都能專注的自己的分工上面，這是不是也很像在製造業的工廠分工呢？</p>
 
-<p>Or here is for <strong>Model</strong> methods: <code>search_by_title</code>:</p>
+<p>再深一層想，所以這個專案能不能成功，其實在前面兩個環節就已經幾乎確定了，後面的工作只要有一個運轉良好的團隊，就能順利產出。這也是為什麼總是聽到無數的管理者強調人的重要性。</p>
 
-<ul>
-<li>it &lsquo;returns empty array if no match&rsquo;</li>
-<li>it &lsquo;returns an array if one video&rsquo;</li>
-<li>it &lsquo;returns an array if partial match&rsquo;</li>
-<li>it &lsquo;returns an array of all matches ordered by DESC&rsquo;</li>
-<li>it &lsquo;returns an empty array for search an empty string&rsquo;</li>
-</ul>
+<hr />
 
-
-<p>To test every possible situations is not an easy work.</p>
-
-<p>Brandon also metioned me that care about using <code>let</code> and <code>before</code>. Because of lots of tests in spec files, we may miss some pre-declare vars by using <code>let</code> or <code>before</code>. Sometimes, it may be better do not clean duplicated codes for code readability.</p>
-
-<p>Second, extract methods into <strong>Model</strong>. ex:</p>
-
-<figure class='code'><figcaption><span>user.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">def</span> <span class="nf">queue_include?</span><span class="p">(</span><span class="n">video</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">queue_items</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:video</span><span class="p">)</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="n">video</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>then, I can use this method everywhere in my app.</p>
-
-<h3>Conclusion</h3>
-
-<p>Still on the way to be more familiar to do TDD. :-)</p>
+<p>回到文章一開頭，看到同事們排排坐在辦公室裡認真的coding，彷彿聽到機器的運轉聲軋軋作響</p>
 </div>
 
 
@@ -218,13 +198,13 @@
 
 
 
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-11T11:21:17+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-03-11</time>
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-06-28T10:01:38+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-06-28</time>
           
 
 <span class="glyphicon glyphicon-tags"></span>&nbsp;
 <span class="categories">
   
-    <a class='category' href='/blog/categories/rails/'>rails</a>, <a class='category' href='/blog/categories/tealeaf/'>tealeaf</a>
+    <a class='category' href='/blog/categories/life/'>life</a>
   
 </span>
 
@@ -233,7 +213,7 @@
         
           <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/06/28/sheng-chan-xiao-lu/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/06/28/sheng-chan-xiao-lu/" >Tweet</a>
   
   
   
@@ -245,10 +225,8 @@
         
           <ul class="meta text-muted pager">
             
-            <li class="previous"><a href="/blog/2015/03/06/reflection-to-tealeaf-course3-week1/" title="Previous Post: Reflection to Tealeaf Course3 week1">&laquo; Reflection to Tealeaf Course3 week1</a></li>
+            <li class="previous"><a href="/blog/2015/05/26/many-to-many-association-by-one-join-tabel-wiwith-3-foreign-keys/" title="Previous Post: Many to Many Association by One Join Tabel with 3 Foreign keys">&laquo; Many to Many Association by One Join Tabel with 3 Foreign keys</a></li>
             
-            
-            <li class="next"><a href="/blog/2015/03/17/reflection-to-tealeaf-course3-week3/" title="Next Post: Reflection to Tealeaf Course3 Week3">Reflection to Tealeaf Course3 Week3 &raquo;</a></li>
             
           </ul>
         
@@ -279,7 +257,7 @@
   
   <div id="recent_posts" class="list-group">
     
-    <a class="list-group-item " href="/blog/2015/06/28/sheng-chan-xiao-lu/">生產效率</a>
+    <a class="list-group-item active" href="/blog/2015/06/28/sheng-chan-xiao-lu/">生產效率</a>
     
     <a class="list-group-item " href="/blog/2015/05/26/many-to-many-association-by-one-join-tabel-wiwith-3-foreign-keys/">Many to Many Association by One Join Tabel With 3 Foreign Keys</a>
     
@@ -333,8 +311,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2/';
-        var disqus_url = 'http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2/';
+        var disqus_identifier = 'http://www.tomohung.com/blog/2015/06/28/sheng-chan-xiao-lu/';
+        var disqus_url = 'http://www.tomohung.com/blog/2015/06/28/sheng-chan-xiao-lu/';
         var disqus_script = 'embed.js';
       
     (function () {

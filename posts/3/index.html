@@ -130,6 +130,287 @@
 
 
 
+<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-09T14:39:06+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-09</time>
+        
+      </p>
+    
+    
+      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/04/09/reflection-to-tealeaf-course3-week5/" itemprop="url">Reflection to Tealeaf Course3 Week5 (1/2)</a></h2>
+    
+  </header>
+
+
+  <div class="entry-content clearfix" itemprop="articleBody description"><h3>Feature test for sending email</h3>
+
+<p>Following by <a href="http://www.tomohung.com/blog/2015/04/07/reflection-to-tealeaf-course3-week4/">previous week</a>, this week we have a feature test for sending email.</p>
+
+<p>Install gem,</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ gem 'capybara-email'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And added this line to <code>spec_helper.rb</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>require 'capybara/email/rspec'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>require 'spec_helper'
+</span><span class='line'>
+</span><span class='line'>feature 'User resets password' do
+</span><span class='line'>  scenario 'user successfully resets the password' do
+</span><span class='line'>    clear_emails
+</span><span class='line'>
+</span><span class='line'>    user = Fabricate(:user)
+</span><span class='line'>    visit sign_in_path
+</span><span class='line'>    click_link 'Forgot Password?'
+</span><span class='line'>
+</span><span class='line'>    fill_in 'Email Address', with: user.email
+</span><span class='line'>    click_button 'Send Email'
+</span><span class='line'>
+</span><span class='line'>    open_email(user.email)
+</span><span class='line'>    current_email.click_link("Reset Password")
+</span><span class='line'>
+</span><span class='line'>    fill_in 'New Password', with: 'new_password'
+</span><span class='line'>    click_button 'Reset Password'
+</span><span class='line'>
+</span><span class='line'>    fill_in 'Email Address', with: user.email
+</span><span class='line'>    fill_in 'Password', with: 'new_password'
+</span><span class='line'>    click_button 'Sign in'
+</span><span class='line'>    expect(page).to have_content("Welcome, #{user.full_name}")
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Especially notice for <code>open_email</code>, <code>current_email</code> functions are offered by <code>capybara-email</code> gem.</p>
+
+<h3>Invite Friend and Registeration</h3>
+
+<p>We also have a work on inviting friends through email, the key point here is how to use a secure <code>token</code> to tracking data.</p>
+
+<ul>
+<li>create an invitations data, including inviter, recipient email, name, and <code>token</code>.</li>
+<li><p>when user get the email, following the link provided to server, page will direct to the register page with existing data stored with this token.</p>
+
+<p>And set the routes for path</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>get 'register/:token', to: 'users#new_with_invitation_token'</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>we can have a hidden data in the register form for new#users to use.</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>= hidden_field_tag :token, @invitation_token</span></code></pre></td></tr></table></div></figure>
+
+
+<p>we don&rsquo;t use form_for element, becuase this hidden attribute does not belong to backend modeled form.</p>
+
+<h3>Concerns</h3>
+
+<p>To Dry our code, we can use <code>concern</code> with <code>module</code>. Here is a <a href="https://signalvnoise.com/posts/3372-put-chubby-models-on-a-diet-with-concerns">post by DHH</a> why we should do this.</p>
+
+<p>We can merge the same function feature into concern file. For example: <code>Tokenable</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#/lib/tokenable.rb
+</span><span class='line'>module Tokenable
+</span><span class='line'>  extend ActiveSupport::Concern
+</span><span class='line'>  included do
+</span><span class='line'>    before_create :generate_token
+</span><span class='line'>  end
+</span><span class='line'>
+</span><span class='line'>  private
+</span><span class='line'>  def generate_token
+</span><span class='line'>    self.token = SecureRandom.urlsafe_base64
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then add to model file</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>require 'tokenable'
+</span><span class='line'>
+</span><span class='line'>class User &lt; ActiveRecord::Base
+</span><span class='line'>  include Tokenable
+</span><span class='line'>  ...
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I prefer to specify require file name, or we can use <a href="http://stackoverflow.com/questions/19098663/auto-loading-lib-files-in-rails-4">auto loading library files</a>.</p>
+
+<h3>Email Service Providers</h3>
+
+<p>Since we have test email sending on ENV:development and EVN:test, now we have test it in the real world. That&rsquo;s why we need a real email service provider. Google has it but with many restriction, Tealeaf recommend <code>Mailgun</code> or <code>Postmark</code>. Here we have a taste for `Mailgun&#8217;.</p>
+
+<p>To setting <code>config/environments/production.rb</code>, add these lines:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>config.action_mailer.default_url_options = { :host =&gt; "tomo-myflix.herokuapp.com" }
+</span><span class='line'>  config.action_mailer.smtp_settings = {
+</span><span class='line'>    :port           =&gt; ENV['MAILGUN_SMTP_PORT'],
+</span><span class='line'>    :address        =&gt; ENV['MAILGUN_SMTP_SERVER'],
+</span><span class='line'>    :user_name      =&gt; ENV['MAILGUN_SMTP_LOGIN'],
+</span><span class='line'>    :password       =&gt; ENV['MAILGUN_SMTP_PASSWORD'],
+</span><span class='line'>    :domain         =&gt; 'tomo-myflix.herokuapp.com',
+</span><span class='line'>    :authentication =&gt; :plain,
+</span><span class='line'>  }
+</span><span class='line'>  config.action_mailer.delivery_method = :smtp</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>tomo-myflix.herokuapp.com</code> is my app name on Heroku. And ENV about Mailgun are maintained by Heroku.</p>
+
+<p>I aslo can use this command to check <code>Heroku configurations</code>.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ heroku config</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then push it to heroku and test for a real email address, it works!!</p>
+
+<h3>Background Jobs</h3>
+
+<p>Sometimes, some actions do not need to be synchrous, like sending email, we don&rsquo;t need to wait email sending action completed. That&rsquo;s why we need to use a background job to do sending email to speed up the flow.</p>
+
+<p><code>Sidekiq</code> and <code>Resque</code> are some of this concept product. And Tealeaf recommend to use <a href="https://github.com/mperham/sidekiq/wiki">Sidekiq</a>.</p>
+
+<p>Install gem Sidekiq</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem 'sidekiq'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Only a tiny change for using it by delay method</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>AppMailer.delay.notify_on_new_todo(current_user, @todo) # new 
+</span><span class='line'>AppMailer.notify_on_new_todo(current_user, @todo).deliver #older one
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Add this line in <code>spec/spec_helper.rb</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>require 'sidekiq/testing/inline'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here we setup sidekiq, but we still need start <code>Redis</code> server:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ brew install redis
+</span><span class='line'>$ redis-server /usr/local/etc/redis.conf</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And this start sidekiq with another terminal:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ bundle exec sidekiq</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So far, this makes <code>local</code> works fine with <code>sidekiq</code> for background jobs. If we want to use background jobs in ENV:production, Heroku take charges if dyno is more than 1, or try <a href="https://coderwall.com/p/fprnhg/free-background-jobs-on-heroku">this way to simulate</a></p>
+
+<p>I have not implemented this yet, but I&rsquo;ll try it later.</p>
+
+<p>There is also <a href="https://devcenter.heroku.com/articles/procfile#deploying-to-heroku">an article talking about Procfile and Foreman</a>.</p>
+
+<p>If sidekiq version >= 3.0, you might also run this line</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>heroku config:set REDIS_PROVIDER=REDISTOGO_URL</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Monitor Production Error</h3>
+
+<p>Here we have a try for <a href="https://getsentry.com/welcome/">Sentry</a>.</p>
+
+<p>Tracking errors is also a key for automation deployment.</p>
+</div>
+  
+  
+
+
+        </article>
+      
+      
+        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+          
+  <header class="page-header">
+    
+      <p class="meta text-muted text-uppercase">
+        
+
+
+
+
+
+
+
+
+
+
+
+
 <span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-07T13:11:30+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-07</time>
         
       </p>
@@ -956,106 +1237,6 @@
 
         </article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
-    
-      <p class="meta text-muted text-uppercase">
-        
-
-
-
-
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-02-08T14:13:48+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-02-08</time>
-        
-      </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/02/08/tealeaf-course2-lesson2-quiz/" itemprop="url">Tealeaf Course2 Lesson2 Quiz</a></h2>
-    
-  </header>
-
-
-  <div class="entry-content clearfix" itemprop="articleBody description"><blockquote><h4>1. Name all the 7 (or 8) routes exposed by the resources keyword in the routes.rb file. Also name the 4 named routes, and how the request is routed to the controller/action.</h4></blockquote>
-
-<p>  For example by table <code>posts</code>:</p>
-
-<table>
-<thead>
-<tr>
-<th>Prefix   </th>
-<th>Verb   </th>
-<th>URI   </th>
-<th>Controller#Action   </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>posts   </td>
-<td>GET   </td>
-<td>/posts   </td>
-<td>posts#index   </td>
-</tr>
-<tr>
-<td>new_post   </td>
-<td>GET   </td>
-<td>/posts/new   </td>
-<td>post#new   </td>
-</tr>
-<tr>
-<td>   </td>
-<td>POST   </td>
-<td>/posts   </td>
-<td>post#create   </td>
-</tr>
-<tr>
-<td>post   </td>
-<td>GET   </td>
-<td>/posts/:id   </td>
-<td>post#show   </td>
-</tr>
-<tr>
-<td>edit_post   </td>
-<td>GET   </td>
-<td>/posts/:id   </td>
-<td>post#edit   </td>
-</tr>
-<tr>
-<td>   </td>
-<td>PUT/PATCH   </td>
-<td>/posts/:id   </td>
-<td>post#update   </td>
-</tr>
-<tr>
-<td>   </td>
-<td>DELETE   </td>
-<td>/posts/:id   </td>
-<td>post#destroy   </td>
-</tr>
-</tbody>
-</table>
-
-
-</div>
-  
-  
-    <footer>
-      <a class="btn btn-default" href="/blog/2015/02/08/tealeaf-course2-lesson2-quiz/">繼續閱讀 Read on &rarr;</a>
-    </footer>
-  
-
-
-        </article>
-      
     </div>
 
     <ul class="pager">
@@ -1085,6 +1266,8 @@
   
   <div id="recent_posts" class="list-group">
     
+    <a class="list-group-item " href="/blog/2015/06/28/sheng-chan-xiao-lu/">生產效率</a>
+    
     <a class="list-group-item " href="/blog/2015/05/26/many-to-many-association-by-one-join-tabel-wiwith-3-foreign-keys/">Many to Many Association by One Join Tabel With 3 Foreign Keys</a>
     
     <a class="list-group-item " href="/blog/2015/05/25/many-to-many-association-with-two-join-tables/">Many to Many Association With Two Join Tables</a>
@@ -1102,8 +1285,6 @@
     <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week7-2/">Reflection to Tealeaf Course3 Week7 (2/3)</a>
     
     <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week7-1/">Reflection to Tealeaf Course3 Week7 (1/3)</a>
-    
-    <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week6-2-slash-2/">Reflection to Tealeaf Course3 Week6 (2/2)</a>
     
   </div>
 </section>
