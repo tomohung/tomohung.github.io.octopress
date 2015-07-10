@@ -1,11 +1,16 @@
+
 <!DOCTYPE html>
-<html class="no-js" lang="en">
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
   <title>The Life Alchemist</title>
   <meta name="author" content="Tomo">
 
   
+  <meta name="description" content="Feature test for sending email Following by previous week, this week we have a feature test for sending email. Install gem, 1
+$ gem 'capybara-email' &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -15,132 +20,99 @@
 
   
   <link rel="canonical" href="http://www.tomohung.com/posts/3">
-  <link href="/favicon.png" type="image/png" rel="icon">
-  <link href="/atom.xml" rel="alternate" title="The Life Alchemist" type="application/atom+xml">
-
-  <!-- http://opengraphprotocol.org/ -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="http://www.tomohung.com/posts/3">
-  <meta property="og:title" content="The Life Alchemist">
-  
-
-  <script src="/javascripts/libs/jquery/jquery-2.0.3.min.js"></script>
-
-<link href="/assets/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="/assets/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css">
-
-
-  
+  <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-
+  <link href="/atom.xml" rel="alternate" title="The Life Alchemist" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet" type="text/css">
+<!--- MathJax Configuration -->
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
-   <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-12830335-2']);
+    _gaq.push(['_trackPageview']);
 
-    ga('create', 'UA-12830335-2', 'auto');
-    ga('send', 'pageview');
-
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
   </script>
 
 
 </head>
 
-  <body   >
-    <a href="#content" class="sr-only sr-only-focusable">Skip to main content</a>
-    <div id="wrap">
-      <header role="banner">
-        <nav class="navbar navbar-default" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">The Life Alchemist</a>
-        </div>
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">The Life Alchemist</a></h1>
+  
+</hgroup>
 
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="active">
-                    <a rel="index" href="/">Blog</a>
-                </li>
-                <li >
-                    <a href="/blog/archives">Archives</a>
-                </li>
-                <li >
-                    <a href="/about">About</a>
-                </li>
-            </ul>
-            <ul class="nav navbar-nav navbar-right">
-                
-                    <li>
-                        <form class="search navbar-form navbar-right" action="https://www.google.com/search" method="GET">
-                            <input type="hidden" name="q" value="site:www.tomohung.com">
-                            <div class="form-group">
-                                <input class="form-control" type="text" name="q" placeholder="Search">
-                            </div>
-                        </form>
-                    </li>
-                
-                <li>
-                    <a class="subscribe-rss" href="/atom.xml" title="subscribe via RSS">
-                        <span class="visible-xs">RSS</span>
-                        <img class="hidden-xs" src="/images/rss.png" alt="RSS">
-                    </a>
-                </li>
-                
-            </ul>
-        </div>
-    </div>
+</header>
+  <nav role="navigation"><ul class="subscribe" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS" target="_blank"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25" viewbox="0 0 100 100"><path class="social" d="M 13.310204,73.332654 C 5.967347,73.332654 0,79.322448 0,86.621428 c 0,7.338776 5.967347,13.262246 13.310204,13.262246 7.370408,0 13.328572,-5.92245 13.328572,-13.262246 0,-7.29898 -5.958164,-13.288774 -13.328572,-13.288774 z M 0.01530612,33.978572 V 53.143878 C 12.493878,53.143878 24.229592,58.02347 33.068368,66.865306 41.894898,75.685714 46.767346,87.47449 46.767346,100 h 19.25 C 66.017346,63.592858 36.4,33.979592 0.01530612,33.978572 l 0,0 z M 0.03877552,0 V 19.17449 C 44.54796,19.17551 80.77551,55.437756 80.77551,100 H 100 C 100,44.87653 55.15102,0 0.03877552,0 z"></path></svg></a></li>
+  
+</ul>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+      <form action="https://www.google.com/search" method="get">
+        <fieldset role="search">
+          <input type="hidden" name="sitesearch" value="www.tomohung.com" />
+    
+          <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+        </fieldset>
+      </form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
 </nav>
-
-
-      </header>
-      <div id="main" role="main" class="container">
-        <div id="content">
-          <div class="row">
-  <div class="page-content col-md-9">
-    <div class="blog-index" itemscope itemtype="http://schema.org/Blog">
-    <meta itemprop="name" content="The Life Alchemist" />
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
     
-    <meta itemprop="url" content="http://www.tomohung.com" />
-      
-      
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
+      <h1 class="entry-title"><a href="/blog/2015/04/09/reflection-to-tealeaf-course3-week5/">Reflection to Tealeaf Course3 Week5 (1/2)</a></h1>
     
-      <p class="meta text-muted text-uppercase">
+    
+      <p class="meta">
         
 
 
 
 
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-09T14:39:06+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-09</time>
+<time class='entry-date' datetime='2015-04-09T14:39:06+08:00'><span class='date'>2015-04-09</span> <span class='time'>2:39 pm</span></time>
+        
         
       </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/04/09/reflection-to-tealeaf-course3-week5/" itemprop="url">Reflection to Tealeaf Course3 Week5 (1/2)</a></h2>
     
   </header>
 
 
-  <div class="entry-content clearfix" itemprop="articleBody description"><h3>Feature test for sending email</h3>
+  <div class="entry-content"><h3>Feature test for sending email</h3>
 
 <p>Following by <a href="http://www.tomohung.com/blog/2015/04/07/reflection-to-tealeaf-course3-week4/">previous week</a>, this week we have a feature test for sending email.</p>
 
@@ -390,38 +362,31 @@
   
 
 
-        </article>
+    </article>
+  
+  
+    <article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
+  <header>
     
-      <p class="meta text-muted text-uppercase">
+      <h1 class="entry-title"><a href="/blog/2015/04/07/reflection-to-tealeaf-course3-week4/">Reflection to Tealeaf Course3 Week4</a></h1>
+    
+    
+      <p class="meta">
         
 
 
 
 
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-04-07T13:11:30+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-04-07</time>
+<time class='entry-date' datetime='2015-04-07T13:11:30+08:00'><span class='date'>2015-04-07</span> <span class='time'>1:11 pm</span></time>
+        
         
       </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/04/07/reflection-to-tealeaf-course3-week4/" itemprop="url">Reflection to Tealeaf Course3 Week4</a></h2>
     
   </header>
 
 
-  <div class="entry-content clearfix" itemprop="articleBody description"><h3>Three kinds of BDD</h3>
+  <div class="entry-content"><h3>Three kinds of BDD</h3>
 
 <p>In week 4 beginning, we got a brief intro for 3 kinds of BDD:</p>
 
@@ -565,38 +530,31 @@
   
 
 
-        </article>
+    </article>
+  
+  
+    <article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
+  <header>
     
-      <p class="meta text-muted text-uppercase">
+      <h1 class="entry-title"><a href="/blog/2015/03/17/reflection-to-tealeaf-course3-week3/">Reflection to Tealeaf Course3 Week3</a></h1>
+    
+    
+      <p class="meta">
         
 
 
 
 
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-17T09:41:26+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-03-17</time>
+<time class='entry-date' datetime='2015-03-17T09:41:26+08:00'><span class='date'>2015-03-17</span> <span class='time'>9:41 am</span></time>
+        
         
       </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/03/17/reflection-to-tealeaf-course3-week3/" itemprop="url">Reflection to Tealeaf Course3 Week3</a></h2>
     
   </header>
 
 
-  <div class="entry-content clearfix" itemprop="articleBody description"><p><a href="http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2/">In week 2</a>, Tealeaf talked about how to test controller, and this week, I got a more comprehensive test consideration for controller and user interaction.</p>
+  <div class="entry-content"><p><a href="http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2/">In week 2</a>, Tealeaf talked about how to test controller, and this week, I got a more comprehensive test consideration for controller and user interaction.</p>
 
 <h3>For Controller Test</h3>
 
@@ -861,38 +819,31 @@
   
 
 
-        </article>
+    </article>
+  
+  
+    <article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
+  <header>
     
-      <p class="meta text-muted text-uppercase">
+      <h1 class="entry-title"><a href="/blog/2015/03/11/reflection-to-tealeaf-course3-week2/">Reflection to Tealeaf Course3 Week2</a></h1>
+    
+    
+      <p class="meta">
         
 
 
 
 
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-11T11:21:17+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-03-11</time>
+<time class='entry-date' datetime='2015-03-11T11:21:17+08:00'><span class='date'>2015-03-11</span> <span class='time'>11:21 am</span></time>
+        
         
       </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/03/11/reflection-to-tealeaf-course3-week2/" itemprop="url">Reflection to Tealeaf Course3 Week2</a></h2>
     
   </header>
 
 
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>There are 3 kinds of test: <code>Unit</code>, <code>Functional</code>, <code>Integration</code>. In <a href="http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1/">week 1</a>, we test <strong>Model</strong>, this should belong to <code>Unit test</code> . And this week we test <strong>Controller</strong>, this should belong to <code>Functional test</code>. I guess it should be <code>Integration test</code> when we move into part of <strong>View</strong> test.</p>
+  <div class="entry-content"><p>There are 3 kinds of test: <code>Unit</code>, <code>Functional</code>, <code>Integration</code>. In <a href="http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1/">week 1</a>, we test <strong>Model</strong>, this should belong to <code>Unit test</code> . And this week we test <strong>Controller</strong>, this should belong to <code>Functional test</code>. I guess it should be <code>Integration test</code> when we move into part of <strong>View</strong> test.</p>
 
 <p>I have to heavily rely on solution videos, there are two main reasons:</p>
 
@@ -953,38 +904,31 @@
   
 
 
-        </article>
+    </article>
+  
+  
+    <article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
+  <header>
     
-      <p class="meta text-muted text-uppercase">
+      <h1 class="entry-title"><a href="/blog/2015/03/06/reflection-to-tealeaf-course3-week1/">Reflection to Tealeaf Course3 Week1</a></h1>
+    
+    
+      <p class="meta">
         
 
 
 
 
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-06T08:40:32+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-03-06</time>
+<time class='entry-date' datetime='2015-03-06T08:40:32+08:00'><span class='date'>2015-03-06</span> <span class='time'>8:40 am</span></time>
+        
         
       </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/03/06/reflection-to-tealeaf-course3-week1/" itemprop="url">Reflection to Tealeaf Course3 Week1</a></h2>
     
   </header>
 
 
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>In Course3 week1, Kevin give me a schema of what should developper do from beginning.</p>
+  <div class="entry-content"><p>In Course3 week1, Kevin give me a schema of what should developper do from beginning.</p>
 
 <p>There are so many subjects I&rsquo;ve heard but not ever practicing in action, like: TDD, git flow(github flow), why test&hellip;etc.</p>
 
@@ -1003,38 +947,31 @@
   
 
 
-        </article>
+    </article>
+  
+  
+    <article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
+  <header>
     
-      <p class="meta text-muted text-uppercase">
+      <h1 class="entry-title"><a href="/blog/2015/03/03/titans-tic-tac-toe/">Titan&#8217;s Tic Tac Toe</a></h1>
+    
+    
+      <p class="meta">
         
 
 
 
 
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-03-03T09:11:10+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-03-03</time>
+<time class='entry-date' datetime='2015-03-03T09:11:10+08:00'><span class='date'>2015-03-03</span> <span class='time'>9:11 am</span></time>
+        
         
       </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/03/03/titans-tic-tac-toe/" itemprop="url">Titan&#8217;s Tic Tac Toe</a></h2>
     
   </header>
 
 
-  <div class="entry-content clearfix" itemprop="articleBody description"><p><img src="http://i.minus.com/i2XJ0y9E48CHg.png"></p>
+  <div class="entry-content"><p><img src="http://i.minus.com/i2XJ0y9E48CHg.png"></p>
 
 <h3>Prelude</h3>
 
@@ -1052,43 +989,36 @@
   
   
     <footer>
-      <a class="btn btn-default" href="/blog/2015/03/03/titans-tic-tac-toe/">繼續閱讀 Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2015/03/03/titans-tic-tac-toe/">繼續閱讀 Read on &rarr;</a>
     </footer>
   
 
 
-        </article>
+    </article>
+  
+  
+    <article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
+  <header>
     
-      <p class="meta text-muted text-uppercase">
+      <h1 class="entry-title"><a href="/blog/2015/02/22/reflection-to-tealeaf-course2-lesson4/">Reflection to Tealeaf Course2 Lesson4</a></h1>
+    
+    
+      <p class="meta">
         
 
 
 
 
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-02-22T21:22:10+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-02-22</time>
+<time class='entry-date' datetime='2015-02-22T21:22:10+08:00'><span class='date'>2015-02-22</span> <span class='time'>9:22 pm</span></time>
+        
         
       </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/02/22/reflection-to-tealeaf-course2-lesson4/" itemprop="url">Reflection to Tealeaf Course2 Lesson4</a></h2>
     
   </header>
 
 
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>In Course2(Rapid Prototyping with Ruby on Rails), <a href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/">first week</a> I learned about <code>Models and database</code>, <a href="http://www.tomohung.com/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/">second week</a> I learned about <code>Controllers and Views</code>. The <a href="http://www.tomohung.com/blog/2015/02/16/reflection-to-tealeaf-course2-lesson3/">third week</a> I learned to add <code>Authentication</code> and <code>Polymorphic table</code>.</p>
+  <div class="entry-content"><p>In Course2(Rapid Prototyping with Ruby on Rails), <a href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/">first week</a> I learned about <code>Models and database</code>, <a href="http://www.tomohung.com/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/">second week</a> I learned about <code>Controllers and Views</code>. The <a href="http://www.tomohung.com/blog/2015/02/16/reflection-to-tealeaf-course2-lesson3/">third week</a> I learned to add <code>Authentication</code> and <code>Polymorphic table</code>.</p>
 
 <p>And this week, also the last week, I completed all basic functions I need to know. Including Ajax for voting, extract methods into gem, build and publish gem, display time info considering user&rsquo;s timezone.</p>
 
@@ -1096,85 +1026,71 @@
   
   
     <footer>
-      <a class="btn btn-default" href="/blog/2015/02/22/reflection-to-tealeaf-course2-lesson4/">繼續閱讀 Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2015/02/22/reflection-to-tealeaf-course2-lesson4/">繼續閱讀 Read on &rarr;</a>
     </footer>
   
 
 
-        </article>
+    </article>
+  
+  
+    <article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
+  <header>
     
-      <p class="meta text-muted text-uppercase">
+      <h1 class="entry-title"><a href="/blog/2015/02/16/reflection-to-tealeaf-course2-lesson3/">Reflection to Tealeaf Course2 Lesson3</a></h1>
+    
+    
+      <p class="meta">
         
 
 
 
 
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-02-16T08:37:25+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-02-16</time>
+<time class='entry-date' datetime='2015-02-16T08:37:25+08:00'><span class='date'>2015-02-16</span> <span class='time'>8:37 am</span></time>
+        
         
       </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/02/16/reflection-to-tealeaf-course2-lesson3/" itemprop="url">Reflection to Tealeaf Course2 Lesson3</a></h2>
     
   </header>
 
 
-  <div class="entry-content clearfix" itemprop="articleBody description"><p>In Course2(Rapid Prototyping with Ruby on Rails), <a href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/">first week</a> I learned about <code>Models and database</code>, <a href="http://www.tomohung.com/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/">second week</a> I learned about <code>Controllers and Views</code>. This week I learned to add some features into my app, and make it vivid!!</p>
+  <div class="entry-content"><p>In Course2(Rapid Prototyping with Ruby on Rails), <a href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/">first week</a> I learned about <code>Models and database</code>, <a href="http://www.tomohung.com/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/">second week</a> I learned about <code>Controllers and Views</code>. This week I learned to add some features into my app, and make it vivid!!</p>
 
 </div>
   
   
     <footer>
-      <a class="btn btn-default" href="/blog/2015/02/16/reflection-to-tealeaf-course2-lesson3/">繼續閱讀 Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2015/02/16/reflection-to-tealeaf-course2-lesson3/">繼續閱讀 Read on &rarr;</a>
     </footer>
   
 
 
-        </article>
+    </article>
+  
+  
+    <article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
+  <header>
     
-      <p class="meta text-muted text-uppercase">
+      <h1 class="entry-title"><a href="/blog/2015/02/15/tealeaf-course2-lesson3-quiz/">Tealeaf Course2 Lesson3 Quiz</a></h1>
+    
+    
+      <p class="meta">
         
 
 
 
 
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-02-15T08:22:00+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-02-15</time>
+<time class='entry-date' datetime='2015-02-15T08:22:00+08:00'><span class='date'>2015-02-15</span> <span class='time'>8:22 am</span></time>
+        
         
       </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/02/15/tealeaf-course2-lesson3-quiz/" itemprop="url">Tealeaf Course2 Lesson3 Quiz</a></h2>
     
   </header>
 
 
-  <div class="entry-content clearfix" itemprop="articleBody description"><blockquote><h4>1. What&rsquo;s the difference between rendering and redirecting? What&rsquo;s the impact with regards to instance variables, view templates?</h4></blockquote>
+  <div class="entry-content"><blockquote><h4>1. What&rsquo;s the difference between rendering and redirecting? What&rsquo;s the impact with regards to instance variables, view templates?</h4></blockquote>
 
 <ul>
 <li>rendering: render a template HTML code, like <code>partial</code>.</li>
@@ -1186,43 +1102,36 @@
   
   
     <footer>
-      <a class="btn btn-default" href="/blog/2015/02/15/tealeaf-course2-lesson3-quiz/">繼續閱讀 Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2015/02/15/tealeaf-course2-lesson3-quiz/">繼續閱讀 Read on &rarr;</a>
     </footer>
   
 
 
-        </article>
+    </article>
+  
+  
+    <article>
       
-      
-        <article class="post" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
-          
-  <header class="page-header">
+  <header>
     
-      <p class="meta text-muted text-uppercase">
+      <h1 class="entry-title"><a href="/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/">Reflection to Tealeaf Course2 Lesson2</a></h1>
+    
+    
+      <p class="meta">
         
 
 
 
 
-
-
-
-
-
-
-
-
-<span class="glyphicon glyphicon-calendar"></span> <time datetime="2015-02-10T16:39:30+08:00"  data-updated="true" itemprop="datePublished dateCreated">2015-02-10</time>
+<time class='entry-date' datetime='2015-02-10T16:39:30+08:00'><span class='date'>2015-02-10</span> <span class='time'>4:39 pm</span></time>
+        
         
       </p>
-    
-    
-      <h2 class="entry-title" itemprop="name headline"><a href="/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/" itemprop="url">Reflection to Tealeaf Course2 Lesson2</a></h2>
     
   </header>
 
 
-  <div class="entry-content clearfix" itemprop="articleBody description"><p><a href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/">Last week</a>, I know Models and Database side of Rails.</p>
+  <div class="entry-content"><p><a href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/">Last week</a>, I know Models and Database side of Rails.</p>
 
 <p>This week Tealeaf reveals the <code>Controller</code> and <code>View</code> part of MVC, I would like to summarize this lesson into two parts: <code>Don't Repeat Yourself</code> and <code>Conventions over Configuration</code>.</p>
 
@@ -1230,90 +1139,38 @@
   
   
     <footer>
-      <a class="btn btn-default" href="/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/">繼續閱讀 Read on &rarr;</a>
+      <a rel="full-article" href="/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/">繼續閱讀 Read on &rarr;</a>
     </footer>
   
 
 
-        </article>
-      
-    </div>
-
-    <ul class="pager">
-      
-        <li class="previous"><a href="/posts/4">&larr;&nbsp;Older</a></li>
-      
-      <li><a href="/blog/archives">Blog Archives</a></li>
-      
-        <li class="next"><a href="/posts/2">Newer&nbsp;&rarr;</a></li>
-      
-    </ul>
-  </div>
-
+    </article>
   
-    <aside class="sidebar col-md-3">
-      
-        
-<section>
-	<span>
-		<img src="http://www.gravatar.com/avatar/8708c05d2568e10fb402516eeb954ef2" alt="Gravatar of Tomo " title="Gravatar of Tomo" />
-	</span>
-</section>
-<section class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">Recent Posts</h3>
-  </div>
-  
-  <div id="recent_posts" class="list-group">
+  <div class="pagination">
     
-    <a class="list-group-item " href="/blog/2015/06/28/sheng-chan-xiao-lu/">生產效率</a>
+      <a class="prev" href="/posts/4">&larr; Older</a>
     
-    <a class="list-group-item " href="/blog/2015/05/26/many-to-many-association-by-one-join-tabel-wiwith-3-foreign-keys/">Many to Many Association by One Join Tabel With 3 Foreign Keys</a>
+    <a href="/blog/archives">Blog Archives</a>
     
-    <a class="list-group-item " href="/blog/2015/05/25/many-to-many-association-with-two-join-tables/">Many to Many Association With Two Join Tables</a>
-    
-    <a class="list-group-item " href="/blog/2015/05/19/eloquent-ruby-9/">Eloquent Ruby -9 [Write Specs!]</a>
-    
-    <a class="list-group-item " href="/blog/2015/05/19/eloquent-ruby-8/">Eloquent Ruby -8 [Embrance Dynamic Typing]</a>
-    
-    <a class="list-group-item " href="/blog/2015/05/07/reflection-to-tealeaf-course3-week8-2/">Reflection to Tealeaf Course3 Week8 (2/2)</a>
-    
-    <a class="list-group-item " href="/blog/2015/05/07/reflection-to-tealeaf-course3-week8-1/">Reflection to Tealeaf Course3 Week8 (1/2)</a>
-    
-    <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week7-3-slash-3/">Reflection to Tealeaf Course3 Week7 (3/3)</a>
-    
-    <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week7-2/">Reflection to Tealeaf Course3 Week7 (2/3)</a>
-    
-    <a class="list-group-item " href="/blog/2015/05/06/reflection-to-tealeaf-course3-week7-1/">Reflection to Tealeaf Course3 Week7 (1/3)</a>
+    <a class="next" href="/posts/2">Newer &rarr;</a>
     
   </div>
-</section>
-
-
-
-
-
-
-      
-    </aside>
-  
 </div>
+<aside class="sidebar">
+  
+    
+  
+</aside>
 
-        </div>
-      </div>
     </div>
-    <footer role="contentinfo"><div class="container">
-    <p class="text-muted credits">
-  Copyright &copy; 2015 - Tomo<br>
-  <small>
-      <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>,
-      <span class="credit">customized with <a href="https://github.com/kAworu/octostrap3">octostrap3</a></span>.
-  </small>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Tomo -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/lucaslew/whitespace">Whitespace</a></span>
 </p>
 
-</div>
 </footer>
-    
+  
 
 <script type="text/javascript">
       var disqus_shortname = 'tomohung';
@@ -1327,6 +1184,9 @@
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
+
+
+
 
 
 
@@ -1354,9 +1214,8 @@
   </script>
 
 
-<script src="/assets/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="/javascripts/modernizr-2.0.js"></script>
 
 
-  </body>
+
+</body>
 </html>
