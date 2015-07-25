@@ -9,7 +9,9 @@
   <meta name="author" content="Tomo">
 
   
-  <meta name="description" content="1. Name all the 7 (or 8) routes exposed by the resources keyword in the routes.rb file. Also name the 4 named routes, and how the request is routed &hellip;">
+  <meta name="description" content="Chapter 5 - Find the Right String with Regular Expressions Match One Character .可以match任何單一字元(except new line)
+如果想match .本身，可以用\，如3\.14
+再譬如.r\.， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +83,8 @@
 <ul class="main-navigation">
   <li><a href="/">Blog</a></li>
   <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/blog/categories/tealeaf">Tealeaf</a></li>
+  <li><a href="/about/index.html">About</a></li>
 </ul>
 
 </nav>
@@ -94,7 +98,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/02/08/tealeaf-course2-lesson2-quiz/">Tealeaf Course2 Lesson2 Quiz</a></h1>
+      <h1 class="entry-title"><a href="/blog/2015/05/03/eloquent-ruby-5/">Eloquent Ruby -5 [Find the Right String With Regular Expressions]</a></h1>
     
     
       <p class="meta">
@@ -103,7 +107,7 @@
 
 
 
-<time class='entry-date' datetime='2015-02-08T14:13:48+08:00'><span class='date'>2015-02-08</span> <span class='time'>2:13 pm</span></time>
+<time class='entry-date' datetime='2015-05-03T20:38:53+08:00'><span class='date'>2015-05-03</span> <span class='time'>8:38 pm</span></time>
         
         
       </p>
@@ -111,423 +115,108 @@
   </header>
 
 
-  <div class="entry-content"><blockquote><h4>1. Name all the 7 (or 8) routes exposed by the resources keyword in the routes.rb file. Also name the 4 named routes, and how the request is routed to the controller/action.</h4></blockquote>
+  <div class="entry-content"><h1>Chapter 5 - Find the Right String with Regular Expressions</h1>
 
-<p>  For example by table <code>posts</code>:</p>
-
-<table>
-<thead>
-<tr>
-<th>Prefix   </th>
-<th>Verb   </th>
-<th>URI   </th>
-<th>Controller#Action   </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>posts   </td>
-<td>GET   </td>
-<td>/posts   </td>
-<td>posts#index   </td>
-</tr>
-<tr>
-<td>new_post   </td>
-<td>GET   </td>
-<td>/posts/new   </td>
-<td>post#new   </td>
-</tr>
-<tr>
-<td>   </td>
-<td>POST   </td>
-<td>/posts   </td>
-<td>post#create   </td>
-</tr>
-<tr>
-<td>post   </td>
-<td>GET   </td>
-<td>/posts/:id   </td>
-<td>post#show   </td>
-</tr>
-<tr>
-<td>edit_post   </td>
-<td>GET   </td>
-<td>/posts/:id   </td>
-<td>post#edit   </td>
-</tr>
-<tr>
-<td>   </td>
-<td>PUT/PATCH   </td>
-<td>/posts/:id   </td>
-<td>post#update   </td>
-</tr>
-<tr>
-<td>   </td>
-<td>DELETE   </td>
-<td>/posts/:id   </td>
-<td>post#destroy   </td>
-</tr>
-</tbody>
-</table>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2015/02/08/tealeaf-course2-lesson2-quiz/">繼續閱讀 Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/02/02/newbie-for-rails-migration/">Newbie for Rails Migration</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-02-02T21:46:35+08:00'><span class='date'>2015-02-02</span> <span class='time'>9:46 pm</span></time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>As a newbie for Rails, It&rsquo;s normal to do something stupid.</p>
-
-<h2>Modified migration files after <code>rake db:migrate</code></h2>
-
-<p>It&rsquo;s useless!! Be carful that every migration filename including a timestamp, after running <code>rake db:migrate</code> will re-generate schema.rb. Data in schema.rb will show that the lastest timestamp, if there is no any new migration files newer than this timestamp, <code>rake db:migrate</code> will do nothing. Yes! it&rsquo;s nothing!!</p>
-
-<figure class='code'><figcaption><span>normally you should see</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='text'><span class='line'>==  CreateArticles: migrating ==================================================
-</span><span class='line'>-- create_table(:articles)
-</span><span class='line'>   -&gt; 0.0019s
-</span><span class='line'>==  CreateArticles: migrated (0.0020s) =========================================
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>schema.rb has been updated, rake db:migrate do nothing</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='text'><span class='line'>$ rake db:migrate
-</span><span class='line'>$ rake db:migrate
-</span></code></pre></td></tr></table></div></figure>
-
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2015/02/02/newbie-for-rails-migration/">繼續閱讀 Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/">Reflection to Tealeaf Course 2 Lesson 1</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-02-02T16:05:05+08:00'><span class='date'>2015-02-02</span> <span class='time'>4:05 pm</span></time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Finally, Rails is coming.</p>
-
-<p>Before join Tealeaf, I&rsquo;ve tried few times to follow some rails guide books. I just can type some magic codes to build simplest web app but didn&rsquo;t know why at all, because I even didn&rsquo;t know what ruby is.</p>
-
-<p>This time, passing through course 1, I knew what the ruby is, then following <a href="http://guides.rubyonrails.org/getting_started.html">official tour guide</a>, it&rsquo;s much clear than other books I&rsquo;ve seen. But I still got stuck on creating many-to-many relationship, because I made a stupid mistake here: <em>I modified migration file after running <code>rake db:migrate</code></em>.</p>
-
-<p>Then I dived into solution videos, and Chirs said that:</p>
-
-<blockquote><p>Don&rsquo;t use <code>rails generate</code> except <code>migration</code></p></blockquote>
-
-<p>I do love this way, because:</p>
-
-<ol>
-<li><p>I never saw other&rsquo;s show this way to build migration, they always use <code>rails generate model</code> to create model and migration. And the problem is, I thought this is the only way to create models and migrations!! And I just thought this is Rails magic, I don&rsquo;t need to think too much.</p></li>
-<li><p>When I got stuck because I didn&rsquo;t know I can&rsquo;t modified migration files after running <code>rake db:migrate</code>. Make sure migration setting is all done before running <code>rake db:migrate</code> is very important. And this is just for ActiveRecord layer, database is another layer. It&rsquo;s much easier to understand how could be a disaster to modified/delete migration files working with database layer.</p></li>
-</ol>
-
-
-<p>I make <a href="http://www.tomohung.com/blog/2015/02/02/newbie-for-rails-migration/">a post to record my big step for Rails</a>.</p>
-
-<p>I also try to detect tealeaf discus panel, becuase I think it&rsquo;s better to <code>show who kudos this post</code>. Sometimes I just want to give a kudos for people reply my post without saying something more, but it&rsquo;s wierd for others to read this post, because they can&rsquo;t see kudos I already gave the post. Anyway, here is my ERD for discuss panel.</p>
-
-<p><img src="http://i.minus.com/ibfrZjiBfElndg.jpg"></p>
-
-<p>I&rsquo;m super satisfied that this week I found my mistake when using migrations, and I think there must be other mistake for controller&rsquo;s and view&rsquo;s. Moving to next lesson!!</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/30/tealeaf-course2-lesson1-quiz/">Tealeaf Course2 Lesson1 Quiz</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-30T16:13:42+08:00'><span class='date'>2015-01-30</span> <span class='time'>4:13 pm</span></time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Answer these quizzes, then updated after watching solution.</p>
-
-<h2>1. Why do they call it a relational database?</h2>
-
-<p>  Relational database can store the relationship between data and data. For example, a table store customer&rsquo;s info, and a table store consuming record, these two table can be associated with another table, to establish the customer&rsquo;s consuming history. There are relationships between data and data in relational database. ex. sqlite, MySQL, PostgreSQL ect.</p>
-
-<blockquote><p>the tables within the database are associated with each other. This association can be created with primary/foreign keys and various syntax.</p></blockquote>
-
-<h2>2. What is SQL?</h2>
-
-<p>  SQL(Structured Query Language), it&rsquo;s domain specific language to manipulate database.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2015/01/30/tealeaf-course2-lesson1-quiz/">繼續閱讀 Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/22/reflection-to-tealeaf-lesson-4/">Reflection to Tealeaf Lesson 4</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-22T11:59:53+08:00'><span class='date'>2015-01-22</span> <span class='time'>11:59 am</span></time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img class="right" src="http://i.minus.com/iS2bpDcNcj44W.jpg" width="320"></p>
-
-<p>To be honest, I still feel uncomfortable with this week. From week 3, I learned html &amp; css, to week 4, I learned jQuery &amp; Ajax. It&rsquo;s definitely not enough only rely on Codecademy&rsquo;s course, so I decide to do one more app, tic-tac-toe on wep. I think this should make me more comfortable with these lessons.</p>
-
-<p>But I&rsquo;m wrong, ha!! I still get stuck when doing UI and interactive design. Since I already knew that the most important thing at this moment is becoming a robust rails development, I decide to keep my pace and going to next course.</p>
-
-<p>Recap to this course:</p>
+<h2>Match One Character</h2>
 
 <ul>
-<li>week 1, basic Ruby program.</li>
-<li>week 2, OOP in Ruby.</li>
-<li>week 3, <strong>HTTP is stateless</strong>, HTML &amp; CSS, Sinatra, and Bootstrap.</li>
-<li>week 4, jQuery and Ajax.</li>
+<li><p><code>.</code>可以match任何單一字元(except new line)</p></li>
+<li><p>如果想match <code>.</code>本身，可以用<code>\</code>，如<code>3\.14</code></p></li>
+<li><p>再譬如<code>.r\.</code>，可以match <code>Mr.</code> or <code>Dr.</code></p></li>
 </ul>
 
 
-<p>One more thing, I thought I could be a full stack web developer before this course, then I knew I&rsquo;m wrong. There are a lot of knowledge in front end.</p>
+<h2>Sets, Range, Alternatives</h2>
 
-<p>And now I have to keep focus on back end.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io/">在Nitrous上寫Octopress</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-16T21:10:08+08:00'><span class='date'>2015-01-16</span> <span class='time'>9:10 pm</span></time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Octopress &amp; github</h3>
-
-<p>這個部落格是用<a href="octopress.rog">Octopress</a>在<a href="github.com">github</a>上建立起來的。但是不像一般的部落格系統，可以只要用瀏覽器登入，就可以開始寫文章。不過既然知道<a href="nitrous.io">nitrous.io</a>可以雲端工作，所以就把腦筋動到它的上面去。</p>
-
-<h3>Clone Octopress</h3>
-
-<p>作法是參考<a href="http://blog.zerosharp.com/clone-your-octopress-to-blog-from-two-places/">這篇文章</a>。</p>
-
-<p>但是其中的程式碼有點錯誤，因為github上存放網頁的位置己經改成github.io了。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io/">繼續閱讀 Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/14/show-http-is-stateless-by-sinatra/">Show HTTP Is Stateless by Sinatra</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-14T21:25:15+08:00'><span class='date'>2015-01-14</span> <span class='time'>9:25 pm</span></time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In tealeaf week 3, introduce to HTTP.</p>
-
-<p>The most important thing is that, HTTP is stateless.</p>
-
-<p>What&rsquo;s the influnce by this property? Showing this by Sinatra.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2015/01/14/show-http-is-stateless-by-sinatra/">繼續閱讀 Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/13/reflection-to-tealeaf-week-3/">Reflection to Tealeaf Week 3</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-13T22:23:15+08:00'><span class='date'>2015-01-13</span> <span class='time'>10:23 pm</span></time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img class="right" src="http://i.minus.com/ilSTmPNHVpVTm.png" width="320"></p>
-
-<p>It&rsquo;s realy a tough week for me, because I&rsquo;m totally new to web development.
-There are lots of material need to be done:</p>
+<h3>Sets</h3>
 
 <ul>
-<li>One new concept book: HTTP <a href="https://www.gotealeaf.com/books/http">https://www.gotealeaf.com/books/http</a></li>
-<li>Two new languages: HTML &amp; CSS <a href="http://www.codecademy.com/tracks/htmlcss">http://www.codecademy.com/tracks/htmlcss</a></li>
-<li>Two new frameworks: <a href="http://www.sinatrarb.com/intro.html">Sinatra</a> &amp; <a href="http://getbootstrap.com/">bootstrap</a></li>
+<li><p>例如<code>[0123456789]</code>可以match任何一個數字字元</p></li>
+<li><p><code>[pPaA][Mm]</code>可以match <code>Am</code> or <code>pm</code>.</p></li>
 </ul>
 
 
-<p>I think the most important thing in this week is &ldquo;HTTP is stateless&rdquo;.</p>
+<h3>Range</h3>
 
-<p>And using Sinatra show me this property explicit.</p>
+<ul>
+<li><p><code>[0-9a-f]</code>可以match任何一個16進位的字元</p></li>
+<li><p><code>\d</code>可以match任何一個數字字元，<code>\d\d</code>可以match 連續2個數字字元</p></li>
+<li><p><code>\w</code>可以match任何一個字元，包含數字、底線等</p></li>
+<li><p><code>\s</code>可以match任何一個空白字元，包含space, tab, new line.</p></li>
+</ul>
 
-<p>Every request in main.rb is independant with each other, using instance variables to store data only survive its scope.</p>
 
-<p>I also write a brief post to memo this property<a href="http://www.tomohung.com/blog/2015/01/14/show-http-is-stateless-by-sinatra/">(HTTP is Stateless)</a>.
-Using chache is another way to feel free in thinking programming in the old way.</p>
+<h3>Alternatives</h3>
 
-<p>Though I still use class to complete this assignment, I feel comfortable with this, because I don&rsquo;t need to make a wheel again.</p>
+<ul>
+<li><p><code>|</code>是替換符號</p></li>
+<li><p><code>A\.M\.|AM|P\.M\.|PM</code> 可以match <code>A.M.</code> or <code>AM</code>, or <code>P.M.</code> or <code>PM</code></p></li>
+<li><p>處理時間格式可以用 <code>\d\d:\d\d (AM|PM)</code></p></li>
+</ul>
 
-<p>The first struggle in this week is when I saw something like <code>&lt;form action..../&gt;</code>, I have no idea what&rsquo;s this?! because HTML &amp; CSS course in codecademy never metion this. After google that, I found there are plenty of other syntax I didn&rsquo;t know, <a href="http://www.w3schools.com/html/html5_intro.asp">w3shool</a> help me to know more about HTML.</p>
 
-<p>Another struggle is Sinatra, when I first time read the intro, I totally had no idea what those nouns mean. <code>get '/' {}</code> seems not a nature ruby way; what <code>get</code> <code>post</code> are ??</p>
+<h2>Asterist <code>*</code></h2>
 
-<p>Following with video and implement functions and pages, then I read Sinatra intro again, this time I feel much clear what its said.</p>
+<ul>
+<li><p>*星號可以表示在星號前的字元有任意個，包含零個。</p></li>
+<li><p><code>AB*</code>，可以match <code>AB</code>, <code>A</code>, or <code>ABBBB</code></p></li>
+<li><p>所以可以用 <code>[0–9]*</code>，match任何長度的數字</p></li>
+</ul>
 
-<p>Another horrible thing is on viewing video introduce to modern web development. There are so many tools, concepts, languages need to know. Wow&hellip;</p>
 
-<p>To be a web development, I know I have to keep going.
-Moving to Lesson 4.</p>
+<h2>Regular Expression in Ruby</h2>
 
-<p>Finally, here is my blog talking about Reflections for tealeaf lessons.
-<a href="http://www.tomohung.com/blog/categories/tealeaf/">http://www.tomohung.com/blog/categories/tealeaf/</a></p>
+<ul>
+<li><p>Format regex by slash: <code>/\d\d:\d\d (AM|PM)/</code></p></li>
+<li><p>use operator <code>=~</code></p></li>
+<li><p>所以在irb中跑這段</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/\d\d:\d\d (AM|PM)/ =~ '10:24 PM'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>回傳<code>0</code>，這表示字串有符合，從index = 0的位置開始。</p>
+
+<ul>
+<li><p>如果沒有符合，回傳<code>nil</code></p></li>
+<li><p>可以變成case insensitive，加上i，如：<code>/AM/i =~ 'am'</code></p></li>
+<li><p>也可以當參數傳入gsub來用</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>time_string.gsub!( /\d\d:\d\d (AM|PM)/, '**:** **' )</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Beginning and Ending</h2>
+
+<ul>
+<li><p>如果想要match字串的開頭用指定的文字，可以加入<code>\A</code>，如<code>\AIn the Beginning</code>，可以match字串前面為<code>In the Beginning</code></p></li>
+<li><p>反過來如果想要match字串結尾用指定的文字，可以在尾巴加入<code>\z</code></p></li>
+<li><p>如果想要match字串中<code>任何一行的開頭</code>有滿足，可以在條件字串前面加上<code>^</code></p></li>
+<li><p>如果想要match字串中<code>任何一行的結尾</code>有滿足，可以在條件字串尾巴加上<code>$</code></p></li>
+<li><p>如果想要進階同時match開頭跟結尾</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/^Once upon a time.*happily ever after\.$/</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這樣會失敗，因為<code>.</code>配合<code>*</code>雖然可以取代中間的任意數量的字元，但<code>.</code>不包含new line</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/^Once upon a time.*happily ever after\.$/m</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在結尾加上<code>m</code>可以關閉<code>.</code>這個特性。</p>
+
+<ul>
+<li><code>?</code>的作用和<code>*</code>類似</li>
+</ul>
+
 </div>
   
   
@@ -540,7 +229,7 @@ Moving to Lesson 4.</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/01/12/yi-makers-schedule-managers-schedule/">[譯]Maker&#8217;s Schedule, Manager&#8217;s Schedule</a></h1>
+      <h1 class="entry-title"><a href="/blog/2015/04/26/eloquent-ruby-4/">Eloquent Ruby -4 [Take Advantage of Ruby’s Smart Strings]</a></h1>
     
     
       <p class="meta">
@@ -549,7 +238,7 @@ Moving to Lesson 4.</p>
 
 
 
-<time class='entry-date' datetime='2015-01-12T06:30:34+08:00'><span class='date'>2015-01-12</span> <span class='time'>6:30 am</span></time>
+<time class='entry-date' datetime='2015-04-26T21:25:50+08:00'><span class='date'>2015-04-26</span> <span class='time'>9:25 pm</span></time>
         
         
       </p>
@@ -557,34 +246,186 @@ Moving to Lesson 4.</p>
   </header>
 
 
-  <div class="entry-content"><p>我曾經試過，寫程式最有效率的反而是在假日，可以從早上六點就一直做到晚上十二點（當然中間有被吃飯時間中斷），比起平常日在公司，產出高出好幾倍。所以看到這篇文章心有戚戚焉。</p>
+  <div class="entry-content"><h1>Chapter 4 - Take Advantage of Ruby’s Smart Strings</h1>
+
+<p>string也和array, hash一樣有豐富的函式庫</p>
+
+<p><a href="http://ruby-doc.org/core-2.2.2/String.html">http://ruby-doc.org/core-2.2.2/String.html</a></p>
+
+<p>本章的結論就有Ruby提供的string非常好用，但壞處就是你要熟讀它。</p>
 
 <hr />
 
-<p>原文出處：<a href="http://www.paulgraham.com/makersschedule.html">連結</a> Paul Graham, Y-Combinator founder</p>
-
-<!--
-One reason programmers dislike meetings so much is that they're on a different type of schedule from other people. Meetings cost them more.
--->
+<ul>
+<li>double quoted string <code>"</code>, 比<code>'</code>還多了點用途</li>
+</ul>
 
 
-<p>對程式員來說不喜歡開會的原因之一，是因為他們和其它人平同的行程安排類型。</p>
+<p>像是在字串中加入變數時<code>#{}</code>，我常忘了用<code>'</code>就沒有這個效果。</p>
 
-<p>開會的代價更大。</p>
-
-<!--
-There are two types of schedule, which I'll call the manager's schedule and the maker's schedule. The manager's schedule is for bosses. It's embodied in the traditional appointment book, with each day cut into one hour intervals. You can block off several hours for a single task if you need to, but by default you change what you're doing every hour.
--->
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"Hi, #{user.name}."</span></code></pre></td></tr></table></div></figure>
 
 
-<p>有兩種行程安排類型，管理者行程和製造者行程。管理者行程是給老闆用的，它是傳統上指派任務，每天把時間切成數個小時片段，你可以指派任務給其中幾個小時，但原則上，每個小時要做的事情都不一樣。</p>
+<ul>
+<li>遇到很煩的字串含有一堆單引號雙引號，可以用</li>
+</ul>
 
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>%q{"Oh No", "I can't tell what's the difference between 's' and "s"."}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>像上面的小寫q，也有對應用大寫Q的，效果就是像要加入變數時用：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>%Q{ "Hi, I'm #{user.name}."}</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>可以隨意斷行</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>multi_line_string = '你抓
+</span><span class='line'>不到我
+</span><span class='line'>'
+</span><span class='line'>
+</span><span class='line'>another_multi_line_string = %q{ 你抓
+</span><span class='line'>不到我 }
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果不想有new line，可以用back slash</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>multi_line_with_no_new_line = '你抓\
+</span><span class='line'>不到我'</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>超長文字可以這樣寫</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>really_long_string = &lt;&lt;EOF
+</span><span class='line'>這是開頭
+</span><span class='line'>...
+</span><span class='line'>這是結尾
+</span><span class='line'>EOF</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>chop &amp; chomp</li>
+</ul>
+
+
+<p>長的很像的兩個函數，用法天差地遠</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"a string with new line\n".chomp</span></code></pre></td></tr></table></div></figure>
+
+
+<p>會回傳 <code>a string with new line</code>，尾巴的new line會截掉。注意如果結尾含有多個new line，它只會截掉一個。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"a string".chop</span></code></pre></td></tr></table></div></figure>
+
+
+<p>會回傳&#8221;a strin&#8221;，回傳截掉最後一個字的結果。</p>
+
+<ul>
+<li>sub &amp; gsub</li>
+</ul>
+
+
+<p>替換字串內容</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>puts 'good good'.sub( 'good', 'bad' )
+</span><span class='line'>puts 'good good'.gsub( 'good', 'bad' )</span></code></pre></td></tr></table></div></figure>
+
+
+<p>得到的結果是</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>'bad good'
+</span><span class='line'>'bad bad'</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>split 分割字串</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"one two three four five".split</span></code></pre></td></tr></table></div></figure>
+
+
+<p>回傳一個矩陣</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>["one", "two", "three", "four", "five"]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>或是分割參數</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"one;two;three;four;five".split(";")</span></code></pre></td></tr></table></div></figure>
+
+
+<p>回傳結果同上</p>
+
+<ul>
+<li>index 搜尋字串位置</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"actions speak louder than words".index("speak") # return 8</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>each_char, each_byte, each_line</li>
+</ul>
+
+
+<p>分別用迴圈回傳字元，位元數，每一行</p>
+
+<ul>
+<li>Ruby string is mutable</li>
+</ul>
+
+
+<p>mutable雖然翻譯是可變異，但我覺得它的意義和指標有點類似</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>street_name = 'taiwan street'
+</span><span class='line'>road_name = street_name
+</span><span class='line'>street_name.upcase!</span></code></pre></td></tr></table></div></figure>
+
+
+<p>結果road_name = ?</p>
+
+<p>注意像帶有!的函數常會有mutate的作用，所以上述結果road_name = &lsquo;TAIWAN STREET&rsquo;</p>
 </div>
   
-  
-    <footer>
-      <a rel="full-article" href="/blog/2015/01/12/yi-makers-schedule-managers-schedule/">繼續閱讀 Read on &rarr;</a>
-    </footer>
   
 
 
@@ -595,7 +436,7 @@ There are two types of schedule, which I'll call the manager's schedule and the 
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/01/11/nitroukai-fa-huan-jing/">nitrous.io 開發環境</a></h1>
+      <h1 class="entry-title"><a href="/blog/2015/04/24/eloquent-ruby-3/">Eloquent Ruby -3 [Take Advantage of Ruby’s Smart Collections]</a></h1>
     
     
       <p class="meta">
@@ -604,7 +445,7 @@ There are two types of schedule, which I'll call the manager's schedule and the 
 
 
 
-<time class='entry-date' datetime='2015-01-11T21:26:49+08:00'><span class='date'>2015-01-11</span> <span class='time'>9:26 pm</span></time>
+<time class='entry-date' datetime='2015-04-24T16:33:18+08:00'><span class='date'>2015-04-24</span> <span class='time'>4:33 pm</span></time>
         
         
       </p>
@@ -612,25 +453,345 @@ There are two types of schedule, which I'll call the manager's schedule and the 
   </header>
 
 
-  <div class="entry-content"><p><img src="http://i.minus.com/iyZNw6vDZnJa6.png" width="800"></p>
+  <div class="entry-content"><h1>Chapter 3 - Take Advantage of Ruby’s Smart Collections</h1>
+
+<p>直接結論，Ruby的Array跟Hash提供很多方便的函數可用，可以參考</p>
+
+<p><a href="http://ruby-doc.org/core-2.2.0/Array.html">Array</a>
+<a href="http://ruby-doc.org/core-2.2.0/Hash.html">Hash</a></p>
+
+<p>以下才是正文開始</p>
+
+<hr />
 
 <ul>
-<li>太強了</li>
-<li>太強了</li>
-<li>太強了</li>
+<li>如果是要初始化一個給值的陣列，如</li>
 </ul>
 
 
-<p>因為<a href="http://nitrous.io">nitrous</a>太強了，所以說三遍。</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>love_words = ["Nancy", "I", "love", "you"]</span></code></pre></td></tr></table></div></figure>
 
-<p>入門網路應用程式開發一開始最大的門檻就是安裝適合的環境，尤其是OS用Windows的，好像是次等公民一樣，一下是終端機要用跟別人不一樣的，一下又是安裝套件卡住，一開始一頭熱的想要投入，馬上就被潑盆冷水。</p>
 
+<p>也可以這樣產生</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>love_words = %w{ Nancy I love you }</span></code></pre></td></tr></table></div></figure>
+
+
+<p>－ Ruby沒有指標，但是也有個類似指標的用法</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def echo_all( *args )
+</span><span class='line'>  args.each { |arg| puts arg }
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>*暗示arg其實是個陣列值，可以遞進來做陣列處理。</p>
+
+<ul>
+<li>對於hash，可以這樣用</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>run( {speed: :fast, tools: :train} )</span></code></pre></td></tr></table></div></figure>
+
+
+<p>也可以不要大括號，這樣寫</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>run( speed: :fast, tools: :train )</span></code></pre></td></tr></table></div></figure>
+
+
+<p>甚至</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>run speed: :fast, tools: :train</span></code></pre></td></tr></table></div></figure>
+
+
+<p>不過在參數只傳遞一個hash時，這樣寫蠻清爽的，如果是像form_for中要傳html_options時還這樣寫，簡直是個閱讀災難，我被誤導了好久。</p>
+
+<p>－ 雖然array和hash都有提供each這個method，不過hash在使用上有些不一樣的地方</p>
+
+<p>只給定一個參數的話</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>hash_value = { one: 1, two: 2, three: 3 }
+</span><span class='line'>
+</span><span class='line'>hash_value.each do |value|
+</span><span class='line'>  #something for value
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>value其實是個矩陣，如[:one, 1], [:two, 2], [:three, 3]。</p>
+
+<p>也可以給2個參數</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>hash_value.each do |key, value|
+</span><span class='line'>  #something for value
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>key和value就分別對應到hash值上，這就不用多說了。</p>
+
+<ul>
+<li>另外有個<code>inject</code> method可以幫助加總所有元素</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def average_word_length
+</span><span class='line'>  total = words.inject(0.0){ |result, word| word.size + result}
+</span><span class='line'>  total / word_count
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>－ 不要再each裡面操作delete的動作，如果需要的話可以用<code>array.delete_if</code> method。</p>
+
+<p>－ 如果只是要檢查某個元素有沒有已經存在陣列中，可以考慮改用<code>Set</code>這個class，而不是用Array。
+<a href="http://ruby-doc.org/stdlib-2.2.2/libdoc/set/rdoc/Set.html">http://ruby-doc.org/stdlib-2.2.2/libdoc/set/rdoc/Set.html</a></p>
+
+<p>它在檢查效率上比較好。</p>
 </div>
   
   
-    <footer>
-      <a rel="full-article" href="/blog/2015/01/11/nitroukai-fa-huan-jing/">繼續閱讀 Read on &rarr;</a>
-    </footer>
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/24/eloquent-ruby-2/">Eloquent Ruby -2 [Choose the Right Control Structure]</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-24T15:37:46+08:00'><span class='date'>2015-04-24</span> <span class='time'>3:37 pm</span></time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Chapter 2 - Choose the Right Control Structure</h1>
+
+<p>說是Control Structure，我比較習慣說Control Flow，簡單就是說幾乎所有程式語言都有的流程控制語法，像是if, while, case等。</p>
+
+<ul>
+<li>Ruby比較特別的是有unless, until反向詞語，一開始用不大習慣，但後來寫著寫著，心裡慢慢習慣照著口語的語法說，現在反而比較喜歡這樣寫了，總之照Ruby的理念就是這些反向詞語的目的就是為了要減少在閱讀程式碼時，心裡還需要做轉換的浪費。</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>if not @read_only</span></code></pre></td></tr></table></div></figure>
+
+
+<p>看到not心裡還要先把@read_only的值反向</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>unless @read_only</span></code></pre></td></tr></table></div></figure>
+
+
+<p>讀起來比較順口</p>
+
+<ul>
+<li>另一個蠻特別的點是，條件式可以放在最後面，也是為了配合口語語法</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@title = new_title unless @read_only</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>Ruby也有for迴圈，不過直接被捨棄不用（那當初幹嘛創造=___=），都用<code>each</code>。而且<code>for</code>也是用each實踐的，所以直接用each就好了。註：for語法不包含block，所以內中的變數scope是和for同一個，和each只存在於block中不一樣，each和for還是有些不同。</p></li>
+<li><p>case, 要注意的是在case中比較是用<code>===</code>，另外條件式也可以用regex來比較</p></li>
+</ul>
+
+
+<p>這邊惡補一下幾個我不熟的operator</p>
+
+<p><code>&lt;=&gt;</code>
+Combined comparison operator. Returns 0 if first operand equals second, 1 if first operand is greater than the second and -1 if first operand is less than the second.</p>
+
+<p><code>(a &lt;=&gt; b) returns -1.</code></p>
+
+<p><code>===</code>
+Used to test equality within a when clause of a case statement.</p>
+
+<p><code>(1...10) === 5 returns true.</code></p>
+
+<p><code>.eql?</code>
+True if the receiver and argument have both the same type and equal values.</p>
+
+<p><code>1 == 1.0 returns true, but 1.eql?(1.0) is false.</code></p>
+
+<p><code>equal?</code>
+True if the receiver and argument have the same object id.</p>
+
+<p><code>if aObj is duplicate of bObj then aObj == bObj is true, a.equal?bObj is false but a.equal?aObj is true.</code></p>
+
+<ul>
+<li><p>只有false和nil被測試時才會回傳false，<code>0</code>不是！還特別highlight以前寫C的人（哈哈），因為在C裡面<code>0</code>值被測試也是算false</p></li>
+<li><p>延續上，因為false和nil被測試都是回傳false，所以要特別注意條件式中會不會false和nil混在一起</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>while next_object = get_next_object
+</span><span class='line'>  # Do something with the object
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上面的迴圈是假設next_object最後會變成nil，而nil測試後回傳false。但萬一今天next_object本身的值就是false呢。改成下面的碼會比較好</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>until (next_object = get_next_object).nil?
+</span><span class='line'>  # Do something with the object
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>明確指定出next_object是nil才會跳離迴圈</p>
+
+<ul>
+<li>Ternery operator</li>
+</ul>
+
+
+<p>這個以前在C++我就蠻愛用的，可以很漂亮的縮短一些簡單的if-else</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>result = (face == :beauty) ? "handsome" : "ugly" # 同等於下式
+</span><span class='line'>
+</span><span class='line'>if face == :beauty
+</span><span class='line'> result = "handsome"
+</span><span class='line'>else
+</span><span class='line'> result = "ugly"
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>另一個是常用的變數初始化技巧</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@first_name ||= ''</span></code></pre></td></tr></table></div></figure>
+
+
+<p>@first_name如果還沒初始化，會被賦值&#8217;&lsquo;，如果已經有值，那就回傳本身。不過不要拿來對boolean type的變數這樣做，因為它也是倚賴 || operator機制。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/24/eloquent-ruby-1/">Eloquent Ruby -1 [Write Code That Looks Like Ruby]</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-24T14:15:45+08:00'><span class='date'>2015-04-24</span> <span class='time'>2:15 pm</span></time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Eloquent Ruby</h1>
+
+<p><code>Eloquent Ruby</code> by Russ Olsen 是一本在Tealeaf推薦的書，但它是所謂的『第二本Ruby的書』，而不是第一本，因為這本書裡面已經假設你對Ruby有基礎的觀念了。如果真的完全是初學者，Tealeaf推薦<a href="https://pine.fm/LearnToProgram/">Learn to Program by Chris Pine</a>，或者是<a href="http://learnrubythehardway.org/book/">Learn Ruby The Hard Way</a>，我覺得也不錯，還可以一邊練習打字。</p>
+
+<p>目前我把Part I：Basics看完了，共九章，覺得自己有學到些東西，所以就把它給紀錄下來，並參雜一些個人的想法。</p>
+
+<h1>Charpter 1 - Write Code That Looks Like Ruby</h1>
+
+<p>其實這章指的就是Code Style。更多的Ruby Code Style可以參考<a href="https://github.com/bbatsov/ruby-style-guide">這裡</a>。</p>
+
+<ul>
+<li><p>Indent code with two spaces，以前在寫C++時就一直覺得縮排其實2個空白就夠了（雖然我還是用預設4個），轉成Ruby後倒是蠻習慣的，尤其是不用再寫分號跟括號。</p></li>
+<li><p>什麼時候寫註解，告訴人家要怎麼用這個method，最好還帶範例。其它的像是最好用良好的命名去定義名稱，省去閱讀時的猜測，documenting itself.</p></li>
+<li><p>如果是寫const value，最好用Uppercase with underline，像UPPERCASE_WITH_UNDERLINE。</p></li>
+<li><p>因為括號是可以省略的，所以⋯⋯我常被搞混=___=，書用建議def method時後面帶參數時要用括號，但如果是一些接近口語的句子時可以考慮拿掉，如</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>puts 'hello world'。</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>如果code block只有一行時最好縮成一排，反過來說如果是多行的話就用block</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>apples.each { |apple| apple.to_eat } # prefer if only single code statement
+</span><span class='line'>
+</span><span class='line'>apples.each do |apple|
+</span><span class='line'>  apple.to_eat
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>如果method name結尾帶一個問號?，通常表示這個方法回傳true or false，如<code>array.nil?</code>；又如果是驚嘆號!，通常表示可能有點危險（所謂的危險通常是把丟進來的參數被改變mutate了，如<code>array.map!</code>。但是不管是問號還是驚嘆號，都只是Ruby習慣的命名而已，不是強制性。</p></li>
+<li><p>有慣例就會有例外，像是</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> pi = Float('3.14159')</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Float開頭是大寫而不是小寫。為什麼我也不知道@_@</p>
+</div>
+  
   
 
 

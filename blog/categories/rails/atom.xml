@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Rails | The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/blog/categories/rails/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-07-10T11:14:47+08:00</updated>
+  <updated>2015-07-26T07:20:01+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -12,6 +12,50 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Interview Review After Tealeaf]]></title>
+    <link href="http://www.tomohung.com/blog/2015/07/26/interview-review-after-tealeaf/"/>
+    <updated>2015-07-26T07:07:25+08:00</updated>
+    <id>http://www.tomohung.com/blog/2015/07/26/interview-review-after-tealeaf</id>
+    <content type="html"><![CDATA[<p>It&rsquo;s a late post since I got a Rails job for 2 month. I&rsquo;ll share my background and my interview experience, hope it will be helpful if you have the similar background like me.</p>
+
+<p>Background:</p>
+
+<ul>
+<li>From Taiwan</li>
+<li>Have 8 years for vision inspection machine development, it needs some of coding work by using C++.</li>
+<li>But with NO any experience for web development.</li>
+<li>Seek for a career change from a local-based develop a machine for manufacture industry to a cloud-based develop a user experience service.</li>
+<li>Start Tealeaf course from last December Christmas and finish it in the early May. ( finish the course on schedule)</li>
+<li>Start a Rails working on June.</li>
+</ul>
+
+
+<p>First, let me show the conclusion first:</p>
+
+<ul>
+<li>Join Tealeaf Academy is definitely worthy.</li>
+<li>Finish the Interview Prep is definitely worthy.</li>
+<li>Write blog for this course is definitely worthy.</li>
+</ul>
+
+
+<hr />
+
+<p>Unfortunately, there&rsquo;re not too much job opportunities in Taiwan. This is true, but on the other hand, there are also not too much people really good at Rails. I mean, Rails is popular and well-known, but most people just finish some tutorials from free course like code school or some one day workshop like Rails girls. What we different is &ndash; this is a great opportunity to show your ambitious why you want to &ldquo;PAY&rdquo; for Tealeaf to upgrade your Rails skill. This is always the first question when I talk with interview officer.</p>
+
+<p>I only got 4 interview chances in two month, two of them on April after finishing course 2 and the other two on May after finishing course 3. The Interview Prep is very very very helpful because I am asked for the exactly same questions from there!! Something like security probelm: csrf, authenticity token, or Rails architecture: MVC, OR Mapping, Ruby: polymorphism&hellip;etc. Even that example for association of person and children and grandson :-)</p>
+
+<p>Doing Interview Prep is also a good chance to review what I knew and what I don&rsquo;t know. For example: n + 1 queries and eager loading.</p>
+
+<p>Since I&rsquo;m not a native in English, so choosing a English-based course is also an impressing action. Same for writing blogs what I learned from Tealeaf course. I got an unexpecting interview chance from a foreigner company which offer higher payment than others, just because my blog is impressing to them.</p>
+
+<hr />
+
+<p>Hope these will be helpful.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Many to Many Association With Two Join Tables]]></title>
@@ -607,211 +651,6 @@ end
 <p>Kevin also metions this:</p>
 
 <blockquote><p>a pure &ldquo;mockist&rdquo; way of doing test can be difficult in Rails apps, because in rails apps persistence is handled by the framework and for small apps most of object collaboration / message sending are about persistence. If you mock those interfaces, you end up mocking the guts of rails and that typically doesn&rsquo;t end up well.  this is also why we only touch this topic in the context of non rails objects like service objects.</p></blockquote>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Reflection to Tealeaf Course3 Week7 (2/3)]]></title>
-    <link href="http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week7-2/"/>
-    <updated>2015-05-06T15:42:37+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week7-2</id>
-    <content type="html"><![CDATA[<h1>Beyond MVC</h1>
-
-<p>Rails built on MVC (Model / View / Controller) structure. And something get complex if we got more code and logic. This is why we need design patterns.</p>
-
-<h2>Decorators</h2>
-
-<p>Some tips from gem <code>Draper</code>:</p>
-
-<blockquote><p>Without Draper, this functionality might have been tangled up in procedural helpers or adding bulk to your models. With Draper decorators, you can wrap your models with presentation-related logic to organise - and test - this layer of your app much more effectively.</p></blockquote>
-
-<p>Or</p>
-
-<blockquote><p>Decorators are the ideal place to:</p>
-
-<ul>
-<li>format complex data for user display</li>
-<li>define commonly-used representations of an object, like a <code>name</code> method that combine <code>first_name</code> and <code>last_name</code> attributes.</li>
-<li>mark up attributes with a little semantic HTML, like turning a url fiedl into a hyperlink.</li>
-</ul>
-</blockquote>
-
-<p>First, install gem</p>
-
-<pre><code>gem 'draper'
-</code></pre>
-
-<pre><code class="ruby app/decorator/video_decorator.rb">class VideoDecorator &lt; Draper::Decorator
-  delegate_all
-
-  def rating
-    "Rating: " + (object.rating.present? ? "#{object.rating}/5.0" : "NA")
-  end
-end
-</code></pre>
-
-<p>And use it in controller</p>
-
-<pre><code class="ruby videos_controller.rb">  def show
-    @video = VideoDecorator.decorate(Vidoe.find(params[:id]))
-  dne
-</code></pre>
-
-<p>In view, just a clear line code.</p>
-
-<pre><code class="ruby app/views/videos/show.html.haml">  = @video.rating
-</code></pre>
-
-<p>The key point here is that we have a model data (rating) associated with view, it&rsquo;s not suitable to put to <code>view helper</code> (some logic with model). That&rsquo;s why here using decorator to encapsulate presentation logic.</p>
-
-<h2>Policy Objects</h2>
-
-<p>Define what is premium user:</p>
-
-<pre><code class="ruby models/user_level_policy.rb">class UserLevelPolicy
-  attr_reader :user
-  def initialize(user)
-    @user = user
-  end
-
-  def premium?
-    user.created_at &lt; Date.new(2010,1,1) || user.plan.premium?
-  end
-end
-</code></pre>
-
-<p>In Controller</p>
-
-<pre><code class="ruby todo_controller.rb">###some code
-
-  if UserLevelPolicy.new(current_user).premium?
-    #do something
-  else
-    #do another thing
-  end
-</code></pre>
-
-<p>Different with Decorators, Policy Ojbects only concern judgement logic into one place, without presentation concerned.</p>
-
-<h2>Domain Objects</h2>
-
-<p>if <code>User</code> has an attribute <code>credit_balance</code>. Then merge those code relative to <code>credit</code> into Domain Object.</p>
-
-<pre><code class="ruby models/credit.rb">class Credit
-  attr_accessor :credit_balance, :user
-
-  def initialize(user)
-    @credit_balance = user.current_credit_balance
-    @user = user
-  end
-
-  def -(number)
-    credit_balance = credit_balance - number
-  end
-
-  def save
-    user.current_credit_balance = credit_balance
-    user.save
-  end
-
-  def depleted?
-    credit_balance &lt; 0
-  end
-
-  def low_balance?
-    credit_balance &lt; 10
-  end
-end
-</code></pre>
-
-<p>Thus <code>Credit.new(current_user)</code> can call methods about credit, and don&rsquo;t need to put these code in model <code>User</code>, or <code>UsersController</code>.</p>
-
-<h2>Service Objects</h2>
-
-<p>We abstract an action as <code>sign up</code> in <code>UsersController#create</code>.</p>
-
-<pre><code class="ruby">class UsersController &lt; ApplicationController
-  def create    
-    @user = User.new(user_params)
-    user_signup_service = UserSignup.new(@user)
-    result = user_signup_service.sign_up(params[:stripeToken], params[:token])
-
-    if result.successful?
-      session[:user_id] = @user.id
-      redirect_to home_path
-    else
-      flash.now[:danger] =  user_signup_service.error_message
-      render :new
-    end
-  end
-end
-</code></pre>
-
-<p>Then create an service object <code>UserSignup</code> to handle this.</p>
-
-<pre><code class="ruby app/service/user_signup.rb">class UserSignup
-
-  attr_reader :error_message
-
-  def initialize(user)
-    @user = user
-  end
-
-  def sign_up(stripe_token = nil, invitation_token = nil)
-    if @user.valid?      
-      charge = customer_charge_user_with_stripe(stripe_token)
-      if charge.success?
-        @user.customer_token = charge.customer_token
-        @user.save
-        set_invitation_following_relationship(invitation_token)
-        AppMailer.delay.send_welcome_email(@user)
-        @status = :success
-        self
-      else
-        @status = :failed
-        @error_message = charge.error_message
-        self
-      end
-    else
-      @status = :failed
-      @error_message = "User info is invalid."
-      self
-    end
-  end
-
-  def successful?
-    @status == :success
-  end
-end
-</code></pre>
-
-<p>There is an article from Code Climate <a href="http://blog.codeclimate.com/blog/2012/10/17/7-ways-to-decompose-fat-activerecord-models/">7 Patterns to Refactor Fat ActiveRecord Models</a></p>
-
-<p>As it metion when to use Service Object:</p>
-
-<ul>
-<li>The action is complex (e.g. closing the books at the end of an accounting period)</li>
-<li>The action reaches across multiple models (e.g. an e-commerce purchase using Order, CreditCard and Customer objects)</li>
-<li>The action interacts with an external service (e.g. posting to social networks)</li>
-<li>The action is not a core concern of the underlying model (e.g. sweeping up outdated data after a certain time period).</li>
-<li>There are multiple ways of performing the action (e.g. authenticating with an access token or password). This is the Gang of Four Strategy pattern.</li>
-</ul>
-
-
-<h2>Some Concept for Object Oriented Design</h2>
-
-<ul>
-<li><p><code>Fat model, skinny controllers</code> makes model uncontrollrable. That&rsquo;s why we need Object Oriented Design</p></li>
-<li><p>YAGNI</p></li>
-</ul>
-
-
-<p>YAGNI means <code>You Aren't Gonna Need It!</code></p>
-
-<p>Don&rsquo;t write the code you haven&rsquo;t need it.</p>
-
-<p>Here is aother post talking about <code>YAGNI</code>, <code>KISS</code>, <code>DRY</code>.
-<a href="http://www.itexico.com/blog/bid/99765/Software-Development-KISS-YAGNI-DRY-3-Principles-to-simplify-your-life">Software Development: KISS, YAGNI &amp; DRY. 3 Principles to simplify your life.</a></p>
 ]]></content>
   </entry>
   

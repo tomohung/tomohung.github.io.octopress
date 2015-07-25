@@ -9,7 +9,7 @@
   <meta name="author" content="Tomo">
 
   
-  <meta name="description" content="Although I have some option video not done yet, I want to share some of my reflection. When I came to lesson 2, first I found that discussion is &hellip;">
+  <meta name="description" content="Continuous Integration(CI) and Continous Delivery(CD) This part is super exciting so I decide to make it a individual post. Continuous Integration(CI &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +81,8 @@
 <ul class="main-navigation">
   <li><a href="/">Blog</a></li>
   <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/blog/categories/tealeaf">Tealeaf</a></li>
+  <li><a href="/about/index.html">About</a></li>
 </ul>
 
 </nav>
@@ -94,7 +96,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/01/07/reflection-to-tealeaf-lesson-2/">Reflection of Tealeaf Week 2</a></h1>
+      <h1 class="entry-title"><a href="/blog/2015/04/09/reflection-to-tealeaf-course3-week5-2-slash-2/">Reflection to Tealeaf Course3 Week5 (2/2)</a></h1>
     
     
       <p class="meta">
@@ -103,7 +105,7 @@
 
 
 
-<time class='entry-date' datetime='2015-01-07T08:15:13+08:00'><span class='date'>2015-01-07</span> <span class='time'>8:15 am</span></time>
+<time class='entry-date' datetime='2015-04-09T15:58:27+08:00'><span class='date'>2015-04-09</span> <span class='time'>3:58 pm</span></time>
         
         
       </p>
@@ -111,100 +113,382 @@
   </header>
 
 
-  <div class="entry-content"><p><img class="right" src="http://i.minus.com/ibnRw2O1pxsQam.png" width="320"></p>
+  <div class="entry-content"><h3>Continuous Integration(CI) and Continous Delivery(CD)</h3>
 
-<p>Although I have some option video not done yet, I want to share some of my reflection.</p>
+<p>This part is super exciting so I decide to make it a individual post.</p>
 
-<p>When I came to lesson 2, first I found that discussion is less than lesson 1 obviously. I think this imply the lesson OOP is harder than before. Thank god I finished three assignments in a week, how I can do this is because:</p>
+<p>Continuous Integration(CI) and Continous Delivery(CD) are two of most important part in automation development. There are plenty of innovation tools, but I think the work flow is the key to understand.</p>
 
 <ol>
-<li><p>As a C++ programmer, OOP concept is also the same in Ruby, like inheritance, polymorphism, composition&hellip;etc. Since I have some experience to OOP, familiar with Ruby&rsquo;s style is not a hard work for me.</p></li>
-<li><p><a href="http://www.gotealeaf.com/books/oo_ruby"><code>Object Oriented Program book</code></a> is fantastic!! I spent one night to read it, then next day I can just start to implement my idea without too much struggles. It clearly explain the relationship between <code>is-a</code> and <code>has-a</code> corresponding to inheritance and mixin.</p></li>
+<li>Pull the latest code from GitHub.</li>
+<li>Create a new feature branch and develop.</li>
+<li>Finish development and put to a feature named branch on GitHub.</li>
+<li>Create a PR from this branch to <code>staging</code> branch.</li>
+<li>Wait CI test for staging branch.</li>
+<li>CI automatically deploy from staging branch to <code>staging server</code>.</li>
+<li>Manual test on staging server.</li>
+<li>Create PR from staging to <code>master</code> branch.</li>
+<li>trigger CI for master branch and automatically deploy to <code>production server</code>.</li>
 </ol>
 
 
-<p>And I do fall in love with Ruby, <code>convention</code> is over configuration becomes nature. In lesson 1, it&rsquo;s weird for me to pass a variable into method, but modified or not depends on what actions in the method. Now I start to think it&rsquo;s convenient to decide modified the variable in the method.
-<code>attr_accessor</code> is another kind of example, default getter and setter helps a lot to reduce typing time.</p>
+<h3>Setting CI and CD</h3>
 
-<p>Using polymorphism, I don&rsquo;t need to care about how using virtual function, just inheritance class then use it.
-Especially for method <code>super</code>, the best way to reduce redundant code.
-One suggestion, If subclass&rsquo;s initialize method doesn&rsquo;t use super, then you might think the superclass and subclass relationship is <code>has-a</code>, not <code>is-a</code>.</p>
-
-<p>I do love my <a href="https://github.com/tomohung/tealeaf/blob/master/Lesson2/oo_tic_tac_toe.rb">Tic-Tac-Toe</a> and <a href="https://github.com/tomohung/tealeaf/blob/master/Lesson2/oo_blackjack.rb">Black Jack</a> implemented by OO. In Tic-Tac-Toe, I use polymorphism to implement single player and double players mode. In Black Jack, I add feature that player can play with others NPC together, not just with dealer. This make the game likely in the real world. Without OO concept, these features are hard to implement.</p>
-
-<p>Next lesson is absolutely my challenge, because I&rsquo;m totally new for web development.
-But I do look forward to it.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/01/reflection-to-tealeaf-lesson-1/">Reflection to Tealeaf Week 1</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-01T16:03:33+08:00'><span class='date'>2015-01-01</span> <span class='time'>4:03 pm</span></time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img class="right" src="http://i.minus.com/ibsevSRoOPCEmU.png" width="320"></p>
-
-<p>Happy new year!!</p>
-
-<p>Before I talk about where I struggled with, I would like to say something before I join the course.
-I am using C++ for few years, and coding is part of my job. Before join the course, I&rsquo;ve also done the <a href="http://learnrubythehardway.org/book/">Learn Ruby The Hard Way</a> to lesson 45. <code>Learn Ruby The Hard Way</code> is also a good pratice, especially for <code>muscle memory</code>. It focus on <code>just typing ruby</code> when learning ruby knowledge.</p>
-
-<p>After that, I start <code>Prep Course</code> @ tealeaf, reading the book <a href="http://www.gotealeaf.com/books/ruby"><code>Introduce to Programing</code></a>. <code>Introduction to Programing</code> is also an amazing book, it use a simple way to explain more detail in ruby, and I really did several times &ldquo;Ah ha!&rdquo; when reading it. Then I thought I was ready for lesson 1, but maybe I&rsquo;m wrong :p</p>
-
-<p>About my struggles, as a C++ programmer, there are mainly two &ldquo;What?&rdquo; for ruby:</p>
+<p>Here we use <a href="https://circleci.com">Circle CI</a> for CI and CD. There is also well known service called <a href="https://travis-ci.org/">Travis CI</a>.</p>
 
 <ul>
-<li><p>variable scope: in C++, every local variable only survive in its scope, but in ruby, this is not always true. Even now, I&rsquo;m still a little confused with that. Glad that I find a way to deal with this: <code>Never use outside variable in insdie scope, make them in different name</code>.</p></li>
-<li><p>pointer &amp; reference: when passing a variable to functions(in ruby called: methods), if varaible has prefix like <code>*</code> or <code>&amp;</code>, it obvious means this variable may be modified in this methods. Ruby doesn&rsquo;t take this way, input variables in method could be modified just by what action do inside the method. Fotunately, ruby usaually append suffix <code>!</code> behind method&rsquo;s name to indicate this method modify input variable.</p></li>
+<li>Create a <code>staging</code> branch.</li>
+<li>Follow Circle CI project setting.</li>
+<li>You may need Heroku API key and SSH.</li>
+<li>[Key] Create a <code>circle.yml</code> in the root of project, adjust <code>production_app_name</code> and <code>staging_app_name</code>.</li>
 </ul>
 
 
-<p>Even these, I do love ruby.</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>machine:
+</span><span class='line'>  ruby:
+</span><span class='line'>    version: 2.1.5
+</span><span class='line'>deployment:
+</span><span class='line'>  production:
+</span><span class='line'>    branch: master
+</span><span class='line'>    commands:
+</span><span class='line'>      - heroku maintenance:on --app production_app_name
+</span><span class='line'>      - heroku pg:backups capture --app production_app_name
+</span><span class='line'>      - git push git@heroku.com:production_app_name.git $CIRCLE_SHA1:refs/heads/master
+</span><span class='line'>      - heroku run rake db:migrate --app production_app_name
+</span><span class='line'>      - heroku maintenance:off --app production_app_name
+</span><span class='line'>  staging:
+</span><span class='line'>    branch: staging
+</span><span class='line'>    commands:
+</span><span class='line'>      - heroku maintenance:on --app staging_app_name
+</span><span class='line'>      - git push git@heroku.com:staging_app_name.git $CIRCLE_SHA1:refs/heads/master
+</span><span class='line'>      - heroku run rake db:migrate --app staging_app_name
+</span><span class='line'>      - heroku maintenance:off --app staging_app_name</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I got an error when running Circle test: [counldn&rsquo;t find file &lsquo;bootstrap&rsquo;]</p>
+
+<p>Solution: Rename file <code>stylesheets/application.css</code> to <code>stylesheets/application.css.scss</code>. And add Line to the file:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@import 'bootstrap-sprockents'
+</span><span class='line'>@import 'bootstrap'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and remove line <code>*= require bootstrap</code>.</p>
+
+<h3>Embeded Badget</h3>
+
+<p>I aslo try to use badget in my homepage.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>%img(src="https://circleci.com/gh/tomohung/myflix.png?circle-token=a7c782deb0d0022335fa1f095e268bb44eb4cab8")</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then I can see this passing test badget.</p>
+
+<p><img src="https://circleci.com/gh/tomohung/myflix.png?circle-token=a7c782deb0d0022335fa1f095e268bb44eb4cab8"></p>
+
+<h3>Slack ingegration with Github and Circle CI</h3>
+
+<p>I failed to use <a href="http://ccmenu.org/">CCMenu</a> to have a notification. But I use <a href="https://slack.com/">Slack</a> to integrate GitHub and Circle CI, and that&rsquo;s why I said it&rsquo;s exciting!!</p>
+
+<p>After setting done, the only thing I need to do is <code>git push origin staging</code> or <code>git push origin master</code>. I&rsquo;ll get notifications in Slack when Github got a push event, and Circle CI run the test and deployment in the same time. Surely I will also get a Circle CI result notification if test and deployment finished.</p>
+
+<p>This is what a programmer should do!! Don&rsquo;t Repeat Yourself!! Bravo!!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/09/reflection-to-tealeaf-course3-week5/">Reflection to Tealeaf Course3 Week5 (1/2)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-09T14:39:06+08:00'><span class='date'>2015-04-09</span> <span class='time'>2:39 pm</span></time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>Feature test for sending email</h3>
+
+<p>Following by <a href="http://www.tomohung.com/blog/2015/04/07/reflection-to-tealeaf-course3-week4/">previous week</a>, this week we have a feature test for sending email.</p>
+
+<p>Install gem,</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ gem 'capybara-email'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And added this line to <code>spec_helper.rb</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>require 'capybara/email/rspec'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>require 'spec_helper'
+</span><span class='line'>
+</span><span class='line'>feature 'User resets password' do
+</span><span class='line'>  scenario 'user successfully resets the password' do
+</span><span class='line'>    clear_emails
+</span><span class='line'>
+</span><span class='line'>    user = Fabricate(:user)
+</span><span class='line'>    visit sign_in_path
+</span><span class='line'>    click_link 'Forgot Password?'
+</span><span class='line'>
+</span><span class='line'>    fill_in 'Email Address', with: user.email
+</span><span class='line'>    click_button 'Send Email'
+</span><span class='line'>
+</span><span class='line'>    open_email(user.email)
+</span><span class='line'>    current_email.click_link("Reset Password")
+</span><span class='line'>
+</span><span class='line'>    fill_in 'New Password', with: 'new_password'
+</span><span class='line'>    click_button 'Reset Password'
+</span><span class='line'>
+</span><span class='line'>    fill_in 'Email Address', with: user.email
+</span><span class='line'>    fill_in 'Password', with: 'new_password'
+</span><span class='line'>    click_button 'Sign in'
+</span><span class='line'>    expect(page).to have_content("Welcome, #{user.full_name}")
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Especially notice for <code>open_email</code>, <code>current_email</code> functions are offered by <code>capybara-email</code> gem.</p>
+
+<h3>Invite Friend and Registeration</h3>
+
+<p>We also have a work on inviting friends through email, the key point here is how to use a secure <code>token</code> to tracking data.</p>
 
 <ul>
-<li>There are a lot of built-in convenient methods for String, Array, Hash&hellip;etc. And more are waiting to discover</li>
-<li>More fluent phrase for flow control, if, unless, while, until&hellip;etc. Readable code is becoming more and more important.</li>
-<li>type less key :p</li>
+<li>create an invitations data, including inviter, recipient email, name, and <code>token</code>.</li>
+<li><p>when user get the email, following the link provided to server, page will direct to the register page with existing data stored with this token.</p>
+
+<p>And set the routes for path</p></li>
 </ul>
 
 
-<p>And special Thanks for TA&rsquo;s:
-Without their help, I couldn&rsquo;t finished these assignments on time. Because of unfamiliar with ruby methods, wrong code style, improper naming&hellip;etc. They always give me timely advice.</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>get 'register/:token', to: 'users#new_with_invitation_token'</span></code></pre></td></tr></table></div></figure>
 
-<p>Last, share my experience for developing game <code>Black Jack</code>:</p>
 
 <ul>
-<li>write psuedo code : 10 min</li>
-<li>coding : 2 hours</li>
-<li>debugging : 2 hours more</li>
-<li>feedback from TA, then refactor: 2 hours</li>
+<li>we can have a hidden data in the register form for new#users to use.</li>
 </ul>
 
 
-<p>By the way, the most difficulty in Lesson 1 is completing &ldquo;Tic-Tac-Toe&rdquo; AI, it tooks me 10 hours more.
-If you are totally new to program, don&rsquo;t be disppointed at spending a lot of time, because me too!!
-If you are take these assignment as piece of cake, well, let&rsquo;s move to Lesson 2. See you.</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>= hidden_field_tag :token, @invitation_token</span></code></pre></td></tr></table></div></figure>
+
+
+<p>we don&rsquo;t use form_for element, becuase this hidden attribute does not belong to backend modeled form.</p>
+
+<h3>Concerns</h3>
+
+<p>To Dry our code, we can use <code>concern</code> with <code>module</code>. Here is a <a href="https://signalvnoise.com/posts/3372-put-chubby-models-on-a-diet-with-concerns">post by DHH</a> why we should do this.</p>
+
+<p>We can merge the same function feature into concern file. For example: <code>Tokenable</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#/lib/tokenable.rb
+</span><span class='line'>module Tokenable
+</span><span class='line'>  extend ActiveSupport::Concern
+</span><span class='line'>  included do
+</span><span class='line'>    before_create :generate_token
+</span><span class='line'>  end
+</span><span class='line'>
+</span><span class='line'>  private
+</span><span class='line'>  def generate_token
+</span><span class='line'>    self.token = SecureRandom.urlsafe_base64
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then add to model file</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>require 'tokenable'
+</span><span class='line'>
+</span><span class='line'>class User &lt; ActiveRecord::Base
+</span><span class='line'>  include Tokenable
+</span><span class='line'>  ...
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I prefer to specify require file name, or we can use <a href="http://stackoverflow.com/questions/19098663/auto-loading-lib-files-in-rails-4">auto loading library files</a>.</p>
+
+<h3>Email Service Providers</h3>
+
+<p>Since we have test email sending on ENV:development and EVN:test, now we have test it in the real world. That&rsquo;s why we need a real email service provider. Google has it but with many restriction, Tealeaf recommend <code>Mailgun</code> or <code>Postmark</code>. Here we have a taste for `Mailgun&#8217;.</p>
+
+<p>To setting <code>config/environments/production.rb</code>, add these lines:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>config.action_mailer.default_url_options = { :host =&gt; "tomo-myflix.herokuapp.com" }
+</span><span class='line'>  config.action_mailer.smtp_settings = {
+</span><span class='line'>    :port           =&gt; ENV['MAILGUN_SMTP_PORT'],
+</span><span class='line'>    :address        =&gt; ENV['MAILGUN_SMTP_SERVER'],
+</span><span class='line'>    :user_name      =&gt; ENV['MAILGUN_SMTP_LOGIN'],
+</span><span class='line'>    :password       =&gt; ENV['MAILGUN_SMTP_PASSWORD'],
+</span><span class='line'>    :domain         =&gt; 'tomo-myflix.herokuapp.com',
+</span><span class='line'>    :authentication =&gt; :plain,
+</span><span class='line'>  }
+</span><span class='line'>  config.action_mailer.delivery_method = :smtp</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>tomo-myflix.herokuapp.com</code> is my app name on Heroku. And ENV about Mailgun are maintained by Heroku.</p>
+
+<p>I aslo can use this command to check <code>Heroku configurations</code>.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ heroku config</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then push it to heroku and test for a real email address, it works!!</p>
+
+<h3>Background Jobs</h3>
+
+<p>Sometimes, some actions do not need to be synchrous, like sending email, we don&rsquo;t need to wait email sending action completed. That&rsquo;s why we need to use a background job to do sending email to speed up the flow.</p>
+
+<p><code>Sidekiq</code> and <code>Resque</code> are some of this concept product. And Tealeaf recommend to use <a href="https://github.com/mperham/sidekiq/wiki">Sidekiq</a>.</p>
+
+<p>Install gem Sidekiq</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>gem 'sidekiq'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Only a tiny change for using it by delay method</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>AppMailer.delay.notify_on_new_todo(current_user, @todo) # new 
+</span><span class='line'>AppMailer.notify_on_new_todo(current_user, @todo).deliver #older one
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Add this line in <code>spec/spec_helper.rb</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>require 'sidekiq/testing/inline'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here we setup sidekiq, but we still need start <code>Redis</code> server:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ brew install redis
+</span><span class='line'>$ redis-server /usr/local/etc/redis.conf</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And this start sidekiq with another terminal:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ bundle exec sidekiq</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So far, this makes <code>local</code> works fine with <code>sidekiq</code> for background jobs. If we want to use background jobs in ENV:production, Heroku take charges if dyno is more than 1, or try <a href="https://coderwall.com/p/fprnhg/free-background-jobs-on-heroku">this way to simulate</a></p>
+
+<p>I have not implemented this yet, but I&rsquo;ll try it later.</p>
+
+<p>There is also <a href="https://devcenter.heroku.com/articles/procfile#deploying-to-heroku">an article talking about Procfile and Foreman</a>.</p>
+
+<p>If sidekiq version >= 3.0, you might also run this line</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>heroku config:set REDIS_PROVIDER=REDISTOGO_URL</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Monitor Production Error</h3>
+
+<p>Here we have a try for <a href="https://getsentry.com/welcome/">Sentry</a>.</p>
+
+<p>Tracking errors is also a key for automation deployment.</p>
 </div>
   
   
@@ -217,7 +501,7 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/12/15/yu-yan-guan-li-xu/">語言管理－續</a></h1>
+      <h1 class="entry-title"><a href="/blog/2015/04/07/reflection-to-tealeaf-course3-week4/">Reflection to Tealeaf Course3 Week4</a></h1>
     
     
       <p class="meta">
@@ -226,7 +510,7 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
 
 
 
-<time class='entry-date' datetime='2014-12-15T20:34:40+08:00'><span class='date'>2014-12-15</span> <span class='time'>8:34 pm</span></time>
+<time class='entry-date' datetime='2015-04-07T13:11:30+08:00'><span class='date'>2015-04-07</span> <span class='time'>1:11 pm</span></time>
         
         
       </p>
@@ -234,24 +518,147 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
   </header>
 
 
-  <div class="entry-content"><p><img src="http://i.minus.com/ijEvqo7aLC7BY.jpg" width="640"></p>
+  <div class="entry-content"><h3>Three kinds of BDD</h3>
 
-<p><a href="http://www.tomohung.com/blog/2014/12/12/language-management/">上一篇文章</a>關於聽了『語言管理』講座，朋友私底下來信討論，整理了一下對話留個記錄。刪去了一些朋友之間五四三的對話，盡量保留原意：</p>
+<p>In week 4 beginning, we got a brief intro for 3 kinds of BDD:</p>
 
-<h1>對話</h1>
+<ul>
+<li><p>meet in the middle</p>
 
-<p>R&rsquo;s:</p>
+<p>I think this should be the popular one for modern development. The front-end engineer build the pages from mockups, then back-end developer connect UI with controllers and models.</p></li>
+<li><p>inside out</p>
 
-<blockquote><p>  &ldquo;參與力&#8221;聽起來只是重新包裝過的&#8221;競爭力&#8221;耶&hellip;.你把他用&#8221;參與力&#8221;的句子全部代換成競爭力應該一樣通順吧？<br/>
-    他的所謂的新詞的話 得到的action item會跟原來用&#8221;競爭力&#8221;當重點的時候 不一樣在哪邊？<br/>
-    我想我的疑問來自於 結果都是要強調語言很重要的話，那特別創新的詞的用意？</p></blockquote>
+<p>It develops from models to controllers till views and integrations. It&rsquo;s hard to decide what models you really need in the beginning.</p></li>
+<li><p>outside in</p>
 
+<p>It devlops from integrations to controllers and models. It start from a big vision, and close to what user&rsquo;s need. But for developer, it&rsquo;s hard to code from this big vision, especially for integration test in the development beginning.</p></li>
+</ul>
+
+
+<h3>Self Referential Associations</h3>
+
+<p>We can use <strong>self referential association</strong> to let user track other users. For example:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># t.integer :follower_id, :leader_id
+</span><span class='line'>class Relationship &lt; ActiveRecord::Base
+</span><span class='line'>  belongs_to :follower, class_name: 'User'
+</span><span class='line'>  belongs_to :leader, class_name: 'User'
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then, model <code>User</code> can have these virtual attributes:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  has_many :following_relationships, class_name: 'Relationship', foreign_key: :follower_id
+</span><span class='line'>  has_many :leading_relationships, class_name: 'Relationship', foreign_key: :leader_id</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Sending Emails</h3>
+
+<p>Rails also offer <code>ActionMailer</code> for sending emails.</p>
+
+<ul>
+<li>create files in <code>app/mailers/app_mailer.rb</code></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class AppMailer &lt; ActionMailer::Base
+</span><span class='line'>
+</span><span class='line'>  def send_welcome_email(user)
+</span><span class='line'>    @user = user
+</span><span class='line'>    mail to: user.email, from: 'info@myflix.com', subject: 'Welcome to Myflix'
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><code>View</code> template in <code>app/views/app_mailers/send_welcome_email</code>:</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>%html(lang='en-US')
+</span><span class='line'>  %body
+</span><span class='line'>    %p Welcome to MyFlix, #{@user.full_name}</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Config for <code>config/environments/development.rb</code></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>config.action_mailer.delivery_method = :letter_opener</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>group :development do
+</span><span class='line'>  gem 'letter-opener'
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<blockquote><p>This is only for <code>development</code> setting, we also need to set for <code>test</code> and <code>production</code> independent</p></blockquote>
+
+<h3>Handling Sensitive Account Info</h3>
+
+<p>It&rsquo;s dangerous to upload config setting file to github or other public storage, there is someone update AWS key to GitHub and got a unbelievable credit bill.</p>
+
+<p>Use <code>ENV</code> to protect secret data, we can use gem <code>Figaro</code>.
+<a href="https://github.com/laserlemon/figaro">Figara</a> is the simplest way to keep our key value safe.</p>
+
+<p>There are two posts talking about this topic:</p>
+
+<ol>
+<li><a href="http://railsapps.github.io/rails-environment-variables.html">Rails Environment Variables</a></li>
+<li><a href="https://devcenter.heroku.com/articles/config-vars">Configuration and config Vars</a></li>
+</ol>
+
+
+<blockquote><p>Update: Tealeaf also have a post about <a href="http://www.gotealeaf.com/blog/managing-environment-configuration-variables-in-rails">Managing Environment Configuration Variables in Rails</a></p></blockquote>
+
+<h3>Test Email sending</h3>
+
+<p>Remember to clear email deliveries before test:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>before { ActionMailer::Base.deliveries.clear }
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then we can validate email in the test by this</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>post :create
+</span><span class='line'>expect(ActionMailer::Base.deliveries.last.to).to eq([user_attributes["email"]])
+</span><span class='line'># expect(ActionMailer::Base.deliveries.last.body).to include(user_attributes["full_name"])</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Update database, use rake tasks</h3>
+
+<p>An advice from TA Tomtomecek, I update existing data in model User, and he suggest me to use <a href="http://guides.rubyonrails.org/command_line.html#custom-rake-tasks">custom rake tasks</a> to do that. I&rsquo;ve not taste that yet, just leave a memo here to remember.</p>
 </div>
   
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/12/15/yu-yan-guan-li-xu/">繼續閱讀 Read on &rarr;</a>
-    </footer>
   
 
 
@@ -262,7 +669,7 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/12/12/language-management/">語言管理</a></h1>
+      <h1 class="entry-title"><a href="/blog/2015/03/17/reflection-to-tealeaf-course3-week3/">Reflection to Tealeaf Course3 Week3</a></h1>
     
     
       <p class="meta">
@@ -271,7 +678,7 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
 
 
 
-<time class='entry-date' datetime='2014-12-12T05:32:48+08:00'><span class='date'>2014-12-12</span> <span class='time'>5:32 am</span></time>
+<time class='entry-date' datetime='2015-03-17T09:41:26+08:00'><span class='date'>2015-03-17</span> <span class='time'>9:41 am</span></time>
         
         
       </p>
@@ -279,18 +686,268 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
   </header>
 
 
-  <div class="entry-content"><p><img src="http://i.minus.com/ibp6diev7FKMoZ.jpg" width="640"></p>
+  <div class="entry-content"><p><a href="http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2/">In week 2</a>, Tealeaf talked about how to test controller, and this week, I got a more comprehensive test consideration for controller and user interaction.</p>
 
-<p>這禮拜三晚上，特地到台大參加今周刊舉辦的講座『語言管理』，一開始完全就是為了范疇才報名的，想聽看看本人會說些什麼。但其實講座的主講人有兩位，一位是范疇，另一位是陳超明老師。</p>
+<h3>For Controller Test</h3>
 
-<p>聽完後才覺得，這輩子學英文老是覺得學習英文很重要，但是總是處於半吊子的狀態，范疇說了，<code>英文不是拿來學習的，是要拿來用的</code>。怎麼樣建立目標與動機，永遠是學習最重要的課題啊。</p>
+<ul>
+<li>Everytime add a function feature, also need to add a test for it.</li>
+<li>Everytime find a bug, also add a test for it.</li>
+</ul>
 
+
+<h3>DRY</h3>
+
+<p>RSpec also offer two ways to DRY code.</p>
+
+<h4>- Macro</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mkdir spec/support
+</span><span class='line'>$ touch macros.rb</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And we can move repeatedly code into here, for example, we usually need to set a login user:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def set_current_user(user = nil)
+</span><span class='line'>  session[:user_id] = (user || Fabricate(:user)).id
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and find user</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def current_user
+</span><span class='line'>  User.find(session[:user_id])
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>- Shared Examples</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ touch spec/support/share_examples.rb</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A test method may be called through different controllers:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>shared_examples 'requre_sign_in' do
+</span><span class='line'>  it 'redirects to the root page'
+</span><span class='line'>    action
+</span><span class='line'>    expect(response).to redirect_to root_path
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Be careful: <code>action</code> is a <strong>variable</strong>, then when using it:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>it_behaves_like 'require_sign_in' do
+</span><span class='line'>  let(:action) { get :index }
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Feature Specs</h3>
+
+<p>There are two methods to test user interactions, one is <code>request spec</code> and this is deprecated by <strong>Capybara</strong>. The other one is <code>feature specs</code>, recommended by <strong>Capybara</strong>.</p>
+
+<p><strong>Capybara</strong> offer functions that we can click link/button, fill text field&hellip;etc, to interactive with UI.</p>
+
+<h4>- Install Capybara gem</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>group :test
+</span><span class='line'>  gem 'capybara'
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Also add this line to test helper file</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>requrire 'capybara/rails'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$mkdir spec/features
+</span><span class='line'>$touch user_signs_in_spec.rb</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>- A sample for user operation:</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>feature 'user interacts with the queue' do 
+</span><span class='line'>
+</span><span class='line'>  scenario 'user adds and reorder videos in the queue' do
+</span><span class='line'>    category    = Fabricate(:category)
+</span><span class='line'>    monk        = Fabricate(:video, title: 'monk', category: category)
+</span><span class='line'>    futurama    = Fabricate(:video, title: 'futurama', category: category)
+</span><span class='line'>    south_park  = Fabricate(:video, title: 'south park', category: category)
+</span><span class='line'>
+</span><span class='line'>    sign_in
+</span><span class='line'>    expect(page).to have_content 'You have signed in.'
+</span><span class='line'>
+</span><span class='line'>    add_video_to_queue(monk)
+</span><span class='line'>    expect(page).to have_content(monk.title)
+</span><span class='line'>
+</span><span class='line'>    visit video_path(monk)
+</span><span class='line'>    expect(page).not_to have_content('+ My Queue')
+</span><span class='line'>
+</span><span class='line'>    add_video_to_queue(futurama)
+</span><span class='line'>    add_video_to_queue(south_park)
+</span><span class='line'>
+</span><span class='line'>    set_video_order(monk, 3)
+</span><span class='line'>    set_video_order(futurama, 1)
+</span><span class='line'>    set_video_order(south_park, 2)
+</span><span class='line'>
+</span><span class='line'>    expect_video_order(monk, 3)
+</span><span class='line'>    expect_video_order(futurama, 1)
+</span><span class='line'>    expect_video_order(south_park, 2)
+</span><span class='line'>  end
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'>def add_video_to_queue(video)
+</span><span class='line'>  visit home_path
+</span><span class='line'>  find("a[href='/videos/#{video.id}']").click
+</span><span class='line'>  expect(page).to have_content(video.title)
+</span><span class='line'>  click_link '+ My Queue'
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'>def set_video_order(video, order)
+</span><span class='line'>  within(:xpath, "//tr[contains(.,'#{video.title}')]") do
+</span><span class='line'>    fill_in 'queue_items[][position]', with: order
+</span><span class='line'>  end
+</span><span class='line'>end
+</span><span class='line'>
+</span><span class='line'>def expect_video_order(video, order)
+</span><span class='line'>  expect(find(:xpath, "//tr[contains(.,'#{video.title}')]//input[@type='text']").value).to eq(order.to_s)
+</span><span class='line'>end
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>here I choose to use <code>:xpath</code>.</p>
+
+<h4>- One level for scenario</h4>
+
+<p>In above sample, I extract methods <code>add_video_to_queue</code>, <code>set_video_order</code>, and <code>expect_video_order</code>. This is we want to keep a principle <code>Abstract one level for scenario</code>. Encapsulating logic code and keep main code readable on the same abstract level can help reader to review.</p>
+
+<h3>Rails Conventions</h3>
+
+<h4>- Merge Params</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>= form_tag update_queue_path do
+</span><span class='line'>  ...
+</span><span class='line'>  %td= text_field_tag 'queue_items[][position]', queue_item.position
+</span><span class='line'>  =hidden_field_tag 'queue_items[][id]', queue_item.id
+</span><span class='line'>
+</span><span class='line'>  =submit_tag 'Update'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then we will get a hash value <code>params[queue_items] = {position: xxx, id: xxx}</code></p>
+
+<h4>- select_tag</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>%td= select_tag 'queue_items[][rating]', options_for_video_reviews(queue_item.rating), include_blank: true</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And <code>options_for_video_reviews</code>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def options_for_video_reviews(selected = nil)
+</span><span class='line'>  options_for_select((1..5).map { |num| [pluralize(num, 'Star'), num]}, selected)
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Be careful that <code>[pluralize(num, 'Star'), num]</code> is a pair value.</p>
+
+<h4>- ActiveRecord Transactions</h4>
+
+<p>A sample from Rails Tutorial</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ActiveRecord::Base.transaction do
+</span><span class='line'>  david.withdrawal(100)
+</span><span class='line'>  mary.deposit(100)
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If any one of <code>david.withdrawl</code> or <code>mary.deposit</code> raise an exception(<strong>Be careful: there must be a raising error to trigger transaction</strong>), all database record in this action will be rollback. It deal with batch action with database. So I have to care about what functions will raise an exception when fail. Ex. <code>update</code> return a fail, and <code>update!</code> raise an exception.</p>
 </div>
   
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/12/12/language-management/">繼續閱讀 Read on &rarr;</a>
-    </footer>
   
 
 
@@ -301,7 +958,7 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2014/12/09/why-do-software-engineers-make-so-much/">[Quora]為什麼軟體工程師可以賺這麼多錢？</a></h1>
+      <h1 class="entry-title"><a href="/blog/2015/03/11/reflection-to-tealeaf-course3-week2/">Reflection to Tealeaf Course3 Week2</a></h1>
     
     
       <p class="meta">
@@ -310,7 +967,7 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
 
 
 
-<time class='entry-date' datetime='2014-12-09T20:51:53+08:00'><span class='date'>2014-12-09</span> <span class='time'>8:51 pm</span></time>
+<time class='entry-date' datetime='2015-03-11T11:21:17+08:00'><span class='date'>2015-03-11</span> <span class='time'>11:21 am</span></time>
         
         
       </p>
@@ -318,168 +975,72 @@ If you are take these assignment as piece of cake, well, let&rsquo;s move to Les
   </header>
 
 
-  <div class="entry-content"><p><img src="http://i.minus.com/iEq3JDsAn8DtA.jpg" width="640"></p>
+  <div class="entry-content"><p>There are 3 kinds of test: <code>Unit</code>, <code>Functional</code>, <code>Integration</code>. In <a href="http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1/">week 1</a>, we test <strong>Model</strong>, this should belong to <code>Unit test</code> . And this week we test <strong>Controller</strong>, this should belong to <code>Functional test</code>. I guess it should be <code>Integration test</code> when we move into part of <strong>View</strong> test.</p>
 
-<p>原文出處Origin: <a href="http://qr.ae/qhLVJ">http://qr.ae/qhLVJ</a></p>
+<p>I have to heavily rely on solution videos, there are two main reasons:</p>
 
-<h1>為什麼軟體工程師可以賺這麼多錢？</h1>
-
-<h2>問：</h2>
-
-<!--
-In California, the average software engineer at a tech startup makes well over $100k/year. And that's when they're fresh out of college. 
-
-Why? I'm guessing it's because of supply/demand and there's a shortage of software engineers.
-
-With so many students pursuing careers in software engineering today, do you see salaries going significantly down in the future? By how much would you say?
--->
+<ol>
+<li><p>I&rsquo;m not familiar with <code>what to test</code>, because I&rsquo;m a starter for TDD. It&rsquo;s a big conversion <strong>from test laster to test driven</strong>.</p></li>
+<li><p>I&rsquo;m not familiar with <code>RSpec</code>. There are some tricks for test controllers when using RSpec.</p></li>
+</ol>
 
 
-<p>在加州，軟體工程師在新創團隊年薪可超過10萬。而且這還是他們剛踏出校園的水準。</p>
+<p>For example, when we test `QueueItemsController#create&#8217;, there are 7 tests:</p>
 
-<p>為什麼？我猜這是因為供給需求，而軟體工程師很少。
-隨著愈來愈多學生投入軟體工程的今天，你可以預見在未來薪水會明顯的減少嗎？又會少到什麼程度呢？</p>
+<ul>
+<li>it &lsquo;redirects to my queue page&rsquo;</li>
+<li>it &lsquo;creates a queue item&rsquo;</li>
+<li>it &lsquo;creates the queue item associated with video&rsquo;</li>
+<li>it &lsquo;creates the queue item associated with current user&rsquo;</li>
+<li>it &lsquo;puts the video as the last one in the queue&rsquo;</li>
+<li>it &lsquo;does not add the video in the queue if already existed in the queue&rsquo;</li>
+<li>it &lsquo;redirects to sign in page if unauthenticated&rsquo;</li>
+</ul>
 
-<h2>答：</h2>
 
-<p><strong>Michael O. Church</strong></p>
+<p>A simple action needs to do such lots of tests!!</p>
 
-<!--
-That's actually not that high. Housing is considered affordable at 24-30% of a person's annual income. That means that, at $100,000 per year, you can afford up to $2,000 to $2,500 per month. What can you get in San Francisco for $2,500? Or New York? You can get a decent studio or 1BR, but raising a family is impossible. Even in the Valley, what kind of house would you be able to get on a $2,500 mortgage?
--->
+<p>Or here is for <strong>Model</strong> methods: <code>search_by_title</code>:</p>
+
+<ul>
+<li>it &lsquo;returns empty array if no match&rsquo;</li>
+<li>it &lsquo;returns an array if one video&rsquo;</li>
+<li>it &lsquo;returns an array if partial match&rsquo;</li>
+<li>it &lsquo;returns an array of all matches ordered by DESC&rsquo;</li>
+<li>it &lsquo;returns an empty array for search an empty string&rsquo;</li>
+</ul>
 
 
-<p>實際上並沒有這麼高。住的花費大概會佔掉一個人大約24-30%的年收入。這表示，年收入10萬，你可以負擔2000-2500每個月的房租。只有2500要怎麼在舊金山生活？或者是紐約？你可以有一個工作室，或是一個小套房，但如果是一個家庭的話，不可能。甚至在矽谷，什麼樣的房子可以只用2500就能貨款買到？</p>
+<p>To test every possible situations is not an easy work.</p>
 
+<p>Brandon also metioned me that care about using <code>let</code> and <code>before</code>. Because of lots of tests in spec files, we may miss some pre-declare vars by using <code>let</code> or <code>before</code>. Sometimes, it may be better do not clean duplicated codes for code readability.</p>
+
+<p>Second, extract methods into <strong>Model</strong>. ex:</p>
+
+<figure class='code'><figcaption><span>user.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">def</span> <span class="nf">queue_include?</span><span class="p">(</span><span class="n">video</span><span class="p">)</span>
+</span><span class='line'>    <span class="n">queue_items</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:video</span><span class="p">)</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="n">video</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>then, I can use this method everywhere in my app.</p>
+
+<h3>Conclusion</h3>
+
+<p>Still on the way to be more familiar to do TDD. :-)</p>
 </div>
   
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/12/09/why-do-software-engineers-make-so-much/">繼續閱讀 Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/12/06/what-do-mainland-chinese-people-think-of-the-democracy-in-taiwan/">[Quora]大陸人怎麼看台灣民主？</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-12-06T21:48:36+08:00'><span class='date'>2014-12-06</span> <span class='time'>9:48 pm</span></time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="http://i.minus.com/ibw1BjtQuOWXDe.jpg" width="640"></p>
-
-<p>原文出處：<a href="http://qr.ae/DQj7j">http://qr.ae/DQj7j</a></p>
-
-<h1>大陸人怎麼看台灣民主？</h1>
-
-<p><strong>Feifei Wang</strong></p>
-
-<!---
-Mainland Chinese people have a rather mixed feeling about the democracy in Taiwan, that is, for those small group of intellectuals who do feel something about it. Most people simply don’t care. What does Taiwan have to do with us, other than “they’re part of China”. While it is nice for the Taiwanese to imagine that mainland Chinese actually “envy” their system, it’s no more than a self-indulging illusion. 
--->
-
-
-<p>大陸人有一種混雜的心情看待台灣的民主，就是只有小部份團體會關心它，而大部份的人並不會去關心。台灣會對我們做什麼，或者是台灣是中國的一部份。有時台灣人會想像大陸是一種”邪惡”的系統，但那只不過是種自我安慰罷了。</p>
-
-<!---
-There’re a certain group of people who kept a close watch on Taiwan democracy. They’re hoping that they might use Taiwan’s model and do something similar in Mainland China. These are the people who truly have the will (some even have the power) to change. 
--->
-
-
-<p>有一些保持近距離觀察台灣民主的團體，他們希望台灣民主的模式，也許有些類似的模式可以用在大陸上。他們是真正有願景（有些也有能力）去改變。</p>
-
-<!---
-And how they’re disappointed. 
--->
-
-
-<p>然後他們失望了。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/12/06/what-do-mainland-chinese-people-think-of-the-democracy-in-taiwan/">繼續閱讀 Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/12/06/whats-it-like-to-have-a-150-iq-is-life-really-easy/">[Quora]IQ150的人是怎樣的體驗，是否生活變成很輕鬆？</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-12-06T21:37:12+08:00'><span class='date'>2014-12-06</span> <span class='time'>9:37 pm</span></time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img src="http://i.minus.com/ield6JjxHhryw.jpg" width="640"></p>
-
-<p>原文出處： <a href="http://qr.ae/mT5sc">http://qr.ae/mT5sc</a></p>
-
-<h1>IQ150的人是怎樣的體驗，是否生活變成很輕鬆？</h1>
-
-<p><strong>Kerry Watson</strong></p>
-
-<!---
-I was once married to a man with an IQ of 170. After we broke up he was diagnosed with Asperger syndrome and ADD. Life is in no way easier; in many ways it is far more difficult. Nobody seems logical; everything and everyone is a shade of gray, nothing is black and white. Even easy decisions get mired in possibilities.
--->
-
-
-<p>我曾經嫁給一位IQ170的人。之後我們離婚因為他患有愛斯柏格症Asperger syndrome和注意力不足過動症ADD。生活沒有更輕鬆，而是再困難不過的事了。沒有人看起來是有邏輯性的，任何東西和任何人都是黑暗的陰影，沒有黑白對錯。甚至簡單的決擇都有可能變成一團亂。</p>
-
-<!---
-Sure, work is super-easy, but it’s also boring and hard to find real challenges, and one gets mired in the politics that are illogical and emotional and downright stupid. His difficulty in life was trying to reduce everything to a model. Of course the world cannot be reduced to a model. In a discussion, he would try to define the criteria by which to judge the discussion (the model), then he would “win” because he had defined them. Most people didn’t catch on to this. And nobody gets issued common sense to go with a high IQ. The two might even be inversely correlated.
--->
-
-
-<p>當然，工作是超級簡單，但它也令人覺得無聊也找不到真正值得挑戰的目標，一個人陷入非理性的情緒時完全變成個傻瓜。他的為難點就是在生活中把任何的事情都要歸納出一個模型。當然，世界並沒有辦法簡單的縮減成一個模型。在模型的討論中，也許他會”贏”，是因為他老早就定義這些模型了。大部份的人並無法理解這件事，也沒有人會對這種常識發出疑問。這兩件事甚至是相反的關係。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2014/12/06/whats-it-like-to-have-a-150-iq-is-life-really-easy/">繼續閱讀 Read on &rarr;</a>
-    </footer>
   
 
 
     </article>
   
   <div class="pagination">
+    
+      <a class="prev" href="/posts/6">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
