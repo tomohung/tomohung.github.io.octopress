@@ -9,7 +9,7 @@
   <meta name="author" content="Tomo">
 
   
-  <meta name="description" content="It&rsquo;s a late post since I got a Rails job for 2 month. I&rsquo;ll share my background and my interview experience, hope it will be helpful if &hellip;">
+  <meta name="description" content="因為最近被壞同事推坑，開始對Elixir這個Functional Program產生了興趣。目前還在官網的getting started奮鬥中，但已經可以感受到一些function program和一般OOP的語言所帶來不同的樂趣和不同的思考方式。 網路上的學習資源跟Ruby比起來還差了一大截， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -90,6 +90,62 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/12/18/good-ways-of-learning-elixir-programming-language/">Good Ways of Learning Elixir Programming Language</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-12-18T16:32:43+08:00'><span class='date'>2015-12-18</span> <span class='time'>4:32 pm</span></time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>因為最近被壞同事推坑，開始對Elixir這個Functional Program產生了興趣。目前還在官網的getting started奮鬥中，但已經可以感受到一些function program和一般OOP的語言所帶來不同的樂趣和不同的思考方式。</p>
+
+<p>網路上的學習資源跟Ruby比起來還差了一大截，剛好在Quora上看到一篇建議的文章就順手翻譯了一下來灌個水。</p>
+
+<p>Quora原文出處<a href="https://www.quora.com/What-are-some-good-ways-of-learning-the-Elixir-programming-language">link</a></p>
+
+<p>我是如何學習Elixir的：
+Here&rsquo;s how I learned Elixir:</p>
+
+<ol>
+<li>從elixir-lang.org的getting started開始</li>
+<li>Learn Elixir with a Pro<a href="http://elixirsips.com/">link</a>，很有幫助的教學，可以了解Elixir很多函式庫和語言特徵</li>
+<li>The Pragmatic Bookshefl | Programming Elixir</li>
+<li>大量讀其它Elixir的程式碼，我建議讀Elixir的函式庫，因為你每天都在用。對我而言主要就是phoenix framwork/phoenix和Elixir-lang/plug</li>
+<li>動手寫一些程式碼！我做了Programming Elixir書上的習慣，還有一些OSS的貢獻。我也用Phoenix建一些應用。</li>
+<li>學習Erlang！ The Progmatic Bookshelf | Programming Erlang</li>
+</ol>
+
+
+<p>The Programming Elixir有很多的習題可以讓你很快上手</p>
+
+<p>看完書後，你會發現有很多不清楚的地方，這是因為你得學Erlang（譯：這不是個好消息）。學習Erlang變的很簡單因為Elixir本來就有很多承襲Erlang的地方。</p>
+
+<p>累的時候就看一些screencast，和讀書交換著做。</p>
+
+<p>Github上有很多Elixir的程式碼可以讀，可以看看那些由Elixir核心成員寫的code，看他們是怎麼寫的。
+如果還是不知道要寫什麼，你可以試著貢獻那些你喜歡的函式庫。這幫助你讀的更多，也更能理解你常用的工具。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -635,80 +691,6 @@
 
 
 <p>看起來都有正常連結，這個作法的缺點應該是在user_tags和book_tags都有記錄tag_id這個橍位，在空間上的利用效率較差。不過目前我也沒想到其它的方法就是了。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/05/19/eloquent-ruby-9/">Eloquent Ruby -9 [Write Specs!]</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-05-19T09:11:44+08:00'><span class='date'>2015-05-19</span> <span class='time'>9:11 am</span></time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1>Chapter 9 - Write Specs!</h1>
-
-<h2>Don&rsquo;t test it, Spec it!</h2>
-
-<p>雖然內建MiniTest，但實際上寫測試的思維可以像是在定義規格，這也是<code>RSpec</code>的出發點。</p>
-
-<p>在描述上更接近口語的方式：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>doc.words.include?('blog') == true
-</span><span class='line'>
-</span><span class='line'>#==&gt; RSpec
-</span><span class='line'>doc.words should include('blog')</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Easy Stubs</h2>
-
-<p>理想上最好測試一次只測一個類別，但實際上很困難，所以可以利用stub來隔開同時間操作不同的類別。
-概念上就是如果需要呼叫外部其它的類別時，賦值給其呼叫的函數</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>stub_outputer = stub :available? =&gt; true, :render =&gt; nil</span></code></pre></td></tr></table></div></figure>
-
-
-<p>如此當stub_outputer.availabe? 回傳true, stub_outputer.render回傳nil。</p>
-
-<h2>Easy Mocks</h2>
-
-<p>不同於Stubs，我們希望在測試的函數中，有呼叫到另一個函數，在這裡不用考慮這個函數是否運作正常（這個動作應該在該類別中測試），所以我們期望在這個函數中有呼叫即可</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">it</span> <span class="s1">&#39;should know how to output&#39;</span> <span class="k">do</span>
-</span><span class='line'>  <span class="n">mock_outputer</span> <span class="o">=</span> <span class="n">mock</span><span class="p">(</span><span class="s1">&#39;Printer&#39;</span><span class="p">)</span> <span class="c1"># &lt;== mock objects</span>
-</span><span class='line'>  <span class="n">mock_outputer</span><span class="o">.</span><span class="n">should_receive</span><span class="p">(</span><span class="ss">:available?</span><span class="p">)</span><span class="o">.</span><span class="n">and_return</span><span class="p">(</span><span class="kp">true</span><span class="p">)</span>  <span class="c1"># &lt;== expectation call</span>
-</span><span class='line'>  <span class="vi">@doc</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">mock_outputer</span><span class="p">)</span><span class="o">.</span><span class="n">should</span> <span class="o">==</span> <span class="s1">&#39;Done&#39;</span> <span class="c1"># &lt;== :avaliable? should be called in output method.</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
 </div>
   
   

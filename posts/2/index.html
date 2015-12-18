@@ -9,7 +9,11 @@
   <meta name="author" content="Tomo">
 
   
-  <meta name="description" content="Chapter 8 - Embrance Dynamic Typing 不需要抽象類別 在C++中，通常會先定義一個抽象類別讓其它類別來繼承並實現其中的Virtual Function，但是在Ruby中這個動作是多餘的。只要類別中有同名的method即可。 例如有二個類別Document, &hellip;">
+  <meta name="description" content="Chapter 9 - Write Specs! Don&rsquo;t test it, Spec it! 雖然內建MiniTest，但實際上寫測試的思維可以像是在定義規格，這也是RSpec的出發點。 在描述上更接近口語的方式： 1
+2
+3
+4
+doc.words.include?('blog &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -90,6 +94,80 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/05/19/eloquent-ruby-9/">Eloquent Ruby -9 [Write Specs!]</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-05-19T09:11:44+08:00'><span class='date'>2015-05-19</span> <span class='time'>9:11 am</span></time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Chapter 9 - Write Specs!</h1>
+
+<h2>Don&rsquo;t test it, Spec it!</h2>
+
+<p>雖然內建MiniTest，但實際上寫測試的思維可以像是在定義規格，這也是<code>RSpec</code>的出發點。</p>
+
+<p>在描述上更接近口語的方式：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>doc.words.include?('blog') == true
+</span><span class='line'>
+</span><span class='line'>#==&gt; RSpec
+</span><span class='line'>doc.words should include('blog')</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Easy Stubs</h2>
+
+<p>理想上最好測試一次只測一個類別，但實際上很困難，所以可以利用stub來隔開同時間操作不同的類別。
+概念上就是如果需要呼叫外部其它的類別時，賦值給其呼叫的函數</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>stub_outputer = stub :available? =&gt; true, :render =&gt; nil</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如此當stub_outputer.availabe? 回傳true, stub_outputer.render回傳nil。</p>
+
+<h2>Easy Mocks</h2>
+
+<p>不同於Stubs，我們希望在測試的函數中，有呼叫到另一個函數，在這裡不用考慮這個函數是否運作正常（這個動作應該在該類別中測試），所以我們期望在這個函數中有呼叫即可</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="n">it</span> <span class="s1">&#39;should know how to output&#39;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">mock_outputer</span> <span class="o">=</span> <span class="n">mock</span><span class="p">(</span><span class="s1">&#39;Printer&#39;</span><span class="p">)</span> <span class="c1"># &lt;== mock objects</span>
+</span><span class='line'>  <span class="n">mock_outputer</span><span class="o">.</span><span class="n">should_receive</span><span class="p">(</span><span class="ss">:available?</span><span class="p">)</span><span class="o">.</span><span class="n">and_return</span><span class="p">(</span><span class="kp">true</span><span class="p">)</span>  <span class="c1"># &lt;== expectation call</span>
+</span><span class='line'>  <span class="vi">@doc</span><span class="o">.</span><span class="n">output</span><span class="p">(</span><span class="n">mock_outputer</span><span class="p">)</span><span class="o">.</span><span class="n">should</span> <span class="o">==</span> <span class="s1">&#39;Done&#39;</span> <span class="c1"># &lt;== :avaliable? should be called in output method.</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -916,345 +994,6 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
 <p>Kevin also metions this:</p>
 
 <blockquote><p>a pure &ldquo;mockist&rdquo; way of doing test can be difficult in Rails apps, because in rails apps persistence is handled by the framework and for small apps most of object collaboration / message sending are about persistence. If you mock those interfaces, you end up mocking the guts of rails and that typically doesn&rsquo;t end up well.  this is also why we only touch this topic in the context of non rails objects like service objects.</p></blockquote>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/05/06/reflection-to-tealeaf-course3-week7-2/">Reflection to Tealeaf Course3 Week7 (2/3)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-05-06T15:42:37+08:00'><span class='date'>2015-05-06</span> <span class='time'>3:42 pm</span></time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1>Beyond MVC</h1>
-
-<p>Rails built on MVC (Model / View / Controller) structure. And something get complex if we got more code and logic. This is why we need design patterns.</p>
-
-<h2>Decorators</h2>
-
-<p>Some tips from gem <code>Draper</code>:</p>
-
-<blockquote><p>Without Draper, this functionality might have been tangled up in procedural helpers or adding bulk to your models. With Draper decorators, you can wrap your models with presentation-related logic to organise - and test - this layer of your app much more effectively.</p></blockquote>
-
-<p>Or</p>
-
-<blockquote><p>Decorators are the ideal place to:</p>
-
-<ul>
-<li>format complex data for user display</li>
-<li>define commonly-used representations of an object, like a <code>name</code> method that combine <code>first_name</code> and <code>last_name</code> attributes.</li>
-<li>mark up attributes with a little semantic HTML, like turning a url fiedl into a hyperlink.</li>
-</ul>
-</blockquote>
-
-<p>First, install gem</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>gem 'draper'</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>app/decorator/video_decorator.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">VideoDecorator</span> <span class="o">&lt;</span> <span class="no">Draper</span><span class="o">::</span><span class="no">Decorator</span>
-</span><span class='line'>  <span class="n">delegate_all</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">rating</span>
-</span><span class='line'>    <span class="s2">&quot;Rating: &quot;</span> <span class="o">+</span> <span class="p">(</span><span class="n">object</span><span class="o">.</span><span class="n">rating</span><span class="o">.</span><span class="n">present?</span> <span class="p">?</span> <span class="s2">&quot;</span><span class="si">#{</span><span class="n">object</span><span class="o">.</span><span class="n">rating</span><span class="si">}</span><span class="s2">/5.0&quot;</span> <span class="p">:</span> <span class="s2">&quot;NA&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And use it in controller</p>
-
-<figure class='code'><figcaption><span>videos_controller.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">def</span> <span class="nf">show</span>
-</span><span class='line'>    <span class="vi">@video</span> <span class="o">=</span> <span class="no">VideoDecorator</span><span class="o">.</span><span class="n">decorate</span><span class="p">(</span><span class="no">Vidoe</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">))</span>
-</span><span class='line'>  <span class="n">dne</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In view, just a clear line code.</p>
-
-<figure class='code'><figcaption><span>app/views/videos/show.html.haml</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="o">=</span> <span class="vi">@video</span><span class="o">.</span><span class="n">rating</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The key point here is that we have a model data (rating) associated with view, it&rsquo;s not suitable to put to <code>view helper</code> (some logic with model). That&rsquo;s why here using decorator to encapsulate presentation logic.</p>
-
-<h2>Policy Objects</h2>
-
-<p>Define what is premium user:</p>
-
-<figure class='code'><figcaption><span>models/user_level_policy.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">UserLevelPolicy</span>
-</span><span class='line'>  <span class="kp">attr_reader</span> <span class="ss">:user</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
-</span><span class='line'>    <span class="vi">@user</span> <span class="o">=</span> <span class="n">user</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">premium?</span>
-</span><span class='line'>    <span class="n">user</span><span class="o">.</span><span class="n">created_at</span> <span class="o">&lt;</span> <span class="no">Date</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="mi">2010</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span> <span class="o">||</span> <span class="n">user</span><span class="o">.</span><span class="n">plan</span><span class="o">.</span><span class="n">premium?</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>In Controller</p>
-
-<figure class='code'><figcaption><span>todo_controller.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1">###some code</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">if</span> <span class="no">UserLevelPolicy</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">current_user</span><span class="p">)</span><span class="o">.</span><span class="n">premium?</span>
-</span><span class='line'>    <span class="c1">#do something</span>
-</span><span class='line'>  <span class="k">else</span>
-</span><span class='line'>    <span class="c1">#do another thing</span>
-</span><span class='line'>  <span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Different with Decorators, Policy Ojbects only concern judgement logic into one place, without presentation concerned.</p>
-
-<h2>Domain Objects</h2>
-
-<p>if <code>User</code> has an attribute <code>credit_balance</code>. Then merge those code relative to <code>credit</code> into Domain Object.</p>
-
-<figure class='code'><figcaption><span>models/credit.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Credit</span>
-</span><span class='line'>  <span class="kp">attr_accessor</span> <span class="ss">:credit_balance</span><span class="p">,</span> <span class="ss">:user</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
-</span><span class='line'>    <span class="vi">@credit_balance</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">current_credit_balance</span>
-</span><span class='line'>    <span class="vi">@user</span> <span class="o">=</span> <span class="n">user</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">-</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">credit_balance</span> <span class="o">=</span> <span class="n">credit_balance</span> <span class="o">-</span> <span class="n">number</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">save</span>
-</span><span class='line'>    <span class="n">user</span><span class="o">.</span><span class="n">current_credit_balance</span> <span class="o">=</span> <span class="n">credit_balance</span>
-</span><span class='line'>    <span class="n">user</span><span class="o">.</span><span class="n">save</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">depleted?</span>
-</span><span class='line'>    <span class="n">credit_balance</span> <span class="o">&lt;</span> <span class="mi">0</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">low_balance?</span>
-</span><span class='line'>    <span class="n">credit_balance</span> <span class="o">&lt;</span> <span class="mi">10</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Thus <code>Credit.new(current_user)</code> can call methods about credit, and don&rsquo;t need to put these code in model <code>User</code>, or <code>UsersController</code>.</p>
-
-<h2>Service Objects</h2>
-
-<p>We abstract an action as <code>sign up</code> in <code>UsersController#create</code>.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">create</span>
-</span><span class='line'>    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">user_params</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">user_signup_service</span> <span class="o">=</span> <span class="no">UserSignup</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="vi">@user</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">result</span> <span class="o">=</span> <span class="n">user_signup_service</span><span class="o">.</span><span class="n">sign_up</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:stripeToken</span><span class="o">]</span><span class="p">,</span> <span class="n">params</span><span class="o">[</span><span class="ss">:token</span><span class="o">]</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">successful?</span>
-</span><span class='line'>      <span class="n">session</span><span class="o">[</span><span class="ss">:user_id</span><span class="o">]</span> <span class="o">=</span> <span class="vi">@user</span><span class="o">.</span><span class="n">id</span>
-</span><span class='line'>      <span class="n">redirect_to</span> <span class="n">home_path</span>
-</span><span class='line'>    <span class="k">else</span>
-</span><span class='line'>      <span class="n">flash</span><span class="o">.</span><span class="n">now</span><span class="o">[</span><span class="ss">:danger</span><span class="o">]</span> <span class="o">=</span>  <span class="n">user_signup_service</span><span class="o">.</span><span class="n">error_message</span>
-</span><span class='line'>      <span class="n">render</span> <span class="ss">:new</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then create an service object <code>UserSignup</code> to handle this.</p>
-
-<figure class='code'><figcaption><span>app/service/user_signup.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">UserSignup</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kp">attr_reader</span> <span class="ss">:error_message</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
-</span><span class='line'>    <span class="vi">@user</span> <span class="o">=</span> <span class="n">user</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">sign_up</span><span class="p">(</span><span class="n">stripe_token</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">,</span> <span class="n">invitation_token</span> <span class="o">=</span> <span class="kp">nil</span><span class="p">)</span>
-</span><span class='line'>    <span class="k">if</span> <span class="vi">@user</span><span class="o">.</span><span class="n">valid?</span>
-</span><span class='line'>      <span class="n">charge</span> <span class="o">=</span> <span class="n">customer_charge_user_with_stripe</span><span class="p">(</span><span class="n">stripe_token</span><span class="p">)</span>
-</span><span class='line'>      <span class="k">if</span> <span class="n">charge</span><span class="o">.</span><span class="n">success?</span>
-</span><span class='line'>        <span class="vi">@user</span><span class="o">.</span><span class="n">customer_token</span> <span class="o">=</span> <span class="n">charge</span><span class="o">.</span><span class="n">customer_token</span>
-</span><span class='line'>        <span class="vi">@user</span><span class="o">.</span><span class="n">save</span>
-</span><span class='line'>        <span class="n">set_invitation_following_relationship</span><span class="p">(</span><span class="n">invitation_token</span><span class="p">)</span>
-</span><span class='line'>        <span class="no">AppMailer</span><span class="o">.</span><span class="n">delay</span><span class="o">.</span><span class="n">send_welcome_email</span><span class="p">(</span><span class="vi">@user</span><span class="p">)</span>
-</span><span class='line'>        <span class="vi">@status</span> <span class="o">=</span> <span class="ss">:success</span>
-</span><span class='line'>        <span class="nb">self</span>
-</span><span class='line'>      <span class="k">else</span>
-</span><span class='line'>        <span class="vi">@status</span> <span class="o">=</span> <span class="ss">:failed</span>
-</span><span class='line'>        <span class="vi">@error_message</span> <span class="o">=</span> <span class="n">charge</span><span class="o">.</span><span class="n">error_message</span>
-</span><span class='line'>        <span class="nb">self</span>
-</span><span class='line'>      <span class="k">end</span>
-</span><span class='line'>    <span class="k">else</span>
-</span><span class='line'>      <span class="vi">@status</span> <span class="o">=</span> <span class="ss">:failed</span>
-</span><span class='line'>      <span class="vi">@error_message</span> <span class="o">=</span> <span class="s2">&quot;User info is invalid.&quot;</span>
-</span><span class='line'>      <span class="nb">self</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">successful?</span>
-</span><span class='line'>    <span class="vi">@status</span> <span class="o">==</span> <span class="ss">:success</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>There is an article from Code Climate <a href="http://blog.codeclimate.com/blog/2012/10/17/7-ways-to-decompose-fat-activerecord-models/">7 Patterns to Refactor Fat ActiveRecord Models</a></p>
-
-<p>As it metion when to use Service Object:</p>
-
-<ul>
-<li>The action is complex (e.g. closing the books at the end of an accounting period)</li>
-<li>The action reaches across multiple models (e.g. an e-commerce purchase using Order, CreditCard and Customer objects)</li>
-<li>The action interacts with an external service (e.g. posting to social networks)</li>
-<li>The action is not a core concern of the underlying model (e.g. sweeping up outdated data after a certain time period).</li>
-<li>There are multiple ways of performing the action (e.g. authenticating with an access token or password). This is the Gang of Four Strategy pattern.</li>
-</ul>
-
-
-<h2>Some Concept for Object Oriented Design</h2>
-
-<ul>
-<li><p><code>Fat model, skinny controllers</code> makes model uncontrollrable. That&rsquo;s why we need Object Oriented Design</p></li>
-<li><p>YAGNI</p></li>
-</ul>
-
-
-<p>YAGNI means <code>You Aren't Gonna Need It!</code></p>
-
-<p>Don&rsquo;t write the code you haven&rsquo;t need it.</p>
-
-<p>Here is aother post talking about <code>YAGNI</code>, <code>KISS</code>, <code>DRY</code>.
-<a href="http://www.itexico.com/blog/bid/99765/Software-Development-KISS-YAGNI-DRY-3-Principles-to-simplify-your-life">Software Development: KISS, YAGNI &amp; DRY. 3 Principles to simplify your life.</a></p>
 </div>
   
   

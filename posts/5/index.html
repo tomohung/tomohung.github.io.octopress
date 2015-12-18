@@ -9,7 +9,7 @@
   <meta name="author" content="Tomo">
 
   
-  <meta name="description" content="Continuous Integration(CI) and Continous Delivery(CD) This part is super exciting so I decide to make it a individual post. Continuous Integration(CI &hellip;">
+  <meta name="description" content="Eloquent Ruby Eloquent Ruby by Russ Olsen 是一本在Tealeaf推薦的書，但它是所謂的『第二本Ruby的書』，而不是第一本，因為這本書裡面已經假設你對Ruby有基礎的觀念了。如果真的完全是初學者，Tealeaf推薦Learn to Program by &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -90,6 +90,85 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/24/eloquent-ruby-1/">Eloquent Ruby -1 [Write Code That Looks Like Ruby]</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-24T14:15:45+08:00'><span class='date'>2015-04-24</span> <span class='time'>2:15 pm</span></time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Eloquent Ruby</h1>
+
+<p><code>Eloquent Ruby</code> by Russ Olsen 是一本在Tealeaf推薦的書，但它是所謂的『第二本Ruby的書』，而不是第一本，因為這本書裡面已經假設你對Ruby有基礎的觀念了。如果真的完全是初學者，Tealeaf推薦<a href="https://pine.fm/LearnToProgram/">Learn to Program by Chris Pine</a>，或者是<a href="http://learnrubythehardway.org/book/">Learn Ruby The Hard Way</a>，我覺得也不錯，還可以一邊練習打字。</p>
+
+<p>目前我把Part I：Basics看完了，共九章，覺得自己有學到些東西，所以就把它給紀錄下來，並參雜一些個人的想法。</p>
+
+<h1>Charpter 1 - Write Code That Looks Like Ruby</h1>
+
+<p>其實這章指的就是Code Style。更多的Ruby Code Style可以參考<a href="https://github.com/bbatsov/ruby-style-guide">這裡</a>。</p>
+
+<ul>
+<li><p>Indent code with two spaces，以前在寫C++時就一直覺得縮排其實2個空白就夠了（雖然我還是用預設4個），轉成Ruby後倒是蠻習慣的，尤其是不用再寫分號跟括號。</p></li>
+<li><p>什麼時候寫註解，告訴人家要怎麼用這個method，最好還帶範例。其它的像是最好用良好的命名去定義名稱，省去閱讀時的猜測，documenting itself.</p></li>
+<li><p>如果是寫const value，最好用Uppercase with underline，像UPPERCASE_WITH_UNDERLINE。</p></li>
+<li><p>因為括號是可以省略的，所以⋯⋯我常被搞混=___=，書用建議def method時後面帶參數時要用括號，但如果是一些接近口語的句子時可以考慮拿掉，如</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>puts 'hello world'。</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>如果code block只有一行時最好縮成一排，反過來說如果是多行的話就用block</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>apples.each { |apple| apple.to_eat } # prefer if only single code statement
+</span><span class='line'>
+</span><span class='line'>apples.each do |apple|
+</span><span class='line'>  apple.to_eat
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>如果method name結尾帶一個問號?，通常表示這個方法回傳true or false，如<code>array.nil?</code>；又如果是驚嘆號!，通常表示可能有點危險（所謂的危險通常是把丟進來的參數被改變mutate了，如<code>array.map!</code>。但是不管是問號還是驚嘆號，都只是Ruby習慣的命名而已，不是強制性。</p></li>
+<li><p>有慣例就會有例外，像是</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'> pi = Float('3.14159')</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Float開頭是大寫而不是小寫。為什麼我也不知道@_@</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -946,91 +1025,6 @@
 
 
 <p>If any one of <code>david.withdrawl</code> or <code>mary.deposit</code> raise an exception(<strong>Be careful: there must be a raising error to trigger transaction</strong>), all database record in this action will be rollback. It deal with batch action with database. So I have to care about what functions will raise an exception when fail. Ex. <code>update</code> return a fail, and <code>update!</code> raise an exception.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/03/11/reflection-to-tealeaf-course3-week2/">Reflection to Tealeaf Course3 Week2</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-03-11T11:21:17+08:00'><span class='date'>2015-03-11</span> <span class='time'>11:21 am</span></time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>There are 3 kinds of test: <code>Unit</code>, <code>Functional</code>, <code>Integration</code>. In <a href="http://www.tomohung.com/blog/2015/03/06/reflection-to-tealeaf-course3-week1/">week 1</a>, we test <strong>Model</strong>, this should belong to <code>Unit test</code> . And this week we test <strong>Controller</strong>, this should belong to <code>Functional test</code>. I guess it should be <code>Integration test</code> when we move into part of <strong>View</strong> test.</p>
-
-<p>I have to heavily rely on solution videos, there are two main reasons:</p>
-
-<ol>
-<li><p>I&rsquo;m not familiar with <code>what to test</code>, because I&rsquo;m a starter for TDD. It&rsquo;s a big conversion <strong>from test laster to test driven</strong>.</p></li>
-<li><p>I&rsquo;m not familiar with <code>RSpec</code>. There are some tricks for test controllers when using RSpec.</p></li>
-</ol>
-
-
-<p>For example, when we test `QueueItemsController#create&#8217;, there are 7 tests:</p>
-
-<ul>
-<li>it &lsquo;redirects to my queue page&rsquo;</li>
-<li>it &lsquo;creates a queue item&rsquo;</li>
-<li>it &lsquo;creates the queue item associated with video&rsquo;</li>
-<li>it &lsquo;creates the queue item associated with current user&rsquo;</li>
-<li>it &lsquo;puts the video as the last one in the queue&rsquo;</li>
-<li>it &lsquo;does not add the video in the queue if already existed in the queue&rsquo;</li>
-<li>it &lsquo;redirects to sign in page if unauthenticated&rsquo;</li>
-</ul>
-
-
-<p>A simple action needs to do such lots of tests!!</p>
-
-<p>Or here is for <strong>Model</strong> methods: <code>search_by_title</code>:</p>
-
-<ul>
-<li>it &lsquo;returns empty array if no match&rsquo;</li>
-<li>it &lsquo;returns an array if one video&rsquo;</li>
-<li>it &lsquo;returns an array if partial match&rsquo;</li>
-<li>it &lsquo;returns an array of all matches ordered by DESC&rsquo;</li>
-<li>it &lsquo;returns an empty array for search an empty string&rsquo;</li>
-</ul>
-
-
-<p>To test every possible situations is not an easy work.</p>
-
-<p>Brandon also metioned me that care about using <code>let</code> and <code>before</code>. Because of lots of tests in spec files, we may miss some pre-declare vars by using <code>let</code> or <code>before</code>. Sometimes, it may be better do not clean duplicated codes for code readability.</p>
-
-<p>Second, extract methods into <strong>Model</strong>. ex:</p>
-
-<figure class='code'><figcaption><span>user.rb</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'>  <span class="k">def</span> <span class="nf">queue_include?</span><span class="p">(</span><span class="n">video</span><span class="p">)</span>
-</span><span class='line'>    <span class="n">queue_items</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:video</span><span class="p">)</span><span class="o">.</span><span class="n">include?</span><span class="p">(</span><span class="n">video</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>then, I can use this method everywhere in my app.</p>
-
-<h3>Conclusion</h3>
-
-<p>Still on the way to be more familiar to do TDD. :-)</p>
 </div>
   
   
