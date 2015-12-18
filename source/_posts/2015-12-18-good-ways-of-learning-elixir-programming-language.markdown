@@ -6,21 +6,28 @@ comments: true
 categories: [elixir]
 ---
 
+因為最近被壞同事推坑，開始對Elixir這個Functional Program產生了興趣。目前還在官網的getting started奮鬥中，但已經可以感受到一些function program和一般OOP的語言所帶來不同的樂趣和不同的思考方式。
+
+網路上的學習資源跟Ruby比起來還差了一大截，剛好在Quora上看到一篇建議的文章就順手翻譯了一下來灌個水。
+
+Quora原文出處[link](https://www.quora.com/What-are-some-good-ways-of-learning-the-Elixir-programming-language)
+
+我是如何學習Elixir的：
 Here's how I learned Elixir:
 
-1. Went through this getting started guide on elixir-lang.org
-2. Learn Elixir With a Pro - these short screencasts are helpful and show you how to use certain libraries or language features in Elixir
-3. Read a book on Elixir - The Pragmatic Bookshelf | Programming Elixir
-4. Read a lot of other people's code - I suggest reading Elixir libraries that you would likely use on a day-to-day basis. For me, this was mainly phoenixframework/phoenix and elixir-lang/plug
-5.  Write some Elixir code! - I did the exercises on the Programming Elixir book and did some OSS contributions. I'm also building something in Phoenix.
-6. Learn Erlang! - The Pragmatic Bookshelf | Programming Erlang
+1. 從elixir-lang.org的getting started開始
+2. Learn Elixir with a Pro[link](http://elixirsips.com/)，很有幫助的教學，可以了解Elixir很多函式庫和語言特徵
+3. The Pragmatic Bookshefl | Programming Elixir
+4. 大量讀其它Elixir的程式碼，我建議讀Elixir的函式庫，因為你每天都在用。對我而言主要就是phoenix framwork/phoenix和Elixir-lang/plug
+5. 動手寫一些程式碼！我做了Programming Elixir書上的習慣，還有一些OSS的貢獻。我也用Phoenix建一些應用。
+6. 學習Erlang！ The Progmatic Bookshelf | Programming Erlang
 
-I typically prefer reading a book when learning a new programming language. The structure it provides saves me from a lot of decisions I otherwise would have to make. The Programming Elixir was a great primer and provides a lot of exercises for you to immediately apply what you learn in a chapter. 
+The Programming Elixir有很多的習題可以讓你很快上手
 
-After going through the Programming Elixir book, you'll find that a lot of questions about Elixir are unanswered. That's because you'd need to learn yourself some Erlang. Elixir directly benefits from Erlang's properties and its ecosystem so learning Erlang will be really helpful. I found that learning Erlang was easy since a lot of Elixir is inherited from Erlang. Others read the Programming Erlang book simultaneously with Programming Elixir, so you could do it that way if you prefer.
+看完書後，你會發現有很多不清楚的地方，這是因為你得學Erlang（譯：這不是個好消息）。學習Erlang變的很簡單因為Elixir本來就有很多承襲Erlang的地方。
 
-When I feel a little lazy, I watch a screencast or 2 since it doesn't take as much effort compared to reading. I guess it's nice to mix the medium every once in a while.
+累的時候就看一些screencast，和讀書交換著做。
 
-There's lots of Elixir code in Github to read. Might be best to start with those created by the Elixir core team to see how they would write Elixir. When finding it hard to decide on what to write in Elixir, you could start with small contributions to your favorite Elixir lib. This gives you more to read, but has the added bonus of better understanding a tool you will likely be using.
+Github上有很多Elixir的程式碼可以讀，可以看看那些由Elixir核心成員寫的code，看他們是怎麼寫的。
+如果還是不知道要寫什麼，你可以試著貢獻那些你喜歡的函式庫。這幫助你讀的更多，也更能理解你常用的工具。
 
-I hope this was helpful!
