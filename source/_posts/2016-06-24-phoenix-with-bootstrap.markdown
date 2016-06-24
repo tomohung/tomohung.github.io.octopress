@@ -119,3 +119,4 @@ $ cp node_modules/bootstrap/dist/fonts/* web/static/assets/fonts/
 
 Happy Phoenix!!
 
+Demo: https://github.com/tomohung/phoenix_bootstrap_example
