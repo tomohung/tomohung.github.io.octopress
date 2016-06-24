@@ -4,7 +4,7 @@
   <title><![CDATA[The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2016-06-24T22:21:12+08:00</updated>
+  <updated>2016-06-24T22:29:41+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -172,6 +172,8 @@
 回去瀏覽器看結果，切換不同的tab都會顯示不同的icon！！</p>
 
 <p>Happy Phoenix!!</p>
+
+<p>Demo: <a href="https://github.com/tomohung/phoenix_bootstrap_example">https://github.com/tomohung/phoenix_bootstrap_example</a></p>
 ]]></content>
   </entry>
   
