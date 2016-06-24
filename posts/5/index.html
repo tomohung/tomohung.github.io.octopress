@@ -9,7 +9,7 @@
   <meta name="author" content="Tomo">
 
   
-  <meta name="description" content="Eloquent Ruby Eloquent Ruby by Russ Olsen 是一本在Tealeaf推薦的書，但它是所謂的『第二本Ruby的書』，而不是第一本，因為這本書裡面已經假設你對Ruby有基礎的觀念了。如果真的完全是初學者，Tealeaf推薦Learn to Program by &hellip;">
+  <meta name="description" content="Chapter 2 - Choose the Right Control Structure 說是Control Structure，我比較習慣說Control Flow，簡單就是說幾乎所有程式語言都有的流程控制語法，像是if, while, case等。 Ruby比較特別的是有unless, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -90,6 +90,152 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/24/eloquent-ruby-2/">Eloquent Ruby -2 [Choose the Right Control Structure]</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-24T15:37:46+08:00'><span class='date'>2015-04-24</span> <span class='time'>3:37 pm</span></time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Chapter 2 - Choose the Right Control Structure</h1>
+
+<p>說是Control Structure，我比較習慣說Control Flow，簡單就是說幾乎所有程式語言都有的流程控制語法，像是if, while, case等。</p>
+
+<ul>
+<li>Ruby比較特別的是有unless, until反向詞語，一開始用不大習慣，但後來寫著寫著，心裡慢慢習慣照著口語的語法說，現在反而比較喜歡這樣寫了，總之照Ruby的理念就是這些反向詞語的目的就是為了要減少在閱讀程式碼時，心裡還需要做轉換的浪費。</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>if not @read_only</span></code></pre></td></tr></table></div></figure>
+
+
+<p>看到not心裡還要先把@read_only的值反向</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>unless @read_only</span></code></pre></td></tr></table></div></figure>
+
+
+<p>讀起來比較順口</p>
+
+<ul>
+<li>另一個蠻特別的點是，條件式可以放在最後面，也是為了配合口語語法</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@title = new_title unless @read_only</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>Ruby也有for迴圈，不過直接被捨棄不用（那當初幹嘛創造=___=），都用<code>each</code>。而且<code>for</code>也是用each實踐的，所以直接用each就好了。註：for語法不包含block，所以內中的變數scope是和for同一個，和each只存在於block中不一樣，each和for還是有些不同。</p></li>
+<li><p>case, 要注意的是在case中比較是用<code>===</code>，另外條件式也可以用regex來比較</p></li>
+</ul>
+
+
+<p>這邊惡補一下幾個我不熟的operator</p>
+
+<p><code>&lt;=&gt;</code>
+Combined comparison operator. Returns 0 if first operand equals second, 1 if first operand is greater than the second and -1 if first operand is less than the second.</p>
+
+<p><code>(a &lt;=&gt; b) returns -1.</code></p>
+
+<p><code>===</code>
+Used to test equality within a when clause of a case statement.</p>
+
+<p><code>(1...10) === 5 returns true.</code></p>
+
+<p><code>.eql?</code>
+True if the receiver and argument have both the same type and equal values.</p>
+
+<p><code>1 == 1.0 returns true, but 1.eql?(1.0) is false.</code></p>
+
+<p><code>equal?</code>
+True if the receiver and argument have the same object id.</p>
+
+<p><code>if aObj is duplicate of bObj then aObj == bObj is true, a.equal?bObj is false but a.equal?aObj is true.</code></p>
+
+<ul>
+<li><p>只有false和nil被測試時才會回傳false，<code>0</code>不是！還特別highlight以前寫C的人（哈哈），因為在C裡面<code>0</code>值被測試也是算false</p></li>
+<li><p>延續上，因為false和nil被測試都是回傳false，所以要特別注意條件式中會不會false和nil混在一起</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>while next_object = get_next_object
+</span><span class='line'>  # Do something with the object
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>上面的迴圈是假設next_object最後會變成nil，而nil測試後回傳false。但萬一今天next_object本身的值就是false呢。改成下面的碼會比較好</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>until (next_object = get_next_object).nil?
+</span><span class='line'>  # Do something with the object
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>明確指定出next_object是nil才會跳離迴圈</p>
+
+<ul>
+<li>Ternery operator</li>
+</ul>
+
+
+<p>這個以前在C++我就蠻愛用的，可以很漂亮的縮短一些簡單的if-else</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>result = (face == :beauty) ? "handsome" : "ugly" # 同等於下式
+</span><span class='line'>
+</span><span class='line'>if face == :beauty
+</span><span class='line'> result = "handsome"
+</span><span class='line'>else
+</span><span class='line'> result = "ugly"
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>另一個是常用的變數初始化技巧</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>@first_name ||= ''</span></code></pre></td></tr></table></div></figure>
+
+
+<p>@first_name如果還沒初始化，會被賦值&#8217;&lsquo;，如果已經有值，那就回傳本身。不過不要拿來對boolean type的變數這樣做，因為它也是倚賴 || operator機制。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -743,295 +889,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/03/17/reflection-to-tealeaf-course3-week3/">Reflection to Tealeaf Course3 Week3</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-03-17T09:41:26+08:00'><span class='date'>2015-03-17</span> <span class='time'>9:41 am</span></time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><a href="http://www.tomohung.com/blog/2015/03/11/reflection-to-tealeaf-course3-week2/">In week 2</a>, Tealeaf talked about how to test controller, and this week, I got a more comprehensive test consideration for controller and user interaction.</p>
-
-<h3>For Controller Test</h3>
-
-<ul>
-<li>Everytime add a function feature, also need to add a test for it.</li>
-<li>Everytime find a bug, also add a test for it.</li>
-</ul>
-
-
-<h3>DRY</h3>
-
-<p>RSpec also offer two ways to DRY code.</p>
-
-<h4>- Macro</h4>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ mkdir spec/support
-</span><span class='line'>$ touch macros.rb</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And we can move repeatedly code into here, for example, we usually need to set a login user:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>def set_current_user(user = nil)
-</span><span class='line'>  session[:user_id] = (user || Fabricate(:user)).id
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>and find user</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>def current_user
-</span><span class='line'>  User.find(session[:user_id])
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>- Shared Examples</h4>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ touch spec/support/share_examples.rb</span></code></pre></td></tr></table></div></figure>
-
-
-<p>A test method may be called through different controllers:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>shared_examples 'requre_sign_in' do
-</span><span class='line'>  it 'redirects to the root page'
-</span><span class='line'>    action
-</span><span class='line'>    expect(response).to redirect_to root_path
-</span><span class='line'>  end
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Be careful: <code>action</code> is a <strong>variable</strong>, then when using it:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>it_behaves_like 'require_sign_in' do
-</span><span class='line'>  let(:action) { get :index }
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Feature Specs</h3>
-
-<p>There are two methods to test user interactions, one is <code>request spec</code> and this is deprecated by <strong>Capybara</strong>. The other one is <code>feature specs</code>, recommended by <strong>Capybara</strong>.</p>
-
-<p><strong>Capybara</strong> offer functions that we can click link/button, fill text field&hellip;etc, to interactive with UI.</p>
-
-<h4>- Install Capybara gem</h4>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>group :test
-</span><span class='line'>  gem 'capybara'
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Also add this line to test helper file</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>requrire 'capybara/rails'</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$mkdir spec/features
-</span><span class='line'>$touch user_signs_in_spec.rb</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>- A sample for user operation:</h4>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>feature 'user interacts with the queue' do 
-</span><span class='line'>
-</span><span class='line'>  scenario 'user adds and reorder videos in the queue' do
-</span><span class='line'>    category    = Fabricate(:category)
-</span><span class='line'>    monk        = Fabricate(:video, title: 'monk', category: category)
-</span><span class='line'>    futurama    = Fabricate(:video, title: 'futurama', category: category)
-</span><span class='line'>    south_park  = Fabricate(:video, title: 'south park', category: category)
-</span><span class='line'>
-</span><span class='line'>    sign_in
-</span><span class='line'>    expect(page).to have_content 'You have signed in.'
-</span><span class='line'>
-</span><span class='line'>    add_video_to_queue(monk)
-</span><span class='line'>    expect(page).to have_content(monk.title)
-</span><span class='line'>
-</span><span class='line'>    visit video_path(monk)
-</span><span class='line'>    expect(page).not_to have_content('+ My Queue')
-</span><span class='line'>
-</span><span class='line'>    add_video_to_queue(futurama)
-</span><span class='line'>    add_video_to_queue(south_park)
-</span><span class='line'>
-</span><span class='line'>    set_video_order(monk, 3)
-</span><span class='line'>    set_video_order(futurama, 1)
-</span><span class='line'>    set_video_order(south_park, 2)
-</span><span class='line'>
-</span><span class='line'>    expect_video_order(monk, 3)
-</span><span class='line'>    expect_video_order(futurama, 1)
-</span><span class='line'>    expect_video_order(south_park, 2)
-</span><span class='line'>  end
-</span><span class='line'>end
-</span><span class='line'>
-</span><span class='line'>def add_video_to_queue(video)
-</span><span class='line'>  visit home_path
-</span><span class='line'>  find("a[href='/videos/#{video.id}']").click
-</span><span class='line'>  expect(page).to have_content(video.title)
-</span><span class='line'>  click_link '+ My Queue'
-</span><span class='line'>end
-</span><span class='line'>
-</span><span class='line'>def set_video_order(video, order)
-</span><span class='line'>  within(:xpath, "//tr[contains(.,'#{video.title}')]") do
-</span><span class='line'>    fill_in 'queue_items[][position]', with: order
-</span><span class='line'>  end
-</span><span class='line'>end
-</span><span class='line'>
-</span><span class='line'>def expect_video_order(video, order)
-</span><span class='line'>  expect(find(:xpath, "//tr[contains(.,'#{video.title}')]//input[@type='text']").value).to eq(order.to_s)
-</span><span class='line'>end
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>here I choose to use <code>:xpath</code>.</p>
-
-<h4>- One level for scenario</h4>
-
-<p>In above sample, I extract methods <code>add_video_to_queue</code>, <code>set_video_order</code>, and <code>expect_video_order</code>. This is we want to keep a principle <code>Abstract one level for scenario</code>. Encapsulating logic code and keep main code readable on the same abstract level can help reader to review.</p>
-
-<h3>Rails Conventions</h3>
-
-<h4>- Merge Params</h4>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>= form_tag update_queue_path do
-</span><span class='line'>  ...
-</span><span class='line'>  %td= text_field_tag 'queue_items[][position]', queue_item.position
-</span><span class='line'>  =hidden_field_tag 'queue_items[][id]', queue_item.id
-</span><span class='line'>
-</span><span class='line'>  =submit_tag 'Update'</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then we will get a hash value <code>params[queue_items] = {position: xxx, id: xxx}</code></p>
-
-<h4>- select_tag</h4>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>%td= select_tag 'queue_items[][rating]', options_for_video_reviews(queue_item.rating), include_blank: true</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And <code>options_for_video_reviews</code>:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>def options_for_video_reviews(selected = nil)
-</span><span class='line'>  options_for_select((1..5).map { |num| [pluralize(num, 'Star'), num]}, selected)
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Be careful that <code>[pluralize(num, 'Star'), num]</code> is a pair value.</p>
-
-<h4>- ActiveRecord Transactions</h4>
-
-<p>A sample from Rails Tutorial</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>ActiveRecord::Base.transaction do
-</span><span class='line'>  david.withdrawal(100)
-</span><span class='line'>  mary.deposit(100)
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If any one of <code>david.withdrawl</code> or <code>mary.deposit</code> raise an exception(<strong>Be careful: there must be a raising error to trigger transaction</strong>), all database record in this action will be rollback. It deal with batch action with database. So I have to care about what functions will raise an exception when fail. Ex. <code>update</code> return a fail, and <code>update!</code> raise an exception.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/6">&larr; Older</a>
@@ -1051,7 +908,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Tomo -
+  Copyright &copy; 2016 - Tomo -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/lucaslew/whitespace">Whitespace</a></span>
 </p>
 

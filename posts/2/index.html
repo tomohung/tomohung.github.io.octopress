@@ -9,11 +9,9 @@
   <meta name="author" content="Tomo">
 
   
-  <meta name="description" content="Chapter 9 - Write Specs! Don&rsquo;t test it, Spec it! 雖然內建MiniTest，但實際上寫測試的思維可以像是在定義規格，這也是RSpec的出發點。 在描述上更接近口語的方式： 1
-2
-3
-4
-doc.words.include?('blog &hellip;">
+  <meta name="description" content="今天被問了一個問題當場答不出來，記錄起來，回家後試著實作看看 建立滿足以下關係的Table Associations User can create a tag for a book.
+According to a given tag, return book list.
+According to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -94,6 +92,256 @@ doc.words.include?('blog &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/05/25/many-to-many-association-with-two-join-tables/">Many to Many Association With Two Join Tables</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-05-25T21:37:28+08:00'><span class='date'>2015-05-25</span> <span class='time'>9:37 pm</span></time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天被問了一個問題當場答不出來，記錄起來，回家後試著實作看看</p>
+
+<p>建立滿足以下關係的Table Associations</p>
+
+<ol>
+<li>User can create a tag for a book.</li>
+<li>According to a given tag, return book list.</li>
+<li>According to a given book, return tag list.</li>
+</ol>
+
+
+<p>提示：需要用到2個Join Table</p>
+
+<p>以下作法不確定是否正確，閱讀時請斟酌</p>
+
+<p>需要建立5個Table</p>
+
+<figure class='code'><figcaption><span>Users</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CreateUsers</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">change</span>
+</span><span class='line'>    <span class="n">create_table</span> <span class="ss">:users</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">string</span> <span class="ss">:name</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">timestamp</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Books</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CreateBooks</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">change</span>
+</span><span class='line'>    <span class="n">create_table</span> <span class="ss">:books</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">string</span> <span class="ss">:title</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">timestamps</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Tags</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CreateTags</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">change</span>
+</span><span class='line'>    <span class="n">create_table</span> <span class="ss">:tags</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">text</span> <span class="ss">:label</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">timestamps</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>UserTags</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CreateUserTags</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">change</span>
+</span><span class='line'>    <span class="n">create_table</span> <span class="ss">:user_tags</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">integer</span> <span class="ss">:user_id</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">integer</span> <span class="ss">:tag_id</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>BookTags</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CreateBookTags</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
+</span><span class='line'>  <span class="k">def</span> <span class="nf">change</span>
+</span><span class='line'>    <span class="n">create_table</span> <span class="ss">:book_tags</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">integer</span> <span class="ss">:book_id</span>
+</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">integer</span> <span class="ss">:tag_id</span>
+</span><span class='line'>    <span class="k">end</span>
+</span><span class='line'>  <span class="k">end</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>接著是Model設定</p>
+
+<figure class='code'><figcaption><span>User</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:user_tags</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:tags</span><span class="p">,</span> <span class="ss">through</span><span class="p">:</span> <span class="ss">:user_tags</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Book</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Book</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:book_tags</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:tags</span><span class="p">,</span> <span class="ss">through</span><span class="p">:</span> <span class="ss">:book_tags</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>Tag</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Tag</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:user_tags</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:users</span><span class="p">,</span> <span class="ss">through</span><span class="p">:</span> <span class="ss">:user_tags</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:book_tags</span>
+</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:books</span><span class="p">,</span> <span class="ss">through</span><span class="p">:</span> <span class="ss">:book_tags</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>UserTag</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">UserTag</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:user</span>
+</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:tag</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>BookTag</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">BookTag</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
+</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:book</span>
+</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:tag</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然後在Rails Console下測試</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Create data</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">User</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Tomo&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">Book</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">title</span><span class="p">:</span> <span class="s2">&quot;Ruby&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">Tag</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">label</span><span class="p">:</span> <span class="s2">&quot;good book&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">User</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">tags</span> <span class="o">&lt;&lt;</span> <span class="no">Tag</span><span class="o">.</span><span class="n">first</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">Book</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">tags</span> <span class="o">&lt;&lt;</span> <span class="no">Tag</span><span class="o">.</span><span class="n">first</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Test associations</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">User</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">tags</span> <span class="c1"># return tags belong to user</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">Book</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">tags</span> <span class="c1"># return tags belong to book</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">Tag</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">users</span> <span class="c1"># return tag&#39;s users</span>
+</span><span class='line'><span class="o">&gt;</span> <span class="no">Tag</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">books</span> <span class="c1"># return tag&#39;s books</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>看起來都有正常連結，這個作法的缺點應該是在user_tags和book_tags都有記錄tag_id這個橍位，在空間上的利用效率較差。不過目前我也沒想到其它的方法就是了。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -885,122 +1133,6 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/05/06/reflection-to-tealeaf-course3-week7-3-slash-3/">Reflection to Tealeaf Course3 Week7 (3/3)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-05-06T17:22:47+08:00'><span class='date'>2015-05-06</span> <span class='time'>5:22 pm</span></time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1>Messsage Expectation</h1>
-
-<p>We has metioned <a href="http://www.tomohung.com/blog/2015/05/06/reflection-to-tealeaf-course3-week7-1/">Test Double at post (1/3)</a>, and here is another kind of Test Double, called <code>Mock Objects</code>.</p>
-
-<blockquote><p>Assert communication, not response</p></blockquote>
-
-<p>In previous post, we have moved the code into <code>UserSignup</code> services obejct and test it. And here all we need to test is ensure that <code>:sign_up</code> method is called in <code>UsersController#create</code>.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>describe UsersController do
-</span><span class='line'>  describe 'POST create' do
-</span><span class='line'>    context 'with valid input' do
-</span><span class='line'>
-</span><span class='line'>      it 'should logged_in if create user' do
-</span><span class='line'>        result = double(:sign_up, successful?: true)
-</span><span class='line'>        expect_any_instance_of(UserSignup).to receive(:sign_up).and_return(result)
-</span><span class='line'>        expect_any_instance_of(User).to receive(:id).and_return(1)
-</span><span class='line'>        post :create, user: Fabricate.attributes_for(:user)
-</span><span class='line'>        expect(session[:user_id]).to eq(1)
-</span><span class='line'>      end
-</span><span class='line'>    end
-</span><span class='line'>  end
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>expect_any_instance_of(UserSignup).to receive(:sign_up).and_return(result)</code> is called <code>Message Expectation</code> in RSpec, a kind of <code>Mock Object</code>.</p>
-
-<p>Refer to RSpec, it defines</p>
-
-<blockquote><h3>Mock Objects and Test Stubs</h3>
-
-<p>The names Mock Object and Test Stub suggest specialized Test Doubles. i.e. a Test Stub is a Test Double that only supports method stubs, and a Mock Object is a Test Double that supports message expectations and method stubs.</p>
-
-<p>There is a lot of overlapping nomenclature here, and there are many variations of these patterns (fakes, spies, etc). Keep in mind that most of the time we&rsquo;re talking about method-level concepts that are variations of method stubs and message expectations, and we&rsquo;re applying to them to one generic kind of object: a Test Double.</p></blockquote>
-
-<h1>Test Minimalist</h1>
-
-<p>Here we got 3 resources of discussion test.</p>
-
-<ul>
-<li><a href="https://www.youtube.com/watch?v=R9FOchgTtLM">Why you don&rsquo;t get mock objects</a> by Gregory</li>
-<li><a href="http://martinfowler.com/articles/mocksArentStubs.html">Mock Aren&rsquo;t Stub</a> by Mark Folwer</li>
-<li><a href="https://www.youtube.com/watch?v=URSWYvyc42M">The Magic tricks of Testing</a> by Sandi Mets</li>
-</ul>
-
-
-<p>Summary for these three resources.</p>
-
-<p>I use Sandi&rsquo;s picture for the start:</p>
-
-<p><img src="http://jnoconor.github.io/images/unit-testing-chart-sandi-metz.png"></p>
-
-<p>Use this week assignment, class <code>UserSignup</code> for example:</p>
-
-<ul>
-<li><p>Incoming Query: We test UserSignup method <code>sign_up</code>, and expect it returns an successful object with valid info. This spec is testing this object state.</p></li>
-<li><p>Incoming Command: We also test UserSignup method <code>sign_up</code>, and expect it should create an user with valid info. This is what Sandi said: side effects for outside.</p></li>
-</ul>
-
-
-<blockquote><p>Incoming Command and Incoming Query are all what Mark Folwer said State or Stub or Classical.</p></blockquote>
-
-<ul>
-<li><p>Sent to Self: According to Sandi&rsquo;s opinion, it&rsquo;s not necessary to test all private methods in class. Maybe for the complex method, we should think if we can abstract some logic into a new class, and give that class another tests if we need it.</p></li>
-<li><p>Outgoing Query: Sandi ignore this, I guess she means that once the object send a new query to the other object, all we need to do is make sure that the other object works fine. And this should be test on that object, so we don&rsquo;t need to test outgoing query.</p></li>
-<li><p>Outgoing Command: Once we let an object send a message to the other object do some side effects, all we need to do is make sure that this object do send a message. And this is method message expectation in RSpec, also Mark Folwer said behavior or Mockist or &lsquo;Mock&rsquo;.</p></li>
-</ul>
-
-
-<p>Gregory and Sandi all said that Mock Object can loose each objects association when testing. Once we are testing behavior( or maybe I can say testing interface), we don&rsquo;t need to bind the test and method with specific variable, but bind with an interface. It looks like apply OO concept on testing - try to loose connection with each objects, also loose each object&rsquo;s tests.</p>
-
-<p>Kevin also metions this:</p>
-
-<blockquote><p>a pure &ldquo;mockist&rdquo; way of doing test can be difficult in Rails apps, because in rails apps persistence is handled by the framework and for small apps most of object collaboration / message sending are about persistence. If you mock those interfaces, you end up mocking the guts of rails and that typically doesn&rsquo;t end up well.  this is also why we only touch this topic in the context of non rails objects like service objects.</p></blockquote>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/3">&larr; Older</a>
@@ -1020,7 +1152,7 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Tomo -
+  Copyright &copy; 2016 - Tomo -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/lucaslew/whitespace">Whitespace</a></span>
 </p>
 

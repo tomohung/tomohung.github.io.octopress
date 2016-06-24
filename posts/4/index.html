@@ -9,7 +9,7 @@
   <meta name="author" content="Tomo">
 
   
-  <meta name="description" content="Chapter 6 - Use Symbols to Stand for Something String和Symbol很類似，都可以用來代表程式中的某個事物，但字串還多了可以被用來處理得到額外資訊，如果我們單純只是想要用來代表程式中的某個事物，用Symbol就可以了。 － &hellip;">
+  <meta name="description" content="Chapter 7 - Treat Everything Like an Object—Because Everything Is Classes, Instances, Methods Class就像是容器，可以裝很多Method。Class也像是工廠，製造出很多副本Instances &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -90,6 +90,203 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/05/04/eloquent-ruby-7/">Eloquent Ruby -7 [Treat Everything Like an Object—Because Everything Is]</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-05-04T06:19:26+08:00'><span class='date'>2015-05-04</span> <span class='time'>6:19 am</span></time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Chapter 7 - Treat Everything Like an Object—Because Everything Is</h1>
+
+<h2>Classes, Instances, Methods</h2>
+
+<ul>
+<li><p>Class就像是容器，可以裝很多Method。Class也像是工廠，製造出很多副本Instances</p></li>
+<li><p>如果沒有指定superclass時，<code>Object</code>為預設繼承的類別。<code>Object</code>也是繼承了<code>BasicObject</code></p></li>
+</ul>
+
+
+<h2>Objects</h2>
+
+<ul>
+<li>反正什麼東西在Ruby裡面都是Object，可以測試這些</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>-1.class
+</span><span class='line'>true.class
+</span><span class='line'>nil.class
+</span><span class='line'>/regex/.class</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>如果puts出來，預設會用<code>to_s</code>轉換</li>
+</ul>
+
+
+<h2>eval</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cmd = 'gets'
+</span><span class='line'>puts eval(cmd)</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>eval</code>可以像irb執行字串所代表的程式，這也是由Object繼承而來的函數</p>
+
+<h2>public, private, protected</h2>
+
+<p>三種屬性來控制method的曝露性</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Method
+</span><span class='line'>  def public_method
+</span><span class='line'>    #預設為public，所有public method都可以呼叫
+</span><span class='line'>  end
+</span><span class='line'>
+</span><span class='line'>  private # 在此之後方法都是private，只有在該instance內可以呼叫
+</span><span class='line'>  def private_method
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>也可以這樣寫，不過我還沒看過實際有人這樣寫</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Method
+</span><span class='line'>  def private_method
+</span><span class='line'>  end
+</span><span class='line'>
+</span><span class='line'>  private :prviate_method #在這指定private_method屬性是private</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>private內的方法繼承到subclass後，<strong>同樣可以呼叫</strong>，這跟在C++中不一樣</p></li>
+<li><p>protected有夠難理解，原文是這樣的</p></li>
+</ul>
+
+
+<blockquote><p>Any instance of a class can call a protected method on any other instance of the class</p></blockquote>
+
+<p>我是參考高見龍<a href="http://blog.eddie.com.tw/2011/07/26/public-protected-and-private-method-in-ruby/">這篇文章</a>才比較理解為什麼</p>
+
+<p>可以在irb這樣測試</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Base
+</span><span class='line'>  private 
+</span><span class='line'>  def private_show
+</span><span class='line'>    puts self.class
+</span><span class='line'>  end
+</span><span class='line'>
+</span><span class='line'>  protected
+</span><span class='line'>  def protected_show
+</span><span class='line'>    puts self.class
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然後</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class SubBase &lt; Base
+</span><span class='line'>  def use_private
+</span><span class='line'>    private_show # 如果寫成self.private_show，會產生錯誤
+</span><span class='line'>  end
+</span><span class='line'>
+</span><span class='line'>  def use_protected
+</span><span class='line'>    self.protected_show # 可以指定在self這個instance上
+</span><span class='line'>  end
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>原生Ruby source code中，20萬行的程式碼，大約有1000個private methods, protected methods只有50幾個。意思就是用到的機會也不多啦。</p></li>
+<li><p>另外Ruby也有個設計，如果你實在想突破限制使用class內的方法，可以用<code>send</code></p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sub_base.send(:private_show)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>不過一般的作法大概都是另外寫一個public method把private method包起來給外部呼叫。</p>
+
+<ul>
+<li>public, private, protected並不是什麼特別的Ruby Magic，其實他們都是methods，呼叫後面帶參數</li>
+</ul>
+
+
+<p>相同的還有<code>require</code>載入檔案</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>require 'rails_spec'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>或者是<code>attr_accessor</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>attr_accessor :name</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然後我們就可以有<code>name</code>的getter和setter方法</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -633,152 +830,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/04/24/eloquent-ruby-2/">Eloquent Ruby -2 [Choose the Right Control Structure]</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-04-24T15:37:46+08:00'><span class='date'>2015-04-24</span> <span class='time'>3:37 pm</span></time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1>Chapter 2 - Choose the Right Control Structure</h1>
-
-<p>說是Control Structure，我比較習慣說Control Flow，簡單就是說幾乎所有程式語言都有的流程控制語法，像是if, while, case等。</p>
-
-<ul>
-<li>Ruby比較特別的是有unless, until反向詞語，一開始用不大習慣，但後來寫著寫著，心裡慢慢習慣照著口語的語法說，現在反而比較喜歡這樣寫了，總之照Ruby的理念就是這些反向詞語的目的就是為了要減少在閱讀程式碼時，心裡還需要做轉換的浪費。</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>if not @read_only</span></code></pre></td></tr></table></div></figure>
-
-
-<p>看到not心裡還要先把@read_only的值反向</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>unless @read_only</span></code></pre></td></tr></table></div></figure>
-
-
-<p>讀起來比較順口</p>
-
-<ul>
-<li>另一個蠻特別的點是，條件式可以放在最後面，也是為了配合口語語法</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>@title = new_title unless @read_only</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><p>Ruby也有for迴圈，不過直接被捨棄不用（那當初幹嘛創造=___=），都用<code>each</code>。而且<code>for</code>也是用each實踐的，所以直接用each就好了。註：for語法不包含block，所以內中的變數scope是和for同一個，和each只存在於block中不一樣，each和for還是有些不同。</p></li>
-<li><p>case, 要注意的是在case中比較是用<code>===</code>，另外條件式也可以用regex來比較</p></li>
-</ul>
-
-
-<p>這邊惡補一下幾個我不熟的operator</p>
-
-<p><code>&lt;=&gt;</code>
-Combined comparison operator. Returns 0 if first operand equals second, 1 if first operand is greater than the second and -1 if first operand is less than the second.</p>
-
-<p><code>(a &lt;=&gt; b) returns -1.</code></p>
-
-<p><code>===</code>
-Used to test equality within a when clause of a case statement.</p>
-
-<p><code>(1...10) === 5 returns true.</code></p>
-
-<p><code>.eql?</code>
-True if the receiver and argument have both the same type and equal values.</p>
-
-<p><code>1 == 1.0 returns true, but 1.eql?(1.0) is false.</code></p>
-
-<p><code>equal?</code>
-True if the receiver and argument have the same object id.</p>
-
-<p><code>if aObj is duplicate of bObj then aObj == bObj is true, a.equal?bObj is false but a.equal?aObj is true.</code></p>
-
-<ul>
-<li><p>只有false和nil被測試時才會回傳false，<code>0</code>不是！還特別highlight以前寫C的人（哈哈），因為在C裡面<code>0</code>值被測試也是算false</p></li>
-<li><p>延續上，因為false和nil被測試都是回傳false，所以要特別注意條件式中會不會false和nil混在一起</p></li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>while next_object = get_next_object
-</span><span class='line'>  # Do something with the object
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>上面的迴圈是假設next_object最後會變成nil，而nil測試後回傳false。但萬一今天next_object本身的值就是false呢。改成下面的碼會比較好</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>until (next_object = get_next_object).nil?
-</span><span class='line'>  # Do something with the object
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>明確指定出next_object是nil才會跳離迴圈</p>
-
-<ul>
-<li>Ternery operator</li>
-</ul>
-
-
-<p>這個以前在C++我就蠻愛用的，可以很漂亮的縮短一些簡單的if-else</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>result = (face == :beauty) ? "handsome" : "ugly" # 同等於下式
-</span><span class='line'>
-</span><span class='line'>if face == :beauty
-</span><span class='line'> result = "handsome"
-</span><span class='line'>else
-</span><span class='line'> result = "ugly"
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>另一個是常用的變數初始化技巧</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>@first_name ||= ''</span></code></pre></td></tr></table></div></figure>
-
-
-<p>@first_name如果還沒初始化，會被賦值&#8217;&lsquo;，如果已經有值，那就回傳本身。不過不要拿來對boolean type的變數這樣做，因為它也是倚賴 || operator機制。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/5">&larr; Older</a>
@@ -798,7 +849,7 @@ True if the receiver and argument have the same object id.</p>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Tomo -
+  Copyright &copy; 2016 - Tomo -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/lucaslew/whitespace">Whitespace</a></span>
 </p>
 

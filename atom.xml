@@ -4,7 +4,7 @@
   <title><![CDATA[The Life Alchemist]]></title>
   <link href="http://www.tomohung.com/atom.xml" rel="self"/>
   <link href="http://www.tomohung.com/"/>
-  <updated>2015-12-18T22:01:48+08:00</updated>
+  <updated>2016-06-24T22:21:12+08:00</updated>
   <id>http://www.tomohung.com/</id>
   <author>
     <name><![CDATA[Tomo]]></name>
@@ -12,6 +12,168 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Phoenix With Bootstrap]]></title>
+    <link href="http://www.tomohung.com/blog/2016/06/24/phoenix-with-bootstrap/"/>
+    <updated>2016-06-24T21:50:28+08:00</updated>
+    <id>http://www.tomohung.com/blog/2016/06/24/phoenix-with-bootstrap</id>
+    <content type="html"><![CDATA[<p>最近終於真正開始用Phoenix來開發，對於一個前端近乎白痴的人來說，起手式當然要來個匯入Bootstrap才行。</p>
+
+<p>原本以為Phoenix內建就有引入Bootstrap，但使用後才發現原來它只匯入了css，javascript和icon都必需另外處理。找了網路上相關的文章好像都弄的有一點複雜，但經過試誤法後其實蠻簡單的，記錄一下。</p>
+
+<hr />
+
+<p>建立新專案</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mix phoenix.new bootstrap_example
+</span><span class='line'>$ mix deps.get
+</span><span class='line'>$ mix phoenix.server</span></code></pre></td></tr></table></div></figure>
+
+
+<p>打開網頁到<code>localhost:4000</code>看看結果，很好，預設的首頁出來了。</p>
+
+<p>再來就是測試javascript相關的原件</p>
+
+<p>修改<code>web/template/page/index.html.eex</code></p>
+
+<p>貼上Bootstrap官網的範例,順便把內容加上icon可以一起測試</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;div&gt;
+</span><span class='line'>  &lt;!-- Nav tabs --&gt;
+</span><span class='line'>  &lt;ul class="nav nav-tabs" role="tablist"&gt;
+</span><span class='line'>    &lt;li role="presentation" class="active"&gt;&lt;a href="#home" aria-controls="home" role="tab" data-toggle="tab"&gt;Home&lt;/a&gt;&lt;/li&gt;
+</span><span class='line'>    &lt;li role="presentation"&gt;&lt;a href="#profile" aria-controls="profile" role="tab" data-toggle="tab"&gt;Profile&lt;/a&gt;&lt;/li&gt;
+</span><span class='line'>    &lt;li role="presentation"&gt;&lt;a href="#messages" aria-controls="messages" role="tab" data-toggle="tab"&gt;Messages&lt;/a&gt;&lt;/li&gt;
+</span><span class='line'>  &lt;/ul&gt;
+</span><span class='line'>
+</span><span class='line'>  &lt;!-- Tab panes --&gt;
+</span><span class='line'>  &lt;div class="tab-content"&gt;
+</span><span class='line'>    &lt;div role="tabpanel" class="tab-pane active" id="home"&gt;&lt;span class="glyphicon glyphicon-home"&gt;&lt;/span&gt;&lt;/div&gt;
+</span><span class='line'>      &lt;div role="tabpanel" class="tab-pane" id="profile"&gt;&lt;span class="glyphicon glyphicon-th-list"&gt;&lt;/span&gt;&lt;/div&gt;
+</span><span class='line'>      &lt;div role="tabpanel" class="tab-pane" id="messages"&gt;&lt;span class="glyphicon glyphicon-file"&gt;&lt;/span&gt;&lt;/div&gt;
+</span><span class='line'>  &lt;/div&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;/div&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Phoenix會自動幫我們更新內容
+更新一下瀏覽器，會看到tab list，但是點了之後下方內容不會更新，因為javascript並沒有匯入。</p>
+
+<p>其實Phoenix已經幫我們鋪好路了，來看看設定檔<code>brunch.config.js</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>exports.config = {
+</span><span class='line'>  // See http://brunch.io/#documentation for docs.
+</span><span class='line'>  files: {
+</span><span class='line'>    javascripts: {
+</span><span class='line'>      joinTo: "js/app.js",
+</span><span class='line'>
+</span><span class='line'>      //
+</span><span class='line'>      // To change the order of concatenation of files, explicitly mention here
+</span><span class='line'>      // https://github.com/brunch/brunch/tree/master/docs#concatenation
+</span><span class='line'>      //  order: {
+</span><span class='line'>      //    before: [
+</span><span class='line'>      //     "web/static/vendor/js/jquery-2.1.1.js",
+</span><span class='line'>      //     "web/static/vendor/js/bootstrap.min.js"
+</span><span class='line'>      //   ]
+</span><span class='line'>      // }
+</span><span class='line'>    },
+</span><span class='line'>........</span></code></pre></td></tr></table></div></figure>
+
+
+<p>把</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  order: {
+</span><span class='line'>    before: [
+</span><span class='line'>       "web/static/vendor/js/jquery-2.1.1.js",
+</span><span class='line'>       "web/static/vendor/js/bootstrap.min.js"
+</span><span class='line'>    ]
+</span><span class='line'>  }</span></code></pre></td></tr></table></div></figure>
+
+
+<p>解除掉,記得前一行的<code>joinTo: "js/app.js",</code>要加上逗號</p>
+
+<p>好，這樣只是設定好要放的路徑，因為bootstrap.min.js相依jquery，所以要下載</p>
+
+<p>既然我們已經用npm來管理套件了，用npm安裝最快囉</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ npm install bootstrap</span></code></pre></td></tr></table></div></figure>
+
+
+<p>jQuery是相依套件npm會一起裝</p>
+
+<p>copy jQuery library</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mkdir -p web/static/vendor/js/
+</span><span class='line'>$ cp  node_modules/jquery/dist/jquery.min.js web/static/vendor/js/jquery-2.1.1.js</span></code></pre></td></tr></table></div></figure>
+
+
+<p>copy Bootstrap library</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ cp node_modules/bootstrap/dist/bootstrap.min.js web/static/vendor/js/bootstrap.min.js</span></code></pre></td></tr></table></div></figure>
+
+
+<p>順便連icon也一起處理</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mkdir web/static/assets/fonts
+</span><span class='line'>$ cp node_modules/bootstrap/dist/fonts/* web/static/assets/fonts/</span></code></pre></td></tr></table></div></figure>
+
+
+<p>大功告成！！！
+回去瀏覽器看結果，切換不同的tab都會顯示不同的icon！！</p>
+
+<p>Happy Phoenix!!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Good Ways of Learning Elixir Programming Language]]></title>
@@ -3075,131 +3237,6 @@ Description: <code>Attaching this card to a Customer object will succeed, but at
 <a href="http://ruby-doc.org/stdlib-2.2.2/libdoc/set/rdoc/Set.html">http://ruby-doc.org/stdlib-2.2.2/libdoc/set/rdoc/Set.html</a></p>
 
 <p>它在檢查效率上比較好。</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Eloquent Ruby -2 [Choose the Right Control Structure]]]></title>
-    <link href="http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-2/"/>
-    <updated>2015-04-24T15:37:46+08:00</updated>
-    <id>http://www.tomohung.com/blog/2015/04/24/eloquent-ruby-2</id>
-    <content type="html"><![CDATA[<h1>Chapter 2 - Choose the Right Control Structure</h1>
-
-<p>說是Control Structure，我比較習慣說Control Flow，簡單就是說幾乎所有程式語言都有的流程控制語法，像是if, while, case等。</p>
-
-<ul>
-<li>Ruby比較特別的是有unless, until反向詞語，一開始用不大習慣，但後來寫著寫著，心裡慢慢習慣照著口語的語法說，現在反而比較喜歡這樣寫了，總之照Ruby的理念就是這些反向詞語的目的就是為了要減少在閱讀程式碼時，心裡還需要做轉換的浪費。</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>if not @read_only</span></code></pre></td></tr></table></div></figure>
-
-
-<p>看到not心裡還要先把@read_only的值反向</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>unless @read_only</span></code></pre></td></tr></table></div></figure>
-
-
-<p>讀起來比較順口</p>
-
-<ul>
-<li>另一個蠻特別的點是，條件式可以放在最後面，也是為了配合口語語法</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>@title = new_title unless @read_only</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><p>Ruby也有for迴圈，不過直接被捨棄不用（那當初幹嘛創造=___=），都用<code>each</code>。而且<code>for</code>也是用each實踐的，所以直接用each就好了。註：for語法不包含block，所以內中的變數scope是和for同一個，和each只存在於block中不一樣，each和for還是有些不同。</p></li>
-<li><p>case, 要注意的是在case中比較是用<code>===</code>，另外條件式也可以用regex來比較</p></li>
-</ul>
-
-
-<p>這邊惡補一下幾個我不熟的operator</p>
-
-<p><code>&lt;=&gt;</code>
-Combined comparison operator. Returns 0 if first operand equals second, 1 if first operand is greater than the second and -1 if first operand is less than the second.</p>
-
-<p><code>(a &lt;=&gt; b) returns -1.</code></p>
-
-<p><code>===</code>
-Used to test equality within a when clause of a case statement.</p>
-
-<p><code>(1...10) === 5 returns true.</code></p>
-
-<p><code>.eql?</code>
-True if the receiver and argument have both the same type and equal values.</p>
-
-<p><code>1 == 1.0 returns true, but 1.eql?(1.0) is false.</code></p>
-
-<p><code>equal?</code>
-True if the receiver and argument have the same object id.</p>
-
-<p><code>if aObj is duplicate of bObj then aObj == bObj is true, a.equal?bObj is false but a.equal?aObj is true.</code></p>
-
-<ul>
-<li><p>只有false和nil被測試時才會回傳false，<code>0</code>不是！還特別highlight以前寫C的人（哈哈），因為在C裡面<code>0</code>值被測試也是算false</p></li>
-<li><p>延續上，因為false和nil被測試都是回傳false，所以要特別注意條件式中會不會false和nil混在一起</p></li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>while next_object = get_next_object
-</span><span class='line'>  # Do something with the object
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>上面的迴圈是假設next_object最後會變成nil，而nil測試後回傳false。但萬一今天next_object本身的值就是false呢。改成下面的碼會比較好</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>until (next_object = get_next_object).nil?
-</span><span class='line'>  # Do something with the object
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>明確指定出next_object是nil才會跳離迴圈</p>
-
-<ul>
-<li>Ternery operator</li>
-</ul>
-
-
-<p>這個以前在C++我就蠻愛用的，可以很漂亮的縮短一些簡單的if-else</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>result = (face == :beauty) ? "handsome" : "ugly" # 同等於下式
-</span><span class='line'>
-</span><span class='line'>if face == :beauty
-</span><span class='line'> result = "handsome"
-</span><span class='line'>else
-</span><span class='line'> result = "ugly"
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>另一個是常用的變數初始化技巧</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>@first_name ||= ''</span></code></pre></td></tr></table></div></figure>
-
-
-<p>@first_name如果還沒初始化，會被賦值&#8217;&lsquo;，如果已經有值，那就回傳本身。不過不要拿來對boolean type的變數這樣做，因為它也是倚賴 || operator機制。</p>
 ]]></content>
   </entry>
   

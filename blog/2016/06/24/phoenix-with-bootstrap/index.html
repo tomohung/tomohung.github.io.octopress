@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Eloquent Ruby -7 [Treat Everything Like an Object—Because Everything Is] - The Life Alchemist</title>
+  <title>Phoenix With Bootstrap - The Life Alchemist</title>
   <meta name="author" content="Tomo">
 
   
-  <meta name="description" content="Chapter 7 - Treat Everything Like an Object—Because Everything Is Classes, Instances, Methods Class就像是容器，可以裝很多Method。Class也像是工廠，製造出很多副本Instances &hellip;">
+  <meta name="description" content="最近終於真正開始用Phoenix來開發，對於一個前端近乎白痴的人來說，起手式當然要來個匯入Bootstrap才行。 原本以為Phoenix內建就有引入Bootstrap，但使用後才發現原來它只匯入了css，javascript和icon都必需另外處理。找了網路上相關的文章好像都弄的有一點複雜， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://www.tomohung.com/blog/2015/05/04/eloquent-ruby-7">
+  <link rel="canonical" href="http://www.tomohung.com/blog/2016/06/24/phoenix-with-bootstrap">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="The Life Alchemist" type="application/atom+xml">
@@ -94,7 +94,7 @@
   <header>
     
       
-        <h1 class="entry-title">Eloquent Ruby -7 [Treat Everything Like an Object—Because Everything Is]</h1>
+        <h1 class="entry-title">Phoenix With Bootstrap</h1>
       
     
     
@@ -104,7 +104,7 @@
 
 
 
-<time class='entry-date' datetime='2015-05-04T06:19:26+08:00'><span class='date'>2015-05-04</span> <span class='time'>6:19 am</span></time>
+<time class='entry-date' datetime='2016-06-24T21:50:28+08:00'><span class='date'>2016-06-24</span> <span class='time'>9:50 pm</span></time>
         
         
       </p>
@@ -112,97 +112,29 @@
   </header>
 
 
-<div class="entry-content"><h1>Chapter 7 - Treat Everything Like an Object—Because Everything Is</h1>
+<div class="entry-content"><p>最近終於真正開始用Phoenix來開發，對於一個前端近乎白痴的人來說，起手式當然要來個匯入Bootstrap才行。</p>
 
-<h2>Classes, Instances, Methods</h2>
+<p>原本以為Phoenix內建就有引入Bootstrap，但使用後才發現原來它只匯入了css，javascript和icon都必需另外處理。找了網路上相關的文章好像都弄的有一點複雜，但經過試誤法後其實蠻簡單的，記錄一下。</p>
 
-<ul>
-<li><p>Class就像是容器，可以裝很多Method。Class也像是工廠，製造出很多副本Instances</p></li>
-<li><p>如果沒有指定superclass時，<code>Object</code>為預設繼承的類別。<code>Object</code>也是繼承了<code>BasicObject</code></p></li>
-</ul>
+<hr />
 
-
-<h2>Objects</h2>
-
-<ul>
-<li>反正什麼東西在Ruby裡面都是Object，可以測試這些</li>
-</ul>
-
+<p>建立新專案</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>-1.class
-</span><span class='line'>true.class
-</span><span class='line'>nil.class
-</span><span class='line'>/regex/.class</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mix phoenix.new bootstrap_example
+</span><span class='line'>$ mix deps.get
+</span><span class='line'>$ mix phoenix.server</span></code></pre></td></tr></table></div></figure>
 
 
-<ul>
-<li>如果puts出來，預設會用<code>to_s</code>轉換</li>
-</ul>
+<p>打開網頁到<code>localhost:4000</code>看看結果，很好，預設的首頁出來了。</p>
 
+<p>再來就是測試javascript相關的原件</p>
 
-<h2>eval</h2>
+<p>修改<code>web/template/page/index.html.eex</code></p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cmd = 'gets'
-</span><span class='line'>puts eval(cmd)</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>eval</code>可以像irb執行字串所代表的程式，這也是由Object繼承而來的函數</p>
-
-<h2>public, private, protected</h2>
-
-<p>三種屬性來控制method的曝露性</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>class Method
-</span><span class='line'>  def public_method
-</span><span class='line'>    #預設為public，所有public method都可以呼叫
-</span><span class='line'>  end
-</span><span class='line'>
-</span><span class='line'>  private # 在此之後方法都是private，只有在該instance內可以呼叫
-</span><span class='line'>  def private_method
-</span><span class='line'>  end
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>也可以這樣寫，不過我還沒看過實際有人這樣寫</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>class Method
-</span><span class='line'>  def private_method
-</span><span class='line'>  end
-</span><span class='line'>
-</span><span class='line'>  private :prviate_method #在這指定private_method屬性是private</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><p>private內的方法繼承到subclass後，<strong>同樣可以呼叫</strong>，這跟在C++中不一樣</p></li>
-<li><p>protected有夠難理解，原文是這樣的</p></li>
-</ul>
-
-
-<blockquote><p>Any instance of a class can call a protected method on any other instance of the class</p></blockquote>
-
-<p>我是參考高見龍<a href="http://blog.eddie.com.tw/2011/07/26/public-protected-and-private-method-in-ruby/">這篇文章</a>才比較理解為什麼</p>
-
-<p>可以在irb這樣測試</p>
+<p>貼上Bootstrap官網的範例,順便把內容加上icon可以一起測試</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -215,20 +147,34 @@
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>class Base
-</span><span class='line'>  private 
-</span><span class='line'>  def private_show
-</span><span class='line'>    puts self.class
-</span><span class='line'>  end
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;div&gt;
+</span><span class='line'>  &lt;!-- Nav tabs --&gt;
+</span><span class='line'>  &lt;ul class="nav nav-tabs" role="tablist"&gt;
+</span><span class='line'>    &lt;li role="presentation" class="active"&gt;&lt;a href="#home" aria-controls="home" role="tab" data-toggle="tab"&gt;Home&lt;/a&gt;&lt;/li&gt;
+</span><span class='line'>    &lt;li role="presentation"&gt;&lt;a href="#profile" aria-controls="profile" role="tab" data-toggle="tab"&gt;Profile&lt;/a&gt;&lt;/li&gt;
+</span><span class='line'>    &lt;li role="presentation"&gt;&lt;a href="#messages" aria-controls="messages" role="tab" data-toggle="tab"&gt;Messages&lt;/a&gt;&lt;/li&gt;
+</span><span class='line'>  &lt;/ul&gt;
 </span><span class='line'>
-</span><span class='line'>  protected
-</span><span class='line'>  def protected_show
-</span><span class='line'>    puts self.class
-</span><span class='line'>  end
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>  &lt;!-- Tab panes --&gt;
+</span><span class='line'>  &lt;div class="tab-content"&gt;
+</span><span class='line'>    &lt;div role="tabpanel" class="tab-pane active" id="home"&gt;&lt;span class="glyphicon glyphicon-home"&gt;&lt;/span&gt;&lt;/div&gt;
+</span><span class='line'>      &lt;div role="tabpanel" class="tab-pane" id="profile"&gt;&lt;span class="glyphicon glyphicon-th-list"&gt;&lt;/span&gt;&lt;/div&gt;
+</span><span class='line'>      &lt;div role="tabpanel" class="tab-pane" id="messages"&gt;&lt;span class="glyphicon glyphicon-file"&gt;&lt;/span&gt;&lt;/div&gt;
+</span><span class='line'>  &lt;/div&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;/div&gt;
+</span></code></pre></td></tr></table></div></figure>
 
 
-<p>然後</p>
+<p>Phoenix會自動幫我們更新內容
+更新一下瀏覽器，會看到tab list，但是點了之後下方內容不會更新，因為javascript並沒有匯入。</p>
+
+<p>其實Phoenix已經幫我們鋪好路了，來看看設定檔<code>brunch.config.js</code></p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -239,47 +185,87 @@
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>class SubBase &lt; Base
-</span><span class='line'>  def use_private
-</span><span class='line'>    private_show # 如果寫成self.private_show，會產生錯誤
-</span><span class='line'>  end
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>exports.config = {
+</span><span class='line'>  // See http://brunch.io/#documentation for docs.
+</span><span class='line'>  files: {
+</span><span class='line'>    javascripts: {
+</span><span class='line'>      joinTo: "js/app.js",
 </span><span class='line'>
-</span><span class='line'>  def use_protected
-</span><span class='line'>    self.protected_show # 可以指定在self這個instance上
-</span><span class='line'>  end
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>      //
+</span><span class='line'>      // To change the order of concatenation of files, explicitly mention here
+</span><span class='line'>      // https://github.com/brunch/brunch/tree/master/docs#concatenation
+</span><span class='line'>      //  order: {
+</span><span class='line'>      //    before: [
+</span><span class='line'>      //     "web/static/vendor/js/jquery-2.1.1.js",
+</span><span class='line'>      //     "web/static/vendor/js/bootstrap.min.js"
+</span><span class='line'>      //   ]
+</span><span class='line'>      // }
+</span><span class='line'>    },
+</span><span class='line'>........</span></code></pre></td></tr></table></div></figure>
 
 
-<ul>
-<li><p>原生Ruby source code中，20萬行的程式碼，大約有1000個private methods, protected methods只有50幾個。意思就是用到的機會也不多啦。</p></li>
-<li><p>另外Ruby也有個設計，如果你實在想突破限制使用class內的方法，可以用<code>send</code></p></li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sub_base.send(:private_show)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>不過一般的作法大概都是另外寫一個public method把private method包起來給外部呼叫。</p>
-
-<ul>
-<li>public, private, protected並不是什麼特別的Ruby Magic，其實他們都是methods，呼叫後面帶參數</li>
-</ul>
-
-
-<p>相同的還有<code>require</code>載入檔案</p>
+<p>把</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>require 'rails_spec'</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  order: {
+</span><span class='line'>    before: [
+</span><span class='line'>       "web/static/vendor/js/jquery-2.1.1.js",
+</span><span class='line'>       "web/static/vendor/js/bootstrap.min.js"
+</span><span class='line'>    ]
+</span><span class='line'>  }</span></code></pre></td></tr></table></div></figure>
 
 
-<p>或者是<code>attr_accessor</code></p>
+<p>解除掉,記得前一行的<code>joinTo: "js/app.js",</code>要加上逗號</p>
+
+<p>好，這樣只是設定好要放的路徑，因為bootstrap.min.js相依jquery，所以要下載</p>
+
+<p>既然我們已經用npm來管理套件了，用npm安裝最快囉</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>attr_accessor :name</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ npm install bootstrap</span></code></pre></td></tr></table></div></figure>
 
 
-<p>然後我們就可以有<code>name</code>的getter和setter方法</p>
+<p>jQuery是相依套件npm會一起裝</p>
+
+<p>copy jQuery library</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mkdir -p web/static/vendor/js/
+</span><span class='line'>$ cp  node_modules/jquery/dist/jquery.min.js web/static/vendor/js/jquery-2.1.1.js</span></code></pre></td></tr></table></div></figure>
+
+
+<p>copy Bootstrap library</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ cp node_modules/bootstrap/dist/bootstrap.min.js web/static/vendor/js/bootstrap.min.js</span></code></pre></td></tr></table></div></figure>
+
+
+<p>順便連icon也一起處理</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mkdir web/static/assets/fonts
+</span><span class='line'>$ cp node_modules/bootstrap/dist/fonts/* web/static/assets/fonts/</span></code></pre></td></tr></table></div></figure>
+
+
+<p>大功告成！！！
+回去瀏覽器看結果，切換不同的tab都會顯示不同的icon！！</p>
+
+<p>Happy Phoenix!!</p>
 </div>
 
 
@@ -302,13 +288,13 @@
 
 
 
-<time class='entry-date' datetime='2015-05-04T06:19:26+08:00'><span class='date'>2015-05-04</span> <span class='time'>6:19 am</span></time>
+<time class='entry-date' datetime='2016-06-24T21:50:28+08:00'><span class='date'>2016-06-24</span> <span class='time'>9:50 pm</span></time>
       
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/book/'>book</a>, <a class='category' href='/blog/categories/eloquent-ruby/'>eloquent ruby</a>, <a class='category' href='/blog/categories/ruby/'>ruby</a>
+    <a class='category' href='/blog/categories/bootstrap/'>bootstrap</a>, <a class='category' href='/blog/categories/elixir/'>elixir</a>, <a class='category' href='/blog/categories/phoenix/'>phoenix</a>
   
 </span>
 
@@ -317,7 +303,7 @@
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2015/05/04/eloquent-ruby-7/" data-via="" data-counturl="http://www.tomohung.com/blog/2015/05/04/eloquent-ruby-7/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2016/06/24/phoenix-with-bootstrap/" data-via="" data-counturl="http://www.tomohung.com/blog/2016/06/24/phoenix-with-bootstrap/" >Tweet</a>
   
   
   
@@ -328,10 +314,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2015/05/03/eloquent-ruby-6/" title="Previous Post: Eloquent Ruby -6 [Use Symbols to Stand for Something]">&laquo; Eloquent Ruby -6 [Use Symbols to Stand for Something]</a>
+        <a class="basic-alignment left" href="/blog/2015/12/18/good-ways-of-learning-elixir-programming-language/" title="Previous Post: Good ways of learning Elixir programming language">&laquo; Good ways of learning Elixir programming language</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2015/05/06/reflection-to-tealeaf-course3-week6/" title="Next Post: Reflection to Tealeaf Course3 Week6 (1/2)">Reflection to Tealeaf Course3 Week6 (1/2) &raquo;</a>
       
     </p>
   </footer>
@@ -361,8 +345,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://www.tomohung.com/blog/2015/05/04/eloquent-ruby-7/';
-        var disqus_url = 'http://www.tomohung.com/blog/2015/05/04/eloquent-ruby-7/';
+        var disqus_identifier = 'http://www.tomohung.com/blog/2016/06/24/phoenix-with-bootstrap/';
+        var disqus_url = 'http://www.tomohung.com/blog/2016/06/24/phoenix-with-bootstrap/';
         var disqus_script = 'embed.js';
       
     (function () {

@@ -9,7 +9,7 @@
   <meta name="author" content="Tomo">
 
   
-  <meta name="description" content="因為最近被壞同事推坑，開始對Elixir這個Functional Program產生了興趣。目前還在官網的getting started奮鬥中，但已經可以感受到一些function program和一般OOP的語言所帶來不同的樂趣和不同的思考方式。 網路上的學習資源跟Ruby比起來還差了一大截， &hellip;">
+  <meta name="description" content="最近終於真正開始用Phoenix來開發，對於一個前端近乎白痴的人來說，起手式當然要來個匯入Bootstrap才行。 原本以為Phoenix內建就有引入Bootstrap，但使用後才發現原來它只匯入了css，javascript和icon都必需另外處理。找了網路上相關的文章好像都弄的有一點複雜， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -90,6 +90,189 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/06/24/phoenix-with-bootstrap/">Phoenix With Bootstrap</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-06-24T21:50:28+08:00'><span class='date'>2016-06-24</span> <span class='time'>9:50 pm</span></time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近終於真正開始用Phoenix來開發，對於一個前端近乎白痴的人來說，起手式當然要來個匯入Bootstrap才行。</p>
+
+<p>原本以為Phoenix內建就有引入Bootstrap，但使用後才發現原來它只匯入了css，javascript和icon都必需另外處理。找了網路上相關的文章好像都弄的有一點複雜，但經過試誤法後其實蠻簡單的，記錄一下。</p>
+
+<hr />
+
+<p>建立新專案</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mix phoenix.new bootstrap_example
+</span><span class='line'>$ mix deps.get
+</span><span class='line'>$ mix phoenix.server</span></code></pre></td></tr></table></div></figure>
+
+
+<p>打開網頁到<code>localhost:4000</code>看看結果，很好，預設的首頁出來了。</p>
+
+<p>再來就是測試javascript相關的原件</p>
+
+<p>修改<code>web/template/page/index.html.eex</code></p>
+
+<p>貼上Bootstrap官網的範例,順便把內容加上icon可以一起測試</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;div&gt;
+</span><span class='line'>  &lt;!-- Nav tabs --&gt;
+</span><span class='line'>  &lt;ul class="nav nav-tabs" role="tablist"&gt;
+</span><span class='line'>    &lt;li role="presentation" class="active"&gt;&lt;a href="#home" aria-controls="home" role="tab" data-toggle="tab"&gt;Home&lt;/a&gt;&lt;/li&gt;
+</span><span class='line'>    &lt;li role="presentation"&gt;&lt;a href="#profile" aria-controls="profile" role="tab" data-toggle="tab"&gt;Profile&lt;/a&gt;&lt;/li&gt;
+</span><span class='line'>    &lt;li role="presentation"&gt;&lt;a href="#messages" aria-controls="messages" role="tab" data-toggle="tab"&gt;Messages&lt;/a&gt;&lt;/li&gt;
+</span><span class='line'>  &lt;/ul&gt;
+</span><span class='line'>
+</span><span class='line'>  &lt;!-- Tab panes --&gt;
+</span><span class='line'>  &lt;div class="tab-content"&gt;
+</span><span class='line'>    &lt;div role="tabpanel" class="tab-pane active" id="home"&gt;&lt;span class="glyphicon glyphicon-home"&gt;&lt;/span&gt;&lt;/div&gt;
+</span><span class='line'>      &lt;div role="tabpanel" class="tab-pane" id="profile"&gt;&lt;span class="glyphicon glyphicon-th-list"&gt;&lt;/span&gt;&lt;/div&gt;
+</span><span class='line'>      &lt;div role="tabpanel" class="tab-pane" id="messages"&gt;&lt;span class="glyphicon glyphicon-file"&gt;&lt;/span&gt;&lt;/div&gt;
+</span><span class='line'>  &lt;/div&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;/div&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Phoenix會自動幫我們更新內容
+更新一下瀏覽器，會看到tab list，但是點了之後下方內容不會更新，因為javascript並沒有匯入。</p>
+
+<p>其實Phoenix已經幫我們鋪好路了，來看看設定檔<code>brunch.config.js</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>exports.config = {
+</span><span class='line'>  // See http://brunch.io/#documentation for docs.
+</span><span class='line'>  files: {
+</span><span class='line'>    javascripts: {
+</span><span class='line'>      joinTo: "js/app.js",
+</span><span class='line'>
+</span><span class='line'>      //
+</span><span class='line'>      // To change the order of concatenation of files, explicitly mention here
+</span><span class='line'>      // https://github.com/brunch/brunch/tree/master/docs#concatenation
+</span><span class='line'>      //  order: {
+</span><span class='line'>      //    before: [
+</span><span class='line'>      //     "web/static/vendor/js/jquery-2.1.1.js",
+</span><span class='line'>      //     "web/static/vendor/js/bootstrap.min.js"
+</span><span class='line'>      //   ]
+</span><span class='line'>      // }
+</span><span class='line'>    },
+</span><span class='line'>........</span></code></pre></td></tr></table></div></figure>
+
+
+<p>把</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  order: {
+</span><span class='line'>    before: [
+</span><span class='line'>       "web/static/vendor/js/jquery-2.1.1.js",
+</span><span class='line'>       "web/static/vendor/js/bootstrap.min.js"
+</span><span class='line'>    ]
+</span><span class='line'>  }</span></code></pre></td></tr></table></div></figure>
+
+
+<p>解除掉,記得前一行的<code>joinTo: "js/app.js",</code>要加上逗號</p>
+
+<p>好，這樣只是設定好要放的路徑，因為bootstrap.min.js相依jquery，所以要下載</p>
+
+<p>既然我們已經用npm來管理套件了，用npm安裝最快囉</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ npm install bootstrap</span></code></pre></td></tr></table></div></figure>
+
+
+<p>jQuery是相依套件npm會一起裝</p>
+
+<p>copy jQuery library</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mkdir -p web/static/vendor/js/
+</span><span class='line'>$ cp  node_modules/jquery/dist/jquery.min.js web/static/vendor/js/jquery-2.1.1.js</span></code></pre></td></tr></table></div></figure>
+
+
+<p>copy Bootstrap library</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ cp node_modules/bootstrap/dist/bootstrap.min.js web/static/vendor/js/bootstrap.min.js</span></code></pre></td></tr></table></div></figure>
+
+
+<p>順便連icon也一起處理</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mkdir web/static/assets/fonts
+</span><span class='line'>$ cp node_modules/bootstrap/dist/fonts/* web/static/assets/fonts/</span></code></pre></td></tr></table></div></figure>
+
+
+<p>大功告成！！！
+回去瀏覽器看結果，切換不同的tab都會顯示不同的icon！！</p>
+
+<p>Happy Phoenix!!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -448,256 +631,6 @@ Here&rsquo;s how I learned Elixir:</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/05/25/many-to-many-association-with-two-join-tables/">Many to Many Association With Two Join Tables</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-05-25T21:37:28+08:00'><span class='date'>2015-05-25</span> <span class='time'>9:37 pm</span></time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>今天被問了一個問題當場答不出來，記錄起來，回家後試著實作看看</p>
-
-<p>建立滿足以下關係的Table Associations</p>
-
-<ol>
-<li>User can create a tag for a book.</li>
-<li>According to a given tag, return book list.</li>
-<li>According to a given book, return tag list.</li>
-</ol>
-
-
-<p>提示：需要用到2個Join Table</p>
-
-<p>以下作法不確定是否正確，閱讀時請斟酌</p>
-
-<p>需要建立5個Table</p>
-
-<figure class='code'><figcaption><span>Users</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CreateUsers</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">change</span>
-</span><span class='line'>    <span class="n">create_table</span> <span class="ss">:users</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
-</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">string</span> <span class="ss">:name</span>
-</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">timestamp</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>Books</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CreateBooks</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">change</span>
-</span><span class='line'>    <span class="n">create_table</span> <span class="ss">:books</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
-</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">string</span> <span class="ss">:title</span>
-</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">timestamps</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>Tags</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CreateTags</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">change</span>
-</span><span class='line'>    <span class="n">create_table</span> <span class="ss">:tags</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
-</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">text</span> <span class="ss">:label</span>
-</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">timestamps</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>UserTags</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CreateUserTags</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">change</span>
-</span><span class='line'>    <span class="n">create_table</span> <span class="ss">:user_tags</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
-</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">integer</span> <span class="ss">:user_id</span>
-</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">integer</span> <span class="ss">:tag_id</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>BookTags</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">CreateBookTags</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Migration</span>
-</span><span class='line'>  <span class="k">def</span> <span class="nf">change</span>
-</span><span class='line'>    <span class="n">create_table</span> <span class="ss">:book_tags</span> <span class="k">do</span> <span class="o">|</span><span class="n">t</span><span class="o">|</span>
-</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">integer</span> <span class="ss">:book_id</span>
-</span><span class='line'>      <span class="n">t</span><span class="o">.</span><span class="n">integer</span> <span class="ss">:tag_id</span>
-</span><span class='line'>    <span class="k">end</span>
-</span><span class='line'>  <span class="k">end</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>接著是Model設定</p>
-
-<figure class='code'><figcaption><span>User</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:user_tags</span>
-</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:tags</span><span class="p">,</span> <span class="ss">through</span><span class="p">:</span> <span class="ss">:user_tags</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>Book</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Book</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:book_tags</span>
-</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:tags</span><span class="p">,</span> <span class="ss">through</span><span class="p">:</span> <span class="ss">:book_tags</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>Tag</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">Tag</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:user_tags</span>
-</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:users</span><span class="p">,</span> <span class="ss">through</span><span class="p">:</span> <span class="ss">:user_tags</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:book_tags</span>
-</span><span class='line'>  <span class="n">has_many</span> <span class="ss">:books</span><span class="p">,</span> <span class="ss">through</span><span class="p">:</span> <span class="ss">:book_tags</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>UserTag</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">UserTag</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:user</span>
-</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:tag</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span>BookTag</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="k">class</span> <span class="nc">BookTag</span> <span class="o">&lt;</span> <span class="no">ActiveRecord</span><span class="o">::</span><span class="no">Base</span>
-</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:book</span>
-</span><span class='line'>  <span class="n">belongs_to</span> <span class="ss">:tag</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>然後在Rails Console下測試</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Create data</span>
-</span><span class='line'><span class="o">&gt;</span> <span class="no">User</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s2">&quot;Tomo&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="o">&gt;</span> <span class="no">Book</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">title</span><span class="p">:</span> <span class="s2">&quot;Ruby&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="o">&gt;</span> <span class="no">Tag</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">label</span><span class="p">:</span> <span class="s2">&quot;good book&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="o">&gt;</span> <span class="no">User</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">tags</span> <span class="o">&lt;&lt;</span> <span class="no">Tag</span><span class="o">.</span><span class="n">first</span>
-</span><span class='line'><span class="o">&gt;</span> <span class="no">Book</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">tags</span> <span class="o">&lt;&lt;</span> <span class="no">Tag</span><span class="o">.</span><span class="n">first</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># Test associations</span>
-</span><span class='line'><span class="o">&gt;</span> <span class="no">User</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">tags</span> <span class="c1"># return tags belong to user</span>
-</span><span class='line'><span class="o">&gt;</span> <span class="no">Book</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">tags</span> <span class="c1"># return tags belong to book</span>
-</span><span class='line'><span class="o">&gt;</span> <span class="no">Tag</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">users</span> <span class="c1"># return tag&#39;s users</span>
-</span><span class='line'><span class="o">&gt;</span> <span class="no">Tag</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">books</span> <span class="c1"># return tag&#39;s books</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>看起來都有正常連結，這個作法的缺點應該是在user_tags和book_tags都有記錄tag_id這個橍位，在空間上的利用效率較差。不過目前我也沒想到其它的方法就是了。</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -715,7 +648,7 @@ Here&rsquo;s how I learned Elixir:</p>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Tomo -
+  Copyright &copy; 2016 - Tomo -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/lucaslew/whitespace">Whitespace</a></span>
 </p>
 
