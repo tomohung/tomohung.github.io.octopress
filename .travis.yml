@@ -1,5 +1,16 @@
 language: ruby
 rvm:
-  - 2.0.0
-  - 1.9.3
-script: bundle exec rake install; bundle exec rake generate
+  - 2.2.4
+before_script:
+  - git config --global user.name "tomohung"
+  - git config --global user.email "tomohung@gmail.com"
+  - export REPO_URL="https://$GH_TOKEN@github.com/$GH_REPO.git"
+  - bundle exec rake setup_github_pages[$REPO_URL]
+script: bundle exec rake generate
+after_script:
+  - bundle exec rake deploy
+env:
+  global:
+    - GH_REPO="tomohung/tomohung.github.io"
+    - secure: "pLQ4VLfmIjPUzhgJojptppWW9bFx32YGMiswjBudJf2R3DqLUP35vGUYmPgWPzDjQcmTXfSKCysj4icB0Xsvg0Lz8t7c7bIzkwyGhduu39hj5N+h7XjOHU4xfD5yNCoewVB3Tb8vuJTFOhEltoe8vw6AZoTsCbN9hCJkizw+KiTJqx3o1i3+hYZO1JPoXu0hfnCuLBQ4tMWQgP6NhMn0iOIV4Z1YFzpWw5Pe4MCNWVWFQFqHyt3rwhm7On5fAldj2gTyClkUhcZZLvHPLBubt8aYmu6O67Imoot5K5+Wy2SER1W76BsiHPkz7fakADFepSIstas88uuKfGAvpJ++kqgyvfCo5sVY9wWGpfxX/QBNrnME5CxcCGXm67PHtGkrYwVutpNwKKw7C/PM82C7YccBj+bTkKt7a9wR92Sy2KYo2Nhl8S+HdXIe9pqS14PbTTuE1c3qSDoaWuXWUKhEkppLhjApb5j+vkJaCvYqI9Jtd3DOBF5hW8tWyFRjhlDmRGlNH4sV4Wo5YG8jvQaKN2NQOpiAwmszrkuAysDpBxJrii25yXCVi2Zv0ZT8TF/x4oGCJiDRMLRzRVSRh6jjFSJh7vEkaF2mtVi+N8JyEW/j1tyNPeTFohPTSP2rZaTF1gJf9yoZlkSE5sNTqgOQ8MpcwRkrBGlaHdl0eBk5d78="
+
