@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Getting started with Phoenix - 1.Guide Assumptions"
+title: "Getting started with Phoenix - 1. Guide Assumptions"
 date: 2016-08-16 21:16:55 +0800
 comments: true
 categories: [elixir, phoenix, getting_started_with_phoenix]
@@ -21,3 +21,10 @@ categories: [elixir, phoenix, getting_started_with_phoenix]
 Phoenix是基於Elixir的網頁應用開發框架，所以基本上對於Elixir有基本的認識會比較容易上手，我個人的經驗是官網的說明看完即可，OTP部份可以先暫時跳過（雖然這應該是Elixir/Erlang的菁華）。
 
 Elixir官網介紹 http://elixir-lang.org/getting-started/introduction.html
+
+這一系列的文章除了架構上引用Rails官網的Getting started with Rails之外，實作的內容同時也參考了
+
+- Phoenix Official website http://www.phoenixframework.org/
+- Programming Phoenix https://pragprog.com/book/phoenix/programming-phoenix
+
+如果真的要進行Phoenix的開發，Programming Phoenix這本書應該可以縮短很多學習時間，我個人非常推薦。
