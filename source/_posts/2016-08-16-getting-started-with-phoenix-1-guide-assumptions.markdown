@@ -16,15 +16,15 @@ categories: [elixir, phoenix, getting_started_with_phoenix]
 - node.js
 - PostgreSQL（官方預設資料庫）, 但後面的範例我們還是使用Rails開發者比較熟悉的MySQL
 
-安裝方法可以參考Phoenix官網 http://www.phoenixframework.org/docs/installation
+安裝方法可以參考[Phoenix官網](http://www.phoenixframework.org/docs/installation)
 
-Phoenix是基於Elixir的網頁應用開發框架，所以基本上對於Elixir有基本的認識會比較容易上手，我個人的經驗是官網的說明看完即可，OTP部份可以先暫時跳過（雖然這應該是Elixir/Erlang的菁華）。
+Phoenix是基於Elixir的網頁應用開發框架，所以對於Elixir有基本的認識會比較容易上手，我個人的經驗是官網的說明看完即可，OTP部份可以先暫時跳過（雖然這應該是Elixir/Erlang的菁華）。
 
-Elixir官網介紹 http://elixir-lang.org/getting-started/introduction.html
+[Elixir官網介紹](http://elixir-lang.org/getting-started/introduction.html)
 
 這一系列的文章除了架構上引用Rails官網的Getting started with Rails之外，實作的內容同時也參考了
 
-- Phoenix Official website http://www.phoenixframework.org/
-- Programming Phoenix https://pragprog.com/book/phoenix/programming-phoenix
+- [Phoenix Official website](http://www.phoenixframework.org/)
+- [Programming Phoenix](https://pragprog.com/book/phoenix/programming-phoenix)
 
 如果真的要進行Phoenix的開發，Programming Phoenix這本書應該可以縮短很多學習時間，我個人非常推薦。
