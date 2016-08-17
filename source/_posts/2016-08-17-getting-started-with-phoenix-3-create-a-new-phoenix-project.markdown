@@ -6,14 +6,14 @@ comments: true
 categories: [elixir, phoenix, getting_started_with_phoenix]
 ---
 
-### Create a new Phoenix project
+## Create a new Phoenix project
 
-#### Install Phoenix
+### Install Phoenix
 
 可以參考[Phoenix官網安裝方法](http://www.phoenixframework.org/docs/installation)
 另外我們要使用MySQL，所以也要記得安裝，網路上教學文章很多，這裡就跳過
 
-#### Create the Blog application
+### Create the Blog application
 
 打開終端機執行以下程式
 

@@ -6,7 +6,7 @@ comments: true
 categories: [elixir, phoenix, getting_started_with_phoenix]
 ---
 
-# What is Phoenix?
+## What is Phoenix?
 
 Phoenix是一套基於Elixir語言的網頁應用開發框架，主體為MVC架構，很多的概念其實都有從Rails借來的影子，所以如果你本身有Rails的基礎，要入門Phoenix其實不需要太多的時間。
 
