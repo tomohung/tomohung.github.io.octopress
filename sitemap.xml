@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://www.tomohung.com/blog/2016/08/17/getting-started-with-phoenix-4-phoenix-file-slash-folder/</loc>
+    <lastmod>2016-08-17T21:29:15+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://www.tomohung.com/blog/2016/08/17/getting-started-with-phoenix-3-create-a-new-phoenix-project/</loc>
+    <lastmod>2016-08-17T20:59:48+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://www.tomohung.com/blog/2016/08/16/getting-started-with-phoenix-2-what-is-phoenix/</loc>
+    <lastmod>2016-08-16T21:33:57+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://www.tomohung.com/blog/2016/08/16/getting-started-with-phoenix-1-guide-assumptions/</loc>
+    <lastmod>2016-08-16T21:16:55+08:00</lastmod>
+  </url>
+  <url>
     <loc>http://www.tomohung.com/blog/2016/06/24/phoenix-with-bootstrap/</loc>
     <lastmod>2016-06-24T21:50:28+08:00</lastmod>
   </url>
@@ -283,5 +299,38 @@
   </url>
   <url>
     <loc>http://www.tomohung.com/blog/categories/phoenix/</loc>
+  </url>
+  <url>
+    <loc>http://www.tomohung.com/blog/categories/getting-started-with-phoenix/</loc>
+  </url>
+  <url>
+    <loc>http://www.tomohung.com/posts/2/</loc>
+  </url>
+  <url>
+    <loc>http://www.tomohung.com/posts/3/</loc>
+  </url>
+  <url>
+    <loc>http://www.tomohung.com/posts/4/</loc>
+  </url>
+  <url>
+    <loc>http://www.tomohung.com/posts/5/</loc>
+  </url>
+  <url>
+    <loc>http://www.tomohung.com/posts/6/</loc>
+  </url>
+  <url>
+    <loc>http://www.tomohung.com/posts/7/</loc>
+  </url>
+  <url>
+    <loc>http://www.tomohung.com/posts/8/</loc>
+  </url>
+  <url>
+    <loc>http://www.tomohung.com/posts/9/</loc>
+  </url>
+  <url>
+    <loc>http://www.tomohung.com/posts/10/</loc>
+  </url>
+  <url>
+    <loc>http://www.tomohung.com/posts/11/</loc>
   </url>
 </urlset>

@@ -9,7 +9,7 @@
   <meta name="author" content="Tomo">
 
   
-  <meta name="description" content="Chapter 2 - Choose the Right Control Structure 說是Control Structure，我比較習慣說Control Flow，簡單就是說幾乎所有程式語言都有的流程控制語法，像是if, while, case等。 Ruby比較特別的是有unless, &hellip;">
+  <meta name="description" content="Chapter 6 - Use Symbols to Stand for Something String和Symbol很類似，都可以用來代表程式中的某個事物，但字串還多了可以被用來處理得到額外資訊，如果我們單純只是想要用來代表程式中的某個事物，用Symbol就可以了。 － &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +82,7 @@
   <li><a href="/">Blog</a></li>
   <li><a href="/blog/archives">Archives</a></li>
   <li><a href="/blog/categories/tealeaf">Tealeaf</a></li>
+  <li><a href="/blog/categories/phoenix">Phoenix</a></li>
   <li><a href="/about/index.html">About</a></li>
 </ul>
 
@@ -90,6 +91,548 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/05/03/eloquent-ruby-6/">Eloquent Ruby -6 [Use Symbols to Stand for Something]</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-05-03T22:06:44+08:00'><span class='date'>2015-05-03</span> <span class='time'>10:06 pm</span></time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Chapter 6 - Use Symbols to Stand for Something</h1>
+
+<p>String和Symbol很類似，都可以用來代表程式中的某個事物，但字串還多了可以被用來處理得到額外資訊，如果我們單純只是想要用來代表程式中的某個事物，用Symbol就可以了。</p>
+
+<p>－ 同一個symbol永遠指著同一個物件，如</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>a = :sym 
+</span><span class='line'>b= a
+</span><span class='line'>c = :sym</span></code></pre></td></tr></table></div></figure>
+
+
+<p>a, b, c都是相同的物件</p>
+
+<p>但如果是string</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>a = "sym"
+</span><span class='line'>b = "sym"</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>a.equal? b</code> 會回傳false</p>
+
+<ul>
+<li>所有Ruby的物件都有一個<code>public_methods</code>的函數，會回傳一個Array of symbols</li>
+</ul>
+
+
+<hr />
+
+<p>簡單總結這章，Symbol因為有著unique, immutable這兩個特性，在用來當作代表性詞時就很實用，尤其是在應用hash時。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/05/03/eloquent-ruby-5/">Eloquent Ruby -5 [Find the Right String With Regular Expressions]</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-05-03T20:38:53+08:00'><span class='date'>2015-05-03</span> <span class='time'>8:38 pm</span></time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Chapter 5 - Find the Right String with Regular Expressions</h1>
+
+<h2>Match One Character</h2>
+
+<ul>
+<li><p><code>.</code>可以match任何單一字元(except new line)</p></li>
+<li><p>如果想match <code>.</code>本身，可以用<code>\</code>，如<code>3\.14</code></p></li>
+<li><p>再譬如<code>.r\.</code>，可以match <code>Mr.</code> or <code>Dr.</code></p></li>
+</ul>
+
+
+<h2>Sets, Range, Alternatives</h2>
+
+<h3>Sets</h3>
+
+<ul>
+<li><p>例如<code>[0123456789]</code>可以match任何一個數字字元</p></li>
+<li><p><code>[pPaA][Mm]</code>可以match <code>Am</code> or <code>pm</code>.</p></li>
+</ul>
+
+
+<h3>Range</h3>
+
+<ul>
+<li><p><code>[0-9a-f]</code>可以match任何一個16進位的字元</p></li>
+<li><p><code>\d</code>可以match任何一個數字字元，<code>\d\d</code>可以match 連續2個數字字元</p></li>
+<li><p><code>\w</code>可以match任何一個字元，包含數字、底線等</p></li>
+<li><p><code>\s</code>可以match任何一個空白字元，包含space, tab, new line.</p></li>
+</ul>
+
+
+<h3>Alternatives</h3>
+
+<ul>
+<li><p><code>|</code>是替換符號</p></li>
+<li><p><code>A\.M\.|AM|P\.M\.|PM</code> 可以match <code>A.M.</code> or <code>AM</code>, or <code>P.M.</code> or <code>PM</code></p></li>
+<li><p>處理時間格式可以用 <code>\d\d:\d\d (AM|PM)</code></p></li>
+</ul>
+
+
+<h2>Asterist <code>*</code></h2>
+
+<ul>
+<li><p>*星號可以表示在星號前的字元有任意個，包含零個。</p></li>
+<li><p><code>AB*</code>，可以match <code>AB</code>, <code>A</code>, or <code>ABBBB</code></p></li>
+<li><p>所以可以用 <code>[0–9]*</code>，match任何長度的數字</p></li>
+</ul>
+
+
+<h2>Regular Expression in Ruby</h2>
+
+<ul>
+<li><p>Format regex by slash: <code>/\d\d:\d\d (AM|PM)/</code></p></li>
+<li><p>use operator <code>=~</code></p></li>
+<li><p>所以在irb中跑這段</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/\d\d:\d\d (AM|PM)/ =~ '10:24 PM'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>回傳<code>0</code>，這表示字串有符合，從index = 0的位置開始。</p>
+
+<ul>
+<li><p>如果沒有符合，回傳<code>nil</code></p></li>
+<li><p>可以變成case insensitive，加上i，如：<code>/AM/i =~ 'am'</code></p></li>
+<li><p>也可以當參數傳入gsub來用</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>time_string.gsub!( /\d\d:\d\d (AM|PM)/, '**:** **' )</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Beginning and Ending</h2>
+
+<ul>
+<li><p>如果想要match字串的開頭用指定的文字，可以加入<code>\A</code>，如<code>\AIn the Beginning</code>，可以match字串前面為<code>In the Beginning</code></p></li>
+<li><p>反過來如果想要match字串結尾用指定的文字，可以在尾巴加入<code>\z</code></p></li>
+<li><p>如果想要match字串中<code>任何一行的開頭</code>有滿足，可以在條件字串前面加上<code>^</code></p></li>
+<li><p>如果想要match字串中<code>任何一行的結尾</code>有滿足，可以在條件字串尾巴加上<code>$</code></p></li>
+<li><p>如果想要進階同時match開頭跟結尾</p></li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/^Once upon a time.*happily ever after\.$/</span></code></pre></td></tr></table></div></figure>
+
+
+<p>這樣會失敗，因為<code>.</code>配合<code>*</code>雖然可以取代中間的任意數量的字元，但<code>.</code>不包含new line</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>/^Once upon a time.*happily ever after\.$/m</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在結尾加上<code>m</code>可以關閉<code>.</code>這個特性。</p>
+
+<ul>
+<li><code>?</code>的作用和<code>*</code>類似</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/26/eloquent-ruby-4/">Eloquent Ruby -4 [Take Advantage of Ruby’s Smart Strings]</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-26T21:25:50+08:00'><span class='date'>2015-04-26</span> <span class='time'>9:25 pm</span></time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Chapter 4 - Take Advantage of Ruby’s Smart Strings</h1>
+
+<p>string也和array, hash一樣有豐富的函式庫</p>
+
+<p><a href="http://ruby-doc.org/core-2.2.2/String.html">http://ruby-doc.org/core-2.2.2/String.html</a></p>
+
+<p>本章的結論就有Ruby提供的string非常好用，但壞處就是你要熟讀它。</p>
+
+<hr />
+
+<ul>
+<li>double quoted string <code>"</code>, 比<code>'</code>還多了點用途</li>
+</ul>
+
+
+<p>像是在字串中加入變數時<code>#{}</code>，我常忘了用<code>'</code>就沒有這個效果。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"Hi, #{user.name}."</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>遇到很煩的字串含有一堆單引號雙引號，可以用</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>%q{"Oh No", "I can't tell what's the difference between 's' and "s"."}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>像上面的小寫q，也有對應用大寫Q的，效果就是像要加入變數時用：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>%Q{ "Hi, I'm #{user.name}."}</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>可以隨意斷行</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>multi_line_string = '你抓
+</span><span class='line'>不到我
+</span><span class='line'>'
+</span><span class='line'>
+</span><span class='line'>another_multi_line_string = %q{ 你抓
+</span><span class='line'>不到我 }
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果不想有new line，可以用back slash</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>multi_line_with_no_new_line = '你抓\
+</span><span class='line'>不到我'</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>超長文字可以這樣寫</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>really_long_string = &lt;&lt;EOF
+</span><span class='line'>這是開頭
+</span><span class='line'>...
+</span><span class='line'>這是結尾
+</span><span class='line'>EOF</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>chop &amp; chomp</li>
+</ul>
+
+
+<p>長的很像的兩個函數，用法天差地遠</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"a string with new line\n".chomp</span></code></pre></td></tr></table></div></figure>
+
+
+<p>會回傳 <code>a string with new line</code>，尾巴的new line會截掉。注意如果結尾含有多個new line，它只會截掉一個。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"a string".chop</span></code></pre></td></tr></table></div></figure>
+
+
+<p>會回傳&#8221;a strin&#8221;，回傳截掉最後一個字的結果。</p>
+
+<ul>
+<li>sub &amp; gsub</li>
+</ul>
+
+
+<p>替換字串內容</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>puts 'good good'.sub( 'good', 'bad' )
+</span><span class='line'>puts 'good good'.gsub( 'good', 'bad' )</span></code></pre></td></tr></table></div></figure>
+
+
+<p>得到的結果是</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>'bad good'
+</span><span class='line'>'bad bad'</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>split 分割字串</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"one two three four five".split</span></code></pre></td></tr></table></div></figure>
+
+
+<p>回傳一個矩陣</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>["one", "two", "three", "four", "five"]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>或是分割參數</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"one;two;three;four;five".split(";")</span></code></pre></td></tr></table></div></figure>
+
+
+<p>回傳結果同上</p>
+
+<ul>
+<li>index 搜尋字串位置</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>"actions speak louder than words".index("speak") # return 8</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>each_char, each_byte, each_line</li>
+</ul>
+
+
+<p>分別用迴圈回傳字元，位元數，每一行</p>
+
+<ul>
+<li>Ruby string is mutable</li>
+</ul>
+
+
+<p>mutable雖然翻譯是可變異，但我覺得它的意義和指標有點類似</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>street_name = 'taiwan street'
+</span><span class='line'>road_name = street_name
+</span><span class='line'>street_name.upcase!</span></code></pre></td></tr></table></div></figure>
+
+
+<p>結果road_name = ?</p>
+
+<p>注意像帶有!的函數常會有mutate的作用，所以上述結果road_name = &lsquo;TAIWAN STREET&rsquo;</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/24/eloquent-ruby-3/">Eloquent Ruby -3 [Take Advantage of Ruby’s Smart Collections]</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-24T16:33:18+08:00'><span class='date'>2015-04-24</span> <span class='time'>4:33 pm</span></time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1>Chapter 3 - Take Advantage of Ruby’s Smart Collections</h1>
+
+<p>直接結論，Ruby的Array跟Hash提供很多方便的函數可用，可以參考</p>
+
+<p><a href="http://ruby-doc.org/core-2.2.0/Array.html">Array</a>
+<a href="http://ruby-doc.org/core-2.2.0/Hash.html">Hash</a></p>
+
+<p>以下才是正文開始</p>
+
+<hr />
+
+<ul>
+<li>如果是要初始化一個給值的陣列，如</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>love_words = ["Nancy", "I", "love", "you"]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>也可以這樣產生</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>love_words = %w{ Nancy I love you }</span></code></pre></td></tr></table></div></figure>
+
+
+<p>－ Ruby沒有指標，但是也有個類似指標的用法</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def echo_all( *args )
+</span><span class='line'>  args.each { |arg| puts arg }
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>*暗示arg其實是個陣列值，可以遞進來做陣列處理。</p>
+
+<ul>
+<li>對於hash，可以這樣用</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>run( {speed: :fast, tools: :train} )</span></code></pre></td></tr></table></div></figure>
+
+
+<p>也可以不要大括號，這樣寫</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>run( speed: :fast, tools: :train )</span></code></pre></td></tr></table></div></figure>
+
+
+<p>甚至</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>run speed: :fast, tools: :train</span></code></pre></td></tr></table></div></figure>
+
+
+<p>不過在參數只傳遞一個hash時，這樣寫蠻清爽的，如果是像form_for中要傳html_options時還這樣寫，簡直是個閱讀災難，我被誤導了好久。</p>
+
+<p>－ 雖然array和hash都有提供each這個method，不過hash在使用上有些不一樣的地方</p>
+
+<p>只給定一個參數的話</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>hash_value = { one: 1, two: 2, three: 3 }
+</span><span class='line'>
+</span><span class='line'>hash_value.each do |value|
+</span><span class='line'>  #something for value
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>value其實是個矩陣，如[:one, 1], [:two, 2], [:three, 3]。</p>
+
+<p>也可以給2個參數</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>hash_value.each do |key, value|
+</span><span class='line'>  #something for value
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>key和value就分別對應到hash值上，這就不用多說了。</p>
+
+<ul>
+<li>另外有個<code>inject</code> method可以幫助加總所有元素</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def average_word_length
+</span><span class='line'>  total = words.inject(0.0){ |result, word| word.size + result}
+</span><span class='line'>  total / word_count
+</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
+
+
+<p>－ 不要再each裡面操作delete的動作，如果需要的話可以用<code>array.delete_if</code> method。</p>
+
+<p>－ 如果只是要檢查某個元素有沒有已經存在陣列中，可以考慮改用<code>Set</code>這個class，而不是用Array。
+<a href="http://ruby-doc.org/stdlib-2.2.2/libdoc/set/rdoc/Set.html">http://ruby-doc.org/stdlib-2.2.2/libdoc/set/rdoc/Set.html</a></p>
+
+<p>它在檢查效率上比較好。</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -230,658 +773,6 @@ True if the receiver and argument have the same object id.</p>
 
 
 <p>@first_name如果還沒初始化，會被賦值&#8217;&lsquo;，如果已經有值，那就回傳本身。不過不要拿來對boolean type的變數這樣做，因為它也是倚賴 || operator機制。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/04/24/eloquent-ruby-1/">Eloquent Ruby -1 [Write Code That Looks Like Ruby]</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-04-24T14:15:45+08:00'><span class='date'>2015-04-24</span> <span class='time'>2:15 pm</span></time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1>Eloquent Ruby</h1>
-
-<p><code>Eloquent Ruby</code> by Russ Olsen 是一本在Tealeaf推薦的書，但它是所謂的『第二本Ruby的書』，而不是第一本，因為這本書裡面已經假設你對Ruby有基礎的觀念了。如果真的完全是初學者，Tealeaf推薦<a href="https://pine.fm/LearnToProgram/">Learn to Program by Chris Pine</a>，或者是<a href="http://learnrubythehardway.org/book/">Learn Ruby The Hard Way</a>，我覺得也不錯，還可以一邊練習打字。</p>
-
-<p>目前我把Part I：Basics看完了，共九章，覺得自己有學到些東西，所以就把它給紀錄下來，並參雜一些個人的想法。</p>
-
-<h1>Charpter 1 - Write Code That Looks Like Ruby</h1>
-
-<p>其實這章指的就是Code Style。更多的Ruby Code Style可以參考<a href="https://github.com/bbatsov/ruby-style-guide">這裡</a>。</p>
-
-<ul>
-<li><p>Indent code with two spaces，以前在寫C++時就一直覺得縮排其實2個空白就夠了（雖然我還是用預設4個），轉成Ruby後倒是蠻習慣的，尤其是不用再寫分號跟括號。</p></li>
-<li><p>什麼時候寫註解，告訴人家要怎麼用這個method，最好還帶範例。其它的像是最好用良好的命名去定義名稱，省去閱讀時的猜測，documenting itself.</p></li>
-<li><p>如果是寫const value，最好用Uppercase with underline，像UPPERCASE_WITH_UNDERLINE。</p></li>
-<li><p>因為括號是可以省略的，所以⋯⋯我常被搞混=___=，書用建議def method時後面帶參數時要用括號，但如果是一些接近口語的句子時可以考慮拿掉，如</p></li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>puts 'hello world'。</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>如果code block只有一行時最好縮成一排，反過來說如果是多行的話就用block</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>apples.each { |apple| apple.to_eat } # prefer if only single code statement
-</span><span class='line'>
-</span><span class='line'>apples.each do |apple|
-</span><span class='line'>  apple.to_eat
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><p>如果method name結尾帶一個問號?，通常表示這個方法回傳true or false，如<code>array.nil?</code>；又如果是驚嘆號!，通常表示可能有點危險（所謂的危險通常是把丟進來的參數被改變mutate了，如<code>array.map!</code>。但是不管是問號還是驚嘆號，都只是Ruby習慣的命名而已，不是強制性。</p></li>
-<li><p>有慣例就會有例外，像是</p></li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'> pi = Float('3.14159')</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Float開頭是大寫而不是小寫。為什麼我也不知道@_@</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/04/09/reflection-to-tealeaf-course3-week5-2-slash-2/">Reflection to Tealeaf Course3 Week5 (2/2)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-04-09T15:58:27+08:00'><span class='date'>2015-04-09</span> <span class='time'>3:58 pm</span></time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Continuous Integration(CI) and Continous Delivery(CD)</h3>
-
-<p>This part is super exciting so I decide to make it a individual post.</p>
-
-<p>Continuous Integration(CI) and Continous Delivery(CD) are two of most important part in automation development. There are plenty of innovation tools, but I think the work flow is the key to understand.</p>
-
-<ol>
-<li>Pull the latest code from GitHub.</li>
-<li>Create a new feature branch and develop.</li>
-<li>Finish development and put to a feature named branch on GitHub.</li>
-<li>Create a PR from this branch to <code>staging</code> branch.</li>
-<li>Wait CI test for staging branch.</li>
-<li>CI automatically deploy from staging branch to <code>staging server</code>.</li>
-<li>Manual test on staging server.</li>
-<li>Create PR from staging to <code>master</code> branch.</li>
-<li>trigger CI for master branch and automatically deploy to <code>production server</code>.</li>
-</ol>
-
-
-<h3>Setting CI and CD</h3>
-
-<p>Here we use <a href="https://circleci.com">Circle CI</a> for CI and CD. There is also well known service called <a href="https://travis-ci.org/">Travis CI</a>.</p>
-
-<ul>
-<li>Create a <code>staging</code> branch.</li>
-<li>Follow Circle CI project setting.</li>
-<li>You may need Heroku API key and SSH.</li>
-<li>[Key] Create a <code>circle.yml</code> in the root of project, adjust <code>production_app_name</code> and <code>staging_app_name</code>.</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>machine:
-</span><span class='line'>  ruby:
-</span><span class='line'>    version: 2.1.5
-</span><span class='line'>deployment:
-</span><span class='line'>  production:
-</span><span class='line'>    branch: master
-</span><span class='line'>    commands:
-</span><span class='line'>      - heroku maintenance:on --app production_app_name
-</span><span class='line'>      - heroku pg:backups capture --app production_app_name
-</span><span class='line'>      - git push git@heroku.com:production_app_name.git $CIRCLE_SHA1:refs/heads/master
-</span><span class='line'>      - heroku run rake db:migrate --app production_app_name
-</span><span class='line'>      - heroku maintenance:off --app production_app_name
-</span><span class='line'>  staging:
-</span><span class='line'>    branch: staging
-</span><span class='line'>    commands:
-</span><span class='line'>      - heroku maintenance:on --app staging_app_name
-</span><span class='line'>      - git push git@heroku.com:staging_app_name.git $CIRCLE_SHA1:refs/heads/master
-</span><span class='line'>      - heroku run rake db:migrate --app staging_app_name
-</span><span class='line'>      - heroku maintenance:off --app staging_app_name</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I got an error when running Circle test: [counldn&rsquo;t find file &lsquo;bootstrap&rsquo;]</p>
-
-<p>Solution: Rename file <code>stylesheets/application.css</code> to <code>stylesheets/application.css.scss</code>. And add Line to the file:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>@import 'bootstrap-sprockents'
-</span><span class='line'>@import 'bootstrap'</span></code></pre></td></tr></table></div></figure>
-
-
-<p>and remove line <code>*= require bootstrap</code>.</p>
-
-<h3>Embeded Badget</h3>
-
-<p>I aslo try to use badget in my homepage.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>%img(src="https://circleci.com/gh/tomohung/myflix.png?circle-token=a7c782deb0d0022335fa1f095e268bb44eb4cab8")</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then I can see this passing test badget.</p>
-
-<p><img src="https://circleci.com/gh/tomohung/myflix.png?circle-token=a7c782deb0d0022335fa1f095e268bb44eb4cab8"></p>
-
-<h3>Slack ingegration with Github and Circle CI</h3>
-
-<p>I failed to use <a href="http://ccmenu.org/">CCMenu</a> to have a notification. But I use <a href="https://slack.com/">Slack</a> to integrate GitHub and Circle CI, and that&rsquo;s why I said it&rsquo;s exciting!!</p>
-
-<p>After setting done, the only thing I need to do is <code>git push origin staging</code> or <code>git push origin master</code>. I&rsquo;ll get notifications in Slack when Github got a push event, and Circle CI run the test and deployment in the same time. Surely I will also get a Circle CI result notification if test and deployment finished.</p>
-
-<p>This is what a programmer should do!! Don&rsquo;t Repeat Yourself!! Bravo!!</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/04/09/reflection-to-tealeaf-course3-week5/">Reflection to Tealeaf Course3 Week5 (1/2)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-04-09T14:39:06+08:00'><span class='date'>2015-04-09</span> <span class='time'>2:39 pm</span></time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Feature test for sending email</h3>
-
-<p>Following by <a href="http://www.tomohung.com/blog/2015/04/07/reflection-to-tealeaf-course3-week4/">previous week</a>, this week we have a feature test for sending email.</p>
-
-<p>Install gem,</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ gem 'capybara-email'</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And added this line to <code>spec_helper.rb</code></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>require 'capybara/email/rspec'</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>require 'spec_helper'
-</span><span class='line'>
-</span><span class='line'>feature 'User resets password' do
-</span><span class='line'>  scenario 'user successfully resets the password' do
-</span><span class='line'>    clear_emails
-</span><span class='line'>
-</span><span class='line'>    user = Fabricate(:user)
-</span><span class='line'>    visit sign_in_path
-</span><span class='line'>    click_link 'Forgot Password?'
-</span><span class='line'>
-</span><span class='line'>    fill_in 'Email Address', with: user.email
-</span><span class='line'>    click_button 'Send Email'
-</span><span class='line'>
-</span><span class='line'>    open_email(user.email)
-</span><span class='line'>    current_email.click_link("Reset Password")
-</span><span class='line'>
-</span><span class='line'>    fill_in 'New Password', with: 'new_password'
-</span><span class='line'>    click_button 'Reset Password'
-</span><span class='line'>
-</span><span class='line'>    fill_in 'Email Address', with: user.email
-</span><span class='line'>    fill_in 'Password', with: 'new_password'
-</span><span class='line'>    click_button 'Sign in'
-</span><span class='line'>    expect(page).to have_content("Welcome, #{user.full_name}")
-</span><span class='line'>  end
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Especially notice for <code>open_email</code>, <code>current_email</code> functions are offered by <code>capybara-email</code> gem.</p>
-
-<h3>Invite Friend and Registeration</h3>
-
-<p>We also have a work on inviting friends through email, the key point here is how to use a secure <code>token</code> to tracking data.</p>
-
-<ul>
-<li>create an invitations data, including inviter, recipient email, name, and <code>token</code>.</li>
-<li><p>when user get the email, following the link provided to server, page will direct to the register page with existing data stored with this token.</p>
-
-<p>And set the routes for path</p></li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>get 'register/:token', to: 'users#new_with_invitation_token'</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>we can have a hidden data in the register form for new#users to use.</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>= hidden_field_tag :token, @invitation_token</span></code></pre></td></tr></table></div></figure>
-
-
-<p>we don&rsquo;t use form_for element, becuase this hidden attribute does not belong to backend modeled form.</p>
-
-<h3>Concerns</h3>
-
-<p>To Dry our code, we can use <code>concern</code> with <code>module</code>. Here is a <a href="https://signalvnoise.com/posts/3372-put-chubby-models-on-a-diet-with-concerns">post by DHH</a> why we should do this.</p>
-
-<p>We can merge the same function feature into concern file. For example: <code>Tokenable</code></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#/lib/tokenable.rb
-</span><span class='line'>module Tokenable
-</span><span class='line'>  extend ActiveSupport::Concern
-</span><span class='line'>  included do
-</span><span class='line'>    before_create :generate_token
-</span><span class='line'>  end
-</span><span class='line'>
-</span><span class='line'>  private
-</span><span class='line'>  def generate_token
-</span><span class='line'>    self.token = SecureRandom.urlsafe_base64
-</span><span class='line'>  end
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then add to model file</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>require 'tokenable'
-</span><span class='line'>
-</span><span class='line'>class User &lt; ActiveRecord::Base
-</span><span class='line'>  include Tokenable
-</span><span class='line'>  ...
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I prefer to specify require file name, or we can use <a href="http://stackoverflow.com/questions/19098663/auto-loading-lib-files-in-rails-4">auto loading library files</a>.</p>
-
-<h3>Email Service Providers</h3>
-
-<p>Since we have test email sending on ENV:development and EVN:test, now we have test it in the real world. That&rsquo;s why we need a real email service provider. Google has it but with many restriction, Tealeaf recommend <code>Mailgun</code> or <code>Postmark</code>. Here we have a taste for `Mailgun&#8217;.</p>
-
-<p>To setting <code>config/environments/production.rb</code>, add these lines:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>config.action_mailer.default_url_options = { :host =&gt; "tomo-myflix.herokuapp.com" }
-</span><span class='line'>  config.action_mailer.smtp_settings = {
-</span><span class='line'>    :port           =&gt; ENV['MAILGUN_SMTP_PORT'],
-</span><span class='line'>    :address        =&gt; ENV['MAILGUN_SMTP_SERVER'],
-</span><span class='line'>    :user_name      =&gt; ENV['MAILGUN_SMTP_LOGIN'],
-</span><span class='line'>    :password       =&gt; ENV['MAILGUN_SMTP_PASSWORD'],
-</span><span class='line'>    :domain         =&gt; 'tomo-myflix.herokuapp.com',
-</span><span class='line'>    :authentication =&gt; :plain,
-</span><span class='line'>  }
-</span><span class='line'>  config.action_mailer.delivery_method = :smtp</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>tomo-myflix.herokuapp.com</code> is my app name on Heroku. And ENV about Mailgun are maintained by Heroku.</p>
-
-<p>I aslo can use this command to check <code>Heroku configurations</code>.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ heroku config</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then push it to heroku and test for a real email address, it works!!</p>
-
-<h3>Background Jobs</h3>
-
-<p>Sometimes, some actions do not need to be synchrous, like sending email, we don&rsquo;t need to wait email sending action completed. That&rsquo;s why we need to use a background job to do sending email to speed up the flow.</p>
-
-<p><code>Sidekiq</code> and <code>Resque</code> are some of this concept product. And Tealeaf recommend to use <a href="https://github.com/mperham/sidekiq/wiki">Sidekiq</a>.</p>
-
-<p>Install gem Sidekiq</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>gem 'sidekiq'</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Only a tiny change for using it by delay method</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>AppMailer.delay.notify_on_new_todo(current_user, @todo) # new 
-</span><span class='line'>AppMailer.notify_on_new_todo(current_user, @todo).deliver #older one
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Add this line in <code>spec/spec_helper.rb</code></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>require 'sidekiq/testing/inline'</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Here we setup sidekiq, but we still need start <code>Redis</code> server:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ brew install redis
-</span><span class='line'>$ redis-server /usr/local/etc/redis.conf</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And this start sidekiq with another terminal:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ bundle exec sidekiq</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So far, this makes <code>local</code> works fine with <code>sidekiq</code> for background jobs. If we want to use background jobs in ENV:production, Heroku take charges if dyno is more than 1, or try <a href="https://coderwall.com/p/fprnhg/free-background-jobs-on-heroku">this way to simulate</a></p>
-
-<p>I have not implemented this yet, but I&rsquo;ll try it later.</p>
-
-<p>There is also <a href="https://devcenter.heroku.com/articles/procfile#deploying-to-heroku">an article talking about Procfile and Foreman</a>.</p>
-
-<p>If sidekiq version >= 3.0, you might also run this line</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>heroku config:set REDIS_PROVIDER=REDISTOGO_URL</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Monitor Production Error</h3>
-
-<p>Here we have a try for <a href="https://getsentry.com/welcome/">Sentry</a>.</p>
-
-<p>Tracking errors is also a key for automation deployment.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/04/07/reflection-to-tealeaf-course3-week4/">Reflection to Tealeaf Course3 Week4</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-04-07T13:11:30+08:00'><span class='date'>2015-04-07</span> <span class='time'>1:11 pm</span></time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Three kinds of BDD</h3>
-
-<p>In week 4 beginning, we got a brief intro for 3 kinds of BDD:</p>
-
-<ul>
-<li><p>meet in the middle</p>
-
-<p>I think this should be the popular one for modern development. The front-end engineer build the pages from mockups, then back-end developer connect UI with controllers and models.</p></li>
-<li><p>inside out</p>
-
-<p>It develops from models to controllers till views and integrations. It&rsquo;s hard to decide what models you really need in the beginning.</p></li>
-<li><p>outside in</p>
-
-<p>It devlops from integrations to controllers and models. It start from a big vision, and close to what user&rsquo;s need. But for developer, it&rsquo;s hard to code from this big vision, especially for integration test in the development beginning.</p></li>
-</ul>
-
-
-<h3>Self Referential Associations</h3>
-
-<p>We can use <strong>self referential association</strong> to let user track other users. For example:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'># t.integer :follower_id, :leader_id
-</span><span class='line'>class Relationship &lt; ActiveRecord::Base
-</span><span class='line'>  belongs_to :follower, class_name: 'User'
-</span><span class='line'>  belongs_to :leader, class_name: 'User'
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then, model <code>User</code> can have these virtual attributes:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>  has_many :following_relationships, class_name: 'Relationship', foreign_key: :follower_id
-</span><span class='line'>  has_many :leading_relationships, class_name: 'Relationship', foreign_key: :leader_id</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Sending Emails</h3>
-
-<p>Rails also offer <code>ActionMailer</code> for sending emails.</p>
-
-<ul>
-<li>create files in <code>app/mailers/app_mailer.rb</code></li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>class AppMailer &lt; ActionMailer::Base
-</span><span class='line'>
-</span><span class='line'>  def send_welcome_email(user)
-</span><span class='line'>    @user = user
-</span><span class='line'>    mail to: user.email, from: 'info@myflix.com', subject: 'Welcome to Myflix'
-</span><span class='line'>  end
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li><code>View</code> template in <code>app/views/app_mailers/send_welcome_email</code>:</li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>%html(lang='en-US')
-</span><span class='line'>  %body
-</span><span class='line'>    %p Welcome to MyFlix, #{@user.full_name}</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Config for <code>config/environments/development.rb</code></li>
-</ul>
-
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>config.action_mailer.delivery_method = :letter_opener</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>group :development do
-</span><span class='line'>  gem 'letter-opener'
-</span><span class='line'>end</span></code></pre></td></tr></table></div></figure>
-
-
-<blockquote><p>This is only for <code>development</code> setting, we also need to set for <code>test</code> and <code>production</code> independent</p></blockquote>
-
-<h3>Handling Sensitive Account Info</h3>
-
-<p>It&rsquo;s dangerous to upload config setting file to github or other public storage, there is someone update AWS key to GitHub and got a unbelievable credit bill.</p>
-
-<p>Use <code>ENV</code> to protect secret data, we can use gem <code>Figaro</code>.
-<a href="https://github.com/laserlemon/figaro">Figara</a> is the simplest way to keep our key value safe.</p>
-
-<p>There are two posts talking about this topic:</p>
-
-<ol>
-<li><a href="http://railsapps.github.io/rails-environment-variables.html">Rails Environment Variables</a></li>
-<li><a href="https://devcenter.heroku.com/articles/config-vars">Configuration and config Vars</a></li>
-</ol>
-
-
-<blockquote><p>Update: Tealeaf also have a post about <a href="http://www.gotealeaf.com/blog/managing-environment-configuration-variables-in-rails">Managing Environment Configuration Variables in Rails</a></p></blockquote>
-
-<h3>Test Email sending</h3>
-
-<p>Remember to clear email deliveries before test:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>before { ActionMailer::Base.deliveries.clear }
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then we can validate email in the test by this</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>post :create
-</span><span class='line'>expect(ActionMailer::Base.deliveries.last.to).to eq([user_attributes["email"]])
-</span><span class='line'># expect(ActionMailer::Base.deliveries.last.body).to include(user_attributes["full_name"])</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Update database, use rake tasks</h3>
-
-<p>An advice from TA Tomtomecek, I update existing data in model User, and he suggest me to use <a href="http://guides.rubyonrails.org/command_line.html#custom-rake-tasks">custom rake tasks</a> to do that. I&rsquo;ve not taste that yet, just leave a memo here to remember.</p>
 </div>
   
   

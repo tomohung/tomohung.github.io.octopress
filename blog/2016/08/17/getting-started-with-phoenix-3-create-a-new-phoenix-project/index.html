@@ -1,0 +1,315 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Getting Started With Phoenix - 3. Create a New Phoenix Project - The Life Alchemist</title>
+  <meta name="author" content="Tomo">
+
+  
+  <meta name="description" content="Create a new Phoenix project Install Phoenix 可以參考Phoenix官網安裝方法
+另外我們要使用MySQL，所以也要記得安裝，網路上教學文章很多，這裡就跳過 Create the Blog application 打開終端機執行以下程式 1
+$ mix &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://www.tomohung.com/blog/2016/08/17/getting-started-with-phoenix-3-create-a-new-phoenix-project">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="The Life Alchemist" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=Fjalla+One" rel="stylesheet" type="text/css">
+<!--- MathJax Configuration -->
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-12830335-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   class="collapse-sidebar sidebar-footer" >
+  <header role="banner"><hgroup>
+  <h1><a href="/">The Life Alchemist</a></h1>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscribe" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS" target="_blank"><svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="25" height="25" viewbox="0 0 100 100"><path class="social" d="M 13.310204,73.332654 C 5.967347,73.332654 0,79.322448 0,86.621428 c 0,7.338776 5.967347,13.262246 13.310204,13.262246 7.370408,0 13.328572,-5.92245 13.328572,-13.262246 0,-7.29898 -5.958164,-13.288774 -13.328572,-13.288774 z M 0.01530612,33.978572 V 53.143878 C 12.493878,53.143878 24.229592,58.02347 33.068368,66.865306 41.894898,75.685714 46.767346,87.47449 46.767346,100 h 19.25 C 66.017346,63.592858 36.4,33.979592 0.01530612,33.978572 l 0,0 z M 0.03877552,0 V 19.17449 C 44.54796,19.17551 80.77551,55.437756 80.77551,100 H 100 C 100,44.87653 55.15102,0 0.03877552,0 z"></path></svg></a></li>
+  
+</ul>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+      <form action="https://www.google.com/search" method="get">
+        <fieldset role="search">
+          <input type="hidden" name="sitesearch" value="www.tomohung.com" />
+    
+          <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+        </fieldset>
+      </form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/blog/categories/tealeaf">Tealeaf</a></li>
+  <li><a href="/blog/categories/phoenix">Phoenix</a></li>
+  <li><a href="/about/index.html">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      
+        <h1 class="entry-title">Getting Started With Phoenix - 3. Create a New Phoenix Project</h1>
+      
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-08-17T20:59:48+08:00'><span class='date'>2016-08-17</span> <span class='time'>8:59 pm</span></time>
+        
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h3>Create a new Phoenix project</h3>
+
+<h4>Install Phoenix</h4>
+
+<p>可以參考<a href="http://www.phoenixframework.org/docs/installation">Phoenix官網安裝方法</a>
+另外我們要使用MySQL，所以也要記得安裝，網路上教學文章很多，這裡就跳過</p>
+
+<h4>Create the Blog application</h4>
+
+<p>打開終端機執行以下程式</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mix phoenix.new blog --datebase mysql</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>--database mysql</code>是為了將預設資料庫PostgreSQL指定成MySQL。
+而blog是我們專案的名稱</p>
+
+<p>接下來會提示是否安裝相依套件
+Fetch and Install dependencies? [Yn]</p>
+
+<p>選擇Y之後，程式應該會自動執行這兩行</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mix deps.get
+</span><span class='line'>$ npm install</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果npm install沒安裝的話，前端套件會沒有，你看到的就是一個醜醜的網站，因為Phoenix已經預設幫你用了Bootstrap的css檔案，和一點點客製化的內容。</p>
+
+<p>想要有完整的Bootstrap功能，包含Javascript，可以參考我另一篇文章<a href="">Phoenix with Bootstrap</a></p>
+
+<p>接下來進入專案並且執行server</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ cd blog
+</span><span class='line'>$ mix phoenix.server</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Server運行起來後，打開瀏覽器輸入<code>localhost:4000</code>，你應該可以看到Phoenix的觀迎首頁</p>
+
+<p><img src="https://files.readme.io/dgQq2PC8SiyitRnHtf7A_welcome-to-phoenix.png"></p>
+
+<p>另外雖然還沒用到，但可以先建立資料庫</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ mix ecto.create</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果出現錯誤的話，很有可能是帳號密碼錯了，可以到<code>config/dev.exs</code>修改</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># Configure your database
+</span><span class='line'>config :blog, Blog.Repo,
+</span><span class='line'>  adapter: Ecto.Adapters.MySQL,
+</span><span class='line'>  username: "root",
+</span><span class='line'>  password: "",
+</span><span class='line'>  database: "blog_dev",
+</span><span class='line'>  hostname: "localhost",
+</span><span class='line'>  pool_size: 10</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+
+  <span class="byline author vcard">Authored by <span class="fn">
+  
+    Tomo
+  
+  </span></span>
+
+
+      
+
+
+
+
+<time class='entry-date' datetime='2016-08-17T20:59:48+08:00'><span class='date'>2016-08-17</span> <span class='time'>8:59 pm</span></time>
+      
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/elixir/'>elixir</a>, <a class='category' href='/blog/categories/getting-started-with-phoenix/'>getting_started_with_phoenix</a>, <a class='category' href='/blog/categories/phoenix/'>phoenix</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://www.tomohung.com/blog/2016/08/17/getting-started-with-phoenix-3-create-a-new-phoenix-project/" data-via="" data-counturl="http://www.tomohung.com/blog/2016/08/17/getting-started-with-phoenix-3-create-a-new-phoenix-project/" >Tweet</a>
+  
+  
+  
+    <div class="fb-like" data-layout="button_count" data-send="false" data-width="300" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2016/08/16/getting-started-with-phoenix-2-what-is-phoenix/" title="Previous Post: Getting started with Phoenix - 2. What is Phoenix">&laquo; Getting started with Phoenix - 2. What is Phoenix</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2016/08/17/getting-started-with-phoenix-4-phoenix-file-slash-folder/" title="Next Post: Getting started with Phoenix - 4. Phoenix File/Folder">Getting started with Phoenix - 4. Phoenix File/Folder &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+
+</div>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2016 - Tomo -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a> | Themed with <a href="https://github.com/lucaslew/whitespace">Whitespace</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'tomohung';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://www.tomohung.com/blog/2016/08/17/getting-started-with-phoenix-3-create-a-new-phoenix-project/';
+        var disqus_url = 'http://www.tomohung.com/blog/2016/08/17/getting-started-with-phoenix-3-create-a-new-phoenix-project/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

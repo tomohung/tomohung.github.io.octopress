@@ -9,7 +9,7 @@
   <meta name="author" content="Tomo">
 
   
-  <meta name="description" content="Finally, Rails is coming. Before join Tealeaf, I&rsquo;ve tried few times to follow some rails guide books. I just can type some magic codes to build &hellip;">
+  <meta name="description" content="1. What&rsquo;s the difference between rendering and redirecting? What&rsquo;s the impact with regards to instance variables, view templates? &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +82,7 @@
   <li><a href="/">Blog</a></li>
   <li><a href="/blog/archives">Archives</a></li>
   <li><a href="/blog/categories/tealeaf">Tealeaf</a></li>
+  <li><a href="/blog/categories/phoenix">Phoenix</a></li>
   <li><a href="/about/index.html">About</a></li>
 </ul>
 
@@ -90,6 +91,236 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/15/tealeaf-course2-lesson3-quiz/">Tealeaf Course2 Lesson3 Quiz</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-15T08:22:00+08:00'><span class='date'>2015-02-15</span> <span class='time'>8:22 am</span></time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote><h4>1. What&rsquo;s the difference between rendering and redirecting? What&rsquo;s the impact with regards to instance variables, view templates?</h4></blockquote>
+
+<ul>
+<li>rendering: render a template HTML code, like <code>partial</code>.</li>
+<li>redirecting: make a new request to controller.</li>
+</ul>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/02/15/tealeaf-course2-lesson3-quiz/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/">Reflection to Tealeaf Course2 Lesson2</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-10T16:39:30+08:00'><span class='date'>2015-02-10</span> <span class='time'>4:39 pm</span></time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://www.tomohung.com/blog/2015/02/02/reflection-to-tealeaf-course-2-lesson-1/">Last week</a>, I know Models and Database side of Rails.</p>
+
+<p>This week Tealeaf reveals the <code>Controller</code> and <code>View</code> part of MVC, I would like to summarize this lesson into two parts: <code>Don't Repeat Yourself</code> and <code>Conventions over Configuration</code>.</p>
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/02/10/reflection-to-tealeaf-course2-lesson2/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/08/tealeaf-course2-lesson2-quiz/">Tealeaf Course2 Lesson2 Quiz</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-08T14:13:48+08:00'><span class='date'>2015-02-08</span> <span class='time'>2:13 pm</span></time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote><h4>1. Name all the 7 (or 8) routes exposed by the resources keyword in the routes.rb file. Also name the 4 named routes, and how the request is routed to the controller/action.</h4></blockquote>
+
+<p>  For example by table <code>posts</code>:</p>
+
+<table>
+<thead>
+<tr>
+<th>Prefix   </th>
+<th>Verb   </th>
+<th>URI   </th>
+<th>Controller#Action   </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>posts   </td>
+<td>GET   </td>
+<td>/posts   </td>
+<td>posts#index   </td>
+</tr>
+<tr>
+<td>new_post   </td>
+<td>GET   </td>
+<td>/posts/new   </td>
+<td>post#new   </td>
+</tr>
+<tr>
+<td>   </td>
+<td>POST   </td>
+<td>/posts   </td>
+<td>post#create   </td>
+</tr>
+<tr>
+<td>post   </td>
+<td>GET   </td>
+<td>/posts/:id   </td>
+<td>post#show   </td>
+</tr>
+<tr>
+<td>edit_post   </td>
+<td>GET   </td>
+<td>/posts/:id   </td>
+<td>post#edit   </td>
+</tr>
+<tr>
+<td>   </td>
+<td>PUT/PATCH   </td>
+<td>/posts/:id   </td>
+<td>post#update   </td>
+</tr>
+<tr>
+<td>   </td>
+<td>DELETE   </td>
+<td>/posts/:id   </td>
+<td>post#destroy   </td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/02/08/tealeaf-course2-lesson2-quiz/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/02/02/newbie-for-rails-migration/">Newbie for Rails Migration</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-02-02T21:46:35+08:00'><span class='date'>2015-02-02</span> <span class='time'>9:46 pm</span></time>
+        
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>As a newbie for Rails, It&rsquo;s normal to do something stupid.</p>
+
+<h2>Modified migration files after <code>rake db:migrate</code></h2>
+
+<p>It&rsquo;s useless!! Be carful that every migration filename including a timestamp, after running <code>rake db:migrate</code> will re-generate schema.rb. Data in schema.rb will show that the lastest timestamp, if there is no any new migration files newer than this timestamp, <code>rake db:migrate</code> will do nothing. Yes! it&rsquo;s nothing!!</p>
+
+<figure class='code'><figcaption><span>normally you should see</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>==  CreateArticles: migrating ==================================================
+</span><span class='line'>-- create_table(:articles)
+</span><span class='line'>   -&gt; 0.0019s
+</span><span class='line'>==  CreateArticles: migrated (0.0020s) =========================================
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span>schema.rb has been updated, rake db:migrate do nothing</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>$ rake db:migrate
+</span><span class='line'>$ rake db:migrate
+</span></code></pre></td></tr></table></div></figure>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2015/02/02/newbie-for-rails-migration/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
   
   
     <article>
@@ -140,181 +371,6 @@
 <p>I&rsquo;m super satisfied that this week I found my mistake when using migrations, and I think there must be other mistake for controller&rsquo;s and view&rsquo;s. Moving to next lesson!!</p>
 </div>
   
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/30/tealeaf-course2-lesson1-quiz/">Tealeaf Course2 Lesson1 Quiz</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-30T16:13:42+08:00'><span class='date'>2015-01-30</span> <span class='time'>4:13 pm</span></time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Answer these quizzes, then updated after watching solution.</p>
-
-<h2>1. Why do they call it a relational database?</h2>
-
-<p>  Relational database can store the relationship between data and data. For example, a table store customer&rsquo;s info, and a table store consuming record, these two table can be associated with another table, to establish the customer&rsquo;s consuming history. There are relationships between data and data in relational database. ex. sqlite, MySQL, PostgreSQL ect.</p>
-
-<blockquote><p>the tables within the database are associated with each other. This association can be created with primary/foreign keys and various syntax.</p></blockquote>
-
-<h2>2. What is SQL?</h2>
-
-<p>  SQL(Structured Query Language), it&rsquo;s domain specific language to manipulate database.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2015/01/30/tealeaf-course2-lesson1-quiz/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/22/reflection-to-tealeaf-lesson-4/">Reflection to Tealeaf Lesson 4</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-22T11:59:53+08:00'><span class='date'>2015-01-22</span> <span class='time'>11:59 am</span></time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img class="right" src="http://i.minus.com/iS2bpDcNcj44W.jpg" width="320"></p>
-
-<p>To be honest, I still feel uncomfortable with this week. From week 3, I learned html &amp; css, to week 4, I learned jQuery &amp; Ajax. It&rsquo;s definitely not enough only rely on Codecademy&rsquo;s course, so I decide to do one more app, tic-tac-toe on wep. I think this should make me more comfortable with these lessons.</p>
-
-<p>But I&rsquo;m wrong, ha!! I still get stuck when doing UI and interactive design. Since I already knew that the most important thing at this moment is becoming a robust rails development, I decide to keep my pace and going to next course.</p>
-
-<p>Recap to this course:</p>
-
-<ul>
-<li>week 1, basic Ruby program.</li>
-<li>week 2, OOP in Ruby.</li>
-<li>week 3, <strong>HTTP is stateless</strong>, HTML &amp; CSS, Sinatra, and Bootstrap.</li>
-<li>week 4, jQuery and Ajax.</li>
-</ul>
-
-
-<p>One more thing, I thought I could be a full stack web developer before this course, then I knew I&rsquo;m wrong. There are a lot of knowledge in front end.</p>
-
-<p>And now I have to keep focus on back end.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io/">在Nitrous上寫Octopress</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-16T21:10:08+08:00'><span class='date'>2015-01-16</span> <span class='time'>9:10 pm</span></time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>Octopress &amp; github</h3>
-
-<p>這個部落格是用<a href="octopress.rog">Octopress</a>在<a href="github.com">github</a>上建立起來的。但是不像一般的部落格系統，可以只要用瀏覽器登入，就可以開始寫文章。不過既然知道<a href="nitrous.io">nitrous.io</a>可以雲端工作，所以就把腦筋動到它的上面去。</p>
-
-<h3>Clone Octopress</h3>
-
-<p>作法是參考<a href="http://blog.zerosharp.com/clone-your-octopress-to-blog-from-two-places/">這篇文章</a>。</p>
-
-<p>但是其中的程式碼有點錯誤，因為github上存放網頁的位置己經改成github.io了。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2015/01/16/clone-my-octopress-to-nitrous-dot-io/">Read on &rarr;</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2015/01/14/show-http-is-stateless-by-sinatra/">Show HTTP Is Stateless by Sinatra</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-01-14T21:25:15+08:00'><span class='date'>2015-01-14</span> <span class='time'>9:25 pm</span></time>
-        
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>In tealeaf week 3, introduce to HTTP.</p>
-
-<p>The most important thing is that, HTTP is stateless.</p>
-
-<p>What&rsquo;s the influnce by this property? Showing this by Sinatra.</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2015/01/14/show-http-is-stateless-by-sinatra/">Read on &rarr;</a>
-    </footer>
   
 
 
